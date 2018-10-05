@@ -15,15 +15,15 @@ public:
 	// Destructor
 	virtual ~j1Player();
 
-	/*// Called before render is available
-	bool Awake(pugi::xml_node& conf);
+	// Called before render is available
+	//bool Awake(pugi::xml_node& conf);
 
 	// Called before the first frame
 	bool Start();
 
 	// Called each loop iteration
 	bool PreUpdate();
-	bool Update(float dt);
+	bool Update();
 	bool PostUpdate();
 
 	// Called before quitting
@@ -31,7 +31,7 @@ public:
 
 	// Load / Save
 	bool Load(pugi::xml_node&);
-	bool Save(pugi::xml_node&) const;*/
+	bool Save(pugi::xml_node&) const;
 
 private:
 
@@ -41,6 +41,7 @@ private:
 	bool LoadLayer(pugi::xml_node& node, MapLayer* layer);*/
 
 public:
+	iPoint position;	
 	bool dead = false;
 };
 
