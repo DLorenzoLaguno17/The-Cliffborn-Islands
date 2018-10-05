@@ -7,6 +7,7 @@
 #include "j1Render.h"
 #include "j1Window.h"
 #include "j1Map.h"
+#include "j1Player.h"
 #include "j1Scene.h"
 
 j1Scene::j1Scene() : j1Module()
@@ -45,12 +46,21 @@ bool j1Scene::PreUpdate()
 // Called each loop iteration
 bool j1Scene::Update(float dt)
 {
+	// Load and Save
 	if(App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
 		App->LoadGame("save_game.xml");
 
 	if(App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
 		App->SaveGame("save_game.xml");
 
+	// Control of the player
+	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
+		App->player->position.x -= 1;
+
+	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+		App->player->position.x += 1;
+
+	// Control of the camera
 	if(App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
 		App->render->camera.y += 1;
 

@@ -3,7 +3,10 @@
 #include "j1App.h"
 #include "j1Player.h"
 
-j1Player::j1Player() {}
+j1Player::j1Player() : j1Module()
+{
+	name.create("player");
+}
 
 j1Player::~j1Player() {}
 
