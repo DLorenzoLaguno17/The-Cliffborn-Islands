@@ -33,5 +33,11 @@ Go to our [GitHub](https://github.com/DLorenzoLaguno17/The-Cliffborn-Islands).
 	Licensed under Creative Commons: By Attribution 3.0
 	http://creativecommons.org/licenses/by/3.0/
 
+	Music of the second level: "Airship Serenity"
+	Kevin MacLeod (incompetech.com)
+	Licensed under Creative Commons: By Attribution 3.0
+	http://creativecommons.org/licenses/by/3.0/
+
+
 This game has been created by Òscar Faura and Daniel Lorenzo.
 Licensed under the [MIT License](LICENSE).
