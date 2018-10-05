@@ -7,6 +7,8 @@ Go to our [GitHub](https://github.com/DLorenzoLaguno17/The-Cliffborn-Islands).
 ### Gameplay
 * W - Move left
 * D - Move right
+* H - Throw the hook
+* Spacebar - Jump
 
 ### Special keys
 * F1 - To start from the very first level
