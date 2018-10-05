@@ -15,23 +15,23 @@ Go to our [GitHub](https://github.com/DLorenzoLaguno17/The-Cliffborn-Islands).
 
 ### Gameplay
 ---------------------------------------------
-	W - Move left
-	D - Move right
+* W - Move left
+* D - Move right
 
 
 ## Credits
 
 ### Art
 ---------------------------------------------
-Sprites of the character and the background: "Foggy Cliffs - Fantasy Tileset"
-Nauris Amatnieks (https://twitter.com/Namatnieks)
+	Sprites of the character and the background: "Foggy Cliffs - Fantasy Tileset"
+	Nauris Amatnieks (https://twitter.com/Namatnieks)
 
 ### Music
 ---------------------------------------------
-Music of the first level: "Cruising for Goblins"
-Kevin MacLeod (incompetech.com)
-Licensed under Creative Commons: By Attribution 3.0
-http://creativecommons.org/licenses/by/3.0/
+	Music of the first level: "Cruising for Goblins"
+	Kevin MacLeod (incompetech.com)
+	Licensed under Creative Commons: By Attribution 3.0
+	http://creativecommons.org/licenses/by/3.0/
 
 This game has been created by Òscar Faura and Daniel Lorenzo.
 Licensed under the [MIT License](LICENSE).
