@@ -23,7 +23,6 @@ j1Scene1::~j1Scene1()
 bool j1Scene1::Awake()
 {
 	LOG("Loading Scene");
-
 	bool ret = true;
 
 	return ret;
@@ -32,8 +31,12 @@ bool j1Scene1::Awake()
 // Called before the first frame
 bool j1Scene1::Start()
 {
+	// The map is loaded
 	//App->map->Load("hello2.tmx");
 	App->map->Load("iso.tmx");
+
+	// The audio is played
+	App->audio->PlayMusic("audio/music/level1_music.ogg", 1.0f);
 	
 	return true;
 }
