@@ -23,6 +23,7 @@ j1Scene1::~j1Scene1()
 bool j1Scene1::Awake()
 {
 	LOG("Loading Scene");
+
 	bool ret = true;
 
 	return ret;
