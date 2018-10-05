@@ -31,7 +31,7 @@ void j1Map::Draw()
 	if(map_loaded == false)
 		return;	
 
-	// TODO 5(old): Prepare the loop to draw all tilesets + Blit	
+	// Prepares the loop to draw all tilesets + Blit	
 
 	p2List_item<TileSet*>* item; //Sprites_Layer
 	item = data.tilesets.start;
@@ -53,20 +53,17 @@ void j1Map::Draw()
 			}
 		}
 	}
-
-	// TODO 10(old): Complete the draw function
 }
 
 iPoint j1Map::MapToWorld(int x, int y) const
 {
 	iPoint ret(0, 0);
 
-	// TODO 8(old): Create a method that translates x,y coordinates from map positions to world positions
+	// Translates x,y coordinates from map positions to world positions
 	if(data.type == MapTypes::MAPTYPE_ORTHOGONAL) {
 		ret.x = x * data.tile_width;
 		ret.y = y * data.tile_height;
 	}
-	// TODO 1: Add isometric map to world coordinates
 	else if (data.type == MapTypes::MAPTYPE_ISOMETRIC) {
 		ret.x = (x - y) * (data.tile_width / 2);
 		ret.y = (x + y) * (data.tile_height / 2);
@@ -79,12 +76,12 @@ iPoint j1Map::MapToWorld(int x, int y) const
 iPoint j1Map::WorldToMap(int x, int y) const
 {
 	iPoint ret(0,0);
-	// TODO 2: Add orthographic world to map coordinates
+	// Orthographic world to map coordinates
 	if (data.type == MapTypes::MAPTYPE_ORTHOGONAL) {
 		ret.x = x / data.tile_width;
 		ret.y = y / data.tile_height;
 	}
-	// TODO 3: Add the case for isometric maps to WorldToMap
+	// Isometric world to map coordinates
 	else if (data.type == MapTypes::MAPTYPE_ISOMETRIC){
 		ret.x = (x / (data.tile_width / 2) + y / (data.tile_height / 2)) / 2;
 		ret.y = (y / (data.tile_height / 2) - x / (data.tile_width / 2)) / 2;
@@ -95,7 +92,7 @@ iPoint j1Map::WorldToMap(int x, int y) const
 SDL_Rect TileSet::GetTileRect(int id) const
 {
 	SDL_Rect rect;
-	// TODO 7(old): Create a method that receives a tile id and returns it's Rect
+	// Method that receives a tile id and returns its rectangle
 
 	int relative_id = id - firstgid;
 
