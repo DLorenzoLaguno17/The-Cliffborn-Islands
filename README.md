@@ -13,7 +13,7 @@ Go to our [GitHub](https://github.com/DLorenzoLaguno17/The-Cliffborn-Islands).
 * F9 - To view colliders and logic of the game
 * F10 - God mode
 
-### Gameplay:
+### Gameplay
 ---------------------------------------------
 	W - Move left
 	D - Move right
