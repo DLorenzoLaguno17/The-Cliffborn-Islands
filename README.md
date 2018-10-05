@@ -2,9 +2,9 @@
 
 Go to our [GitHub](https://github.com/DLorenzoLaguno17/The-Cliffborn-Islands). 
 
-### Controls
+## Controls
 
-Special keys:
+### Special keys
 ---------------------------------------------
 * F1 - To start from the very first level
 * F2 - To start from the beginning of the current level
@@ -13,7 +13,7 @@ Special keys:
 * F9 - To view colliders and logic of the game
 * F10 - God mode
 
-Gameplay:
+### Gameplay:
 ---------------------------------------------
 	W - Move left
 	D - Move right
