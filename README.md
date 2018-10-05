@@ -3,7 +3,7 @@
 Go to our [GitHub](https://github.com/DLorenzoLaguno17/The-Cliffborn-Islands). 
 
 ## Controls
----------------------------------------------
+
 ### Gameplay
 * W - Move left
 * D - Move right
@@ -19,7 +19,7 @@ Go to our [GitHub](https://github.com/DLorenzoLaguno17/The-Cliffborn-Islands).
 
 
 ## Credits
----------------------------------------------
+
 ### Art
 
 	Sprites of the character and the background: "Foggy Cliffs - Fantasy Tileset"
