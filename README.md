@@ -3,9 +3,12 @@
 Go to our [GitHub](https://github.com/DLorenzoLaguno17/The-Cliffborn-Islands). 
 
 ## Controls
+---------------------------------------------
+### Gameplay
+* W - Move left
+* D - Move right
 
 ### Special keys
----------------------------------------------
 * F1 - To start from the very first level
 * F2 - To start from the beginning of the current level
 * F5 - Save the current state
@@ -13,21 +16,16 @@ Go to our [GitHub](https://github.com/DLorenzoLaguno17/The-Cliffborn-Islands).
 * F9 - To view colliders and logic of the game
 * F10 - God mode
 
-### Gameplay
----------------------------------------------
-* W - Move left
-* D - Move right
 
 
 ## Credits
-
-### Art
 ---------------------------------------------
+### Art
+
 	Sprites of the character and the background: "Foggy Cliffs - Fantasy Tileset"
 	Nauris Amatnieks (https://twitter.com/Namatnieks)
 
 ### Music
----------------------------------------------
 	Music of the first level: "Cruising for Goblins"
 	Kevin MacLeod (incompetech.com)
 	Licensed under Creative Commons: By Attribution 3.0
