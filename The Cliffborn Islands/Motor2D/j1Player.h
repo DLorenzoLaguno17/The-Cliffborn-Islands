@@ -40,17 +40,11 @@ public:
 	bool Load(pugi::xml_node&);
 	bool Save(pugi::xml_node&) const;
 
-private:
-
-	/*bool LoadMap();
-	bool LoadTilesetDetails(pugi::xml_node& tileset_node, TileSet* set);
-	bool LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set);
-	bool LoadLayer(pugi::xml_node& node, MapLayer* layer);*/
-
 public:
 	SDL_Texture* graphics = nullptr;
 	Animation* current_animation = nullptr;
 
+	// Animations of the player
 	Animation idle_right;
 	Animation idle_left;
 	Animation run_right;
@@ -67,6 +61,15 @@ public:
 
 	iPoint position;	
 
+	int horizontalSpeed;
+	int verticalSpeed;
+	int initialVerticalSpeed;
+	float gravity;
+
+	uint currentTime;
+	uint lastTime;
+	
+	bool updatedTime;
 	bool dead = false;
 };
 

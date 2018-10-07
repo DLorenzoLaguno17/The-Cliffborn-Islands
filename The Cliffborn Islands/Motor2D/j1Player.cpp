@@ -110,7 +110,17 @@ bool j1Player::Start() {
 	// Textures are loaded
 	LOG("Loading player textures");
 	graphics = App->tex->Load("textures/character/character.png");
-	
+
+	currentTime = SDL_GetTicks();
+	lastTime = currentTime;
+
+	current_animation = &idle_right;
+
+	initialVerticalSpeed = 10;
+	verticalSpeed = 10;
+	horizontalSpeed = 2;
+	gravity = -4.0f;
+
 	return true;
 }
 
@@ -122,24 +132,74 @@ bool j1Player::PreUpdate() {
 
 // Call modules on each loop iteration
 bool j1Player::Update() {
+	
+	// ---------------------------------------------------------------------------------------------------------------------
+	// CONTROL OF THE PLAYER
+	// ---------------------------------------------------------------------------------------------------------------------
 
-	// Control of the player
-	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
-		position.x -= 1;
-		lastDirection = lastDirection::LEFT;
-	}
-
-	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
-		position.x += 1;
+	// Direction controls
+	if (App->input->GetKey(SDL_SCANCODE_D) == j1KeyState::KEY_REPEAT) {
+		position.x += horizontalSpeed;
 		lastDirection = lastDirection::RIGHT;
+		current_animation = &run_right;
 	}
 
-	current_animation = &idle_right;
+	if (App->input->GetKey(SDL_SCANCODE_A) == j1KeyState::KEY_REPEAT) {
+		position.x -= horizontalSpeed;
+		lastDirection = lastDirection::LEFT;
+		current_animation = &run_left;
+	}
 
-	SDL_Rect rect = current_animation->GetCurrentFrame();
+	// Jump controls
+	/*if (App->input->GetKey(SDL_SCANCODE_SPACE) == j1KeyState::KEY_DOWN) {		
+
+		if (updatedTime == false) {
+			lastTime = currentTime;
+		}
+
+		// If the player touches a wall collider
+		if (//Here we have to put a condition related with colliders) {
+			if(lastDirection == lastDirection::RIGHT)
+				current_animation = &idle_right; 
+			else
+				current_animation = &idle_left;
+
+			updatedTime = false;
+		}
+		else {
+			verticalSpeed = initialVerticalSpeed + (gravity * ((currentTime - lastTime) / 1000));
+			position.y += verticalSpeed;
+
+			// If the player is going right
+			if (lastDirection == lastDirection::RIGHT) {
+				if (verticalSpeed >= 0) {
+					current_animation = &jump_right;
+				}
+				else if (verticalSpeed < 0) {
+					current_animation = &fall_right;
+				}
+			}
+			// If the player is going left
+			if (lastDirection == lastDirection::LEFT) {
+				if (verticalSpeed >= 0) {
+					current_animation = &jump_left;
+				}
+				else if (verticalSpeed < 0) {
+					current_animation = &fall_left;
+				}
+			}
+		}
+	}*/
+
+
+	// ---------------------------------------------------------------------------------------------------------------------
+	// DRAWING EVERYTHING ON THE SCREEN
+	// ---------------------------------------------------------------------------------------------------------------------
+
+	SDL_Rect character = current_animation->GetCurrentFrame();
 
 	// Blitting the player
-	App->render->Blit(graphics, 0, 0, &rect);
+	App->render->Blit(graphics, 0, 0, &character);
 
 	return true;
 }

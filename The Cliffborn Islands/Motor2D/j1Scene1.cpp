@@ -36,8 +36,8 @@ bool j1Scene1::Start()
 	App->map->Load("lvl2.tmx");		
 
 	// The audio is played
-	App->audio->PlayMusic("audio/music/level1_music.ogg", 1.0f);
-	
+	App->audio->PlayMusic("audio/music/level1_music.ogg", 1.0f);	
+
 	return true;
 }
 
