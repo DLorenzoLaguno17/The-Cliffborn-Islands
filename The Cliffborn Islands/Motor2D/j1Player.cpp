@@ -2,7 +2,9 @@
 #include "p2Log.h"
 #include "j1App.h"
 #include "j1Textures.h"
+#include "j1Input.h"
 #include "j1Player.h"
+#include "j1Render.h"
 
 j1Player::j1Player() : j1Module()
 {
@@ -93,13 +95,22 @@ j1Player::j1Player() : j1Module()
 
 j1Player::~j1Player() {}
 
+// Reading from config file
+bool j1Player::Awake(pugi::xml_node& config) {
+	// Setting the position of the player
+	/*position.x = config.child("position").attribute("x").as_int();
+	position.y = config.child("position").attribute("y").as_int();*/
+
+	return true;
+}
+
 // Load assets
 bool j1Player::Start() {
 	
 	// Textures are loaded
 	LOG("Loading player textures");
 	graphics = App->tex->Load("textures/character/character.png");
-
+	
 	return true;
 }
 
@@ -111,6 +122,24 @@ bool j1Player::PreUpdate() {
 
 // Call modules on each loop iteration
 bool j1Player::Update() {
+
+	// Control of the player
+	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
+		position.x -= 1;
+		lastDirection = lastDirection::LEFT;
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
+		position.x += 1;
+		lastDirection = lastDirection::RIGHT;
+	}
+
+	current_animation = &idle_right;
+
+	SDL_Rect rect = current_animation->GetCurrentFrame();
+
+	// Blitting the player
+	App->render->Blit(graphics, 0, 0, &rect);
 
 	return true;
 }

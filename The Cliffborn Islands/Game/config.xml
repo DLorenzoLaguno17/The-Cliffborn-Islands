@@ -11,19 +11,19 @@
   </renderer>
 
   <window>
-    <resolution width="1024" height="768" scale="1"/>
+    <resolution width="1024" height="768" scale="4"/>
     <fullscreen value="false"/>
     <borderless value="false"/>
     <resizable value="false"/>
     <fullscreen_window value="false"/>
-  </window>
-
+  </window>  
+  
   <file_system>
     <path>data.zip</path>
   </file_system>
 
   <map>
     <folder>maps/</folder>
-  </map>
+  </map>  
 
 </config>

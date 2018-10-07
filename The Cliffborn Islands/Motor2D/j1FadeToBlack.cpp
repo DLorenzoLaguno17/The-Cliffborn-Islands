@@ -49,7 +49,9 @@ bool j1FadeToBlack::Update()
 		{
 			// Enable / disable the modules received when FadeToBlacks() gets called
 			ModuleOff->active = false;
-			ModuleOn->Init();
+			ModuleOff->CleanUp();
+			ModuleOn->active = true;
+			ModuleOn->Start();
 			// ---
 			total_time += total_time;
 			start_time = SDL_GetTicks();

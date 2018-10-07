@@ -23,6 +23,27 @@ public:
 		active = true;
 	}
 
+	// Module activation
+	/*bool IsEnabled() const { return active; }
+
+	void Enable()
+	{
+		if (active == false)
+		{
+			active = true;
+			Start();
+		}
+	}
+
+	void Disable()
+	{
+		if (active == true)
+		{
+			active = false;
+			CleanUp();
+		}
+	}*/
+
 	// Called before render is available
 	virtual bool Awake(pugi::xml_node&)
 	{
