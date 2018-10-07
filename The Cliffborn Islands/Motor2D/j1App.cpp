@@ -80,7 +80,7 @@ bool j1App::Awake()
 
 	if(config.empty() == false)
 	{
-		// self-config
+		// Self-config
 		ret = true;
 		app_config = config.child("app");
 		title.create(app_config.child("title").child_value());

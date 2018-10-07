@@ -18,7 +18,7 @@ j1Player::j1Player() : j1Module()
 	idle_right.PushBack({ 130, 184, 22, 25 });
 	idle_right.PushBack({ 163, 184, 21, 25 });
 	idle_right.loop = true;
-	idle_right.speed = 0.8f;
+	idle_right.speed = 0.015f;
 
 	idle_left.PushBack({ 163, 214, 22, 25 });
 	idle_left.PushBack({ 130, 214, 24, 25 });
@@ -27,7 +27,7 @@ j1Player::j1Player() : j1Module()
 	idle_left.PushBack({ 35, 214, 22, 25 });
 	idle_left.PushBack({ 3, 214, 21, 25 });
 	idle_left.loop = true;
-	idle_left.speed = 0.8f;
+	idle_left.speed = 0.015f;
 
 	// Runnig animations
 	run_right.PushBack({ 1, 96, 23, 25 });
@@ -39,7 +39,7 @@ j1Player::j1Player() : j1Module()
 	run_right.PushBack({ 199, 99, 18, 25 });
 	run_right.PushBack({ 228, 98, 20, 25 });
 	run_right.loop = true;
-	run_right.speed = 0.8f;	
+	run_right.speed = 0.02f;	
 
 	run_left.PushBack({ 227, 127, 23, 25 });
 	run_left.PushBack({ 194, 130, 25, 25 });
@@ -50,28 +50,28 @@ j1Player::j1Player() : j1Module()
 	run_left.PushBack({ 34, 130, 18, 25 });
 	run_left.PushBack({ 3, 129, 20, 25 });
 	run_left.loop = true;
-	run_left.speed = 0.8f;
+	run_left.speed = 0.2f;
 
 	// Jump animations
 	jump_right.PushBack({ 2, 158, 20, 25 });
 	jump_right.PushBack({ 34, 158, 20, 25 });
 	jump_right.loop = true;
-	jump_right.speed = 0.8f;
+	jump_right.speed = 0.2f;
 
 	fall_right.PushBack({ 87, 157, 22, 26 });
 	fall_right.PushBack({ 119, 157, 22, 26 });
 	fall_right.loop = true;
-	fall_right.speed = 0.8f;
+	fall_right.speed = 0.2f;
 
 	jump_left.PushBack({ 272, 158, 20, 25 });
 	jump_left.PushBack({ 240, 158, 20, 25 });
 	jump_left.loop = true;
-	jump_left.speed = 0.8f;
+	jump_left.speed = 0.2f;
 
 	fall_left.PushBack({ 185, 157, 22, 26 });
 	fall_left.PushBack({ 153, 157, 22, 26 });
 	fall_left.loop = true;
-	fall_left.speed = 0.8f;
+	fall_left.speed = 0.2f;
 	
 	// Attack animations
 	attack_right.PushBack({ 1, 272, 29, 27 });
@@ -80,7 +80,7 @@ j1Player::j1Player() : j1Module()
 	attack_right.PushBack({ 198, 272, 40, 27 });
 	attack_right.PushBack({ 253, 272, 42, 27 });
 	attack_right.loop = false;
-	attack_right.speed = 0.5f;
+	attack_right.speed = 0.2f;
 	
 	attack_right.PushBack({ 269, 244, 29, 27 });
 	attack_right.PushBack({ 206, 244, 29, 27 });
@@ -88,7 +88,7 @@ j1Player::j1Player() : j1Module()
 	attack_right.PushBack({ 61, 244, 40, 27 });
 	attack_right.PushBack({ 5, 244, 42, 27 });
 	attack_left.loop = false;
-	attack_left.speed = 0.5f;
+	attack_left.speed = 0.2f;
 
 	name.create("player");
 }
@@ -98,8 +98,8 @@ j1Player::~j1Player() {}
 // Reading from config file
 bool j1Player::Awake(pugi::xml_node& config) {
 	// Setting the position of the player
-	/*position.x = config.child("position").attribute("x").as_int();
-	position.y = config.child("position").attribute("y").as_int();*/
+	position.x = config.child("position").attribute("x").as_int();
+	position.y = config.child("position").attribute("y").as_int();
 
 	return true;
 }
@@ -118,7 +118,7 @@ bool j1Player::Start() {
 
 	initialVerticalSpeed = 10;
 	verticalSpeed = 10;
-	horizontalSpeed = 2;
+	horizontalSpeed = 1;
 	gravity = -4.0f;
 
 	return true;
@@ -131,11 +131,20 @@ bool j1Player::PreUpdate() {
 }
 
 // Call modules on each loop iteration
-bool j1Player::Update() {
+bool j1Player::Update(float dt) {
 	
 	// ---------------------------------------------------------------------------------------------------------------------
 	// CONTROL OF THE PLAYER
 	// ---------------------------------------------------------------------------------------------------------------------
+
+	// Idle
+	if (App->input->GetKey(SDL_SCANCODE_D) == j1KeyState::KEY_IDLE
+		&& App->input->GetKey(SDL_SCANCODE_A) == j1KeyState::KEY_IDLE) {
+		if (lastDirection == lastDirection::RIGHT)
+			current_animation = &idle_right;
+		else
+			current_animation = &idle_right;
+	}	
 
 	// Direction controls
 	if (App->input->GetKey(SDL_SCANCODE_D) == j1KeyState::KEY_REPEAT) {
@@ -199,7 +208,7 @@ bool j1Player::Update() {
 	SDL_Rect character = current_animation->GetCurrentFrame();
 
 	// Blitting the player
-	App->render->Blit(graphics, 0, 0, &character);
+	App->render->Blit(graphics, position.x, position.y, &character);
 
 	return true;
 }

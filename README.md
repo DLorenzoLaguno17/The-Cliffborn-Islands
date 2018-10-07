@@ -28,12 +28,7 @@ Go to our [GitHub](https://github.com/DLorenzoLaguno17/The-Cliffborn-Islands).
 	Nauris Amatnieks (https://twitter.com/Namatnieks)
 
 ### Music
-	Music of the first level: "Cruising for Goblins"
-	Kevin MacLeod (incompetech.com)
-	Licensed under Creative Commons: By Attribution 3.0
-	http://creativecommons.org/licenses/by/3.0/
-
-	Music of the second level: "Airship Serenity"
+	Music of the first level: "Airship Serenity"
 	Kevin MacLeod (incompetech.com)
 	Licensed under Creative Commons: By Attribution 3.0
 	http://creativecommons.org/licenses/by/3.0/

@@ -32,8 +32,8 @@ bool j1Scene1::Awake()
 bool j1Scene1::Start()
 {
 	// The map is loaded
-	//App->map->Load("hello2.tmx");
-	App->map->Load("lvl2.tmx");		
+	App->map->Load("lvl2.tmx");
+	//App->map->Load("iso.tmx");
 
 	// The audio is played
 	App->audio->PlayMusic("audio/music/level1_music.ogg", 1.0f);	
@@ -56,17 +56,6 @@ bool j1Scene1::Update(float dt)
 
 	if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
 		App->SaveGame("save_game.xml");
-
-	// Control of the player
-	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
-		App->player->position.x -= 1;
-		App->player->lastDirection = lastDirection::LEFT;
-	}
-
-	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
-		App->player->position.x += 1;
-		App->player->lastDirection = lastDirection::RIGHT;
-	}
 
 	// Control of the camera
 	if(App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
