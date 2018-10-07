@@ -115,11 +115,11 @@ bool j1Player::Start() {
 	lastTime = currentTime;
 
 	current_animation = &idle_right;
-
-	initialVerticalSpeed = 0.1f;
-	verticalSpeed = -0.1f;
+	
+	initialVerticalSpeed = -0.22f;
+	verticalSpeed = -0.22f;
 	horizontalSpeed = 0.12f;
-	gravity = 0.5f;
+	gravity = 0.02f;
 
 	return true;
 }
@@ -159,12 +159,12 @@ bool j1Player::Update(float dt) {
 		current_animation = &run_left;
 	}
 
-	// Jump controls
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == j1KeyState::KEY_DOWN) {		
+	if (position.y > 100) {
+		position.y = 100;
+	}else
 
-		if (updatedTime == false) {
-			lastTime = currentTime;
-		}
+	// Jump controls
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == j1KeyState::KEY_REPEAT && position.y < 100) {		
 
 		// If the player touches a wall collider
 		/*if (//Here we have to put a condition related with colliders) {
@@ -176,15 +176,16 @@ bool j1Player::Update(float dt) {
 			updatedTime = false;
 		}*/
 		//else {
-			//verticalSpeed = initialVerticalSpeed + (gravity * ((currentTime - lastTime) / 1000));
-			position.y += verticalSpeed;
+			
+			position.y += verticalSpeed; 
+			verticalSpeed += 0.001f;
 
 			// If the player is going right
 			if (lastDirection == lastDirection::RIGHT) {
-				if (verticalSpeed >= 0) {
+				if (verticalSpeed <= 0) {
 					current_animation = &jump_right;
 				}
-				else if (verticalSpeed < 0) {
+				else if (verticalSpeed > 0) {
 					current_animation = &fall_right;
 				}
 			}
@@ -198,7 +199,7 @@ bool j1Player::Update(float dt) {
 				}
 			}
 		//}
-	}
+	}	
 
 	// ---------------------------------------------------------------------------------------------------------------------
 	// DRAWING EVERYTHING ON THE SCREEN

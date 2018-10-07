@@ -61,15 +61,15 @@ public:
 
 	fPoint position;
 
-	float horizontalSpeed;
-	float verticalSpeed;
+	float horizontalSpeed; 
 	float initialVerticalSpeed;
+	float verticalSpeed;
 	float gravity;
 
 	uint currentTime;
 	uint lastTime;
 	
-	bool updatedTime;
+	bool updatedTime = false;
 	bool dead = false;
 };
 
