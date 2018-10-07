@@ -1,10 +1,93 @@
 #include "p2Defs.h"
 #include "p2Log.h"
 #include "j1App.h"
+#include "j1Textures.h"
 #include "j1Player.h"
 
 j1Player::j1Player() : j1Module()
 {
+	current_animation = NULL;
+
+	// Idle animations
+	idle_right.PushBack({ 2, 184, 22, 25 });
+	idle_right.PushBack({ 33, 184, 24, 25 });
+	idle_right.PushBack({ 65, 184, 24, 25 });
+	idle_right.PushBack({ 97, 184, 24, 25 });
+	idle_right.PushBack({ 130, 184, 22, 25 });
+	idle_right.PushBack({ 163, 184, 21, 25 });
+	idle_right.loop = true;
+	idle_right.speed = 0.8f;
+
+	idle_left.PushBack({ 163, 214, 22, 25 });
+	idle_left.PushBack({ 130, 214, 24, 25 });
+	idle_left.PushBack({ 98, 214, 24, 25 });
+	idle_left.PushBack({ 66, 214, 24, 25 });
+	idle_left.PushBack({ 35, 214, 22, 25 });
+	idle_left.PushBack({ 3, 214, 21, 25 });
+	idle_left.loop = true;
+	idle_left.speed = 0.8f;
+
+	// Runnig animations
+	run_right.PushBack({ 1, 96, 23, 25 });
+	run_right.PushBack({ 32, 99, 25, 25 });
+	run_right.PushBack({ 65, 99, 23, 25 });
+	run_right.PushBack({ 100, 98, 20, 25 });
+	run_right.PushBack({ 133, 97, 20, 25 });
+	run_right.PushBack({ 165, 99, 17, 25 });
+	run_right.PushBack({ 199, 99, 18, 25 });
+	run_right.PushBack({ 228, 98, 20, 25 });
+	run_right.loop = true;
+	run_right.speed = 0.8f;	
+
+	run_left.PushBack({ 227, 127, 23, 25 });
+	run_left.PushBack({ 194, 130, 25, 25 });
+	run_left.PushBack({ 163, 130, 23, 25 });
+	run_left.PushBack({ 131, 129, 20, 25 });
+	run_left.PushBack({ 98, 129, 20, 25 });
+	run_left.PushBack({ 69, 130, 17, 25 });
+	run_left.PushBack({ 34, 130, 18, 25 });
+	run_left.PushBack({ 3, 129, 20, 25 });
+	run_left.loop = true;
+	run_left.speed = 0.8f;
+
+	// Jump animations
+	jump_right.PushBack({ 2, 158, 20, 25 });
+	jump_right.PushBack({ 34, 158, 20, 25 });
+	jump_right.loop = true;
+	jump_right.speed = 0.8f;
+
+	fall_right.PushBack({ 87, 157, 22, 26 });
+	fall_right.PushBack({ 119, 157, 22, 26 });
+	fall_right.loop = true;
+	fall_right.speed = 0.8f;
+
+	jump_left.PushBack({ 272, 158, 20, 25 });
+	jump_left.PushBack({ 240, 158, 20, 25 });
+	jump_left.loop = true;
+	jump_left.speed = 0.8f;
+
+	fall_left.PushBack({ 185, 157, 22, 26 });
+	fall_left.PushBack({ 153, 157, 22, 26 });
+	fall_left.loop = true;
+	fall_left.speed = 0.8f;
+	
+	// Attack animations
+	attack_right.PushBack({ 1, 272, 29, 27 });
+	attack_right.PushBack({ 64, 272, 29, 27 });
+	attack_right.PushBack({ 135, 272, 35, 27 });
+	attack_right.PushBack({ 198, 272, 40, 27 });
+	attack_right.PushBack({ 253, 272, 42, 27 });
+	attack_right.loop = false;
+	attack_right.speed = 0.5f;
+	
+	attack_right.PushBack({ 269, 244, 29, 27 });
+	attack_right.PushBack({ 206, 244, 29, 27 });
+	attack_right.PushBack({ 129, 244, 35, 27 });
+	attack_right.PushBack({ 61, 244, 40, 27 });
+	attack_right.PushBack({ 5, 244, 42, 27 });
+	attack_left.loop = false;
+	attack_left.speed = 0.5f;
+
 	name.create("player");
 }
 
@@ -12,6 +95,11 @@ j1Player::~j1Player() {}
 
 // Load assets
 bool j1Player::Start() {
+	
+	// Textures are loaded
+	LOG("Loading player textures");
+	graphics = App->tex->Load("textures/character/character.png");
+
 	return true;
 }
 
@@ -55,7 +143,10 @@ bool j1Player::Save(pugi::xml_node& data) const {
 
 // Called before quitting
 bool j1Player::CleanUp() {
-	LOG("Freeing the player");
+	
+	// Remove all memory leaks
+	LOG("Unloading the player");
+	App->tex->UnLoad(graphics);
 
 	return true;
 }

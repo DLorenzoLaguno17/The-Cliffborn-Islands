@@ -99,6 +99,9 @@
     <ClInclude Include="j1Scene1.h">
       <Filter>Desenvolupament  ========\Scenes</Filter>
     </ClInclude>
+    <ClInclude Include="p2Animation.h">
+      <Filter>Programacio 2 ===========</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Programacio 2 ===========">

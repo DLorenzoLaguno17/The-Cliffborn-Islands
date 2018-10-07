@@ -58,11 +58,15 @@ bool j1Scene1::Update(float dt)
 		App->SaveGame("save_game.xml");
 
 	// Control of the player
-	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
+	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
 		App->player->position.x -= 1;
+		App->player->lastDirection = lastDirection::LEFT;
+	}
 
-	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
 		App->player->position.x += 1;
+		App->player->lastDirection = lastDirection::RIGHT;
+	}
 
 	// Control of the camera
 	if(App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)

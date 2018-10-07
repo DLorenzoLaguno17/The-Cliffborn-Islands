@@ -5,7 +5,7 @@ Go to our [GitHub](https://github.com/DLorenzoLaguno17/The-Cliffborn-Islands).
 ## Controls
 
 ### Gameplay
-* W - Move left
+* A - Move left
 * D - Move right
 * H - Throw the hook
 * Spacebar - Jump

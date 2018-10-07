@@ -2,9 +2,16 @@
 #define __j1PLAYER_H__
 
 #include "PugiXml/src/pugixml.hpp"
-#include "p2List.h"
 #include "p2Point.h"
+#include "p2Animation.h"
 #include "j1Module.h"
+
+struct SDL_Texture;
+
+enum lastDirection {
+	RIGHT,
+	LEFT
+};
 
 class j1Player : public j1Module
 {
@@ -41,7 +48,25 @@ private:
 	bool LoadLayer(pugi::xml_node& node, MapLayer* layer);*/
 
 public:
+	SDL_Texture* graphics = nullptr;
+	Animation* current_animation = nullptr;
+
+	Animation idle_right;
+	Animation idle_left;
+	Animation run_right;
+	Animation run_left;
+	Animation jump_right;
+	Animation jump_left;
+	Animation fall_right;
+	Animation fall_left;
+	Animation attack_right;
+	Animation attack_left;
+
+	// To know the last direction the character was moving to
+	lastDirection lastDirection = lastDirection::RIGHT;
+
 	iPoint position;	
+
 	bool dead = false;
 };
 
