@@ -59,12 +59,12 @@ public:
 	// To know the last direction the character was moving to
 	lastDirection lastDirection = lastDirection::RIGHT;
 
-	iPoint position;	
+	fPoint position;
 
-	int horizontalSpeed;
-	int verticalSpeed;
-	int initialVerticalSpeed;
-	int gravity;
+	float horizontalSpeed;
+	float verticalSpeed;
+	float initialVerticalSpeed;
+	float gravity;
 
 	uint currentTime;
 	uint lastTime;

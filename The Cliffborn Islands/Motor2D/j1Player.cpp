@@ -39,7 +39,7 @@ j1Player::j1Player() : j1Module()
 	run_right.PushBack({ 199, 99, 18, 25 });
 	run_right.PushBack({ 228, 98, 20, 25 });
 	run_right.loop = true;
-	run_right.speed = 0.02f;	
+	run_right.speed = 0.025f;	
 
 	run_left.PushBack({ 227, 127, 23, 25 });
 	run_left.PushBack({ 194, 130, 25, 25 });
@@ -50,7 +50,7 @@ j1Player::j1Player() : j1Module()
 	run_left.PushBack({ 34, 130, 18, 25 });
 	run_left.PushBack({ 3, 129, 20, 25 });
 	run_left.loop = true;
-	run_left.speed = 0.02f;
+	run_left.speed = 0.025f;
 
 	// Jump animations
 	jump_right.PushBack({ 2, 158, 20, 25 });
@@ -116,10 +116,10 @@ bool j1Player::Start() {
 
 	current_animation = &idle_right;
 
-	initialVerticalSpeed = -10;
-	verticalSpeed = -10;
-	horizontalSpeed = 1;
-	gravity = 4;
+	initialVerticalSpeed = 0.1f;
+	verticalSpeed = -0.1f;
+	horizontalSpeed = 0.12f;
+	gravity = 0.5f;
 
 	return true;
 }
@@ -176,7 +176,7 @@ bool j1Player::Update(float dt) {
 			updatedTime = false;
 		}*/
 		//else {
-			verticalSpeed = initialVerticalSpeed + (gravity * ((currentTime - lastTime) / 1000));
+			//verticalSpeed = initialVerticalSpeed + (gravity * ((currentTime - lastTime) / 1000));
 			position.y += verticalSpeed;
 
 			// If the player is going right
@@ -207,7 +207,7 @@ bool j1Player::Update(float dt) {
 	SDL_Rect character = current_animation->GetCurrentFrame();
 
 	// Blitting the player
-	App->render->Blit(graphics, position.x, position.y, &character);
+	App->render->Blit(graphics, (int)position.x, (int)position.y, &character);
 
 	return true;
 }
