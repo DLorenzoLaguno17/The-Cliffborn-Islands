@@ -64,7 +64,7 @@ public:
 	int horizontalSpeed;
 	int verticalSpeed;
 	int initialVerticalSpeed;
-	float gravity;
+	int gravity;
 
 	uint currentTime;
 	uint lastTime;

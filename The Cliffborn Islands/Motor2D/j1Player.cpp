@@ -50,28 +50,28 @@ j1Player::j1Player() : j1Module()
 	run_left.PushBack({ 34, 130, 18, 25 });
 	run_left.PushBack({ 3, 129, 20, 25 });
 	run_left.loop = true;
-	run_left.speed = 0.2f;
+	run_left.speed = 0.02f;
 
 	// Jump animations
 	jump_right.PushBack({ 2, 158, 20, 25 });
 	jump_right.PushBack({ 34, 158, 20, 25 });
 	jump_right.loop = true;
-	jump_right.speed = 0.2f;
+	jump_right.speed = 0.02f;
 
 	fall_right.PushBack({ 87, 157, 22, 26 });
 	fall_right.PushBack({ 119, 157, 22, 26 });
 	fall_right.loop = true;
-	fall_right.speed = 0.2f;
+	fall_right.speed = 0.02f;
 
 	jump_left.PushBack({ 272, 158, 20, 25 });
 	jump_left.PushBack({ 240, 158, 20, 25 });
 	jump_left.loop = true;
-	jump_left.speed = 0.2f;
+	jump_left.speed = 0.02f;
 
 	fall_left.PushBack({ 185, 157, 22, 26 });
 	fall_left.PushBack({ 153, 157, 22, 26 });
 	fall_left.loop = true;
-	fall_left.speed = 0.2f;
+	fall_left.speed = 0.02f;
 	
 	// Attack animations
 	attack_right.PushBack({ 1, 272, 29, 27 });
@@ -80,7 +80,7 @@ j1Player::j1Player() : j1Module()
 	attack_right.PushBack({ 198, 272, 40, 27 });
 	attack_right.PushBack({ 253, 272, 42, 27 });
 	attack_right.loop = false;
-	attack_right.speed = 0.2f;
+	attack_right.speed = 0.02f;
 	
 	attack_right.PushBack({ 269, 244, 29, 27 });
 	attack_right.PushBack({ 206, 244, 29, 27 });
@@ -88,7 +88,7 @@ j1Player::j1Player() : j1Module()
 	attack_right.PushBack({ 61, 244, 40, 27 });
 	attack_right.PushBack({ 5, 244, 42, 27 });
 	attack_left.loop = false;
-	attack_left.speed = 0.2f;
+	attack_left.speed = 0.02f;
 
 	name.create("player");
 }
@@ -116,10 +116,10 @@ bool j1Player::Start() {
 
 	current_animation = &idle_right;
 
-	initialVerticalSpeed = 10;
-	verticalSpeed = 10;
+	initialVerticalSpeed = -10;
+	verticalSpeed = -10;
 	horizontalSpeed = 1;
-	gravity = -4.0f;
+	gravity = 4;
 
 	return true;
 }
@@ -143,7 +143,7 @@ bool j1Player::Update(float dt) {
 		if (lastDirection == lastDirection::RIGHT)
 			current_animation = &idle_right;
 		else
-			current_animation = &idle_right;
+			current_animation = &idle_left;
 	}	
 
 	// Direction controls
@@ -160,22 +160,22 @@ bool j1Player::Update(float dt) {
 	}
 
 	// Jump controls
-	/*if (App->input->GetKey(SDL_SCANCODE_SPACE) == j1KeyState::KEY_DOWN) {		
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == j1KeyState::KEY_DOWN) {		
 
 		if (updatedTime == false) {
 			lastTime = currentTime;
 		}
 
 		// If the player touches a wall collider
-		if (//Here we have to put a condition related with colliders) {
+		/*if (//Here we have to put a condition related with colliders) {
 			if(lastDirection == lastDirection::RIGHT)
 				current_animation = &idle_right; 
 			else
 				current_animation = &idle_left;
 
 			updatedTime = false;
-		}
-		else {
+		}*/
+		//else {
 			verticalSpeed = initialVerticalSpeed + (gravity * ((currentTime - lastTime) / 1000));
 			position.y += verticalSpeed;
 
@@ -197,13 +197,12 @@ bool j1Player::Update(float dt) {
 					current_animation = &fall_left;
 				}
 			}
-		}
-	}*/
-
+		//}
+	}
 
 	// ---------------------------------------------------------------------------------------------------------------------
 	// DRAWING EVERYTHING ON THE SCREEN
-	// ---------------------------------------------------------------------------------------------------------------------
+	// ---------------------------------------------------------------------------------------------------------------------	
 
 	SDL_Rect character = current_animation->GetCurrentFrame();
 
