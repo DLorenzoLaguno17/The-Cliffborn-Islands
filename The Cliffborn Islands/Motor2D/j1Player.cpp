@@ -98,9 +98,9 @@ j1Player::~j1Player() {}
 
 // Reading from config file
 bool j1Player::Awake(pugi::xml_node& config) {
-	// Setting the position of the player
-	position.x = config.child("position").attribute("x").as_int();
-	position.y = config.child("position").attribute("y").as_int();
+	// Copying the position of the player
+	initialPosition.x = config.child("position").attribute("x").as_int();
+	initialPosition.y = config.child("position").attribute("y").as_int();
 
 	return true;
 }
@@ -114,8 +114,13 @@ bool j1Player::Start() {
 
 	current_animation = &idle_right;
 	
+	// Setting player position
+	position.x = initialPosition.x;
+	position.y = initialPosition.y;
+
 	initialVerticalSpeed = -0.22f;
 	verticalSpeed = -0.22f;
+	fallingSpeed = 0.0f;
 	horizontalSpeed = 0.09f;
 	gravity = 0.02f;
 
@@ -132,7 +137,7 @@ bool j1Player::PreUpdate() {
 
 // Call modules on each loop iteration
 bool j1Player::Update(float dt) {
-	collided = false;
+
 	// ---------------------------------------------------------------------------------------------------------------------
 	// CONTROL OF THE PLAYER
 	// ---------------------------------------------------------------------------------------------------------------------
@@ -159,14 +164,29 @@ bool j1Player::Update(float dt) {
 		current_animation = &run_left;
 	}
 
+	// The player falls if he has no ground
+	if (feetOnGround == false && jumping == false) {
+
+		position.y += fallingSpeed;
+		fallingSpeed += 0.001f;
+
+		if (lastDirection == lastDirection::RIGHT)
+			current_animation = &fall_right;
+		else
+			current_animation = &fall_left;
+	}
+
 	// Jump controls
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == j1KeyState::KEY_DOWN) {
 		jumping = true;
 	}
 
+	// Reseting the jump
+	feetOnGround = false;
+
 	if(jumping){
 		// If the player touches a wall collider
-		if (collided) {
+		if (feetOnGround) {
 			if(lastDirection == lastDirection::RIGHT)
 				current_animation = &idle_right; 
 			else
@@ -197,6 +217,14 @@ bool j1Player::Update(float dt) {
 			}
 		}
 	}	
+
+	// If the player falls he returns to the first position of the level
+	// --------------------------------- CONDITION TO CHANGE --------------
+	if (position.y > 200) {
+		fallingSpeed = 0.0f;
+		position.x = initialPosition.x;
+		position.y = initialPosition.y - 30;
+	}
 	
 	// God mode
 	if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)
@@ -271,8 +299,9 @@ void j1Player::OnCollision(Collider* col_1, Collider* col_2)
 	if ((col_1->type == COLLIDER_PLAYER && col_2->type == COLLIDER_WALL)
 		|| (col_2->type == COLLIDER_PLAYER || col_1->type == COLLIDER_WALL))
 	{
-		collided = true;
+		feetOnGround = true;
 		jumping = false;
 		verticalSpeed = initialVerticalSpeed;
+		fallingSpeed = 0.0f;
 	}
 };

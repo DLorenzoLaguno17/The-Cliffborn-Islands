@@ -64,17 +64,19 @@ public:
 
 	// To know the last direction the character was moving to
 	lastDirection lastDirection = lastDirection::RIGHT;
-
+	
+	fPoint initialPosition;
 	fPoint position;
 
 	float horizontalSpeed; 
 	float initialVerticalSpeed;
 	float verticalSpeed;
+	float fallingSpeed;
 	float gravity;
 	
 	bool GodMode = false;
 	bool jumping = false;
-	bool collided = false;
+	bool feetOnGround = false;
 	bool dead = false;
 };
 
