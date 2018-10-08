@@ -68,11 +68,6 @@ bool j1Collisions::PreUpdate()
 		}
 	}
 
-	return true;
-}
-
-bool j1Collisions::Update(float dt) 
-{
 	Collider* collider1;
 	Collider* collider2;
 
@@ -102,6 +97,11 @@ bool j1Collisions::Update(float dt)
 		}
 	}
 
+	return true;
+}
+
+bool j1Collisions::Update(float dt) 
+{
 	DrawColliders();
 
 	return true;
@@ -180,5 +180,4 @@ bool Collider::CheckCollision(const SDL_Rect& r) const
 		rect.x + rect.w > r.x &&
 		rect.y < r.y + r.h &&
 		rect.h + rect.y > r.y);
-
 }
