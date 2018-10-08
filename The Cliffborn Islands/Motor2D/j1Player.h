@@ -37,6 +37,9 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	// Called to check collisions
+	void OnCollision(Collider* col_1, Collider* col_2);
+
 	// Load / Save
 	bool Load(pugi::xml_node&);
 	bool Save(pugi::xml_node&) const;
@@ -70,6 +73,8 @@ public:
 	float gravity;
 	
 	bool GodMode = false;
+	bool jumping = false;
+	bool collided = false;
 	bool dead = false;
 };
 

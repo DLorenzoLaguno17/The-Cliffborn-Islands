@@ -160,18 +160,19 @@ bool j1Player::Update(float dt) {
 	}
 
 	// Jump controls
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == j1KeyState::KEY_REPEAT && position.y < 100) {		
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == j1KeyState::KEY_DOWN) {
+		jumping = true;
+	}
 
+	if(jumping){
 		// If the player touches a wall collider
-		/*if (//Here we have to put a condition related with colliders) {
+		if (collided) {
 			if(lastDirection == lastDirection::RIGHT)
 				current_animation = &idle_right; 
 			else
 				current_animation = &idle_left;
-
-			updatedTime = false;
-		}*/
-		//else {
+		}
+		else {
 			
 			position.y += verticalSpeed; 
 			verticalSpeed += 0.001f;
@@ -194,11 +195,10 @@ bool j1Player::Update(float dt) {
 					current_animation = &fall_left;
 				}
 			}
-		//}
+		}
 	}	
 	
 	// God mode
-
 	if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)
 	{
 		GodMode = !GodMode;
@@ -215,8 +215,7 @@ bool j1Player::Update(float dt) {
 	}
 
 	// Update collider position to player position
-	player->SetPos(position.x, position.y);
-	
+	player->SetPos(position.x, position.y);	
 
 	// ---------------------------------------------------------------------------------------------------------------------
 	// DRAWING EVERYTHING ON THE SCREEN
@@ -265,3 +264,15 @@ bool j1Player::CleanUp() {
 
 	return true;
 }
+
+// Detects collision with a wall. If so, the player cannot go further
+void j1Player::OnCollision(Collider* col_1, Collider* col_2)
+{
+	if ((col_1->type == COLLIDER_PLAYER && col_2->type == COLLIDER_WALL)
+		|| (col_2->type == COLLIDER_PLAYER || col_1->type == COLLIDER_WALL))
+	{
+		collided = true;
+		jumping = false;
+		verticalSpeed = initialVerticalSpeed;
+	}
+};

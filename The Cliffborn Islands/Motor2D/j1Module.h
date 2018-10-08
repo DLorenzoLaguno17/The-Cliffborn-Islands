@@ -25,27 +25,6 @@ public:
 		active = true;
 	}
 
-	// Module activation
-	/*bool IsEnabled() const { return active; }
-
-	void Enable()
-	{
-		if (active == false)
-		{
-			active = true;
-			Start();
-		}
-	}
-
-	void Disable()
-	{
-		if (active == true)
-		{
-			active = false;
-			CleanUp();
-		}
-	}*/
-
 	// Called before render is available
 	virtual bool Awake(pugi::xml_node&)
 	{
@@ -82,16 +61,19 @@ public:
 		return true;
 	}
 
+	// Called to Load a new file
 	virtual bool Load(pugi::xml_node&)
 	{
 		return true;
 	}
 
+	// Called to save
 	virtual bool Save(pugi::xml_node&) const
 	{
 		return true;
 	}
 
+	// Called to check collisions
 	virtual void OnCollision(Collider* c1, Collider* c2) {}
 
 public:
