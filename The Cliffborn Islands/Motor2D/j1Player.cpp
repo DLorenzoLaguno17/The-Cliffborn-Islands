@@ -124,7 +124,7 @@ bool j1Player::Start() {
 	horizontalSpeed = 0.09f;
 	gravity = 0.02f;
 
-	player = App->collisions->AddCollider({ position.x, position.y, 22, 25 }, COLLIDER_PLAYER, this);
+	player = App->collisions->AddCollider({ (int)position.x, (int)position.y, 22, 25 }, COLLIDER_PLAYER, this);
 
 	return true;
 }
@@ -253,7 +253,7 @@ bool j1Player::Update(float dt) {
 
 	// Blitting the player
 	App->render->Blit(graphics, (int)position.x, (int)position.y, &character);
-
+	
 	return true;
 }
 
@@ -299,7 +299,7 @@ void j1Player::OnCollision(Collider* col_1, Collider* col_2)
 	if (((col_1->type == COLLIDER_PLAYER || col_1->type == COLLIDER_NONE) && col_2->type == COLLIDER_WALL)
 		|| ((col_2->type == COLLIDER_PLAYER || col_2->type == COLLIDER_PLAYER) || col_1->type == COLLIDER_WALL))
 	{
-		feetOnGround = true;
+		feetOnGround = false;
 		jumping = false;
 		verticalSpeed = initialVerticalSpeed;
 		fallingSpeed = 0.0f;
