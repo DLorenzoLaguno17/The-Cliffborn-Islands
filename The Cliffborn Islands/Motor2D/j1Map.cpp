@@ -5,6 +5,7 @@
 #include "j1Textures.h"
 #include "j1Map.h"
 #include "j1Player.h"
+#include "j1Collisions.h"
 #include <math.h>
 
 j1Map::j1Map() : j1Module(), map_loaded(false)
@@ -216,6 +217,7 @@ bool j1Map::Load(const char* file_name)
 			item_layer = item_layer->next;
 		}
 	}
+	DrawColliders(file_name);
 
 	map_loaded = ret;
 
@@ -379,6 +381,34 @@ bool j1Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 	return ret;
 }
 
-uint MapLayer::Get(int x, int y) const {
+bool j1Map::DrawColliders(const char * file_name)
+{
+	bool ret = true;
+
+	p2SString tmp("%s%s", folder.GetString(), file_name);
+
+	pugi::xml_parse_result result = map_file.load_file(tmp.GetString());
+
+	if (result == NULL)
+	{
+		LOG("Could not load tiled xml file %s. pugi error: %s", file_name, result.description());
+		ret = false;
+	}
+	pugi::xml_node obj;
+	int x, y, width, height;
+	for (obj = map_file.child("map").child("objectgroup").child("object"); obj && ret; obj = obj.next_sibling("object"))
+	{
+		x = obj.attribute("x").as_int();
+		y = obj.attribute("y").as_int();
+		width = obj.attribute("width").as_int();
+		height = obj.attribute("height").as_int();
+		App->collisions->AddCollider({ x, y, width, height }, COLLIDER_WALL);
+	}
+
+	return ret;
+}
+
+uint MapLayer::Get(int x, int y) const 
+{
 		return (y * width) + x;	
 }

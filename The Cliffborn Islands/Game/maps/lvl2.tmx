@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.0" orientation="orthogonal" renderorder="right-down" width="150" height="12" tilewidth="16" tileheight="16" infinite="0" nextlayerid="44" nextobjectid="79">
+<map version="1.2" tiledversion="1.2.0" orientation="orthogonal" renderorder="right-down" width="150" height="12" tilewidth="16" tileheight="16" infinite="0" nextlayerid="45" nextobjectid="171">
  <tileset firstgid="1" name="Tileset" tilewidth="16" tileheight="16" tilecount="1917" columns="71">
   <image source="Tileset.png" width="1136" height="432"/>
  </tileset>
- <layer id="43" name="bg1" width="150" height="12">
+ <layer id="43" name="bg1" width="150" height="12" locked="1">
   <data>
    <tile gid="9"/>
    <tile gid="10"/>
@@ -1807,90 +1807,75 @@
    <tile gid="1451"/>
   </data>
  </layer>
- <objectgroup color="#00aaff" id="17" name="map_collisions" visible="0">
-  <object id="42" x="0" y="48">
-   <polygon points="0,0 80,0 80,16 16,80 0,80"/>
-  </object>
-  <object id="43" x="96" y="160">
-   <polygon points="0,0 0,32 256,32 256,-16 192,-16 192,0 144,0 144,-16 48,-16 48,0"/>
-  </object>
-  <object id="44" x="400" y="112">
-   <polygon points="0,0 0,16 16,32 16,48 32,64 32,80 160,80 160,64 176,48 176,16 192,0 192,-16 144,-16 144,0 96,0 96,-16 48,-16 48,0"/>
-  </object>
-  <object id="45" x="592" y="96">
-   <polygon points="0,0 80,0 80,16 0,16"/>
-  </object>
-  <object id="46" x="672" y="96">
-   <polygon points="0,0 0,16 16,32 16,48 0,48 0,64 16,80 32,64 48,64 64,80 80,64 80,48 64,48 64,32 80,16 80,0 48,0 48,16 32,16 32,0"/>
-  </object>
-  <object id="47" x="784" y="96">
-   <polygon points="0,0 0,32 16,48 32,32 32,0 0,0"/>
-  </object>
-  <object id="48" x="848" y="80">
-   <polygon points="0,0 0,16 16,32 48,32 64,16 64,0"/>
-  </object>
-  <object id="49" x="944" y="80">
-   <polygon points="0,0 0,16 16,32 32,16 32,0"/>
-  </object>
-  <object id="50" x="1024" y="112">
-   <polygon points="0,0 0,32 32,64 32,80 128,80 128,64 112,64 112,32 96,32 96,0"/>
-  </object>
-  <object id="51" x="1184" y="144">
-   <polygon points="0,0 0,16 16,32 48,32 64,16 64,0"/>
-  </object>
-  <object id="52" x="1232" y="64">
-   <polygon points="0,0 0,32 16,48 32,32 48,16 48,-16 16,-16 16,0"/>
-  </object>
-  <object id="53" x="1280" y="48">
-   <polygon points="0,0 96,0 96,16 0,16"/>
-  </object>
-  <object id="54" x="1280" y="160">
-   <polygon points="0,0 0,32 80,32 80,0"/>
-  </object>
-  <object id="55" x="1376" y="48">
-   <polygon points="0,0 0,16 16,32 16,48 32,64 32,80 48,96 80,96 96,96 96,80 256,80 256,96 320,96 320,80 272,80 272,64 224,64 224,48 176,48 176,32 128,32 128,16 80,16 80,0"/>
-  </object>
-  <object id="56" x="1392" y="176">
-   <polygon points="0,0 0,16 352,16 352,0"/>
-  </object>
-  <object id="57" x="1584" y="32">
-   <polygon points="0,0 0,16 16,32 48,32 64,48 80,48 96,64 128,64 160,32 160,16 144,16 144,0"/>
-  </object>
-  <object id="58" x="1760" y="64">
-   <polygon points="0,0 0,16 16,32 32,16 32,0"/>
-  </object>
-  <object id="59" x="1808" y="96">
-   <polygon points="0,0 0,16 16,32 32,16 32,0 0,0"/>
-  </object>
-  <object id="60" x="1856" y="128">
-   <polygon points="0,0 0,16 16,32 32,16 32,0"/>
-  </object>
-  <object id="61" x="1824" y="32">
-   <polygon points="0,0 0,16 16,32 48,32 64,16 64,0 0,0"/>
-  </object>
-  <object id="62" x="1776" y="160">
-   <polygon points="0,0 0,32 80,32 80,0"/>
-  </object>
-  <object id="63" x="1904" y="64">
-   <polygon points="0,0 0,32 16,48 32,48 48,32 48,0"/>
-  </object>
-  <object id="64" x="2016" y="0">
-   <polygon points="0,0 0,16 64,80 96,80 128,48 128,0"/>
-  </object>
-  <object id="65" x="2032" y="128">
-   <polygon points="0,0 0,32 16,48 16,64 176,64 176,48 144,48 144,0"/>
-  </object>
-  <object id="66" x="2208" y="112">
-   <polygon points="0,0 0,16 16,32 48,32 64,16 64,0"/>
-  </object>
-  <object id="67" x="2304" y="96">
-   <polygon points="0,0 0,32 16,48 32,32 32,0"/>
-  </object>
-  <object id="68" x="2400" y="80">
-   <polygon points="0,0 -32,0 -32,80 0,112"/>
-  </object>
+ <objectgroup color="#00aaff" id="44" name="map_collisions">
+  <object id="93" x="0.125" y="48.25" width="77.25" height="16"/>
+  <object id="94" x="96.125" y="160" width="51.375" height="31.875"/>
+  <object id="95" x="144.364" y="144.545" width="93.4545" height="16.3636"/>
+  <object id="96" x="288.25" y="144.5" width="61.25" height="16.375"/>
+  <object id="98" x="238.375" y="160.5" width="49.5" height="13"/>
+  <object id="99" x="400.545" y="112.364" width="147.818" height="14.1818"/>
+  <object id="100" x="418.125" y="127" width="13.625" height="45.125"/>
+  <object id="101" x="432.75" y="171.625" width="15.375" height="20"/>
+  <object id="103" x="404.938" y="126.875" width="12.9375" height="14.3125"/>
+  <object id="104" x="545.091" y="96.5455" width="43.2727" height="14.8182"/>
+  <object id="105" x="448.364" y="96.1818" width="44.8182" height="16.1818"/>
+  <object id="107" x="589.455" y="96.9091" width="111.091" height="14.7273"/>
+  <object id="108" x="720.545" y="97.0909" width="28.3636" height="15.0909"/>
+  <object id="109" x="784.25" y="96.25" width="29.125" height="33.875"/>
+  <object id="110" x="720.75" y="112.75" width="12" height="32"/>
+  <object id="111" x="733.375" y="145.125" width="15.875" height="18.375"/>
+  <object id="112" x="847.875" y="80.5" width="60.875" height="18.75"/>
+  <object id="113" x="856.125" y="99.5" width="47.125" height="11.125"/>
+  <object id="114" x="944" y="79.875" width="29.125" height="18.5"/>
+  <object id="115" x="951.565" y="98.6087" width="15.4348" height="10.4783"/>
+  <object id="116" x="790.125" y="130.25" width="16.875" height="11.3125"/>
+  <object id="117" x="1024.55" y="112.364" width="92.1818" height="38"/>
+  <object id="118" x="1041.27" y="150.636" width="43.8182" height="25.2727"/>
+  <object id="119" x="1057.75" y="176.25" width="15.375" height="16"/>
+  <object id="120" x="1117.25" y="144.5" width="15.25" height="32.125"/>
+  <object id="121" x="1133" y="176.375" width="16.875" height="16.125"/>
+  <object id="122" x="1184.36" y="144.364" width="61.0909" height="16.3636"/>
+  <object id="123" x="1192.73" y="160.545" width="46.1818" height="13.4545"/>
+  <object id="124" x="1232.55" y="64" width="29.2727" height="31.8182"/>
+  <object id="127" x="1238.18" y="96" width="16.7273" height="13.2727"/>
+  <object id="129" x="1248.25" y="48.25" width="206" height="15.5"/>
+  <object id="130" x="1280" y="160" width="78" height="32"/>
+  <object id="131" x="1392.91" y="64.1818" width="38" height="40.1818"/>
+  <object id="133" x="1410.63" y="105.625" width="55.875" height="35.875"/>
+  <object id="134" x="1392.33" y="176.667" width="350.667" height="16"/>
+  <object id="135" x="1454.88" y="64.75" width="47.625" height="16.875"/>
+  <object id="136" x="1504.36" y="80.7273" width="44.7273" height="15.6364"/>
+  <object id="137" x="1551.45" y="97.0909" width="44.9091" height="14.9091"/>
+  <object id="138" x="1599.27" y="113.273" width="46.3636" height="14.7273"/>
+  <object id="139" x="1646.91" y="129.455" width="46.5455" height="12.9091"/>
+  <object id="140" x="1584.75" y="33.5" width="140.5" height="14.75"/>
+  <object id="141" x="1726.25" y="49.75" width="13.25" height="17.5"/>
+  <object id="142" x="1594.5" y="49.5" width="55.25" height="12"/>
+  <object id="143" x="1639.25" y="62.25" width="49.25" height="14.75"/>
+  <object id="144" x="1673.25" y="77.75" width="40.25" height="15.25"/>
+  <object id="145" x="1712.88" y="65" width="14.25" height="14.5"/>
+  <object id="146" x="1759.63" y="64.25" width="31.5" height="15"/>
+  <object id="147" x="1765.75" y="80" width="19.5" height="13.125"/>
+  <object id="148" x="1776.63" y="160.25" width="78.375" height="31.5"/>
+  <object id="149" x="1856.75" y="129.25" width="28" height="16.75"/>
+  <object id="150" x="1861.75" y="146" width="17.875" height="10.25"/>
+  <object id="151" x="1808.75" y="96.375" width="28.375" height="15.875"/>
+  <object id="152" x="1813.88" y="112.75" width="15.875" height="11.5"/>
+  <object id="153" x="1904.36" y="64.7273" width="44.5455" height="31.2727"/>
+  <object id="154" x="1912.36" y="96" width="27.6364" height="13.8182"/>
+  <object id="157" x="1824.36" y="32.3636" width="60.1818" height="17.2727"/>
+  <object id="158" x="1832.55" y="50.1818" width="43.4545" height="12"/>
+  <object id="159" x="2032.67" y="128.333" width="140.333" height="46.6667"/>
+  <object id="161" x="2173.25" y="176.75" width="32.375" height="15"/>
+  <object id="162" x="2067.63" y="50.125" width="51.375" height="27.125"/>
+  <object id="163" x="2208.5" y="112.75" width="60.125" height="16.125"/>
+  <object id="164" x="2216.25" y="129" width="46.125" height="13.375"/>
+  <object id="165" x="2304.55" y="96.5455" width="29.2727" height="31.6364"/>
+  <object id="166" x="2311.09" y="129.273" width="16.3636" height="11.8182"/>
+  <object id="167" x="2370.75" y="80" width="29.25" height="82.5"/>
+  <object id="170" x="2378.73" y="163.091" width="20.9091" height="17.0909"/>
  </objectgroup>
- <objectgroup color="#ff0000" id="18" name="death_collisions" visible="0">
+ <objectgroup color="#ff0000" id="18" name="death_collisions" visible="0" locked="1">
   <object id="69" x="0" y="176">
    <polygon points="0,0 0,16 96,16 96,0"/>
   </object>
@@ -1916,12 +1901,12 @@
    <polygon points="0,0 0,16 192,16 176,0"/>
   </object>
  </objectgroup>
- <objectgroup color="#00ff00" id="19" name="win_collider" visible="0">
+ <objectgroup color="#00ff00" id="19" name="win_collider" visible="0" locked="1">
   <object id="77" x="2368" y="0">
    <polygon points="0,0 0,80 32,80 32,0"/>
   </object>
  </objectgroup>
- <objectgroup color="#ffff00" id="20" name="player_spawn" visible="0">
+ <objectgroup color="#ffff00" id="20" name="player_spawn" visible="0" locked="1">
   <object id="78" x="16" y="16">
    <polygon points="0,0 0,32 16,32 16,0"/>
   </object>
