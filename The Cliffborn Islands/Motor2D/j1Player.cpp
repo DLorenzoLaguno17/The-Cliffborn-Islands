@@ -19,7 +19,7 @@ j1Player::j1Player() : j1Module()
 	idle_right.PushBack({ 130, 184, 22, 25 });
 	idle_right.PushBack({ 163, 184, 21, 25 });
 	idle_right.loop = true;
-	idle_right.speed = 0.015f;
+	idle_right.speed = 0.2f;
 
 	idle_left.PushBack({ 163, 214, 22, 25 });
 	idle_left.PushBack({ 130, 214, 24, 25 });
@@ -28,7 +28,7 @@ j1Player::j1Player() : j1Module()
 	idle_left.PushBack({ 35, 214, 22, 25 });
 	idle_left.PushBack({ 3, 214, 21, 25 });
 	idle_left.loop = true;
-	idle_left.speed = 0.015f;
+	idle_left.speed = 0.2f;
 
 	// Runnig animations
 	run_right.PushBack({ 1, 96, 23, 25 });
@@ -40,7 +40,7 @@ j1Player::j1Player() : j1Module()
 	run_right.PushBack({ 199, 99, 18, 25 });
 	run_right.PushBack({ 228, 98, 20, 25 });
 	run_right.loop = true;
-	run_right.speed = 0.02f;	
+	run_right.speed = 0.25f;	
 
 	run_left.PushBack({ 227, 127, 23, 25 });
 	run_left.PushBack({ 194, 130, 25, 25 });
@@ -51,28 +51,28 @@ j1Player::j1Player() : j1Module()
 	run_left.PushBack({ 34, 130, 18, 25 });
 	run_left.PushBack({ 3, 129, 20, 25 });
 	run_left.loop = true;
-	run_left.speed = 0.02f;
+	run_left.speed = 0.25f;
 
 	// Jump animations
 	jump_right.PushBack({ 2, 158, 20, 25 });
 	jump_right.PushBack({ 34, 158, 20, 25 });
 	jump_right.loop = true;
-	jump_right.speed = 0.02f;
+	jump_right.speed = 0.25f;
 
 	fall_right.PushBack({ 87, 157, 22, 26 });
 	fall_right.PushBack({ 119, 157, 22, 26 });
 	fall_right.loop = true;
-	fall_right.speed = 0.02f;
+	fall_right.speed = 0.25f;
 
 	jump_left.PushBack({ 272, 158, 20, 25 });
 	jump_left.PushBack({ 240, 158, 20, 25 });
 	jump_left.loop = true;
-	jump_left.speed = 0.02f;
+	jump_left.speed = 0.25f;
 
 	fall_left.PushBack({ 185, 157, 22, 26 });
 	fall_left.PushBack({ 153, 157, 22, 26 });
 	fall_left.loop = true;
-	fall_left.speed = 0.02f;
+	fall_left.speed = 0.25f;
 	
 	// Attack animations
 	attack_right.PushBack({ 1, 272, 29, 27 });
@@ -81,7 +81,7 @@ j1Player::j1Player() : j1Module()
 	attack_right.PushBack({ 198, 272, 40, 27 });
 	attack_right.PushBack({ 253, 272, 42, 27 });
 	attack_right.loop = false;
-	attack_right.speed = 0.02f;
+	attack_right.speed = 0.25f;
 	
 	attack_right.PushBack({ 269, 244, 29, 27 });
 	attack_right.PushBack({ 206, 244, 29, 27 });
@@ -89,7 +89,7 @@ j1Player::j1Player() : j1Module()
 	attack_right.PushBack({ 61, 244, 40, 27 });
 	attack_right.PushBack({ 5, 244, 42, 27 });
 	attack_left.loop = false;
-	attack_left.speed = 0.02f;
+	attack_left.speed = 0.25f;
 
 	name.create("player");
 }
@@ -118,11 +118,10 @@ bool j1Player::Start() {
 	position.x = initialPosition.x;
 	position.y = initialPosition.y;
 
-	initialVerticalSpeed = -0.22f;
-	verticalSpeed = -0.22f;
+	initialVerticalSpeed = -2.5f;
+	verticalSpeed = -2.5f;
 	fallingSpeed = 0.0f;
-	horizontalSpeed = 0.09f;
-	gravity = 0.02f;
+	horizontalSpeed = 1.2f;
 
 	player = App->collisions->AddCollider({ (int)position.x, (int)position.y, 22, 25 }, COLLIDER_PLAYER, this);
 
@@ -168,7 +167,7 @@ bool j1Player::Update(float dt) {
 	if (feetOnGround == false && jumping == false) {
 
 		position.y += fallingSpeed;
-		fallingSpeed += 0.001f;
+		fallingSpeed += 0.1f;
 
 		if (lastDirection == lastDirection::RIGHT)
 			current_animation = &fall_right;
@@ -195,7 +194,7 @@ bool j1Player::Update(float dt) {
 		else {
 			
 			position.y += verticalSpeed; 
-			verticalSpeed += 0.001f;
+			verticalSpeed += 0.15f;
 
 			// If the player is going right
 			if (lastDirection == lastDirection::RIGHT) {

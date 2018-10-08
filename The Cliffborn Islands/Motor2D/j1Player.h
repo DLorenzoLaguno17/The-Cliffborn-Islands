@@ -72,7 +72,6 @@ public:
 	float initialVerticalSpeed;
 	float verticalSpeed;
 	float fallingSpeed;
-	float gravity;
 	
 	bool GodMode = false;
 	bool jumping = false;
