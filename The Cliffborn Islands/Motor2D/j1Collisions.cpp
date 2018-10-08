@@ -62,43 +62,8 @@ bool j1Collisions::PreUpdate()
 		{
 			if (colliders[i]->to_delete) 
 			{
-
 				delete colliders[i];
 				colliders[i] = nullptr;
-			}
-		}
-	}
-
-	// Collision detection and callbacks 
-	Collider* c1;
-	Collider* c2;
-
-	for (uint i = 0; i < MAX_COLLIDERS; ++i)
-	{
-		// Skip empty colliders
-		if (colliders[i] == nullptr)
-			continue;
-
-		c1 = colliders[i];
-
-		// avoid checking collisions already checked
-		for (uint k = i + 1; k < MAX_COLLIDERS; ++k)
-		{
-			// skip empty colliders
-			if (colliders[k] == nullptr)
-				continue;
-
-			c2 = colliders[k];
-
-			if (c1->CheckCollision(c2->rect) == true)
-			{
-
-				if (matrix[c1->type][c2->type] && c1->callback)
-					c1->callback->OnCollision(c1, c2);
-
-				if (matrix[c2->type][c1->type] && c2->callback)
-					c2->callback->OnCollision(c2, c1);
-
 			}
 		}
 	}
@@ -115,7 +80,7 @@ bool j1Collisions::Update(float dt)
 	{
 		if (colliders[i] == nullptr) continue;
 
-		if (colliders[i]->type == COLLIDER_PLAYER)
+		if (colliders[i]->type == COLLIDER_PLAYER || colliders[i]->type == COLLIDER_NONE)
 		{
 
 			collider1 = colliders[i];
@@ -211,10 +176,9 @@ Collider* j1Collisions::AddCollider(SDL_Rect rect, COLLIDER_TYPE type, j1Module*
 
 bool Collider::CheckCollision(const SDL_Rect& r) const
 {
-	int margin = 0;
-	return (rect.x < r.x + r.w + margin
-		&& rect.x + rect.w + margin> r.x
-		&&	 rect.y < r.y + r.h + margin
-		&& rect.h + rect.y + margin> r.y);
+	return (rect.x < r.x + r.w &&
+		rect.x + rect.w > r.x &&
+		rect.y < r.y + r.h &&
+		rect.h + rect.y > r.y);
 
 }

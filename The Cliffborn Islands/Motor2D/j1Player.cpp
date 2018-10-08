@@ -195,7 +195,7 @@ bool j1Player::Update(float dt) {
 		else {
 			
 			position.y += verticalSpeed; 
-			verticalSpeed += 0.001f;
+			verticalSpeed += 0.0007f;
 
 			// If the player is going right
 			if (lastDirection == lastDirection::RIGHT) {
@@ -296,8 +296,8 @@ bool j1Player::CleanUp() {
 // Detects collision with a wall. If so, the player cannot go further
 void j1Player::OnCollision(Collider* col_1, Collider* col_2)
 {
-	if ((col_1->type == COLLIDER_PLAYER || col_1->type == COLLIDER_NONE && col_2->type == COLLIDER_WALL)
-		|| (col_2->type == COLLIDER_PLAYER || col_1->type == COLLIDER_WALL))
+	if (((col_1->type == COLLIDER_PLAYER || col_1->type == COLLIDER_NONE) && col_2->type == COLLIDER_WALL)
+		|| ((col_2->type == COLLIDER_PLAYER || col_2->type == COLLIDER_PLAYER) || col_1->type == COLLIDER_WALL))
 	{
 		feetOnGround = true;
 		jumping = false;
