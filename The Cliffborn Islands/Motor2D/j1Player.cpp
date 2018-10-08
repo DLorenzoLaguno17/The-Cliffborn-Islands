@@ -124,7 +124,7 @@ bool j1Player::Start() {
 	horizontalSpeed = 0.09f;
 	gravity = 0.02f;
 
-	player = App->collisions->AddCollider({ (int)position.x, (int)position.y, 24, 25 }, COLLIDER_PLAYER, this);
+	player = App->collisions->AddCollider({ (int)position.x, (int)position.y, 22, 25 }, COLLIDER_PLAYER, this);
 
 	return true;
 }
