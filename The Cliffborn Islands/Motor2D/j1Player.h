@@ -72,10 +72,14 @@ public:
 	float initialVerticalSpeed;
 	float verticalSpeed;
 	float fallingSpeed;
-	
+
+	// It tells you wether the player has landed or not
+	bool feetOnGround = false;
+	// It tells you wether the player has a wall in front of him or not
+	bool wallInFront = false;
+
 	bool GodMode = false;
 	bool jumping = false;
-	bool feetOnGround = false;
 	bool dead = false;
 };
 

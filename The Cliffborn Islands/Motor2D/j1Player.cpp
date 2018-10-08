@@ -19,7 +19,7 @@ j1Player::j1Player() : j1Module()
 	idle_right.PushBack({ 130, 184, 22, 25 });
 	idle_right.PushBack({ 163, 184, 21, 25 });
 	idle_right.loop = true;
-	idle_right.speed = 0.2f;
+	idle_right.speed = 0.07f;
 
 	idle_left.PushBack({ 163, 214, 22, 25 });
 	idle_left.PushBack({ 130, 214, 24, 25 });
@@ -28,7 +28,7 @@ j1Player::j1Player() : j1Module()
 	idle_left.PushBack({ 35, 214, 22, 25 });
 	idle_left.PushBack({ 3, 214, 21, 25 });
 	idle_left.loop = true;
-	idle_left.speed = 0.2f;
+	idle_left.speed = 0.07f;
 
 	// Runnig animations
 	run_right.PushBack({ 1, 96, 23, 25 });
@@ -40,7 +40,7 @@ j1Player::j1Player() : j1Module()
 	run_right.PushBack({ 199, 99, 18, 25 });
 	run_right.PushBack({ 228, 98, 20, 25 });
 	run_right.loop = true;
-	run_right.speed = 0.25f;	
+	run_right.speed = 0.07f;	
 
 	run_left.PushBack({ 227, 127, 23, 25 });
 	run_left.PushBack({ 194, 130, 25, 25 });
@@ -51,7 +51,7 @@ j1Player::j1Player() : j1Module()
 	run_left.PushBack({ 34, 130, 18, 25 });
 	run_left.PushBack({ 3, 129, 20, 25 });
 	run_left.loop = true;
-	run_left.speed = 0.25f;
+	run_left.speed = 0.07f;
 
 	// Jump animations
 	jump_right.PushBack({ 2, 158, 20, 25 });
@@ -167,7 +167,7 @@ bool j1Player::Update(float dt) {
 	if (feetOnGround == false && jumping == false) {
 
 		position.y += fallingSpeed;
-		fallingSpeed += 0.1f;
+		fallingSpeed += 0.15f;
 
 		if (lastDirection == lastDirection::RIGHT)
 			current_animation = &fall_right;
@@ -298,9 +298,28 @@ void j1Player::OnCollision(Collider* col_1, Collider* col_2)
 	if (((col_1->type == COLLIDER_PLAYER || col_1->type == COLLIDER_NONE) && col_2->type == COLLIDER_WALL)
 		|| ((col_2->type == COLLIDER_PLAYER || col_2->type == COLLIDER_PLAYER) || col_1->type == COLLIDER_WALL))
 	{
-		feetOnGround = true;
-		jumping = false;
-		verticalSpeed = initialVerticalSpeed;
-		fallingSpeed = 0.0f;
+		//If the collision is with the ground
+		if (col_1->type == COLLIDER_WALL) {
+			feetOnGround = true;
+			jumping = false;
+			verticalSpeed = initialVerticalSpeed;
+			fallingSpeed = 0.0f;
+			if (position.y + current_animation->GetCurrentFrame().h > col_1->rect.y) {
+				position.y = col_1->rect.y - current_animation->GetCurrentFrame().h + 2;
+			}
+		}
+		else if(col_2->type == COLLIDER_WALL) {
+			feetOnGround = true;
+			jumping = false;
+			verticalSpeed = initialVerticalSpeed;
+			fallingSpeed = 0.0f;
+			if (position.y + current_animation->GetCurrentFrame().h > col_2->rect.y) {
+				position.y = col_2->rect.y - current_animation->GetCurrentFrame().h + 2;
+			}
+			
+		}
+
+		//If the collision is with a wall
+		
 	}
 };
