@@ -208,10 +208,10 @@ bool j1Player::Update(float dt) {
 			}
 			// If the player is going left
 			if (lastDirection == lastDirection::LEFT) {
-				if (verticalSpeed >= 0) {
+				if (verticalSpeed <= 0) {
 					current_animation = &jump_left;
 				}
-				else if (verticalSpeed < 0) {
+				else if (verticalSpeed > 0) {
 					current_animation = &fall_left;
 				}
 			}
