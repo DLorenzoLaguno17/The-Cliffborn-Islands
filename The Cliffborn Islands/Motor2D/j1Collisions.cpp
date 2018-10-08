@@ -19,21 +19,31 @@ j1Collisions::j1Collisions() : j1Module()
 	}
 	name.create("collisions");
 
+	matrix[COLLIDER_NONE][COLLIDER_NONE] = false;
+	matrix[COLLIDER_NONE][COLLIDER_PLAYER] = false;
+	matrix[COLLIDER_NONE][COLLIDER_WALL] = false;
+	matrix[COLLIDER_NONE][COLLIDER_DEATH] = false;
+	matrix[COLLIDER_NONE][COLLIDER_WIN] = false;
+
+	matrix[COLLIDER_PLAYER][COLLIDER_NONE] = false;
 	matrix[COLLIDER_PLAYER][COLLIDER_PLAYER] = false;
 	matrix[COLLIDER_PLAYER][COLLIDER_WALL] = true;
 	matrix[COLLIDER_PLAYER][COLLIDER_DEATH] = true;
 	matrix[COLLIDER_PLAYER][COLLIDER_WIN] = true;
 
+	matrix[COLLIDER_DEATH][COLLIDER_NONE] = false;
 	matrix[COLLIDER_DEATH][COLLIDER_PLAYER] = true;
 	matrix[COLLIDER_DEATH][COLLIDER_WALL] = false;
 	matrix[COLLIDER_DEATH][COLLIDER_DEATH] = false;
 	matrix[COLLIDER_DEATH][COLLIDER_WIN] = false;
 
+	matrix[COLLIDER_WIN][COLLIDER_NONE] = false;
 	matrix[COLLIDER_WIN][COLLIDER_PLAYER] = true;
 	matrix[COLLIDER_WIN][COLLIDER_WALL] = false;
 	matrix[COLLIDER_WIN][COLLIDER_DEATH] = false;
 	matrix[COLLIDER_WIN][COLLIDER_WIN] = false;
 
+	matrix[COLLIDER_WALL][COLLIDER_NONE] = false;
 	matrix[COLLIDER_WALL][COLLIDER_PLAYER] = true;
 	matrix[COLLIDER_WALL][COLLIDER_WALL] = false;
 	matrix[COLLIDER_WALL][COLLIDER_DEATH] = false;
@@ -117,7 +127,7 @@ bool j1Collisions::CleanUp()
 void j1Collisions::DrawColliders() 
 {
 
-	if (App->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
 		debug = !debug;
 
 	if (debug == false)
@@ -131,22 +141,24 @@ void j1Collisions::DrawColliders()
 
 		switch (colliders[i]->type)
 		{
-		case COLLIDER_WALL:	//blue															
+		case COLLIDER_NONE:		//White
+			App->render->DrawQuad(colliders[i]->rect, 255, 255, 255, alpha);
+			break;
+		case COLLIDER_WALL:		//Blue															
 			App->render->DrawQuad(colliders[i]->rect, 0, 0, 255, alpha);
 			break;
-		case COLLIDER_WIN:	//green															
+		case COLLIDER_WIN:		//Green															
 			App->render->DrawQuad(colliders[i]->rect, 0, 255, 0, alpha);
 			break;
-		case COLLIDER_DEATH:	//red
+		case COLLIDER_DEATH:	//Red
 			App->render->DrawQuad(colliders[i]->rect, 255, 0, 0, alpha);
 			break;
-		case COLLIDER_PLAYER:		//yellow
+		case COLLIDER_PLAYER:	//Yellow
 			App->render->DrawQuad(colliders[i]->rect, 255, 255, 0, alpha);
 			break;
 		}
 	}
 }
-
 
 Collider* j1Collisions::AddCollider(SDL_Rect rect, COLLIDER_TYPE type, j1Module* callback)
 {
@@ -163,7 +175,6 @@ Collider* j1Collisions::AddCollider(SDL_Rect rect, COLLIDER_TYPE type, j1Module*
 	}
 	return ret;
 }
-
 
 bool Collider::CheckCollision(const SDL_Rect& r) const
 {

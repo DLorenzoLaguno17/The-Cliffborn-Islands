@@ -7,6 +7,7 @@
 #include "j1Module.h"
 
 struct SDL_Texture;
+struct Collider;
 
 enum lastDirection {
 	RIGHT,
@@ -41,8 +42,10 @@ public:
 	bool Save(pugi::xml_node&) const;
 
 public:
+
 	SDL_Texture* graphics = nullptr;
 	Animation* current_animation = nullptr;
+	Collider* player = nullptr;
 
 	// Animations of the player
 	Animation idle_right;
@@ -65,11 +68,8 @@ public:
 	float initialVerticalSpeed;
 	float verticalSpeed;
 	float gravity;
-
-	uint currentTime;
-	uint lastTime;
 	
-	bool updatedTime = false;
+	bool GodMode = false;
 	bool dead = false;
 };
 

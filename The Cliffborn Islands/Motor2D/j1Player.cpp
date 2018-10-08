@@ -2,6 +2,7 @@
 #include "p2Log.h"
 #include "j1App.h"
 #include "j1Textures.h"
+#include "j1Collisions.h"
 #include "j1Input.h"
 #include "j1Player.h"
 #include "j1Render.h"
@@ -111,15 +112,14 @@ bool j1Player::Start() {
 	LOG("Loading player textures");
 	graphics = App->tex->Load("textures/character/character.png");
 
-	currentTime = SDL_GetTicks();
-	lastTime = currentTime;
-
 	current_animation = &idle_right;
 	
 	initialVerticalSpeed = -0.22f;
 	verticalSpeed = -0.22f;
 	horizontalSpeed = 0.09f;
 	gravity = 0.02f;
+
+	player = App->collisions->AddCollider({ (int)position.x, (int)position.y, 24, 25 }, COLLIDER_PLAYER, this);
 
 	return true;
 }
@@ -159,10 +159,6 @@ bool j1Player::Update(float dt) {
 		current_animation = &run_left;
 	}
 
-	if (position.y > 100) {
-		position.y = 100;
-	}else
-
 	// Jump controls
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == j1KeyState::KEY_REPEAT && position.y < 100) {		
 
@@ -200,6 +196,27 @@ bool j1Player::Update(float dt) {
 			}
 		//}
 	}	
+	
+	// God mode
+
+	if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)
+	{
+		GodMode = !GodMode;
+
+		if (GodMode == true)
+		{
+			player->type = COLLIDER_NONE;
+		}
+		else if (GodMode == false)
+		{
+			//GodMode = false;
+			player->type = COLLIDER_PLAYER;
+		}
+	}
+
+	// Update collider position to player position
+	player->SetPos(position.x, position.y);
+	
 
 	// ---------------------------------------------------------------------------------------------------------------------
 	// DRAWING EVERYTHING ON THE SCREEN
