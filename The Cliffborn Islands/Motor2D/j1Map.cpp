@@ -395,14 +395,21 @@ bool j1Map::DrawColliders(const char * file_name)
 		ret = false;
 	}
 	pugi::xml_node obj;
-	int x, y, width, height;
-	for (obj = map_file.child("map").child("objectgroup").child("object"); obj && ret; obj = obj.next_sibling("object"))
+	pugi::xml_node group;
+	const char* object_name;
+	for (group = map_file.child("map").child("objectgroup"); group && ret; group = group.next_sibling("objectgroup"))
 	{
-		x = obj.attribute("x").as_int();
-		y = obj.attribute("y").as_int();
-		width = obj.attribute("width").as_int();
-		height = obj.attribute("height").as_int();
-		App->collisions->AddCollider({ x, y, width, height }, COLLIDER_WALL);
+		object_name = group.attribute("name").as_string();
+
+		for (obj = group.child("object"); obj && ret; obj = obj.next_sibling("object"))
+		{
+			if (strcmp(object_name, "map_collisions") == 0)
+				App->collisions->AddCollider({ obj.attribute("x").as_int(), obj.attribute("y").as_int(), obj.attribute("width").as_int(), obj.attribute("height").as_int() }, COLLIDER_WALL);
+			if (strcmp(object_name, "death_collisions") == 0)
+				App->collisions->AddCollider({ obj.attribute("x").as_int(), obj.attribute("y").as_int(), obj.attribute("width").as_int(), obj.attribute("height").as_int() }, COLLIDER_DEATH);
+			else if (strcmp(object_name, "win_collider") == 0)
+				App->collisions->AddCollider({ obj.attribute("x").as_int(), obj.attribute("y").as_int(), obj.attribute("width").as_int(), obj.attribute("height").as_int() }, COLLIDER_WIN);
+		}
 	}
 
 	return ret;
