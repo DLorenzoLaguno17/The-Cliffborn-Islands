@@ -6,6 +6,8 @@
 #include "j1Input.h"
 #include "j1Player.h"
 #include "j1Render.h"
+#include "j1FadeToBlack.h"
+#include "j1Scene1.h"
 
 j1Player::j1Player() : j1Module()
 {
@@ -222,12 +224,7 @@ bool j1Player::Update(float dt) {
 
 	// If the player falls he returns to the first position of the level
 	// --------------------------------- CONDITION TO CHANGE --------------
-	if (position.y > 200) {
-		fallingSpeed = 0.0f;
-		position.x = initialPosition.x;
-		position.y = initialPosition.y - 30;
-	}
-	
+
 	// God mode
 	if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)
 	{
@@ -298,8 +295,8 @@ bool j1Player::CleanUp() {
 // Detects collision with a wall. If so, the player cannot go further
 void j1Player::OnCollision(Collider* col_1, Collider* col_2)
 {
-	if (((col_1->type == COLLIDER_PLAYER || col_1->type == COLLIDER_NONE) && col_2->type == COLLIDER_WALL)
-		|| ((col_2->type == COLLIDER_PLAYER || col_2->type == COLLIDER_PLAYER) || col_1->type == COLLIDER_WALL))
+	if (((col_1->type == COLLIDER_PLAYER || col_1->type == COLLIDER_NONE) && col_2->type == COLLIDER_WALL || col_2->type == COLLIDER_DEATH)
+		|| ((col_2->type == COLLIDER_PLAYER || col_2->type == COLLIDER_PLAYER) || col_1->type == COLLIDER_WALL || col_1->type == COLLIDER_DEATH))
 	{
 		//If the collision is with a wall
 		/*if (col_1->type == COLLIDER_WALL) {
@@ -337,6 +334,15 @@ void j1Player::OnCollision(Collider* col_1, Collider* col_2)
 			if (position.y + current_animation->GetCurrentFrame().h > col_2->rect.y && wallInFront == false) {
 				position.y = col_2->rect.y - current_animation->GetCurrentFrame().h + 2;
 			}			
-		}		
+		}	
+
+		//IF the player collides with death_colliders
+		if (col_1->type == COLLIDER_DEATH || col_2->type == COLLIDER_DEATH)
+		{
+			App->fade->FadeToBlack(App->scene1, App->scene1);
+			fallingSpeed = 0.0f;
+			position.x = initialPosition.x;
+			position.y = initialPosition.y - 30;
+		}
 	}
 };
