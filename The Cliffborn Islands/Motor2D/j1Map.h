@@ -100,6 +100,8 @@ private:
 	bool LoadLayer(pugi::xml_node& node, MapLayer* layer);
 	bool DrawColliders(const char* file_name);
 
+	TileSet* GetTilesetFromTileId(int id) const;
+
 public:
 
 	MapData data;

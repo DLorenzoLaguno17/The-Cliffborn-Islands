@@ -3,6 +3,7 @@
 #include "j1App.h"
 #include "j1Render.h"
 #include "j1Textures.h"
+#include "j1Window.h"
 #include "j1Map.h"
 #include "j1Player.h"
 #include "j1Collisions.h"
@@ -30,31 +31,101 @@ bool j1Map::Awake(pugi::xml_node& config)
 
 void j1Map::Draw()
 {
-	if(map_loaded == false)
-		return;	
+	if (map_loaded == false)
+		return;
 
-	// Prepares the loop to draw all tilesets + Blit	
+	// TODO 4: Make sure we draw all the layers and not just the first one
+	p2List_item<MapLayer*>* layer;// = this->data.layers.start->data;
 
-	p2List_item<TileSet*>* item; //Sprites_Layer
-	item = data.tilesets.start;
+	int tile_num;
+	for (layer = data.layers.start; layer != nullptr; layer = layer->next)
+	{
+		tile_num = 0;
+		for (int y = 0; y < data.height; ++y)
+		{
+			for (int x = 0; x < data.width; ++x)
+			{
+				int tile_id = layer->data->data[tile_num];
+				if (tile_id > 0)
+				{
+					TileSet* tileset = GetTilesetFromTileId(tile_id);
+					if (tileset != nullptr)
+					{
+						SDL_Rect r = tileset->GetTileRect(tile_id);
+						iPoint pos = MapToWorld(x, y);
 
-	p2List_item<MapLayer*>* layer; //Map
-	layer = data.layers.start;
-
-	for (int y = 0; y < data.height; ++y) {
-		for (int x = 0; x < data.width; ++x) {
-			
-			uint temp_id = layer->data->Get(x, y);
-
-			temp_id = layer->data->data[temp_id];
-
-			if (temp_id != 0) {
-				SDL_Rect *rect = &item->data->GetTileRect(temp_id);
-				iPoint pos = MapToWorld(x, y);
-				App->render->Blit(item->data->texture, pos.x, pos.y, rect);
+						App->render->Blit(tileset->texture, pos.x, pos.y, &r);
+					}			
+				}
+				tile_num++;
 			}
 		}
 	}
+
+}
+
+//void j1Map::Draw()
+//{
+//	if(map_loaded == false)
+//		return;	
+//
+//
+//	int tile_num;
+//	for (p2List_item<MapLayer*>* layer_iterator = data.layers.start; layer_iterator != nullptr; layer_iterator = layer_iterator->next)
+//	{
+//		tile_num = 0;
+//		SDL_Texture* texture = data.tilesets.At(0)->data->texture;
+//		uint layer_height = layer_iterator->data->height;
+//		uint layer_width = layer_iterator->data->width;
+//	//	float layer_speed = layer_iterator->data->speed;
+//		int camera = -App->render->camera.x;
+//		for (int row = 0; row < layer_height; row++)
+//		{
+//			for (int column = 0; column < layer_width; column++)
+//			{
+//				uint id = layer_iterator->data->data[tile_num];
+//				iPoint position = MapToWorld(column, row);
+//
+//				if ((position.x <= camera * 1 + SCREEN_WIDTH) && (position.x >= camera * 1 - LEFT_LIMIT_RENDER))//need to improve (not all layers load at the same speed)
+//					App->render->Blit(texture, position.x, position.y, &data.tilesets.At(0)->data->GetTileRect(id), 1);
+//				tile_num++;
+//			}
+//		}
+//	}
+//	
+//}
+//
+//TileSet* j1Map::GetTilesetFromTileId(int id) const
+//{
+//
+//	for (int i = 0; i < data.tilesets.count() - 1; ++i)
+//	{
+//		if (data.tilesets[i + 1]->firstgid > id)
+//		{
+//			return data.tilesets[i];
+//		}
+//
+//	}
+//
+//	return data.tilesets.end->data;
+//}
+TileSet* j1Map::GetTilesetFromTileId(int id) const
+{
+	p2List_item<TileSet*>* item = data.tilesets.start;
+	TileSet* set = item->data;
+
+	while (item)
+	{
+		if (id < item->data->firstgid)
+		{
+			set = item->prev->data;
+			break;
+		}
+		set = item->data;
+		item = item->next;
+	}
+
+	return set;
 }
 
 iPoint j1Map::MapToWorld(int x, int y) const
