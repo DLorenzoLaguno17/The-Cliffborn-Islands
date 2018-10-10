@@ -48,12 +48,6 @@ bool j1FadeToBlack::Update(float dt)
 	{
 		if (now >= total_time)
 		{
-			// Enable / disable the modules received when FadeToBlacks() gets called
-			ModuleOff->active = false;
-			ModuleOff->CleanUp();
-			ModuleOn->Init();
-			ModuleOn->Start();
-			// ---
 			total_time += total_time;
 			start_time = SDL_GetTicks();
 			current_step = fade_step::fade_from_black;
@@ -91,4 +85,9 @@ bool j1FadeToBlack::FadeToBlack(j1Module* module_off, j1Module* module_on, float
 		ret = true;
 	}
 	return ret;
+}
+
+bool j1FadeToBlack::IsFading() const
+{
+	return current_step == fade_step::fade_to_black;
 }

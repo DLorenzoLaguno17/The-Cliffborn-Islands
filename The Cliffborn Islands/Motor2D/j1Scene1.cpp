@@ -70,8 +70,13 @@ bool j1Scene1::Update(float dt)
 	if(App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
 		App->render->camera.x -= 5;
 
+	// Camera control
 	if ((App->player->position.x > 140) && (App->render->camera.x > -8570))
 		App->render->camera.x = -App->player->position.x * 4 + 400;
+	
+	// Limit player X position
+	if (App->player->position.x > 2374)
+		App->player->position.x = 2374;
 
 	App->map->Draw();
 

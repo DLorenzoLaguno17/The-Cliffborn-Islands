@@ -301,8 +301,8 @@ bool j1Player::CleanUp() {
 // Detects collision with a wall. If so, the player cannot go further
 void j1Player::OnCollision(Collider* col_1, Collider* col_2)
 {
-	if (((col_1->type == COLLIDER_PLAYER || col_1->type == COLLIDER_NONE) && col_2->type == COLLIDER_WALL || col_2->type == COLLIDER_DEATH)
-		|| ((col_2->type == COLLIDER_PLAYER || col_2->type == COLLIDER_PLAYER) || col_1->type == COLLIDER_WALL || col_1->type == COLLIDER_DEATH))
+	if (((col_1->type == COLLIDER_PLAYER || col_1->type == COLLIDER_NONE) && col_2->type == COLLIDER_WALL || col_2->type == COLLIDER_DEATH || col_2->type == COLLIDER_WIN)
+		|| ((col_2->type == COLLIDER_PLAYER || col_2->type == COLLIDER_PLAYER) || col_1->type == COLLIDER_WALL || col_1->type == COLLIDER_DEATH || col_1->type == COLLIDER_WIN))
 	{
 		//If the collision is with a wall in front
 		if (col_1->type == COLLIDER_WALL) {
@@ -352,12 +352,30 @@ void j1Player::OnCollision(Collider* col_1, Collider* col_2)
 		{
 			App->fade->FadeToBlack(App->scene1, App->scene1);
 			fallingSpeed = 0.0f;
-			position.x = initialPosition.x;
-			position.y = initialPosition.y - 30;
-			App->render->camera.x = 0;
-			App->render->camera.y = 0;
+		
+			if (App->fade->IsFading() == 0)
+			{
+				position.x = initialPosition.x;
+				position.y = initialPosition.y - 30;
+				App->render->camera.x = 0;
+				App->render->camera.y = 0;
+			}
 		}
 
+		if (col_1->type == COLLIDER_WIN || col_2->type == COLLIDER_WIN)
+		{
+			App->fade->FadeToBlack(App->scene1, App->scene1);
+			fallingSpeed = 0.0f;
+
+			if (App->fade->IsFading() == 0)
+			{
+				position.x = initialPosition.x;
+				position.y = initialPosition.y - 30;
+				App->render->camera.x = 0;
+				App->render->camera.y = 0;
+			}
+			
+		}
 		//This is only to ensure the player is loaded in the correct position, once it is, we don't need this anymore
 		loading = false;
 	}
