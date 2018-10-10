@@ -84,6 +84,9 @@ bool j1Scene1::Update(float dt)
 	if (App->player->position.x > 2374)
 		App->player->position.x = 2374;
 
+	if (App->player->position.x < 0)
+		App->player->position.x = 0;
+
 	App->map->Draw();
 
 	int x, y;
