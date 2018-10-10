@@ -35,7 +35,7 @@ void j1Map::Draw()
 		return;
 
 	// TODO 4: Make sure we draw all the layers and not just the first one
-	p2List_item<MapLayer*>* layer;// = this->data.layers.start->data;
+	p2List_item<MapLayer*>* layer; // = this->data.layers.start->data;
 
 	int tile_num;
 	for (layer = data.layers.start; layer != nullptr; layer = layer->next)
@@ -57,6 +57,7 @@ void j1Map::Draw()
 						App->render->Blit(tileset->texture, pos.x, pos.y, &r);
 					}			
 				}
+
 				tile_num++;
 			}
 		}
@@ -64,57 +65,12 @@ void j1Map::Draw()
 
 }
 
-//void j1Map::Draw()
-//{
-//	if(map_loaded == false)
-//		return;	
-//
-//
-//	int tile_num;
-//	for (p2List_item<MapLayer*>* layer_iterator = data.layers.start; layer_iterator != nullptr; layer_iterator = layer_iterator->next)
-//	{
-//		tile_num = 0;
-//		SDL_Texture* texture = data.tilesets.At(0)->data->texture;
-//		uint layer_height = layer_iterator->data->height;
-//		uint layer_width = layer_iterator->data->width;
-//	//	float layer_speed = layer_iterator->data->speed;
-//		int camera = -App->render->camera.x;
-//		for (int row = 0; row < layer_height; row++)
-//		{
-//			for (int column = 0; column < layer_width; column++)
-//			{
-//				uint id = layer_iterator->data->data[tile_num];
-//				iPoint position = MapToWorld(column, row);
-//
-//				if ((position.x <= camera * 1 + SCREEN_WIDTH) && (position.x >= camera * 1 - LEFT_LIMIT_RENDER))//need to improve (not all layers load at the same speed)
-//					App->render->Blit(texture, position.x, position.y, &data.tilesets.At(0)->data->GetTileRect(id), 1);
-//				tile_num++;
-//			}
-//		}
-//	}
-//	
-//}
-//
-//TileSet* j1Map::GetTilesetFromTileId(int id) const
-//{
-//
-//	for (int i = 0; i < data.tilesets.count() - 1; ++i)
-//	{
-//		if (data.tilesets[i + 1]->firstgid > id)
-//		{
-//			return data.tilesets[i];
-//		}
-//
-//	}
-//
-//	return data.tilesets.end->data;
-//}
 TileSet* j1Map::GetTilesetFromTileId(int id) const
 {
 	p2List_item<TileSet*>* item = data.tilesets.start;
 	TileSet* set = item->data;
 
-	while (item)
+	while (item != NULL)
 	{
 		if (id < item->data->firstgid)
 		{

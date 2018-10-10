@@ -336,7 +336,7 @@ void j1Player::OnCollision(Collider* col_1, Collider* col_2)
 			}			
 		}	
 
-		//IF the player collides with death_colliders
+		//If the player collides with death_colliders
 		if (col_1->type == COLLIDER_DEATH || col_2->type == COLLIDER_DEATH)
 		{
 			App->fade->FadeToBlack(App->scene1, App->scene1);
