@@ -29,13 +29,13 @@ bool j1Map::Awake(pugi::xml_node& config)
 	return ret;
 }
 
+// All layers are drawn
 void j1Map::Draw()
 {
 	if (map_loaded == false)
 		return;
 
-	// All layers are drawn
-	p2List_item<MapLayer*>* layer; // = this->data.layers.start->data;
+	p2List_item<MapLayer*>* layer;
 
 	int tile_num;
 	for (layer = data.layers.start; layer != nullptr; layer = layer->next)
@@ -117,11 +117,10 @@ iPoint j1Map::WorldToMap(int x, int y) const
 	return ret;
 }
 
+// Method that receives a tile id and returns its rectangle
 SDL_Rect TileSet::GetTileRect(int id) const
 {
 	SDL_Rect rect;
-	// Method that receives a tile id and returns its rectangle
-
 	int relative_id = id - firstgid;
 
 	rect.w = tile_width;
