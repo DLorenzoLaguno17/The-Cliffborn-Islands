@@ -60,16 +60,19 @@ bool j1Scene1::Update(float dt)
 
 	// Control of the camera
 	if(App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
-		App->render->camera.y += 1;
+		App->render->camera.y += 5;
 
 	if(App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
-		App->render->camera.y -= 1;
+		App->render->camera.y -= 5;
 
 	if(App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
-		App->render->camera.x += 1;
+		App->render->camera.x += 5;
 
 	if(App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
-		App->render->camera.x -= 1;
+		App->render->camera.x -= 5;
+
+	if (App->player->position.x > (App->render->camera.x + (App->win->width / 6.5f)) && App->render->camera.x > -7000)
+		App->render->camera.x -= 5;
 
 	App->map->Draw();
 
