@@ -53,8 +53,14 @@ void j1Map::Draw()
 					{
 						SDL_Rect r = tileset->GetTileRect(tile_id);
 						iPoint pos = MapToWorld(x, y);
-
-						App->render->Blit(tileset->texture, pos.x, pos.y, &r);
+						if (layer->data->name == "bg1" || layer->data->name == "bg2" || layer->data->name == "bg3")
+							App->render->Blit(tileset->texture, pos.x, pos.y, &r, 0.7);
+						else if (layer->data->name == "Fog")
+						{
+							App->render->Blit(tileset->texture, pos.x, pos.y, &r, 0.85);
+						}
+						else
+							App->render->Blit(tileset->texture, pos.x, pos.y, &r);
 					}			
 				}
 
