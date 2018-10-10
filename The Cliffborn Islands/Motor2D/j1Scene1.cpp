@@ -71,8 +71,8 @@ bool j1Scene1::Update(float dt)
 	if(App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
 		App->render->camera.x -= 5;
 
-	if (App->player->position.x > (App->render->camera.x + (App->win->width / 6.5f)) && App->render->camera.x > -7000)
-		App->render->camera.x -= 5;
+	if ((App->player->position.x > 140) && (App->render->camera.x > -8570))
+		App->render->camera.x = -App->player->position.x * 4 + 400;
 
 	App->map->Draw();
 
