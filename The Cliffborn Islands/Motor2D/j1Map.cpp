@@ -34,7 +34,7 @@ void j1Map::Draw()
 	if (map_loaded == false)
 		return;
 
-	// TODO 4: Make sure we draw all the layers and not just the first one
+	// All layers are drawn
 	p2List_item<MapLayer*>* layer; // = this->data.layers.start->data;
 
 	int tile_num;
@@ -100,7 +100,6 @@ iPoint j1Map::MapToWorld(int x, int y) const
 
 	return ret;
 }
-
 
 iPoint j1Map::WorldToMap(int x, int y) const
 {
@@ -385,6 +384,7 @@ bool j1Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 	layer->name = node.attribute("name").as_string();
 	layer->width = node.attribute("width").as_int();
 	layer->height = node.attribute("height").as_int();
+	LoadProperties(node, layer->properties);
 	pugi::xml_node layer_data = node.child("data");
 
 	if(layer_data == NULL)
@@ -445,4 +445,15 @@ bool j1Map::DrawColliders(const char * file_name)
 uint MapLayer::Get(int x, int y) const 
 {
 		return (y * width) + x;	
+}
+
+// Load a group of properties from a node and fill a list with it
+bool j1Map::LoadProperties(pugi::xml_node& node, Properties& properties)
+{
+	bool ret = false;
+
+	// TODO 6: Fill in the method to fill the custom properties from 
+	// an xml_node
+
+	return ret;
 }
