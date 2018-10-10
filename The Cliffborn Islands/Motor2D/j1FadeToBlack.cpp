@@ -4,6 +4,7 @@
 #include "j1App.h"
 #include "j1FadeToBlack.h"
 #include "j1Render.h"
+#include "j1Collisions.h"
 #include "j1Window.h"
 #include "SDL/include/SDL_render.h"
 #include "SDL/include/SDL_timer.h"

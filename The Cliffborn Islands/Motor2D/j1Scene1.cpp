@@ -39,10 +39,6 @@ bool j1Scene1::Start()
 	// The audio is played
 	App->audio->PlayMusic("audio/music/level1_music.ogg", 1.0f);	
 
-	if (App->collisions->active == false) {
-		App->collisions->Init(); asdf
-	}
-
 	return true;
 }
 
@@ -105,7 +101,6 @@ bool j1Scene1::PostUpdate()
 bool j1Scene1::CleanUp()
 {
 	LOG("Freeing scene");
-	App->collisions->CleanUp();
 
 	return true;
 }

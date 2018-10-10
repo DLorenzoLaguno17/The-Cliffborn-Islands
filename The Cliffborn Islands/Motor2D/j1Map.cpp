@@ -242,7 +242,11 @@ bool j1Map::Load(const char* file_name)
 			item_layer = item_layer->next;
 		}
 	}
-	DrawColliders(file_name);
+
+	if (!collidersDrawn) {
+		DrawColliders(file_name);
+		collidersDrawn = true;
+	}
 
 	map_loaded = ret;
 
