@@ -7,11 +7,11 @@
 	<map />
 	<scene1 />
 	<player>
-		<position x="2" y="25" />
+		<position x="144.79982" y="121" />
 	</player>
 	<fade />
 	<collisions />
 	<renderer>
-		<camera x="0" y="0" />
+		<camera x="-98" y="0" />
 	</renderer>
 </game_state>

@@ -343,6 +343,8 @@ void j1Player::OnCollision(Collider* col_1, Collider* col_2)
 			fallingSpeed = 0.0f;
 			position.x = initialPosition.x;
 			position.y = initialPosition.y - 30;
+			App->render->camera.x = 0;
+			App->render->camera.y = 0;
 		}
 	}
 };
