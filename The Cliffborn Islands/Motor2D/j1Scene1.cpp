@@ -33,8 +33,7 @@ bool j1Scene1::Awake()
 bool j1Scene1::Start()
 {
 	// The map is loaded
-	App->map->Load("lvl2.tmx");
-	//App->map->Load("iso.tmx");
+	App->map->Load("lvl1.tmx");
 
 	// The audio is played
 	App->audio->PlayMusic("audio/music/level1_music.ogg", 1.0f);	
