@@ -150,7 +150,7 @@ bool j1Player::Update(float dt) {
 			current_animation = &idle_right;
 		else
 			current_animation = &idle_left;
-	}	
+	}
 
 	// Direction controls
 	if (!wallInFront) {
@@ -159,13 +159,18 @@ bool j1Player::Update(float dt) {
 			lastDirection = lastDirection::RIGHT;
 			current_animation = &run_right;
 		}
+	}
+	else
+		current_animation = &idle_right;
 
+	if (!wallBehind) {
 		if (App->input->GetKey(SDL_SCANCODE_A) == j1KeyState::KEY_REPEAT) {
 			position.x -= horizontalSpeed;
 			lastDirection = lastDirection::LEFT;
 			current_animation = &run_left;
 		}
 	}
+	
 
 	// The player falls if he has no ground
 	if (feetOnGround == false && jumping == false) {
@@ -184,8 +189,10 @@ bool j1Player::Update(float dt) {
 		jumping = true;
 	}
 
-	// Reseting the bools every frame
+	// Reseting the jump every frame
 	feetOnGround = false;
+
+	// Resetting the movement
 	wallInFront = false;
 
 	if(jumping){
@@ -221,9 +228,6 @@ bool j1Player::Update(float dt) {
 			}
 		}
 	}	
-
-	// If the player falls he returns to the first position of the level
-	// --------------------------------- CONDITION TO CHANGE --------------
 
 	// God mode
 	if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)
@@ -300,23 +304,28 @@ void j1Player::OnCollision(Collider* col_1, Collider* col_2)
 	if (((col_1->type == COLLIDER_PLAYER || col_1->type == COLLIDER_NONE) && col_2->type == COLLIDER_WALL || col_2->type == COLLIDER_DEATH)
 		|| ((col_2->type == COLLIDER_PLAYER || col_2->type == COLLIDER_PLAYER) || col_1->type == COLLIDER_WALL || col_1->type == COLLIDER_DEATH))
 	{
-		//If the collision is with a wall
-		/*if (col_1->type == COLLIDER_WALL) {
+		//If the collision is with a wall in front
+		if (col_1->type == COLLIDER_WALL) {
 
-			if (position.x > col_1->rect.x - current_animation->GetCurrentFrame().w * 2
-				&& position.y + current_animation->GetCurrentFrame().h < col_1->rect.x) {
+			if (position.x + current_animation->GetCurrentFrame().w > col_1->rect.x
+				&& position.y + current_animation->GetCurrentFrame().h > col_1->rect.y + col_1->rect.h) {
 				wallInFront = true;
 			}
 		}
 		else if (col_2->type == COLLIDER_WALL) {
 
-			if (position.x > col_2->rect.x - current_animation->GetCurrentFrame().w * 2
-				&& position.y + current_animation->GetCurrentFrame().h < col_1->rect.x) {
+			if (position.x + current_animation->GetCurrentFrame().w > col_2->rect.x
+				&& position.y + current_animation->GetCurrentFrame().h > col_2->rect.y + col_2->rect.h) {
 				wallInFront = true;
 			}
-		}*/
+		}
 
-		//If the collision is with the ground
+		feetOnGround = true;
+		jumping = false;
+		verticalSpeed = initialVerticalSpeed;
+		fallingSpeed = 0.0f;
+
+		/*//If the collision is with the ground
 		if (col_1->type == COLLIDER_WALL) {
 			feetOnGround = true;
 			jumping = false;
@@ -336,7 +345,7 @@ void j1Player::OnCollision(Collider* col_1, Collider* col_2)
 			if (position.y + current_animation->GetCurrentFrame().h > col_2->rect.y && wallInFront == false && loading == false) {
 				position.y = col_2->rect.y - current_animation->GetCurrentFrame().h + 2;
 			}			
-		}	
+		}*/
 
 		//If the player collides with death_colliders
 		if (col_1->type == COLLIDER_DEATH || col_2->type == COLLIDER_DEATH)

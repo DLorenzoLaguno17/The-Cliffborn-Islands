@@ -77,6 +77,8 @@ public:
 	bool feetOnGround = false;
 	// It tells you wether the player has a wall in front of him or not
 	bool wallInFront = false;
+	// It tells you wether the player has a wall in behind of him or not
+	bool wallBehind = false;
 
 	bool loading;
 	bool GodMode = false;
