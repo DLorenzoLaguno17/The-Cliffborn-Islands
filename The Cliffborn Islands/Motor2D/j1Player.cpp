@@ -268,6 +268,8 @@ bool j1Player::Load(pugi::xml_node& data) {
 	position.x = data.child("position").attribute("x").as_int();
 	position.y = data.child("position").attribute("y").as_int();
 
+	loading = true;
+
 	return true;
 }
 
@@ -321,7 +323,7 @@ void j1Player::OnCollision(Collider* col_1, Collider* col_2)
 			verticalSpeed = initialVerticalSpeed;
 			fallingSpeed = 0.0f;
 
-			if (position.y + current_animation->GetCurrentFrame().h > col_1->rect.y && wallInFront == false) {
+			if (position.y + current_animation->GetCurrentFrame().h > col_1->rect.y && wallInFront == false && loading == false) {
 				position.y = col_1->rect.y - current_animation->GetCurrentFrame().h + 2;
 			}
 		}
@@ -331,7 +333,7 @@ void j1Player::OnCollision(Collider* col_1, Collider* col_2)
 			verticalSpeed = initialVerticalSpeed;
 			fallingSpeed = 0.0f;
 
-			if (position.y + current_animation->GetCurrentFrame().h > col_2->rect.y && wallInFront == false) {
+			if (position.y + current_animation->GetCurrentFrame().h > col_2->rect.y && wallInFront == false && loading == false) {
 				position.y = col_2->rect.y - current_animation->GetCurrentFrame().h + 2;
 			}			
 		}	
@@ -346,5 +348,8 @@ void j1Player::OnCollision(Collider* col_1, Collider* col_2)
 			App->render->camera.x = 0;
 			App->render->camera.y = 0;
 		}
+
+		//This is only to ensure the player is loaded in the correct position, once it is, we don't need this anymore
+		loading = false;
 	}
 };

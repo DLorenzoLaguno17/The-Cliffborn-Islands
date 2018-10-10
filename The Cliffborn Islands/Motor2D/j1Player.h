@@ -78,6 +78,7 @@ public:
 	// It tells you wether the player has a wall in front of him or not
 	bool wallInFront = false;
 
+	bool loading;
 	bool GodMode = false;
 	bool jumping = false;
 	bool dead = false;

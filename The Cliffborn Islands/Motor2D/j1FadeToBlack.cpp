@@ -51,7 +51,7 @@ bool j1FadeToBlack::Update(float dt)
 			// Enable / disable the modules received when FadeToBlacks() gets called
 			ModuleOff->active = false;
 			ModuleOff->CleanUp();
-			ModuleOn->active = true;
+			ModuleOn->Init();
 			ModuleOn->Start();
 			// ---
 			total_time += total_time;
