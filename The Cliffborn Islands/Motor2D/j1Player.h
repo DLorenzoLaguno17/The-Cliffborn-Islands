@@ -80,10 +80,9 @@ public:
 	// It tells you wether the player has a wall in behind of him or not
 	bool wallBehind = false;
 
-	bool loading;
+	bool loading = false;
 	bool GodMode = false;
 	bool jumping = false;
-	bool dead = false;
 };
 
 #endif // __jPLAYER_H__

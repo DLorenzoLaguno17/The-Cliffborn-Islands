@@ -76,9 +76,7 @@ bool j1Scene1::Update(float dt)
 		App->render->camera.x = -App->player->position.x * 4 + 400;
 		if (App->render->camera.x > 0)
 			App->render->camera.x = 0;
-	}
-
-		
+	}		
 	
 	// Limit player X position
 	if (App->player->position.x > 2374)
