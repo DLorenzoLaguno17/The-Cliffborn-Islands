@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.0" orientation="orthogonal" renderorder="right-down" width="150" height="12" tilewidth="16" tileheight="16" infinite="0" nextlayerid="12" nextobjectid="179">
+<map version="1.0" tiledversion="1.1.5" orientation="orthogonal" renderorder="right-down" width="150" height="12" tilewidth="16" tileheight="16" infinite="0" nextobjectid="179">
  <tileset firstgid="1" name="Tileset" tilewidth="16" tileheight="16" tilecount="1917" columns="71">
   <image source="Tileset.png" width="1136" height="432"/>
  </tileset>
  <tileset firstgid="1918" name="bgMovingFog" tilewidth="16" tileheight="16" tilecount="240" columns="20">
   <image source="bgMovingFog.png" width="320" height="192"/>
  </tileset>
- <layer id="1" name="bg1" width="150" height="12" visible="0">
+ <layer name="bg1" width="150" height="12" locked="1">
   <data>
    <tile gid="9"/>
    <tile gid="10"/>
@@ -1810,7 +1810,7 @@
    <tile gid="799"/>
   </data>
  </layer>
- <layer id="2" name="bg2" width="150" height="12" visible="0">
+ <layer name="bg2" width="150" height="12" locked="1">
   <data>
    <tile gid="29"/>
    <tile gid="30"/>
@@ -3614,7 +3614,7 @@
    <tile gid="819"/>
   </data>
  </layer>
- <layer id="3" name="bg3" width="150" height="12" visible="0">
+ <layer name="bg3" width="150" height="12" locked="1">
   <data>
    <tile gid="49"/>
    <tile gid="50"/>
@@ -5418,7 +5418,7 @@
    <tile gid="839"/>
   </data>
  </layer>
- <layer id="4" name="map" width="150" height="12">
+ <layer name="map" width="150" height="12" locked="1">
   <data>
    <tile/>
    <tile/>
@@ -6861,7 +6861,7 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="1257"/>
+   <tile gid="72"/>
    <tile gid="1253"/>
    <tile gid="1253"/>
    <tile gid="1253"/>
@@ -6875,7 +6875,7 @@
    <tile gid="1253"/>
    <tile gid="1253"/>
    <tile gid="1253"/>
-   <tile gid="1261"/>
+   <tile gid="74"/>
    <tile/>
    <tile/>
    <tile/>
@@ -7011,7 +7011,7 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="1257"/>
+   <tile gid="72"/>
    <tile gid="1253"/>
    <tile gid="1253"/>
    <tile gid="1253"/>
@@ -7025,7 +7025,7 @@
    <tile gid="1253"/>
    <tile gid="1253"/>
    <tile gid="1253"/>
-   <tile gid="1261"/>
+   <tile gid="74"/>
    <tile/>
    <tile/>
    <tile/>
@@ -7222,7 +7222,7 @@
    <tile gid="1451"/>
   </data>
  </layer>
- <layer id="5" name="decoration" width="150" height="12">
+ <layer name="decoration" width="150" height="12">
   <data>
    <tile/>
    <tile/>
@@ -9026,7 +9026,7 @@
    <tile/>
   </data>
  </layer>
- <layer id="6" name="deocration 2" width="150" height="12">
+ <layer name="deocration 2" width="150" height="12" locked="1">
   <data>
    <tile/>
    <tile/>
@@ -10830,7 +10830,7 @@
    <tile/>
   </data>
  </layer>
- <layer id="11" name="Fog" width="150" height="12">
+ <layer name="Fog" width="150" height="12" locked="1">
   <data>
    <tile/>
    <tile/>
@@ -12634,7 +12634,7 @@
    <tile gid="2147"/>
   </data>
  </layer>
- <objectgroup color="#00aaff" id="7" name="map_collisions">
+ <objectgroup color="#00aaff" name="map_collisions">
   <object id="79" x="0" y="48.9091" width="76.1818" height="14"/>
   <object id="81" x="98.5" y="161.125" width="47.875" height="31.125"/>
   <object id="82" x="145.091" y="144.545" width="91.2727" height="16.8864"/>
@@ -12676,15 +12676,11 @@
   <object id="119" x="1593.25" y="48.5" width="147.75" height="13.75"/>
   <object id="120" x="1641.5" y="62.75" width="92" height="11.75"/>
   <object id="121" x="1671.25" y="75.25" width="46.75" height="17.5"/>
-  <object id="124" x="1761.45" y="64.3636" width="28" height="15.4545"/>
-  <object id="125" x="1766.73" y="80.0455" width="15.6364" height="11.4091"/>
-  <object id="126" x="1808.73" y="96.9091" width="28.9091" height="14.5455"/>
-  <object id="127" x="1816" y="111.818" width="15.4545" height="12.5455"/>
-  <object id="128" x="1857.45" y="128.545" width="28" height="14.9091"/>
-  <object id="129" x="1862.73" y="144" width="15.6364" height="11.6364"/>
+  <object id="124" x="1764.45" y="64.3636" width="22" height="15.4545"/>
+  <object id="126" x="1810.23" y="96.9091" width="24.6591" height="14.5455"/>
+  <object id="128" x="1859.2" y="128.545" width="26.25" height="14.9091"/>
   <object id="130" x="1776" y="160" width="80" height="32"/>
-  <object id="131" x="1824" y="32" width="64" height="16"/>
-  <object id="132" x="1830.5" y="48.25" width="47.5" height="12.75"/>
+  <object id="131" x="1824" y="32" width="59.8182" height="13.8182"/>
   <object id="133" x="1904" y="64" width="48" height="32"/>
   <object id="134" x="1911" y="96.25" width="32.5" height="13.25"/>
   <object id="137" x="2034.5" y="128.75" width="138.25" height="43"/>
@@ -12708,7 +12704,7 @@
   <object id="174" x="2172.88" y="176.25" width="32" height="16"/>
   <object id="176" x="289.5" y="144.063" width="59" height="16.375"/>
  </objectgroup>
- <objectgroup color="#ff0000" id="8" name="death_collisions">
+ <objectgroup color="#ff0000" name="death_collisions" locked="1">
   <object id="149" x="0" y="188.25" width="98" height="3.75"/>
   <object id="150" x="349.25" y="188.25" width="84.75" height="3.75"/>
   <object id="151" x="451" y="188.5" width="680" height="3.5"/>
@@ -12725,8 +12721,8 @@
   <object id="163" x="1456" y="80" width="32" height="12.75"/>
   <object id="164" x="1408" y="64" width="32" height="13"/>
  </objectgroup>
- <objectgroup color="#00ff00" id="9" name="win_collider">
+ <objectgroup color="#00ff00" name="win_collider" locked="1">
   <object id="157" x="2384.55" y="0.75" width="15.4545" height="79.25"/>
  </objectgroup>
- <objectgroup color="#ffff00" id="10" name="player_spawn"/>
+ <objectgroup color="#ffff00" name="player_spawn" locked="1"/>
 </map>
