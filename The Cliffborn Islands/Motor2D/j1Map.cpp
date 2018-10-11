@@ -250,7 +250,7 @@ bool j1Map::Load(const char* file_name)
 	}
 
 	if (!collidersDrawn) {
-		DrawColliders(file_name);
+		PutColliders(file_name);
 		collidersDrawn = true;
 	}
 
@@ -417,7 +417,7 @@ bool j1Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 	return ret;
 }
 
-bool j1Map::DrawColliders(const char * file_name)
+bool j1Map::PutColliders(const char * file_name)
 {
 	bool ret = true;
 
