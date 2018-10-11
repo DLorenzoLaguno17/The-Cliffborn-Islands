@@ -24,7 +24,7 @@ j1Collisions::j1Collisions() : j1Module()
 	matrix[COLLIDER_NONE][COLLIDER_PLAYER] = false;
 	matrix[COLLIDER_NONE][COLLIDER_WALL] = true;
 	matrix[COLLIDER_NONE][COLLIDER_DEATH] = false;
-	matrix[COLLIDER_NONE][COLLIDER_WIN] = false;
+	matrix[COLLIDER_NONE][COLLIDER_WIN] = true;
 
 	matrix[COLLIDER_PLAYER][COLLIDER_NONE] = false;
 	matrix[COLLIDER_PLAYER][COLLIDER_PLAYER] = false;

@@ -68,17 +68,19 @@ public:
 	fPoint initialPosition;
 	fPoint position;
 
-	float horizontalSpeed; 
+	float horizontalSpeed;
+	//Jumping speed
 	float initialVerticalSpeed;
 	float verticalSpeed;
-	float verticalAcceleration;
+	// Free fall speed
 	float fallingSpeed;
+	float initialFallingSpeed;
+	// "Gravity"
+	float verticalAcceleration;
 
-	// It tells you wether the player has landed or not
+	// It tells you wether the player has landed, has a wall in front or a wall behind
 	bool feetOnGround = false;
-	// It tells you wether the player has a wall in front of him or not
 	bool wallInFront = false;
-	// It tells you wether the player has a wall in behind of him or not
 	bool wallBehind = false;
 
 	bool loading = false;

@@ -100,9 +100,20 @@ j1Player::~j1Player() {}
 
 // Reading from config file
 bool j1Player::Awake(pugi::xml_node& config) {
+	
 	// Copying the position of the player
 	initialPosition.x = config.child("position").attribute("x").as_int();
 	initialPosition.y = config.child("position").attribute("y").as_int();
+
+	// Copying values of the speed
+	pugi::xml_node speed = config.child("speed");
+
+	initialVerticalSpeed = speed.child("movement").attribute("initialVertical").as_float();
+	verticalSpeed = speed.child("movement").attribute("vertical").as_float();
+	horizontalSpeed = speed.child("movement").attribute("horizontal").as_float();
+	initialFallingSpeed = speed.child("physics").attribute("initialFalling").as_float();
+	fallingSpeed = speed.child("physics").attribute("falling").as_float();
+	verticalAcceleration = speed.child("physics").attribute("acceleration").as_float();
 
 	return true;
 }
@@ -119,12 +130,6 @@ bool j1Player::Start() {
 	// Setting player position
 	position.x = initialPosition.x;
 	position.y = initialPosition.y;
-
-	initialVerticalSpeed = -3.5f;
-	verticalSpeed = -3.5f;
-	fallingSpeed = 0.0f;
-	verticalAcceleration = 0.15f;
-	horizontalSpeed = 1.2f;
 
 	player = App->collisions->AddCollider({ (int)position.x, (int)position.y, 22, 25 }, COLLIDER_PLAYER, this);
 
@@ -187,7 +192,7 @@ bool j1Player::Update(float dt) {
 	}
 
 	// Jump controls
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == j1KeyState::KEY_DOWN) {
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == j1KeyState::KEY_DOWN && dead == false) {
 		jumping = true;
 	}
 
@@ -344,7 +349,7 @@ void j1Player::OnCollision(Collider* col_1, Collider* col_2)
 		feetOnGround = true;
 		jumping = false;
 		verticalSpeed = initialVerticalSpeed;
-		fallingSpeed = 0.0f;
+		fallingSpeed = initialFallingSpeed;
 
 		//If the collision is with the ground
 		/*if (col_1->type == COLLIDER_WALL) {
@@ -374,15 +379,15 @@ void j1Player::OnCollision(Collider* col_1, Collider* col_2)
 		if (col_1->type == COLLIDER_DEATH || col_2->type == COLLIDER_DEATH)
 		{
 			App->fade->FadeToBlack(App->scene1, App->scene1);
-			fallingSpeed = 0.0f;
-			dead = true;			
+			fallingSpeed = initialFallingSpeed;
+			dead = true;
 		
 			if (App->fade->IsFading() == 0)
 			{
 				position.x = initialPosition.x;
-				position.y = initialPosition.y - 30;
-				App->render->camera.x = 0;
-				App->render->camera.y = 0;
+				position.y = initialPosition.y;
+				App->render->camera.x = App->render->initialCameraX;
+				App->render->camera.y = App->render->initialCameraY;
 				dead = false;
 			}
 		}
@@ -390,15 +395,15 @@ void j1Player::OnCollision(Collider* col_1, Collider* col_2)
 		if (col_1->type == COLLIDER_WIN || col_2->type == COLLIDER_WIN)
 		{
 			App->fade->FadeToBlack(App->scene1, App->scene1);
-			fallingSpeed = 0.0f;
+			fallingSpeed = initialFallingSpeed;
 			dead = true;
 
 			if (App->fade->IsFading() == 0)
 			{
 				position.x = initialPosition.x;
-				position.y = initialPosition.y - 30;
-				App->render->camera.x = 0;
-				App->render->camera.y = 0;
+				position.y = initialPosition.y;
+				App->render->camera.x = App->render->initialCameraX;
+				App->render->camera.y = App->render->initialCameraY;
 				dead = false;
 			}
 			

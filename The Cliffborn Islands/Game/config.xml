@@ -8,6 +8,7 @@
 	
   <renderer>
     <vsync value="true"/>
+	<camera initialX="0" initialY="0"/>
   </renderer>
 
   <window>
@@ -24,6 +25,20 @@
   
   <player>
     <position x="2" y="24"/>
+	<animations>
+		<idle loop="true" speed="0.07">
+			<sprite x="2" y="184" w="22" h="25"/>
+			<sprite x="33" y="184" w="24" h="25"/>
+			<sprite x="65" y="184" w="24" h="25"/>
+			<sprite x="97" y="184" w="24" h="25"/>
+			<sprite x="130" y="184" w="22" h="25"/>
+			<sprite x="163" y="184" w="21" h="25"/>
+		</idle>
+	</animations>
+	<speed>
+		<movement initialVertical="-3.5" vertical="-3.5f" horizontal="1.2"/>
+		<physics initialFalling="0.0" falling="0.0" acceleration="0.15"/>
+	</speed>
   </player>
 
   <map>
