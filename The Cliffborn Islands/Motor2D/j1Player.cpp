@@ -151,10 +151,10 @@ bool j1Player::Update(float dt) {
 			current_animation = &idle_right;
 		else
 			current_animation = &idle_left;
-	}
+	}	
 
 	// Direction controls
-	if (!wallInFront) {
+	if (wallInFront == false && dead == false) {
 		if (App->input->GetKey(SDL_SCANCODE_D) == j1KeyState::KEY_REPEAT) {
 			position.x += horizontalSpeed;
 			lastDirection = lastDirection::RIGHT;
@@ -164,7 +164,7 @@ bool j1Player::Update(float dt) {
 	else
 		current_animation = &idle_right;
 
-	if (!wallBehind) {
+	if (wallBehind == false && dead == false) {
 		if (App->input->GetKey(SDL_SCANCODE_A) == j1KeyState::KEY_REPEAT) {
 			position.x -= horizontalSpeed;
 			lastDirection = lastDirection::LEFT;
@@ -172,7 +172,7 @@ bool j1Player::Update(float dt) {
 		}
 	}
 	else
-		current_animation = &idle_left;
+		current_animation = &idle_right;
 
 	// The player falls if he has no ground
 	if (feetOnGround == false && jumping == false) {
@@ -232,6 +232,14 @@ bool j1Player::Update(float dt) {
 		}
 	}	
 
+	// The player can't move when dead
+	if (dead) {
+		if (lastDirection = lastDirection::LEFT)
+			current_animation = &idle_left;
+		else
+			current_animation = &idle_right;
+	}
+
 	// God mode
 	if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)
 	{
@@ -243,7 +251,6 @@ bool j1Player::Update(float dt) {
 		}
 		else if (GodMode == false)
 		{
-			//GodMode = false;
 			player->type = COLLIDER_PLAYER;
 		}
 	}
@@ -368,6 +375,7 @@ void j1Player::OnCollision(Collider* col_1, Collider* col_2)
 		{
 			App->fade->FadeToBlack(App->scene1, App->scene1);
 			fallingSpeed = 0.0f;
+			dead = true;			
 		
 			if (App->fade->IsFading() == 0)
 			{
@@ -375,6 +383,7 @@ void j1Player::OnCollision(Collider* col_1, Collider* col_2)
 				position.y = initialPosition.y - 30;
 				App->render->camera.x = 0;
 				App->render->camera.y = 0;
+				dead = false;
 			}
 		}
 
@@ -382,6 +391,7 @@ void j1Player::OnCollision(Collider* col_1, Collider* col_2)
 		{
 			App->fade->FadeToBlack(App->scene1, App->scene1);
 			fallingSpeed = 0.0f;
+			dead = true;
 
 			if (App->fade->IsFading() == 0)
 			{
@@ -389,6 +399,7 @@ void j1Player::OnCollision(Collider* col_1, Collider* col_2)
 				position.y = initialPosition.y - 30;
 				App->render->camera.x = 0;
 				App->render->camera.y = 0;
+				dead = false;
 			}
 			
 		}

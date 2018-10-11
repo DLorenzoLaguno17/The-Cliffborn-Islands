@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.1.5" orientation="orthogonal" renderorder="right-down" width="150" height="12" tilewidth="16" tileheight="16" infinite="0" nextobjectid="179">
+<map version="1.0" tiledversion="1.1.5" orientation="orthogonal" renderorder="right-down" width="150" height="12" tilewidth="16" tileheight="16" infinite="0" nextobjectid="181">
  <tileset firstgid="1" name="Tileset" tilewidth="16" tileheight="16" tilecount="1917" columns="71">
   <image source="Tileset.png" width="1136" height="432"/>
  </tileset>
@@ -7222,7 +7222,7 @@
    <tile gid="1451"/>
   </data>
  </layer>
- <layer name="decoration" width="150" height="12">
+ <layer name="decoration" width="150" height="12" locked="1">
   <data>
    <tile/>
    <tile/>
@@ -12665,7 +12665,7 @@
   <object id="108" x="1281.09" y="160.182" width="75.6364" height="31.2727"/>
   <object id="109" x="1232.75" y="63.5" width="27.375" height="32"/>
   <object id="110" x="1239.88" y="96" width="14.625" height="12.125"/>
-  <object id="111" x="1248.75" y="48.375" width="203.977" height="15.0795"/>
+  <object id="111" x="1248.75" y="48.375" width="28.477" height="15.0795"/>
   <object id="112" x="1454.36" y="64.3636" width="46.1818" height="15.4545"/>
   <object id="113" x="1502" y="80.9091" width="47.0909" height="14.7273"/>
   <object id="114" x="1550" y="96.3636" width="46.7273" height="15.2727"/>
@@ -12677,7 +12677,7 @@
   <object id="120" x="1641.5" y="62.75" width="92" height="11.75"/>
   <object id="121" x="1671.25" y="75.25" width="46.75" height="17.5"/>
   <object id="124" x="1764.45" y="64.3636" width="22" height="15.4545"/>
-  <object id="126" x="1810.23" y="96.9091" width="24.6591" height="14.5455"/>
+  <object id="126" x="1810.73" y="96.9091" width="23.9091" height="14.5455"/>
   <object id="128" x="1859.2" y="128.545" width="26.25" height="14.9091"/>
   <object id="130" x="1776" y="160" width="80" height="32"/>
   <object id="131" x="1824" y="32" width="59.8182" height="13.8182"/>
@@ -12703,8 +12703,10 @@
   <object id="173" x="2385.88" y="174.5" width="14" height="13.25"/>
   <object id="174" x="2172.88" y="176.25" width="32" height="16"/>
   <object id="176" x="289.5" y="144.063" width="59" height="16.375"/>
+  <object id="179" x="1378.01" y="48.4603" width="75.727" height="15.3295"/>
+  <object id="180" x="1277.39" y="47.9603" width="100.977" height="4.3295"/>
  </objectgroup>
- <objectgroup color="#ff0000" name="death_collisions" locked="1">
+ <objectgroup color="#ff0000" name="death_collisions">
   <object id="149" x="0" y="188.25" width="98" height="3.75"/>
   <object id="150" x="349.25" y="188.25" width="84.75" height="3.75"/>
   <object id="151" x="451" y="188.5" width="680" height="3.5"/>
@@ -12719,7 +12721,7 @@
   <object id="161" x="1552" y="112" width="32" height="13"/>
   <object id="162" x="1504" y="96" width="32" height="12.75"/>
   <object id="163" x="1456" y="80" width="32" height="12.75"/>
-  <object id="164" x="1408" y="64" width="32" height="13"/>
+  <object id="164" x="1408" y="64.75" width="32" height="13"/>
  </objectgroup>
  <objectgroup color="#00ff00" name="win_collider" locked="1">
   <object id="157" x="2384.55" y="0.75" width="15.4545" height="79.25"/>
