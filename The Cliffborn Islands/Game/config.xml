@@ -25,7 +25,6 @@
   
   <player>
     <position x="2" y="24"/>
-
 	<speed>
 		<movement initialVertical="-3.5" vertical="-3.5f" horizontal="1.2"/>
 		<physics initialFalling="0.0" falling="0.0" acceleration="0.15"/>
@@ -35,5 +34,9 @@
   <map>
     <folder>maps/</folder>
   </map>  
+  
+  <scene1>
+	<camera cameraLimit="-8570" playerLimit="2374"/>
+  </scene1>
 
 </config>

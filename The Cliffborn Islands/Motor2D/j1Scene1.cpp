@@ -21,10 +21,13 @@ j1Scene1::~j1Scene1()
 {}
 
 // Called before render is available
-bool j1Scene1::Awake()
+bool j1Scene1::Awake(pugi::xml_node& config)
 {
 	LOG("Loading Scene");
 	bool ret = true;
+
+	cameraLimit = config.child("camera").attribute("cameraLimit").as_int();
+	playerLimit = config.child("camera").attribute("playerLimit").as_int();
 
 	return ret;
 }
@@ -71,7 +74,7 @@ bool j1Scene1::Update(float dt)
 		App->render->camera.x -= 5;
 
 	// Camera control
-	if (App->render->camera.x > -8570)
+	if (App->render->camera.x > cameraLimit)
 	{
 		App->render->camera.x = -App->player->position.x * 4 + 400;
 		if (App->render->camera.x > 0)
@@ -79,8 +82,8 @@ bool j1Scene1::Update(float dt)
 	}		
 	
 	// Limit player X position
-	if (App->player->position.x > 2374)
-		App->player->position.x = 2374;
+	if (App->player->position.x > playerLimit)
+		App->player->position.x = playerLimit;
 
 	if (App->player->position.x < 0)
 		App->player->position.x = 0;
