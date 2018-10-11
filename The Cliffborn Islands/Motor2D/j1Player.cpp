@@ -12,7 +12,6 @@
 j1Player::j1Player() : j1Module()
 {
 	current_animation = NULL;
-
 	
 	idle_right.LoadAnimations("idle_right");
 	idle_left.LoadAnimations("idle_left");
@@ -21,8 +20,7 @@ j1Player::j1Player() : j1Module()
 	jump_right.LoadAnimations("jump_right");
 	jump_left.LoadAnimations("jump_left");
 	fall_right.LoadAnimations("fall_right");
-	fall_left.LoadAnimations("fall_left");
-	
+	fall_left.LoadAnimations("fall_left");	
 
 	name.create("player");
 }
@@ -79,7 +77,7 @@ bool j1Player::Update(float dt) {
 	// ---------------------------------------------------------------------------------------------------------------------
 	// CONTROL OF THE PLAYER
 	// ---------------------------------------------------------------------------------------------------------------------
-
+	
 	// Idle
 	if (App->input->GetKey(SDL_SCANCODE_D) == j1KeyState::KEY_IDLE
 		&& App->input->GetKey(SDL_SCANCODE_A) == j1KeyState::KEY_IDLE) {
@@ -87,28 +85,36 @@ bool j1Player::Update(float dt) {
 			current_animation = &idle_right;
 		else
 			current_animation = &idle_left;
-	}	
+	}
 
-	// Direction controls
-	if (wallInFront == false && dead == false) {
-		if (App->input->GetKey(SDL_SCANCODE_D) == j1KeyState::KEY_REPEAT) {
+	// Direction controls	
+	if (App->input->GetKey(SDL_SCANCODE_D) == j1KeyState::KEY_REPEAT) {
+		if (wallInFront == false && dead == false) {
 			position.x += horizontalSpeed;
 			lastDirection = lastDirection::RIGHT;
 			current_animation = &run_right;
 		}
+		else if (dead == true) {
+			lastDirection = lastDirection::RIGHT;
+			current_animation = &idle_right;
+		}
+		else
+			current_animation = &idle_right;
 	}
-	else
-		current_animation = &idle_right;
 
-	if (wallBehind == false && dead == false) {
-		if (App->input->GetKey(SDL_SCANCODE_A) == j1KeyState::KEY_REPEAT) {
+	if (App->input->GetKey(SDL_SCANCODE_A) == j1KeyState::KEY_REPEAT) {
+		if (wallBehind == false && dead == false) {
 			position.x -= horizontalSpeed;
 			lastDirection = lastDirection::LEFT;
 			current_animation = &run_left;
 		}
+		else if (dead == true) {
+			lastDirection = lastDirection::LEFT;
+			current_animation = &idle_left;
+		}
+		else
+			current_animation = &idle_left;
 	}
-	else
-		current_animation = &idle_right;
 
 	// The player falls if he has no ground
 	if (feetOnGround == false && jumping == false) {
@@ -123,7 +129,7 @@ bool j1Player::Update(float dt) {
 	}
 
 	// Jump controls
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == j1KeyState::KEY_DOWN && dead == false) {
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == j1KeyState::KEY_DOWN) {
 		jumping = true;
 	}
 
@@ -134,17 +140,17 @@ bool j1Player::Update(float dt) {
 	wallInFront = false;
 	wallBehind = false;
 
-	if(jumping){
+	if (jumping == true && dead == false) {
 		// If the player touches a wall collider
 		if (feetOnGround) {
-			if(lastDirection == lastDirection::RIGHT)
-				current_animation = &idle_right; 
+			if (lastDirection == lastDirection::RIGHT)
+				current_animation = &idle_right;
 			else
 				current_animation = &idle_left;
 		}
 		else {
-			
-			position.y += verticalSpeed; 
+
+			position.y += verticalSpeed;
 			verticalSpeed += verticalAcceleration;
 
 			// If the player is going right
@@ -166,14 +172,6 @@ bool j1Player::Update(float dt) {
 				}
 			}
 		}
-	}	
-
-	// The player can't move when dead
-	if (dead) {
-		if (lastDirection = lastDirection::LEFT)
-			current_animation = &idle_left;
-		else
-			current_animation = &idle_right;
 	}
 
 	// God mode
@@ -192,7 +190,7 @@ bool j1Player::Update(float dt) {
 	}
 
 	// Update collider position to player position
-	player->SetPos(position.x, position.y);	
+	player->SetPos(position.x, position.y);
 
 	// ---------------------------------------------------------------------------------------------------------------------
 	// DRAWING EVERYTHING ON THE SCREEN
@@ -202,7 +200,7 @@ bool j1Player::Update(float dt) {
 
 	// Blitting the player
 	App->render->Blit(graphics, (int)position.x, (int)position.y, &character);
-	
+
 	return true;
 }
 
