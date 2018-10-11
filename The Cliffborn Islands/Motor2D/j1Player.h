@@ -70,6 +70,8 @@ public:
 	fPoint initialPosition;
 	fPoint position;
 
+	uint jumps = 0;
+
 	float horizontalSpeed;
 	//Jumping speed
 	float initialVerticalSpeed;
@@ -88,6 +90,7 @@ public:
 	bool loading = false;
 	bool GodMode = false;
 	bool jumping = false;
+	bool falling = false;
 	bool dead = false;
 
 };

@@ -121,6 +121,7 @@ bool j1Player::Update(float dt) {
 
 		position.y += fallingSpeed;
 		fallingSpeed += verticalAcceleration;
+		falling = true;
 
 		if (lastDirection == lastDirection::RIGHT)
 			current_animation = &fall_right;
@@ -129,8 +130,10 @@ bool j1Player::Update(float dt) {
 	}
 
 	// Jump controls
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == j1KeyState::KEY_DOWN) {
-		jumping = true;
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == j1KeyState::KEY_DOWN && jumps <= 1 && falling == false) {
+			jumping = true;
+			verticalSpeed = initialVerticalSpeed;
+			jumps++;		
 	}
 
 	// Reseting the jump every frame
@@ -232,9 +235,6 @@ bool j1Player::Save(pugi::xml_node& data) const {
 	return true;
 }
 
-
-
-
 // Called before quitting
 bool j1Player::CleanUp() {
 	
@@ -280,8 +280,10 @@ void j1Player::OnCollision(Collider* col_1, Collider* col_2)
 
 		feetOnGround = true;
 		jumping = false;
+		falling = false;
 		verticalSpeed = initialVerticalSpeed;
 		fallingSpeed = initialFallingSpeed;
+		jumps = 0;
 
 		//If the collision is with the ground
 		/*if (col_1->type == COLLIDER_WALL) {
