@@ -123,6 +123,7 @@ bool j1Player::Start() {
 	initialVerticalSpeed = -3.5f;
 	verticalSpeed = -3.5f;
 	fallingSpeed = 0.0f;
+	verticalAcceleration = 0.15f;
 	horizontalSpeed = 1.2f;
 
 	player = App->collisions->AddCollider({ (int)position.x, (int)position.y, 22, 25 }, COLLIDER_PLAYER, this);
@@ -177,7 +178,7 @@ bool j1Player::Update(float dt) {
 	if (feetOnGround == false && jumping == false) {
 
 		position.y += fallingSpeed;
-		fallingSpeed += 0.15f;
+		fallingSpeed += verticalAcceleration;
 
 		if (lastDirection == lastDirection::RIGHT)
 			current_animation = &fall_right;
@@ -208,7 +209,7 @@ bool j1Player::Update(float dt) {
 		else {
 			
 			position.y += verticalSpeed; 
-			verticalSpeed += 0.15f;
+			verticalSpeed += verticalAcceleration;
 
 			// If the player is going right
 			if (lastDirection == lastDirection::RIGHT) {

@@ -71,6 +71,7 @@ public:
 	float horizontalSpeed; 
 	float initialVerticalSpeed;
 	float verticalSpeed;
+	float verticalAcceleration;
 	float fallingSpeed;
 
 	// It tells you wether the player has landed or not
