@@ -16,6 +16,7 @@ enum lastDirection {
 
 class j1Player : public j1Module
 {
+
 public:
 
 	j1Player();
@@ -43,6 +44,7 @@ public:
 	// Load / Save
 	bool Load(pugi::xml_node&);
 	bool Save(pugi::xml_node&) const;
+
 
 public:
 
@@ -87,6 +89,7 @@ public:
 	bool GodMode = false;
 	bool jumping = false;
 	bool dead = false;
+
 };
 
 #endif // __jPLAYER_H__
