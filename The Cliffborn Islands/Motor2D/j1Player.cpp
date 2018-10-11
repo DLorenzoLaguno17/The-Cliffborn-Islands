@@ -120,8 +120,8 @@ bool j1Player::Start() {
 	position.x = initialPosition.x;
 	position.y = initialPosition.y;
 
-	initialVerticalSpeed = -2.5f;
-	verticalSpeed = -2.5f;
+	initialVerticalSpeed = -3.5f;
+	verticalSpeed = -3.5f;
 	fallingSpeed = 0.0f;
 	horizontalSpeed = 1.2f;
 
