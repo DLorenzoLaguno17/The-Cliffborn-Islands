@@ -8,7 +8,7 @@ Go to our [GitHub](https://github.com/DLorenzoLaguno17/The-Cliffborn-Islands).
 * A - Move left
 * D - Move right
 * H - Throw the hook
-* Spacebar - Jump
+* Spacebar - Jump.
 
 ### Special keys
 * F1 - To start from the very first level
@@ -18,13 +18,17 @@ Go to our [GitHub](https://github.com/DLorenzoLaguno17/The-Cliffborn-Islands).
 * F9 - To view colliders and logic of the game
 * F10 - God mode
 
+## Special mechanics
 
+You can push yourself into the air once for each time you leave the ground. That means double jump when you leave the gound with a hop or one jump if you are already in a free fall.
+
+There is a hook you might need to use in order to complete the level. When you throw it, the hook goes horizontally perpendicular to the player, and if it touches a wall it drags the player towards said wall.
 
 ## Credits
 
 ### Art
 
-	Sprites of the character and the background: "Foggy Cliffs - Fantasy Tileset"
+	Sprites and tilesets of the character and the maps: "Foggy Cliffs - Fantasy Tileset"
 	Nauris Amatnieks (https://twitter.com/Namatnieks)
 
 ### Music

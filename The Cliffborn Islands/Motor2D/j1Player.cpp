@@ -130,10 +130,12 @@ bool j1Player::Update(float dt) {
 	}
 
 	// Jump controls
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == j1KeyState::KEY_DOWN && jumps <= 1 && falling == false) {
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == j1KeyState::KEY_DOWN) {
+		if ((jumps == 0 && falling == true) || (jumps <= 1 && falling == false)) {
 			jumping = true;
 			verticalSpeed = initialVerticalSpeed;
-			jumps++;		
+			jumps++;
+		}
 	}
 
 	// Reseting the jump every frame
