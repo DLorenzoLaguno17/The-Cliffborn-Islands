@@ -169,6 +169,9 @@ bool j1Player::Update(float dt) {
 			else
 				current_animation = &fall_left;
 		}
+		else {
+			freefall = false;
+		}
 
 		// Jump controls
 		if (App->input->GetKey(SDL_SCANCODE_SPACE) == j1KeyState::KEY_DOWN) {
@@ -182,10 +185,6 @@ bool j1Player::Update(float dt) {
 		// Reseting the jump every frame
 		feetOnGround = false;
 
-		// Resetting the movement
-		wallInFront = false;
-		wallBehind = false;
-
 		if (jumping == true && dead == false) {
 			// If the player touches a wall collider
 			if (feetOnGround) {
@@ -193,13 +192,14 @@ bool j1Player::Update(float dt) {
 					current_animation = &idle_right;
 				else
 					current_animation = &idle_left;
+
+				jumping = false;
 			}
 			else {
 
-				if (!wallAbove) {
-					position.y += verticalSpeed;
-					verticalSpeed += verticalAcceleration;
-				}
+				position.y += verticalSpeed;
+				verticalSpeed += verticalAcceleration;
+			
 
 				// If the player is going right
 				if (lastDirection == lastDirection::RIGHT) {
@@ -224,6 +224,10 @@ bool j1Player::Update(float dt) {
 
 		// Resetting the jump if touched the "ceiling"
 		wallAbove = false;
+
+		// Resetting the movement
+		wallInFront = false;
+		wallBehind = false;
 	}
 
 	// God mode
@@ -320,6 +324,7 @@ bool j1Player::CleanUp() {
 // Detects collision with a wall. If so, the player cannot go further
 void j1Player::OnCollision(Collider* col_1, Collider* col_2)
 {
+
 	if (col_1->type == COLLIDER_PLAYER || col_1->type == COLLIDER_NONE || col_1->type == COLLIDER_FUTURE
 		|| col_2->type == COLLIDER_PLAYER || col_2->type == COLLIDER_NONE || col_2->type == COLLIDER_FUTURE)
 	{
@@ -357,7 +362,6 @@ void j1Player::OnCollision(Collider* col_1, Collider* col_2)
 				&& position.y + current_animation->GetCurrentFrame().h + 10 < col_1->rect.y + col_1->rect.h) {
 				feetOnGround = true;
 				jumping = false;
-				freefall = false;
 				verticalSpeed = initialVerticalSpeed;
 				fallingSpeed = initialFallingSpeed;
 				currentJumps = initialJumps;
@@ -369,7 +373,6 @@ void j1Player::OnCollision(Collider* col_1, Collider* col_2)
 				&& position.y + current_animation->GetCurrentFrame().h + 10 < col_2->rect.y + col_2->rect.h) {
 				feetOnGround = true;
 				jumping = false;
-				freefall = false;
 				verticalSpeed = initialVerticalSpeed;
 				fallingSpeed = initialFallingSpeed;
 				currentJumps = initialJumps;
@@ -420,6 +423,7 @@ void j1Player::OnCollision(Collider* col_1, Collider* col_2)
 			App->fade->FadeToBlack(App->scene1, App->scene1);
 			fallingSpeed = initialFallingSpeed;
 			dead = true;
+			jumping = false;
 
 			if (App->fade->IsFading() == 0)
 			{

@@ -86,6 +86,8 @@ public:
 	// "Gravity"
 	float verticalAcceleration;
 
+	SDL_Rect intersectingRect;
+
 	// It tells you wether the player has landed, has a wall in front, a wall behind or a wall above
 	bool feetOnGround = false;
 	bool wallInFront = false;
@@ -93,6 +95,7 @@ public:
 	bool wallAbove = false;
 
 	bool GodMode = false;
+	bool playerIdle = false;
 	bool jumping = false;
 	bool freefall = false;
 	bool dead = false;
