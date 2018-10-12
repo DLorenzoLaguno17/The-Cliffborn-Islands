@@ -82,15 +82,15 @@ public:
 	// "Gravity"
 	float verticalAcceleration;
 
-	// It tells you wether the player has landed, has a wall in front or a wall behind
+	// It tells you wether the player has landed, has a wall in front, a wall behind or a wall above
 	bool feetOnGround = false;
 	bool wallInFront = false;
 	bool wallBehind = false;
+	bool wallAbove = false;
 
-	bool loading = false;
 	bool GodMode = false;
 	bool jumping = false;
-	bool falling = false;
+	bool freefall = false;
 	bool dead = false;
 
 };

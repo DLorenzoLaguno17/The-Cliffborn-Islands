@@ -121,7 +121,7 @@ bool j1Player::Update(float dt) {
 
 		position.y += fallingSpeed;
 		fallingSpeed += verticalAcceleration;
-		falling = true;
+		freefall = true;
 
 		if (lastDirection == lastDirection::RIGHT)
 			current_animation = &fall_right;
@@ -131,7 +131,7 @@ bool j1Player::Update(float dt) {
 
 	// Jump controls
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == j1KeyState::KEY_DOWN) {
-		if ((jumps == 0 && falling == true) || (jumps <= 1 && falling == false)) {
+		if ((jumps == 0 && freefall == true) || (jumps <= 1 && freefall == false)) {
 			jumping = true;
 			verticalSpeed = initialVerticalSpeed;
 			jumps++;
@@ -221,8 +221,6 @@ bool j1Player::Load(pugi::xml_node& data) {
 	position.x = data.child("position").attribute("x").as_int();
 	position.y = data.child("position").attribute("y").as_int();
 
-	loading = true;
-
 	return true;
 }
 
@@ -280,36 +278,31 @@ void j1Player::OnCollision(Collider* col_1, Collider* col_2)
 			}
 		}		
 
-		feetOnGround = true;
-		jumping = false;
-		falling = false;
-		verticalSpeed = initialVerticalSpeed;
-		fallingSpeed = initialFallingSpeed;
-		jumps = 0;
-
 		//If the collision is with the ground
-		/*if (col_1->type == COLLIDER_WALL) {
-			feetOnGround = true;
-			jumping = false;
-			verticalSpeed = initialVerticalSpeed;
-			fallingSpeed = 0.0f;
+		if (col_1->type == COLLIDER_WALL) {
 
-			if (position.y + current_animation->GetCurrentFrame().h > col_1->rect.y 
-				&& wallInFront == false && wallBehind == false && loading == false) {
-				position.y = col_1->rect.y - current_animation->GetCurrentFrame().h + 2;
+			if (position.y + current_animation->GetCurrentFrame().h >= col_1->rect.y 
+				&& position.y + current_animation->GetCurrentFrame().h +10 < col_1->rect.y + col_1->rect.h) {
+				feetOnGround = true;
+				jumping = false;
+				freefall = false;
+				verticalSpeed = initialVerticalSpeed;
+				fallingSpeed = initialFallingSpeed;
+				jumps = 0;
 			}
 		}
 		else if(col_2->type == COLLIDER_WALL) {
-			feetOnGround = true;
-			jumping = false;
-			verticalSpeed = initialVerticalSpeed;
-			fallingSpeed = 0.0f;
 
-			if (position.y + current_animation->GetCurrentFrame().h > col_2->rect.y 
-				&& wallInFront == false && wallBehind == false && loading == false) {
-				position.y = col_2->rect.y - current_animation->GetCurrentFrame().h + 2;
+			if (position.y + current_animation->GetCurrentFrame().h >= col_2->rect.y 
+				&& position.y + current_animation->GetCurrentFrame().h + 10 < col_2->rect.y + col_2->rect.h) {
+				feetOnGround = true;
+				jumping = false;
+				freefall = false;
+				verticalSpeed = initialVerticalSpeed;
+				fallingSpeed = initialFallingSpeed;
+				jumps = 0;
 			}			
-		}*/
+		}
 
 		//If the player collides with death_colliders
 		if (col_1->type == COLLIDER_DEATH || col_2->type == COLLIDER_DEATH)
@@ -317,6 +310,8 @@ void j1Player::OnCollision(Collider* col_1, Collider* col_2)
 			App->fade->FadeToBlack(App->scene1, App->scene1);
 			fallingSpeed = initialFallingSpeed;
 			dead = true;
+			jumping = false;
+			jumps = 0;
 		
 			if (App->fade->IsFading() == 0)
 			{
@@ -345,7 +340,5 @@ void j1Player::OnCollision(Collider* col_1, Collider* col_2)
 			
 		}
 
-		//This is only to ensure the player is loaded in the correct position, once it is, we don't need this anymore
-		loading = false;
 	}
 };
