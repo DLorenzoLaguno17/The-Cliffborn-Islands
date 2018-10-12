@@ -155,8 +155,10 @@ bool j1Player::Update(float dt) {
 		}
 		else {
 
-			position.y += verticalSpeed;
-			verticalSpeed += verticalAcceleration;
+			if (!wallAbove) {
+				position.y += verticalSpeed;
+				verticalSpeed += verticalAcceleration;
+			}
 
 			// If the player is going right
 			if (lastDirection == lastDirection::RIGHT) {
@@ -178,6 +180,9 @@ bool j1Player::Update(float dt) {
 			}
 		}
 	}
+
+	// Resetting the jump if touched the "ceiling"
+	wallAbove = false;
 
 	// God mode
 	if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)
@@ -221,16 +226,31 @@ bool j1Player::Load(pugi::xml_node& data) {
 	position.x = data.child("position").attribute("x").as_int();
 	position.y = data.child("position").attribute("y").as_int();
 
+	GodMode = data.child("godmode").attribute("value").as_bool();
+
+	if (GodMode == true)
+	{
+		player->type = COLLIDER_NONE;
+	}
+	else if (GodMode == false)
+	{
+		player->type = COLLIDER_PLAYER;
+	}
+
 	return true;
 }
 
 // Save game state
 bool j1Player::Save(pugi::xml_node& data) const {
 
-	pugi::xml_node player = data.append_child("position");
+	pugi::xml_node playerPosition = data.append_child("position");
 
-	player.append_attribute("x") = position.x;
-	player.append_attribute("y") = position.y;
+	playerPosition.append_attribute("x") = position.x;
+	playerPosition.append_attribute("y") = position.y;
+
+	pugi::xml_node godmode = data.append_child("godmode");
+
+	godmode.append_attribute("value") = GodMode;
 
 	return true;
 }
@@ -282,7 +302,7 @@ void j1Player::OnCollision(Collider* col_1, Collider* col_2)
 		if (col_1->type == COLLIDER_WALL) {
 
 			if (position.y + current_animation->GetCurrentFrame().h >= col_1->rect.y 
-				&& position.y + current_animation->GetCurrentFrame().h +10 < col_1->rect.y + col_1->rect.h) {
+				&& position.y + current_animation->GetCurrentFrame().h + 10 < col_1->rect.y + col_1->rect.h) {
 				feetOnGround = true;
 				jumping = false;
 				freefall = false;
@@ -303,6 +323,26 @@ void j1Player::OnCollision(Collider* col_1, Collider* col_2)
 				jumps = 0;
 			}			
 		}
+
+		//If the collision is with a collider above
+		/*if (col_1->type == COLLIDER_WALL) {
+
+			if (position.y <= col_1->rect.y + col_1->rect.h && position.y > col_1->rect.y + 10
+				&& position.x + current_animation->GetCurrentFrame().w > col_1->rect.x
+				&& position.x < col_1->rect.x + col_1->rect.w) {
+				wallAbove = true;
+				fallingSpeed = initialFallingSpeed;
+			}
+		}
+		else if (col_2->type == COLLIDER_WALL) {
+
+			if (position.y <= col_2->rect.y + col_2->rect.h && position.y > col_2->rect.y + 10
+				&& position.x + current_animation->GetCurrentFrame().w > col_2->rect.x
+				&& position.x < col_2->rect.x + col_2->rect.w) {
+				wallAbove = true;
+				fallingSpeed = initialFallingSpeed;
+			}
+		}*/
 
 		//If the player collides with death_colliders
 		if (col_1->type == COLLIDER_DEATH || col_2->type == COLLIDER_DEATH)
