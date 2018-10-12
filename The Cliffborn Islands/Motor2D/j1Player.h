@@ -45,12 +45,12 @@ public:
 	bool Load(pugi::xml_node&);
 	bool Save(pugi::xml_node&) const;
 
-
 public:
 
 	SDL_Texture* graphics = nullptr;
 	Animation* current_animation = nullptr;
 	Collider* player = nullptr;
+	Collider* futurePlayer = nullptr;
 
 	// Animations of the player
 	Animation idle_right;
@@ -72,7 +72,8 @@ public:
 	fPoint initialPosition;
 	fPoint position;
 
-	uint jumps = 0;
+	uint currentJumps;
+	uint initialJumps;
 
 	float godModeSpeed;
 	float horizontalSpeed;

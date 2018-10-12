@@ -22,34 +22,45 @@ j1Collisions::j1Collisions() : j1Module()
 
 	matrix[COLLIDER_NONE][COLLIDER_NONE] = false;
 	matrix[COLLIDER_NONE][COLLIDER_PLAYER] = false;
+	matrix[COLLIDER_NONE][COLLIDER_FUTURE] = false;
 	matrix[COLLIDER_NONE][COLLIDER_WALL] = true;
 	matrix[COLLIDER_NONE][COLLIDER_DEATH] = false;
 	matrix[COLLIDER_NONE][COLLIDER_WIN] = true;
 
 	matrix[COLLIDER_PLAYER][COLLIDER_NONE] = false;
 	matrix[COLLIDER_PLAYER][COLLIDER_PLAYER] = false;
+	matrix[COLLIDER_PLAYER][COLLIDER_FUTURE] = false;
 	matrix[COLLIDER_PLAYER][COLLIDER_WALL] = true;
 	matrix[COLLIDER_PLAYER][COLLIDER_DEATH] = true;
 	matrix[COLLIDER_PLAYER][COLLIDER_WIN] = true;
 
+	matrix[COLLIDER_FUTURE][COLLIDER_NONE] = false;
+	matrix[COLLIDER_FUTURE][COLLIDER_PLAYER] = false;
+	matrix[COLLIDER_FUTURE][COLLIDER_FUTURE] = false;
+	matrix[COLLIDER_FUTURE][COLLIDER_WALL] = true;
+	matrix[COLLIDER_FUTURE][COLLIDER_DEATH] = true;
+	matrix[COLLIDER_FUTURE][COLLIDER_WIN] = true;
+
 	matrix[COLLIDER_DEATH][COLLIDER_NONE] = false;
 	matrix[COLLIDER_DEATH][COLLIDER_PLAYER] = true;
+	matrix[COLLIDER_DEATH][COLLIDER_FUTURE] = true;
 	matrix[COLLIDER_DEATH][COLLIDER_WALL] = false;
 	matrix[COLLIDER_DEATH][COLLIDER_DEATH] = false;
 	matrix[COLLIDER_DEATH][COLLIDER_WIN] = false;
 
 	matrix[COLLIDER_WIN][COLLIDER_NONE] = false;
 	matrix[COLLIDER_WIN][COLLIDER_PLAYER] = true;
+	matrix[COLLIDER_WIN][COLLIDER_FUTURE] = true;
 	matrix[COLLIDER_WIN][COLLIDER_WALL] = false;
 	matrix[COLLIDER_WIN][COLLIDER_DEATH] = false;
 	matrix[COLLIDER_WIN][COLLIDER_WIN] = false;
 
 	matrix[COLLIDER_WALL][COLLIDER_NONE] = true;
 	matrix[COLLIDER_WALL][COLLIDER_PLAYER] = true;
+	matrix[COLLIDER_WALL][COLLIDER_FUTURE] = true;
 	matrix[COLLIDER_WALL][COLLIDER_WALL] = false;
 	matrix[COLLIDER_WALL][COLLIDER_DEATH] = false;
 	matrix[COLLIDER_WALL][COLLIDER_WIN] = false;
-
 }
 
 j1Collisions::~j1Collisions() {}
@@ -153,6 +164,9 @@ void j1Collisions::DrawColliders()
 			break;
 		case COLLIDER_PLAYER:	//Yellow
 			App->render->DrawQuad(colliders[i]->rect, 255, 255, 0, alpha);
+			break;
+		case COLLIDER_FUTURE:	//Black
+			App->render->DrawQuad(colliders[i]->rect, 0, 0, 0, alpha);
 			break;
 		}
 	}

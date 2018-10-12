@@ -46,6 +46,7 @@ bool j1Player::Awake(pugi::xml_node& config) {
 	initialFallingSpeed = speed.child("physics").attribute("initialFalling").as_float();
 	fallingSpeed = speed.child("physics").attribute("falling").as_float();
 	verticalAcceleration = speed.child("physics").attribute("acceleration").as_float();
+	initialJumps = speed.child("physics").attribute("jumpNumber").as_float();
 
 	return true;
 }
@@ -58,19 +59,25 @@ bool j1Player::Start() {
 	graphics = App->tex->Load("textures/character/character.png");
 
 	current_animation = &idle_right;
+
+	currentJumps = initialJumps;
 	
 	// Setting player position
 	position.x = initialPosition.x;
 	position.y = initialPosition.y;
 
-	player = App->collisions->AddCollider({ (int)position.x, (int)position.y, 22, 25 }, COLLIDER_PLAYER, this);
+	player = App->collisions->AddCollider({ (int)position.x, (int)position.y, 
+		current_animation->GetCurrentFrame().w, current_animation->GetCurrentFrame().h}, COLLIDER_PLAYER, this);
+
+	futurePlayer = App->collisions->AddCollider({ (int)position.x, (int)position.y,
+		current_animation->GetCurrentFrame().w, current_animation->GetCurrentFrame().h}, COLLIDER_FUTURE, this);
 
 	return true;
 }
 
 //Call modules before each loop iteration
 bool j1Player::PreUpdate() {
-
+	futurePlayer->SetPos((player->rect.x + horizontalSpeed), (player->rect.y + verticalSpeed));
 	return true;
 }
 
@@ -165,10 +172,10 @@ bool j1Player::Update(float dt) {
 
 		// Jump controls
 		if (App->input->GetKey(SDL_SCANCODE_SPACE) == j1KeyState::KEY_DOWN) {
-			if ((jumps == 0 && freefall == true) || (jumps <= 1 && freefall == false)) {
+			if ((currentJumps == 0 && freefall == true) || (currentJumps <= 1 && freefall == false)) {
 				jumping = true;
 				verticalSpeed = initialVerticalSpeed;
-				jumps++;
+				currentJumps++;
 			}
 		}
 
@@ -353,7 +360,7 @@ void j1Player::OnCollision(Collider* col_1, Collider* col_2)
 				freefall = false;
 				verticalSpeed = initialVerticalSpeed;
 				fallingSpeed = initialFallingSpeed;
-				jumps = 0;
+				currentJumps = initialJumps;
 			}
 		}
 		else if(col_2->type == COLLIDER_WALL) {
@@ -365,7 +372,7 @@ void j1Player::OnCollision(Collider* col_1, Collider* col_2)
 				freefall = false;
 				verticalSpeed = initialVerticalSpeed;
 				fallingSpeed = initialFallingSpeed;
-				jumps = 0;
+				currentJumps = initialJumps;
 			}			
 		}
 
@@ -396,7 +403,7 @@ void j1Player::OnCollision(Collider* col_1, Collider* col_2)
 			fallingSpeed = initialFallingSpeed;
 			dead = true;
 			jumping = false;
-			jumps = 0;
+			currentJumps = initialJumps;
 		
 			if (App->fade->IsFading() == 0)
 			{
