@@ -63,6 +63,8 @@ public:
 	Animation fall_left;
 	Animation attack_right;
 	Animation attack_left;
+	Animation godmode_right;
+	Animation godmode_left;
 
 	// To know the last direction the character was moving to
 	lastDirection lastDirection = lastDirection::RIGHT;
@@ -72,6 +74,7 @@ public:
 
 	uint jumps = 0;
 
+	float godModeSpeed;
 	float horizontalSpeed;
 	//Jumping speed
 	float initialVerticalSpeed;

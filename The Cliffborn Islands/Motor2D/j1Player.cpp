@@ -20,7 +20,9 @@ j1Player::j1Player() : j1Module()
 	jump_right.LoadAnimations("jump_right");
 	jump_left.LoadAnimations("jump_left");
 	fall_right.LoadAnimations("fall_right");
-	fall_left.LoadAnimations("fall_left");	
+	fall_left.LoadAnimations("fall_left");
+	godmode_right.LoadAnimations("godmode_right");
+	godmode_left.LoadAnimations("godmode_left");
 
 	name.create("player");
 }
@@ -40,6 +42,7 @@ bool j1Player::Awake(pugi::xml_node& config) {
 	initialVerticalSpeed = speed.child("movement").attribute("initialVertical").as_float();
 	verticalSpeed = speed.child("movement").attribute("vertical").as_float();
 	horizontalSpeed = speed.child("movement").attribute("horizontal").as_float();
+	godModeSpeed = speed.child("movement").attribute("godmode").as_float();
 	initialFallingSpeed = speed.child("physics").attribute("initialFalling").as_float();
 	fallingSpeed = speed.child("physics").attribute("falling").as_float();
 	verticalAcceleration = speed.child("physics").attribute("acceleration").as_float();
@@ -78,111 +81,143 @@ bool j1Player::Update(float dt) {
 	// CONTROL OF THE PLAYER
 	// ---------------------------------------------------------------------------------------------------------------------
 	
-	// Idle
-	if (App->input->GetKey(SDL_SCANCODE_D) == j1KeyState::KEY_IDLE
-		&& App->input->GetKey(SDL_SCANCODE_A) == j1KeyState::KEY_IDLE) {
-		if (lastDirection == lastDirection::RIGHT)
-			current_animation = &idle_right;
-		else
-			current_animation = &idle_left;
-	}
-
-	// Direction controls	
-	if (App->input->GetKey(SDL_SCANCODE_D) == j1KeyState::KEY_REPEAT) {
-		if (wallInFront == false && dead == false) {
-			position.x += horizontalSpeed;
+	// GodMode controls
+	if (GodMode) {
+		if (App->input->GetKey(SDL_SCANCODE_D) == j1KeyState::KEY_REPEAT) {
+			position.x += godModeSpeed;
 			lastDirection = lastDirection::RIGHT;
-			current_animation = &run_right;
+			current_animation = &godmode_right;
 		}
-		else if (dead == true) {
-			lastDirection = lastDirection::RIGHT;
-			current_animation = &idle_right;
-		}
-		else
-			current_animation = &idle_right;
-	}
 
-	if (App->input->GetKey(SDL_SCANCODE_A) == j1KeyState::KEY_REPEAT) {
-		if (wallBehind == false && dead == false) {
-			position.x -= horizontalSpeed;
+		if (App->input->GetKey(SDL_SCANCODE_A) == j1KeyState::KEY_REPEAT) {
+			position.x -= godModeSpeed;
 			lastDirection = lastDirection::LEFT;
-			current_animation = &run_left;
+			current_animation = &godmode_left;
 		}
-		else if (dead == true) {
-			lastDirection = lastDirection::LEFT;
-			current_animation = &idle_left;
+
+		if (App->input->GetKey(SDL_SCANCODE_W) == j1KeyState::KEY_REPEAT) {
+			position.y -= godModeSpeed;
+			if(lastDirection == lastDirection::RIGHT)
+				current_animation = &godmode_right;
+			else
+				current_animation = &godmode_left;
 		}
-		else
-			current_animation = &idle_left;
-	}
 
-	// The player falls if he has no ground
-	if (feetOnGround == false && jumping == false) {
-
-		position.y += fallingSpeed;
-		fallingSpeed += verticalAcceleration;
-		freefall = true;
-
-		if (lastDirection == lastDirection::RIGHT)
-			current_animation = &fall_right;
-		else
-			current_animation = &fall_left;
-	}
-
-	// Jump controls
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == j1KeyState::KEY_DOWN) {
-		if ((jumps == 0 && freefall == true) || (jumps <= 1 && freefall == false)) {
-			jumping = true;
-			verticalSpeed = initialVerticalSpeed;
-			jumps++;
+		if (App->input->GetKey(SDL_SCANCODE_S) == j1KeyState::KEY_REPEAT) {
+			position.y += godModeSpeed;
+			if(lastDirection == lastDirection::RIGHT)
+				current_animation = &godmode_right;
+			else
+				current_animation = &godmode_left;
 		}
 	}
-
-	// Reseting the jump every frame
-	feetOnGround = false;
-
-	// Resetting the movement
-	wallInFront = false;
-	wallBehind = false;
-
-	if (jumping == true && dead == false) {
-		// If the player touches a wall collider
-		if (feetOnGround) {
+	else {
+		// Idle
+		if (App->input->GetKey(SDL_SCANCODE_D) == j1KeyState::KEY_IDLE
+			&& App->input->GetKey(SDL_SCANCODE_A) == j1KeyState::KEY_IDLE) {
 			if (lastDirection == lastDirection::RIGHT)
 				current_animation = &idle_right;
 			else
 				current_animation = &idle_left;
 		}
-		else {
 
-			if (!wallAbove) {
-				position.y += verticalSpeed;
-				verticalSpeed += verticalAcceleration;
+		// Direction controls	
+		if (App->input->GetKey(SDL_SCANCODE_D) == j1KeyState::KEY_REPEAT) {
+			if (wallInFront == false && dead == false) {
+				position.x += horizontalSpeed;
+				lastDirection = lastDirection::RIGHT;
+				current_animation = &run_right;
 			}
+			else if (dead == true) {
+				lastDirection = lastDirection::RIGHT;
+				current_animation = &idle_right;
+			}
+			else
+				current_animation = &idle_right;
+		}
 
-			// If the player is going right
-			if (lastDirection == lastDirection::RIGHT) {
-				if (verticalSpeed <= 0) {
-					current_animation = &jump_right;
-				}
-				else if (verticalSpeed > 0) {
-					current_animation = &fall_right;
-				}
+		if (App->input->GetKey(SDL_SCANCODE_A) == j1KeyState::KEY_REPEAT) {
+			if (wallBehind == false && dead == false) {
+				position.x -= horizontalSpeed;
+				lastDirection = lastDirection::LEFT;
+				current_animation = &run_left;
 			}
-			// If the player is going left
-			if (lastDirection == lastDirection::LEFT) {
-				if (verticalSpeed <= 0) {
-					current_animation = &jump_left;
+			else if (dead == true) {
+				lastDirection = lastDirection::LEFT;
+				current_animation = &idle_left;
+			}
+			else
+				current_animation = &idle_left;
+		}
+
+		// The player falls if he has no ground
+		if (feetOnGround == false && jumping == false) {
+
+			freefall = true;
+			position.y += fallingSpeed;
+			fallingSpeed += verticalAcceleration;
+
+			if (lastDirection == lastDirection::RIGHT)
+				current_animation = &fall_right;
+			else
+				current_animation = &fall_left;
+		}
+
+		// Jump controls
+		if (App->input->GetKey(SDL_SCANCODE_SPACE) == j1KeyState::KEY_DOWN) {
+			if ((jumps == 0 && freefall == true) || (jumps <= 1 && freefall == false)) {
+				jumping = true;
+				verticalSpeed = initialVerticalSpeed;
+				jumps++;
+			}
+		}
+
+		// Reseting the jump every frame
+		feetOnGround = false;
+
+		// Resetting the movement
+		wallInFront = false;
+		wallBehind = false;
+
+		if (jumping == true && dead == false) {
+			// If the player touches a wall collider
+			if (feetOnGround) {
+				if (lastDirection == lastDirection::RIGHT)
+					current_animation = &idle_right;
+				else
+					current_animation = &idle_left;
+			}
+			else {
+
+				if (!wallAbove) {
+					position.y += verticalSpeed;
+					verticalSpeed += verticalAcceleration;
 				}
-				else if (verticalSpeed > 0) {
-					current_animation = &fall_left;
+
+				// If the player is going right
+				if (lastDirection == lastDirection::RIGHT) {
+					if (verticalSpeed <= 0) {
+						current_animation = &jump_right;
+					}
+					else if (verticalSpeed > 0) {
+						current_animation = &fall_right;
+					}
+				}
+				// If the player is going left
+				if (lastDirection == lastDirection::LEFT) {
+					if (verticalSpeed <= 0) {
+						current_animation = &jump_left;
+					}
+					else if (verticalSpeed > 0) {
+						current_animation = &fall_left;
+					}
 				}
 			}
 		}
-	}
 
-	// Resetting the jump if touched the "ceiling"
-	wallAbove = false;
+		// Resetting the jump if touched the "ceiling"
+		wallAbove = false;
+	}
 
 	// God mode
 	if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)
@@ -192,6 +227,11 @@ bool j1Player::Update(float dt) {
 		if (GodMode == true)
 		{
 			player->type = COLLIDER_NONE;
+
+			if (lastDirection == lastDirection::RIGHT)
+				current_animation = &godmode_right;
+			else
+				current_animation = &godmode_left;
 		}
 		else if (GodMode == false)
 		{
@@ -231,6 +271,11 @@ bool j1Player::Load(pugi::xml_node& data) {
 	if (GodMode == true)
 	{
 		player->type = COLLIDER_NONE;
+
+		if (lastDirection == lastDirection::RIGHT)
+			current_animation = &godmode_right;
+		else
+			current_animation = &godmode_left;
 	}
 	else if (GodMode == false)
 	{

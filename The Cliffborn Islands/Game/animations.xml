@@ -40,27 +40,37 @@
       <animation x="3" y="129" w="20" h="25"/>
     </run_left>
 
-    <jump_right loop="true" speed="0.25f">
+    <jump_right loop="true" speed="0.15f">
       <animation x="2" y="158" w="20" h="25"/>
       <animation x="34" y="158" w="20" h="25"/>
     </jump_right>
 
-    <jump_left loop="true" speed="0.25f">
+    <jump_left loop="true" speed="0.15f">
       <animation x="272" y="158" w="20" h="25"/>
       <animation x="240" y="158" w="20" h="25"/>
     </jump_left>
 
-    <fall_right loop="true" speed="0.25f">
+    <fall_right loop="true" speed="0.15f">
       <animation x="87" y="157" w="22" h="26"/>
       <animation x="119" y="157" w="22" h="26"/>
     </fall_right>
 
-    <fall_left loop="true" speed="0.25f">
+    <fall_left loop="true" speed="0.15f">
       <animation x="185" y="157" w="22" h="26"/>
       <animation x="153" y="157" w="22" h="26"/>
     </fall_left>
+	
+	<godmode_right loop="true" speed="0.1f">	
+      <animation x="85" y="34" w="29" h="27"/>
+      <animation x="118" y="34" w="28" h="27"/>
+	</godmode_right>
+	
+	<godmode_left loop="true" speed="0.1f">	
+      <animation x="188" y="34" w="29" h="27"/>
+      <animation x="156" y="34" w="28" h="27"/>
+	</godmode_left>		
 
-    <attack_right loop="false" speed="0.025f">
+    <attack_right loop="false" speed="0.015f">
       <animation x="1" y="272" w="29" h="27"/>
       <animation x="64" y="272" w="29" h="27"/>
       <animation x="135" y="272" w="35" h="27"/>
@@ -68,7 +78,7 @@
       <animation x="253" y="272" w="42" h="27"/>
     </attack_right>
 
-    <attack_left loop="false" speed="0.025f">
+    <attack_left loop="false" speed="0.015f">
       <animation x="269" y="244" w="29" h="27"/>
       <animation x="206" y="244" w="29" h="27"/>
       <animation x="129" y="244" w="35" h="27"/>
