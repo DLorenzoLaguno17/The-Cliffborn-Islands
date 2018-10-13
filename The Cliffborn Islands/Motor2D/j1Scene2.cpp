@@ -67,12 +67,17 @@ bool j1Scene2::Update(float dt)
 
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 	{
-
+		ChangeScene();
+		App->player->position.x = 0;
+		App->player->position.y = 20;
+		App->render->camera.x = 0;
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
 	{
-
+		App->player->position.x = 0;
+		App->player->position.y = 40;
+		App->render->camera.x = 0;
 	}
 
 	// Control of the camera
@@ -95,10 +100,6 @@ bool j1Scene2::Update(float dt)
 		if (App->render->camera.x > 0)
 			App->render->camera.x = 0;
 	}
-
-	// Limit player X position
-	//if (App->player->position.x > playerLimit)
-	//	App->player->position.x = playerLimit;
 
 	if (App->player->position.x < 0)
 		App->player->position.x = 0;

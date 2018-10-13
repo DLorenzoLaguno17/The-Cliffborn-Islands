@@ -82,8 +82,8 @@ bool j1Scene1::Update(float dt)
 
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN) 
 	{
-		App->player->position.x = 50;
-		App->player->position.y = 100;
+		App->player->position.x = 0;
+		App->player->position.y = 20;
 		App->render->camera.x = 0;
 	}
 		
