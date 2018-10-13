@@ -9,11 +9,6 @@
 struct SDL_Texture;
 struct Collider;
 
-enum lastDirection {
-	RIGHT,
-	LEFT
-};
-
 class j1Player : public j1Module
 {
 
@@ -53,21 +48,15 @@ public:
 	Collider* futurePlayer = nullptr;
 
 	// Animations of the player
-	Animation idle_right;
-	Animation idle_left;
-	Animation run_right;
-	Animation run_left;
-	Animation jump_right;
-	Animation jump_left;
-	Animation fall_right;
-	Animation fall_left;
-	Animation attack_right;
-	Animation attack_left;
-	Animation godmode_right;
-	Animation godmode_left;
+	Animation idle;
+	Animation run;
+	Animation jump;
+	Animation fall;
+	Animation attack;
+	Animation godmode;
 
 	// To know the last direction the character was moving to
-	lastDirection lastDirection = lastDirection::RIGHT;
+	bool facingRight = true;
 	
 	fPoint initialPosition;
 	fPoint position;

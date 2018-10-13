@@ -14,16 +14,11 @@ j1Player::j1Player() : j1Module()
 {
 	current_animation = NULL;
 	
-	idle_right.LoadAnimations("idle_right");
-	idle_left.LoadAnimations("idle_left");
-	run_right.LoadAnimations("run_right");
-	run_left.LoadAnimations("run_left");
-	jump_right.LoadAnimations("jump_right");
-	jump_left.LoadAnimations("jump_left");
-	fall_right.LoadAnimations("fall_right");
-	fall_left.LoadAnimations("fall_left");
-	godmode_right.LoadAnimations("godmode_right");
-	godmode_left.LoadAnimations("godmode_left");
+	idle.LoadAnimations("idle");
+	run.LoadAnimations("run");
+	jump.LoadAnimations("jump");
+	fall.LoadAnimations("fall");
+	godmode.LoadAnimations("godmode");
 
 	name.create("player");
 }
@@ -65,8 +60,7 @@ bool j1Player::Start() {
 	LOG("Loading player textures");
 	graphics = App->tex->Load("textures/character/character.png");
 
-	current_animation = &idle_right;
-
+	current_animation = &idle;
 	currentJumps = initialJumps;
 	
 	// Setting player position
@@ -94,71 +88,62 @@ bool j1Player::Update(float dt) {
 	
 	// GodMode controls
 	if (GodMode) {
+
+		current_animation = &godmode;
+
 		if (App->input->GetKey(SDL_SCANCODE_D) == j1KeyState::KEY_REPEAT) {
 			position.x += godModeSpeed;
-			lastDirection = lastDirection::RIGHT;
-			current_animation = &godmode_right;
+			facingRight = true;
 		}
 
 		if (App->input->GetKey(SDL_SCANCODE_A) == j1KeyState::KEY_REPEAT) {
 			position.x -= godModeSpeed;
-			lastDirection = lastDirection::LEFT;
-			current_animation = &godmode_left;
+			facingRight = false;
 		}
 
 		if (App->input->GetKey(SDL_SCANCODE_W) == j1KeyState::KEY_REPEAT) {
 			position.y -= godModeSpeed;
-			if(lastDirection == lastDirection::RIGHT)
-				current_animation = &godmode_right;
-			else
-				current_animation = &godmode_left;
 		}
 
 		if (App->input->GetKey(SDL_SCANCODE_S) == j1KeyState::KEY_REPEAT) {
 			position.y += godModeSpeed;
-			if(lastDirection == lastDirection::RIGHT)
-				current_animation = &godmode_right;
-			else
-				current_animation = &godmode_left;
 		}
 	}
 	else {
 		// Idle
 		if (App->input->GetKey(SDL_SCANCODE_D) == j1KeyState::KEY_IDLE
 			&& App->input->GetKey(SDL_SCANCODE_A) == j1KeyState::KEY_IDLE) {
-			if (lastDirection == lastDirection::RIGHT)
-				current_animation = &idle_right;
-			else
-				current_animation = &idle_left;
+			
+			current_animation = &idle;
 		}
 
 		// Direction controls	
 		if (App->input->GetKey(SDL_SCANCODE_D) == j1KeyState::KEY_REPEAT) {
 			if (wallInFront == false && dead == false) {
 				position.x += horizontalSpeed;
-				lastDirection = lastDirection::RIGHT;
-				current_animation = &run_right;
+				facingRight = true;
+				current_animation = &run;
 			}
 			else if (dead == true) {
-				lastDirection = lastDirection::RIGHT;
-				current_animation = &idle_right;
+				facingRight = true;
+				current_animation = &idle;
 			}
 			else
-				current_animation = &idle_right;
+				current_animation = &idle;
 		}
 
 		if (App->input->GetKey(SDL_SCANCODE_A) == j1KeyState::KEY_REPEAT) {
 			if (wallBehind == false && dead == false) {
 				position.x -= horizontalSpeed;
-				lastDirection = lastDirection::LEFT;
-				current_animation = &run_left;
+				facingRight = false;
+				current_animation = &run;
 			}
 			else if (dead == true) {
-				lastDirection = lastDirection::LEFT;
-				current_animation = &idle_left;
+				facingRight = false;
+				current_animation = &idle;
 			}
 			else
-				current_animation = &idle_left;
+				current_animation = &idle;			
 		}
 
 		// The player falls if he has no ground
@@ -167,11 +152,7 @@ bool j1Player::Update(float dt) {
 			freefall = true;
 			position.y += fallingSpeed;
 			fallingSpeed += verticalAcceleration;
-
-			if (lastDirection == lastDirection::RIGHT)
-				current_animation = &fall_right;
-			else
-				current_animation = &fall_left;
+			current_animation = &fall;
 		}
 		else {
 			freefall = false;
@@ -192,36 +173,21 @@ bool j1Player::Update(float dt) {
 		if (jumping == true && dead == false) {
 			// If the player touches a wall collider
 			if (feetOnGround) {
-				if (lastDirection == lastDirection::RIGHT)
-					current_animation = &idle_right;
-				else
-					current_animation = &idle_left;
 
+				current_animation = &idle;
 				jumping = false;
 			}
 			else {
 
 				position.y += verticalSpeed;
-				verticalSpeed += verticalAcceleration;
-			
+				verticalSpeed += verticalAcceleration;			
 
-				// If the player is going right
-				if (lastDirection == lastDirection::RIGHT) {
-					if (verticalSpeed <= 0) {
-						current_animation = &jump_right;
-					}
-					else if (verticalSpeed > 0) {
-						current_animation = &fall_right;
-					}
+				// While the player is falling
+				if (verticalSpeed <= 0) {
+					current_animation = &jump;
 				}
-				// If the player is going left
-				if (lastDirection == lastDirection::LEFT) {
-					if (verticalSpeed <= 0) {
-						current_animation = &jump_left;
-					}
-					else if (verticalSpeed > 0) {
-						current_animation = &fall_left;
-					}
+				else if (verticalSpeed > 0) {
+					current_animation = &fall;				
 				}
 			}
 		}
@@ -242,11 +208,8 @@ bool j1Player::Update(float dt) {
 		if (GodMode == true)
 		{
 			player->type = COLLIDER_NONE;
-
-			if (lastDirection == lastDirection::RIGHT)
-				current_animation = &godmode_right;
-			else
-				current_animation = &godmode_left;
+			current_animation = &godmode;
+			
 		}
 		else if (GodMode == false)
 		{
@@ -264,7 +227,10 @@ bool j1Player::Update(float dt) {
 	SDL_Rect character = current_animation->GetCurrentFrame();
 
 	// Blitting the player
-	App->render->Blit(graphics, (int)position.x, (int)position.y, &character);
+	if (facingRight == true)
+		App->render->Blit(graphics, (int)position.x, (int)position.y, &character, SDL_FLIP_NONE);
+	else
+		App->render->Blit(graphics, (int)position.x, (int)position.y, &character, SDL_FLIP_HORIZONTAL);
 
 	return true;
 }
@@ -286,11 +252,7 @@ bool j1Player::Load(pugi::xml_node& data) {
 	if (GodMode == true)
 	{
 		player->type = COLLIDER_NONE;
-
-		if (lastDirection == lastDirection::RIGHT)
-			current_animation = &godmode_right;
-		else
-			current_animation = &godmode_left;
+		current_animation = &godmode;
 	}
 	else if (GodMode == false)
 	{
