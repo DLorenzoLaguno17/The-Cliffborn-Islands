@@ -293,6 +293,32 @@ void j1Player::OnCollision(Collider* col_1, Collider* col_2)
 	if (col_1->type == COLLIDER_PLAYER || col_1->type == COLLIDER_NONE || col_1->type == COLLIDER_FUTURE
 		|| col_2->type == COLLIDER_PLAYER || col_2->type == COLLIDER_NONE || col_2->type == COLLIDER_FUTURE)
 	{
+		if (col_1->type == COLLIDER_WIN || col_2->type == COLLIDER_WIN)
+		{
+			if (App->scene1->active)
+				App->scene1->ChangeScene();
+			else if (App->scene2->active)
+				App->scene2->ChangeScene();
+
+			fallingSpeed = initialFallingSpeed;
+			dead = true;
+			jumping = false;
+
+			if (App->fade->IsFading() == 0)
+			{
+				position.x = initialPosition.x;
+				position.y = initialPosition.y;
+				App->render->camera.x = App->render->initialCameraX;
+				App->render->camera.y = App->render->initialCameraY;
+				dead = false;
+			}
+
+		}
+
+		if (GodMode) {
+			return;
+		}
+
 		//If the collision is with a wall behind
 		if (col_1->type == COLLIDER_WALL) {
 
@@ -381,28 +407,6 @@ void j1Player::OnCollision(Collider* col_1, Collider* col_2)
 				App->render->camera.y = App->render->initialCameraY;
 				dead = false;
 			}
-		}
-
-		if (col_1->type == COLLIDER_WIN || col_2->type == COLLIDER_WIN)
-		{
-			if (App->scene1->active)
-				App->scene1->ChangeScene();
-			else if (App->scene2->active)
-				App->scene2->ChangeScene();
-
-			fallingSpeed = initialFallingSpeed;
-			dead = true;
-			jumping = false;
-
-			if (App->fade->IsFading() == 0)
-			{
-				position.x = initialPosition.x;
-				position.y = initialPosition.y;
-				App->render->camera.x = App->render->initialCameraX;
-				App->render->camera.y = App->render->initialCameraY;
-				dead = false;
-			}
-			
 		}
 
 	}

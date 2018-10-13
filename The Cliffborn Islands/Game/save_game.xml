@@ -8,12 +8,12 @@
 	<scene1 />
 	<scene2 />
 	<player>
-		<position x="2336.37744" y="72.2500076" />
-		<godmode value="false" />
+		<position x="2339.19507" y="62.6000519" />
+		<godmode value="true" />
 	</player>
 	<fade />
 	<collisions />
 	<renderer>
-		<camera x="-8571" y="0" />
+		<camera x="-8572" y="0" />
 	</renderer>
 </game_state>
