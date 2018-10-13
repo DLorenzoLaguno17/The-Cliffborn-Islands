@@ -149,7 +149,8 @@ void j1Scene1::ChangeScene()
 	App->scene2->active = true;
 	App->scene1->active = false;
 	CleanUp();
-	App->player->CleanUp();
+	App->scene1->CleanUp();
+	App->fade->FadeToBlack(App->scene1, App->scene2, 0.8f);
 	App->player->Start();
 	App->render->camera = { 0,0 };
 	App->scene2->Start();

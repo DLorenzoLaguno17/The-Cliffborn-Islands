@@ -11,6 +11,7 @@
 #include "j1Player.h"
 #include "j1Scene2.h"
 #include "j1Scene1.h"
+#include "j1FadeToBlack.h"
 
 #define CAMERA_LIMIT -8570
 #define PLAYER_LIMIT 2374
@@ -155,9 +156,11 @@ void j1Scene2::ChangeScene()
 	App->scene1->active = true;
 	App->scene2->active = false;
 	CleanUp();
-	App->player->CleanUp();
+	App->scene2->CleanUp();
+	App->fade->FadeToBlack(App->scene2, App->scene1, 0.8f);
 	App->player->Start();
 	App->render->camera = { 0,0 };
 	App->scene1->Start();
 }
+	
 
