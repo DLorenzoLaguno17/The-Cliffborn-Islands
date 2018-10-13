@@ -71,6 +71,8 @@ public:
 	
 	fPoint initialPosition;
 	fPoint position;
+	iPoint playerSize;
+	iPoint margin;
 
 	uint currentJumps;
 	uint initialJumps;

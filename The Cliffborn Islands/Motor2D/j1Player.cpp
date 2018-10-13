@@ -36,6 +36,12 @@ bool j1Player::Awake(pugi::xml_node& config) {
 	initialPosition.x = config.child("position").attribute("x").as_int();
 	initialPosition.y = config.child("position").attribute("y").as_int();
 
+	// Copying the size of the player
+	playerSize.x = config.child("size").attribute("width").as_int();
+	playerSize.y = config.child("size").attribute("height").as_int();
+	margin.x = config.child("margin").attribute("x").as_int();
+	margin.y = config.child("margin").attribute("y").as_int();
+
 	// Copying values of the speed
 	pugi::xml_node speed = config.child("speed");
 
@@ -66,11 +72,8 @@ bool j1Player::Start() {
 	position.x = initialPosition.x;
 	position.y = initialPosition.y;
 
-	player = App->collisions->AddCollider({ (int)position.x, (int)position.y, 
-		current_animation->GetCurrentFrame().w, current_animation->GetCurrentFrame().h}, COLLIDER_PLAYER, this);
-
-	futurePlayer = App->collisions->AddCollider({ (int)position.x, (int)position.y,
-		current_animation->GetCurrentFrame().w, current_animation->GetCurrentFrame().h}, COLLIDER_FUTURE, this);
+	player = App->collisions->AddCollider({ (int)position.x + margin.x, (int)position.y + margin.y, playerSize.x, playerSize.y}, COLLIDER_PLAYER, this);
+	futurePlayer = App->collisions->AddCollider({ (int)position.x, (int)position.y, playerSize.x, playerSize.y}, COLLIDER_FUTURE, this);
 
 	return true;
 }
@@ -251,7 +254,7 @@ bool j1Player::Update(float dt) {
 	}
 
 	// Update collider position to player position
-	player->SetPos(position.x, position.y);
+	player->SetPos(position.x + margin.x, position.y + margin.y);
 
 	// ---------------------------------------------------------------------------------------------------------------------
 	// DRAWING EVERYTHING ON THE SCREEN
