@@ -324,7 +324,6 @@ bool j1Player::CleanUp() {
 // Detects collision with a wall. If so, the player cannot go further
 void j1Player::OnCollision(Collider* col_1, Collider* col_2)
 {
-
 	if (col_1->type == COLLIDER_PLAYER || col_1->type == COLLIDER_NONE || col_1->type == COLLIDER_FUTURE
 		|| col_2->type == COLLIDER_PLAYER || col_2->type == COLLIDER_NONE || col_2->type == COLLIDER_FUTURE)
 	{
