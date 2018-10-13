@@ -75,7 +75,7 @@ bool j1Player::Start() {
 
 //Call modules before each loop iteration
 bool j1Player::PreUpdate() {
-	futurePlayer->SetPos((player->rect.x + horizontalSpeed), (player->rect.y + verticalSpeed));
+	futurePlayer->SetPos((player->rect.x - horizontalSpeed), (player->rect.y - verticalSpeed));
 	return true;
 }
 
@@ -112,10 +112,8 @@ bool j1Player::Update(float dt) {
 	else {
 		// Idle
 		if (App->input->GetKey(SDL_SCANCODE_D) == j1KeyState::KEY_IDLE
-			&& App->input->GetKey(SDL_SCANCODE_A) == j1KeyState::KEY_IDLE) {
-			
-			current_animation = &idle;
-		}
+			&& App->input->GetKey(SDL_SCANCODE_A) == j1KeyState::KEY_IDLE) 
+			current_animation = &idle;		
 
 		// Direction controls	
 		if (App->input->GetKey(SDL_SCANCODE_D) == j1KeyState::KEY_REPEAT) {
@@ -312,6 +310,7 @@ void j1Player::OnCollision(Collider* col_1, Collider* col_2)
 
 		}
 
+		// GodMode only collides with COLLIDER_WIN
 		if (GodMode) {
 			return;
 		}
@@ -319,26 +318,26 @@ void j1Player::OnCollision(Collider* col_1, Collider* col_2)
 		//If the collision is with a wall behind
 		if (col_1->type == COLLIDER_WALL) {
 
-			if (position.x < col_1->rect.x + col_1->rect.w
-				&& position.x - col_1->rect.x > 0
-				&& position.y + current_animation->GetCurrentFrame().h > col_1->rect.y + 10) {
+			if (player->rect.x < col_1->rect.x + col_1->rect.w
+				&& player->rect.x - col_1->rect.x > 0
+				&& player->rect.y + playerSize.y > col_1->rect.y + 10) {
 				wallBehind = true;
 			}
 			//If the collision is with a wall in front
-			else if (position.x + current_animation->GetCurrentFrame().w > col_1->rect.x
-				&& position.y + current_animation->GetCurrentFrame().h > col_1->rect.y + 10) {
+			else if (player->rect.x + playerSize.x > col_1->rect.x
+				&& player->rect.y + playerSize.y > col_1->rect.y + 10) {
 				wallInFront = true;
 			}
 		}
 		else if (col_2->type == COLLIDER_WALL) {
 			
-			if (position.x < col_2->rect.x + col_2->rect.w
-				&& position.x - col_2->rect.x > 0
-				&& position.y + current_animation->GetCurrentFrame().h > col_2->rect.y + 10) {
+			if (player->rect.x < col_2->rect.x + col_2->rect.w
+				&& player->rect.x - col_2->rect.x > 0
+				&& player->rect.y + playerSize.y > col_2->rect.y + 10) {
 				wallBehind = true;
 			}
-			else if (position.x + current_animation->GetCurrentFrame().w > col_2->rect.x
-				&& position.y + current_animation->GetCurrentFrame().h > col_2->rect.y + 10) {
+			else if (player->rect.x + playerSize.x > col_2->rect.x
+				&& player->rect.y + playerSize.y > col_2->rect.y + 10) {
 				wallInFront = true;
 			}
 		}		
@@ -346,8 +345,8 @@ void j1Player::OnCollision(Collider* col_1, Collider* col_2)
 		//If the collision is with the ground
 		if (col_1->type == COLLIDER_WALL) {
 
-			if (position.y + current_animation->GetCurrentFrame().h >= col_1->rect.y 
-				&& position.y + current_animation->GetCurrentFrame().h + 10 < col_1->rect.y + col_1->rect.h) {
+			if (player->rect.y + playerSize.y >= col_1->rect.y
+				&& player->rect.y + playerSize.y + 10 < col_1->rect.y + col_1->rect.h) {
 				feetOnGround = true;
 				jumping = false;
 				freefall = false;
@@ -358,8 +357,8 @@ void j1Player::OnCollision(Collider* col_1, Collider* col_2)
 		}
 		else if(col_2->type == COLLIDER_WALL) {
 
-			if (position.y + current_animation->GetCurrentFrame().h >= col_2->rect.y 
-				&& position.y + current_animation->GetCurrentFrame().h + 10 < col_2->rect.y + col_2->rect.h) {
+			if (player->rect.y + playerSize.y >= col_2->rect.y
+				&& player->rect.y + playerSize.y + 10 < col_2->rect.y + col_2->rect.h) {
 				feetOnGround = true;
 				jumping = false;
 				freefall = false;

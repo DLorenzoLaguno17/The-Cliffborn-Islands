@@ -1,6 +1,6 @@
 <animations>
   <player>
-    <idle loop="true" speed="0.04f">
+    <idle loop="true" speed="0.25f">
       <animation x="2" y="184" w="22" h="25"/>
       <animation x="33" y="184" w="24" h="25"/>
       <animation x="65" y="184" w="24" h="25"/>
@@ -9,7 +9,7 @@
       <animation x="163" y="184" w="21" h="25"/>
     </idle>
 
-    <run loop="true" speed="0.04f">
+    <run loop="true" speed="0.25f">
       <animation x="1" y="96" w="23" h="25"/>
       <animation x="32" y="99" w="25" h="25"/>
       <animation x="65" y="99" w="23" h="25"/>
