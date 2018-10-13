@@ -8,6 +8,7 @@
 #include "j1Render.h"
 #include "j1FadeToBlack.h"
 #include "j1Scene1.h"
+#include "j1Scene2.h"
 
 j1Player::j1Player() : j1Module()
 {
@@ -422,7 +423,11 @@ void j1Player::OnCollision(Collider* col_1, Collider* col_2)
 
 		if (col_1->type == COLLIDER_WIN || col_2->type == COLLIDER_WIN)
 		{
-			App->scene1->ChangeScene();
+			if (App->scene1->active)
+				App->scene1->ChangeScene();
+			else if (App->scene2->active)
+				App->scene2->ChangeScene();
+
 			fallingSpeed = initialFallingSpeed;
 			dead = true;
 			jumping = false;

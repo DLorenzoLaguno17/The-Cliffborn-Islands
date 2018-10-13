@@ -5,19 +5,15 @@
 	<textures />
 	<audio />
 	<map />
-  <scene1>
-
-  </scene1>
-  <scene2>
-
-  </scene2>
+	<scene1 />
+	<scene2 />
 	<player>
-		<position x="120.799881" y="73.2000198" />
-		<godmode value="false" />
+		<position x="297.200592" y="55.9500008" />
+		<godmode value="true" />
 	</player>
 	<fade />
 	<collisions />
 	<renderer>
-		<camera x="-78" y="0" />
+		<camera x="-782" y="0" />
 	</renderer>
 </game_state>
