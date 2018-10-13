@@ -32,6 +32,9 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	// Called to change scene
+	void ChangeScene();
+
 private:
 
 	int cameraLimit;

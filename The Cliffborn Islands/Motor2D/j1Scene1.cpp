@@ -10,6 +10,8 @@
 #include "j1Map.h"
 #include "j1Player.h"
 #include "j1Scene1.h"
+#include "j1Scene2.h"
+#include "j1FadeToBlack.h"
 
 j1Scene1::j1Scene1() : j1Module()
 {
@@ -29,17 +31,22 @@ bool j1Scene1::Awake(pugi::xml_node& config)
 	cameraLimit = config.child("camera").attribute("cameraLimit").as_int();
 	playerLimit = config.child("camera").attribute("playerLimit").as_int();
 
+
 	return ret;
 }
 
 // Called before the first frame
 bool j1Scene1::Start()
 {
-	// The map is loaded
-	App->map->Load("lvl1.tmx");
 
-	// The audio is played
-	App->audio->PlayMusic("audio/music/level1_music.ogg", 1.0f);	
+	if (active)
+	{
+		// The map is loaded
+		App->map->Load("lvl1.tmx");
+
+		// The audio is played
+		App->audio->PlayMusic("audio/music/level1_music.ogg", 1.0f);
+	}
 
 	return true;
 }
@@ -72,6 +79,14 @@ bool j1Scene1::Update(float dt)
 
 	if(App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
 		App->render->camera.x -= 5;
+
+	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN) 
+	{
+		App->player->position.x = 50;
+		App->player->position.y = 100;
+		App->render->camera.x = 0;
+	}
+		
 
 	// Camera control
 	if (App->render->camera.x > cameraLimit)
@@ -118,7 +133,22 @@ bool j1Scene1::PostUpdate()
 bool j1Scene1::CleanUp()
 {
 	LOG("Freeing scene");
+
 	App->map->CleanUp();
+	App->collisions->CleanUp();
+	App->tex->CleanUp();
+	App->player->CleanUp();
 
 	return true;
+}
+
+void j1Scene1::ChangeScene()
+{
+	App->scene2->active = true;
+	App->scene1->active = false;
+	CleanUp();
+	App->player->CleanUp();
+	App->player->Start();
+	App->render->camera = { 0,0 };
+	App->scene2->Start();
 }

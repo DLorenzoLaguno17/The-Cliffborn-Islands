@@ -10,6 +10,7 @@
 #include "j1Map.h"
 #include "j1Player.h"
 #include "j1Scene2.h"
+#include "j1Scene1.h"
 
 j1Scene2::j1Scene2() : j1Module()
 {
@@ -25,9 +26,11 @@ bool j1Scene2::Awake(pugi::xml_node& config)
 {
 	LOG("Loading Scene 2");
 	bool ret = true;
-
 	cameraLimit = config.child("camera").attribute("cameraLimit").as_int();
 	playerLimit = config.child("camera").attribute("playerLimit").as_int();
+
+	if (App->scene1->active == true) 
+		active = false; 
 
 	return ret;
 }
@@ -35,12 +38,14 @@ bool j1Scene2::Awake(pugi::xml_node& config)
 // Called before the first frame
 bool j1Scene2::Start()
 {
-	// The map is loaded
-	//App->map->Load("lvl2.tmx");
-
-	// The audio is played
-	//App->audio->PlayMusic("audio/music/level2_music.ogg", 1.0f);
-
+	if (active)
+	{
+		// The map is loaded
+		App->map->Load("lvl2.tmx"); 
+		// The audio is played
+		App->audio->PlayMusic("audio/music/level2_music.ogg", 1.0f); 
+	}
+	
 	return true;
 }
 
@@ -60,6 +65,16 @@ bool j1Scene2::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
 		App->SaveGame("save_game.xml");
 
+	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
+	{
+
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
+	{
+
+	}
+
 	// Control of the camera
 	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
 		App->render->camera.y += 5;
@@ -74,7 +89,7 @@ bool j1Scene2::Update(float dt)
 		App->render->camera.x -= 5;
 
 	// Camera control
-	if (App->render->camera.x > cameraLimit)
+	if (App->render->camera.x > -8575)  //need to put the X value in XML
 	{
 		App->render->camera.x = -App->player->position.x * 4 + 400;
 		if (App->render->camera.x > 0)
@@ -82,8 +97,8 @@ bool j1Scene2::Update(float dt)
 	}
 
 	// Limit player X position
-	if (App->player->position.x > playerLimit)
-		App->player->position.x = playerLimit;
+	//if (App->player->position.x > playerLimit)
+	//	App->player->position.x = playerLimit;
 
 	if (App->player->position.x < 0)
 		App->player->position.x = 0;
@@ -118,7 +133,23 @@ bool j1Scene2::PostUpdate()
 bool j1Scene2::CleanUp()
 {
 	LOG("Freeing scene");
+
 	App->map->CleanUp();
+	App->collisions->CleanUp();
+	App->tex->CleanUp();
+	App->player->CleanUp();
 
 	return true;
 }
+
+void j1Scene2::ChangeScene()
+{
+	App->scene1->active = true;
+	App->scene2->active = false;
+	CleanUp();
+	App->player->CleanUp();
+	App->player->Start();
+	App->render->camera = { 0,0 };
+	App->scene1->Start();
+}
+

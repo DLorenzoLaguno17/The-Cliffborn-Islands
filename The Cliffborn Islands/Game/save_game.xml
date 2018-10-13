@@ -5,7 +5,12 @@
 	<textures />
 	<audio />
 	<map />
-	<scene1 />
+  <scene1>
+
+  </scene1>
+  <scene2>
+
+  </scene2>
 	<player>
 		<position x="120.799881" y="73.2000198" />
 		<godmode value="false" />

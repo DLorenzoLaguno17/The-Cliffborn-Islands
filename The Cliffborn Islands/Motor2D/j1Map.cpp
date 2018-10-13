@@ -69,6 +69,7 @@ void j1Map::Draw()
 		}
 	}
 
+
 }
 
 TileSet* j1Map::GetTilesetFromTileId(int id) const
@@ -249,10 +250,7 @@ bool j1Map::Load(const char* file_name)
 		}
 	}
 
-	if (!collidersDrawn) {
-		PutColliders(file_name);
-		collidersDrawn = true;
-	}
+	PutColliders(file_name);
 
 	map_loaded = ret;
 

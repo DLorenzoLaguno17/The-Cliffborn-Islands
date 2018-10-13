@@ -422,7 +422,7 @@ void j1Player::OnCollision(Collider* col_1, Collider* col_2)
 
 		if (col_1->type == COLLIDER_WIN || col_2->type == COLLIDER_WIN)
 		{
-			App->fade->FadeToBlack(App->scene1, App->scene1);
+			App->scene1->ChangeScene();
 			fallingSpeed = initialFallingSpeed;
 			dead = true;
 			jumping = false;
