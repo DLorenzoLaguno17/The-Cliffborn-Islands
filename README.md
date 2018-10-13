@@ -1,6 +1,6 @@
 # The Cliffborn Islands
 
-Go to our [GitHub](https://github.com/DLorenzoLaguno17/The-Cliffborn-Islands). 
+Go to our GitHub: https://github.com/DLorenzoLaguno17/The-Cliffborn-Islands 
 
 ## Controls
 
@@ -32,7 +32,7 @@ There is a hook you might need to use in order to complete the level. When you t
 	Nauris Amatnieks (https://twitter.com/Namatnieks)
 
 ### Music
-	Music of the first level: "Airship Serenity"
+	Music of the first and second level: "Airship Serenity"
 	Kevin MacLeod (incompetech.com)
 	Licensed under Creative Commons: By Attribution 3.0
 	http://creativecommons.org/licenses/by/3.0/
