@@ -154,9 +154,6 @@ bool j1Player::Update(float dt) {
 			fallingSpeed += verticalAcceleration;
 			current_animation = &fall;
 		}
-		else {
-			freefall = false;
-		}
 
 		// Jump controls
 		if (App->input->GetKey(SDL_SCANCODE_SPACE) == j1KeyState::KEY_DOWN) {
@@ -353,6 +350,7 @@ void j1Player::OnCollision(Collider* col_1, Collider* col_2)
 				&& position.y + current_animation->GetCurrentFrame().h + 10 < col_1->rect.y + col_1->rect.h) {
 				feetOnGround = true;
 				jumping = false;
+				freefall = false;
 				verticalSpeed = initialVerticalSpeed;
 				fallingSpeed = initialFallingSpeed;
 				currentJumps = initialJumps;
@@ -364,6 +362,7 @@ void j1Player::OnCollision(Collider* col_1, Collider* col_2)
 				&& position.y + current_animation->GetCurrentFrame().h + 10 < col_2->rect.y + col_2->rect.h) {
 				feetOnGround = true;
 				jumping = false;
+				freefall = false;
 				verticalSpeed = initialVerticalSpeed;
 				fallingSpeed = initialFallingSpeed;
 				currentJumps = initialJumps;
