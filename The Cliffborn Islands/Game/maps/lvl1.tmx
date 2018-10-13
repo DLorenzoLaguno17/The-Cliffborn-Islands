@@ -12636,13 +12636,13 @@
  </layer>
  <objectgroup color="#00aaff" name="map_collisions">
   <object id="79" x="0" y="48.9091" width="76.1818" height="14"/>
-  <object id="81" x="98.5" y="161.125" width="47.875" height="31.125"/>
-  <object id="82" x="145.091" y="144.545" width="91.2727" height="16.7886"/>
-  <object id="83" x="231.25" y="161.185" width="65" height="14.7812"/>
-  <object id="84" x="332.25" y="161.188" width="16.25" height="30.3125"/>
-  <object id="85" x="401.818" y="112.909" width="48.4318" height="26.017"/>
-  <object id="86" x="418.545" y="138.367" width="31.6989" height="31.088"/>
-  <object id="87" x="434.114" y="169.463" width="15.9659" height="22.4688"/>
+  <object id="81" x="98.5" y="161.875" width="60.875" height="31.375"/>
+  <object id="82" x="145.091" y="144.545" width="91.2727" height="17.7886"/>
+  <object id="83" x="231.25" y="161.435" width="65" height="14.5312"/>
+  <object id="84" x="332.25" y="161.188" width="16.25" height="31.3125"/>
+  <object id="85" x="401.818" y="112.909" width="54.1818" height="26.017"/>
+  <object id="86" x="418.545" y="138.367" width="37.4489" height="31.088"/>
+  <object id="87" x="434.114" y="169.463" width="21.7159" height="23.7188"/>
   <object id="88" x="449.25" y="96.625" width="43.5" height="16.3098"/>
   <object id="89" x="481.898" y="112.973" width="71.4659" height="16.1186"/>
   <object id="90" x="544.466" y="96.5455" width="155.215" height="16.3637"/>
@@ -12673,7 +12673,7 @@
   <object id="119" x="1593.25" y="48.5" width="147.75" height="13.75"/>
   <object id="120" x="1641.5" y="61.9318" width="92" height="13.0227"/>
   <object id="121" x="1671.25" y="74.0682" width="46.75" height="18.6818"/>
-  <object id="130" x="1776" y="160" width="80" height="32"/>
+  <object id="130" x="1776" y="160" width="80" height="32.75"/>
   <object id="131" x="1824.55" y="32" width="59.2727" height="19.7273"/>
   <object id="137" x="2034.5" y="128.75" width="138.25" height="43"/>
   <object id="138" x="2160.75" y="171" width="12" height="21.25"/>
@@ -12689,7 +12689,7 @@
   <object id="169" x="672.563" y="143.98" width="22.2841" height="18.0199"/>
   <object id="170" x="690.75" y="121.995" width="11" height="22.6818"/>
   <object id="172" x="2048.25" y="171.25" width="19" height="21.25"/>
-  <object id="173" x="2385.88" y="174.5" width="14" height="13.25"/>
+  <object id="173" x="2385.88" y="174.5" width="14" height="14"/>
   <object id="174" x="2172.88" y="176.25" width="33.2727" height="16"/>
   <object id="176" x="289.5" y="144.063" width="59" height="17.0938"/>
   <object id="179" x="1378.01" y="48.4603" width="75.727" height="16.784"/>
@@ -12708,15 +12708,15 @@
   <object id="202" x="720.5" y="121.75" width="11" height="22.9545"/>
  </objectgroup>
  <objectgroup color="#ff0000" name="death_collisions" opacity="0.9">
-  <object id="149" x="0" y="188.25" width="98" height="3.75"/>
-  <object id="150" x="348.641" y="188.25" width="85.3587" height="3.75"/>
-  <object id="151" x="450.188" y="188.5" width="682.485" height="4.5"/>
+  <object id="149" x="0" y="188.25" width="98" height="5"/>
+  <object id="150" x="348.141" y="188.25" width="86.6087" height="4.75"/>
+  <object id="151" x="455.688" y="188.5" width="677.485" height="4.5"/>
   <object id="152" x="1149.91" y="188" width="131.336" height="4"/>
-  <object id="153" x="1357" y="187.75" width="35" height="4.25"/>
-  <object id="154" x="1744.25" y="187.75" width="31.75" height="4.25"/>
+  <object id="153" x="1356.25" y="187.75" width="36.75" height="5"/>
+  <object id="154" x="1744.25" y="187.75" width="32" height="5.25"/>
   <object id="155" x="1856.25" y="188" width="192.25" height="4"/>
   <object id="156" x="2205.45" y="188" width="194.045" height="4"/>
-  <object id="158" x="236.375" y="149.25" width="53.125" height="11.875"/>
+  <object id="158" x="236.625" y="149.25" width="53.875" height="12.625"/>
   <object id="159" x="699.67" y="100" width="25.017" height="12.875"/>
   <object id="160" x="1600" y="128" width="32" height="12.75"/>
   <object id="161" x="1552" y="112" width="32" height="13"/>
@@ -12724,7 +12724,7 @@
   <object id="163" x="1456" y="80" width="32" height="12.75"/>
   <object id="164" x="1408" y="64.75" width="32" height="13"/>
   <object id="194" x="2257.73" y="162.182" width="94.1818" height="15.4545"/>
-  <object id="196" x="1937.06" y="129.958" width="14.5208" height="14.875"/>
+  <object id="196" x="1937.06" y="130.958" width="14.5208" height="14.875"/>
  </objectgroup>
  <objectgroup color="#00ff00" name="win_collider">
   <object id="157" x="2390.91" y="78" width="9.09086" height="2"/>
