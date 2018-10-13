@@ -43,7 +43,6 @@ bool j1Scene1::Start()
 	{
 		// The map is loaded
 		App->map->Load("lvl1.tmx");
-
 		// The audio is played
 		App->audio->PlayMusic("audio/music/level1_music.ogg", 1.0f);
 	}
@@ -86,6 +85,9 @@ bool j1Scene1::Update(float dt)
 		App->player->position.y = 20;
 		App->render->camera.x = 0;
 	}
+
+	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
+		ChangeScene();
 		
 
 	// Camera control

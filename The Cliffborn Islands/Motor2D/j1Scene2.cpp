@@ -12,6 +12,9 @@
 #include "j1Scene2.h"
 #include "j1Scene1.h"
 
+#define CAMERA_LIMIT -8570
+#define PLAYER_LIMIT 2374
+
 j1Scene2::j1Scene2() : j1Module()
 {
 	name.create("scene2");
@@ -94,12 +97,16 @@ bool j1Scene2::Update(float dt)
 		App->render->camera.x -= 5;
 
 	// Camera control
-	if (App->render->camera.x > -8575)  //need to put the X value in XML
+	if (App->render->camera.x > CAMERA_LIMIT)  //need to put the X value in XML
 	{
 		App->render->camera.x = -App->player->position.x * 4 + 400;
 		if (App->render->camera.x > 0)
 			App->render->camera.x = 0;
 	}
+
+	// Limit player X position
+	if (App->player->position.x > PLAYER_LIMIT)
+		App->player->position.x = PLAYER_LIMIT;
 
 	if (App->player->position.x < 0)
 		App->player->position.x = 0;
