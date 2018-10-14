@@ -348,8 +348,9 @@ void j1Player::OnCollision(Collider* col_1, Collider* col_2)
 			if (player->rect.y <= col_1->rect.y + col_1->rect.h
 				&& player->rect.x + player->rect.w >= col_1->rect.x
 				&& player->rect.y + player->rect.h > col_1->rect.y + col_1->rect.h
-				&& player->rect.x <= col_1->rect.x + col_1->rect.w) {
-
+				&& player->rect.x <= col_1->rect.x + col_1->rect.w
+				&& verticalSpeed < 0) {
+				
 				position.y = col_1->rect.y + col_1->rect.h;
 				wallAbove = true;
 				jumping = false;
@@ -359,7 +360,8 @@ void j1Player::OnCollision(Collider* col_1, Collider* col_2)
 			else if (player->rect.y <= col_2->rect.y + col_2->rect.h
 				&& player->rect.x + player->rect.w >= col_2->rect.x
 				&& player->rect.y + player->rect.h > col_2->rect.y + col_2->rect.h
-				&& player->rect.x <= col_2->rect.x + col_2->rect.w) {
+				&& player->rect.x <= col_2->rect.x + col_2->rect.w
+				&& verticalSpeed < 0) {
 
 				position.y = col_2->rect.y + col_2->rect.h;
 				wallAbove = true;
