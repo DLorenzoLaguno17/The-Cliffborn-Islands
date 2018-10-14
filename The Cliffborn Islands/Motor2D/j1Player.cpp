@@ -294,20 +294,6 @@ void j1Player::OnCollision(Collider* col_1, Collider* col_2)
 				App->scene1->ChangeScene();
 			else if (App->scene2->active)
 				App->scene2->ChangeScene();
-
-			fallingSpeed = initialFallingSpeed;
-			dead = true;
-			jumping = false;
-
-			if (App->fade->IsFading() == 0)
-			{
-				position.x = initialPosition.x;
-				position.y = initialPosition.y;
-				App->render->camera.x = App->render->initialCameraX;
-				App->render->camera.y = App->render->initialCameraY;
-				dead = false;
-			}
-
 		}
 
 		// GodMode only collides with COLLIDER_WIN
