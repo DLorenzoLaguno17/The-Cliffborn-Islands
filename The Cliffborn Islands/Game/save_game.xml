@@ -6,18 +6,18 @@
 	<audio />
 	<map />
 	<scene1>
-		<activated true="false" />
+		<activated true="true" />
 	</scene1>
 	<scene2>
-		<activated true="true" />
+		<activated true="false" />
 	</scene2>
 	<player>
-		<position x="1403.99536" y="153" />
+		<position x="2141.56201" y="105" />
 		<godmode value="false" />
 	</player>
 	<fade />
 	<collisions />
 	<renderer>
-		<camera x="-5215" y="0" />
+		<camera x="-8166" y="0" />
 	</renderer>
 </game_state>

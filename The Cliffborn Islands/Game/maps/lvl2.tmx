@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="150" height="12" tilewidth="16" tileheight="16" nextobjectid="376">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="150" height="12" tilewidth="16" tileheight="16" nextobjectid="381">
  <tileset firstgid="1" name="Tileset" tilewidth="16" tileheight="16" tilecount="1917" columns="71">
   <image source="Tileset.png" width="1136" height="432"/>
  </tileset>
@@ -10369,7 +10369,7 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="360"/>
+   <tile gid="1"/>
    <tile gid="290"/>
    <tile gid="291"/>
    <tile gid="291"/>
@@ -12637,7 +12637,7 @@
  <objectgroup color="#00aaff" name="map_collisions">
   <object id="233" x="2353.5" y="113.5" width="48.25" height="79.75"/>
   <object id="234" x="2337.25" y="144.5" width="16.5" height="49"/>
-  <object id="235" x="2271.86" y="128.875" width="82.0227" height="16.25"/>
+  <object id="235" x="2285.68" y="128.875" width="68.2045" height="16.25"/>
   <object id="236" x="2082.5" y="16.75" width="43.5" height="30.25"/>
   <object id="237" x="2084.75" y="46.875" width="38.75" height="10.25"/>
   <object id="238" x="0" y="117.883" width="42.75" height="12.6167"/>
@@ -12687,7 +12687,7 @@
   <object id="286" x="2163.13" y="95.8125" width="71.25" height="15.125"/>
   <object id="287" x="2113.88" y="128.938" width="28.25" height="16.125"/>
   <object id="288" x="2114.13" y="144.188" width="45.125" height="16.375"/>
-  <object id="289" x="2240.17" y="144.646" width="46.3977" height="16.625"/>
+  <object id="289" x="2240.17" y="144.646" width="16.7613" height="16.625"/>
   <object id="290" x="2146.44" y="177.313" width="108.125" height="15.625"/>
   <object id="291" x="2119.44" y="160.563" width="69.25" height="17.25"/>
   <object id="292" x="2211.88" y="160.625" width="69.25" height="17.25"/>
@@ -12758,11 +12758,12 @@
   <object id="367" x="2034.57" y="144.701" width="23.9933" height="8.15558"/>
   <object id="368" x="2032" y="128.537" width="29.6742" height="16.2118"/>
   <object id="369" x="1969.18" y="96.5682" width="92.5453" height="16.1591"/>
-  <object id="370" x="2000.69" y="64.5568" width="31.3409" height="16.75"/>
-  <object id="371" x="1984.61" y="80.6136" width="62.606" height="16.6364"/>
   <object id="372" x="1950.41" y="160.292" width="26.0909" height="21.375"/>
   <object id="374" x="1440.65" y="144.045" width="17.4318" height="38.9091"/>
   <object id="375" x="1457.69" y="128.534" width="29.4318" height="47.0228"/>
+  <object id="377" x="1984.06" y="80.3182" width="63.3333" height="16.7273"/>
+  <object id="379" x="2000.06" y="64.3636" width="32.4242" height="16"/>
+  <object id="380" x="2256.35" y="128.415" width="29.8522" height="32.625"/>
  </objectgroup>
  <objectgroup color="#ff0000" name="death_collisions" opacity="0.9">
   <object id="204" x="1905.75" y="149.021" width="14.5" height="11.8333"/>
