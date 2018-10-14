@@ -115,6 +115,9 @@ public:
 
 private:
 
+	float bgBlitSpeed;
+	float fogBlitSpeed;
+
 	pugi::xml_document	map_file;
 	p2SString			folder;
 	bool				map_loaded;

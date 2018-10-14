@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="150" height="12" tilewidth="16" tileheight="16" nextobjectid="203">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="150" height="12" tilewidth="16" tileheight="16" nextobjectid="204">
  <tileset firstgid="1" name="Tileset" tilewidth="16" tileheight="16" tilecount="1917" columns="71">
   <image source="Tileset.png" width="1136" height="432"/>
  </tileset>
@@ -6318,8 +6318,8 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="1173"/>
-   <tile gid="1174"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
    <tile gid="1311"/>
    <tile gid="1383"/>
    <tile gid="1384"/>
@@ -6468,8 +6468,8 @@
    <tile gid="0"/>
    <tile gid="1"/>
    <tile gid="2"/>
-   <tile gid="77"/>
-   <tile gid="1312"/>
+   <tile gid="2"/>
+   <tile gid="2"/>
    <tile gid="1453"/>
    <tile gid="1454"/>
    <tile gid="0"/>
@@ -9926,8 +9926,8 @@
    <tile gid="220"/>
    <tile gid="221"/>
    <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
+   <tile gid="148"/>
+   <tile gid="149"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -10076,8 +10076,8 @@
    <tile gid="291"/>
    <tile gid="292"/>
    <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
+   <tile gid="503"/>
+   <tile gid="504"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -10226,6 +10226,8 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
+   <tile gid="569"/>
+   <tile gid="569"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -10375,9 +10377,7 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
+   <tile gid="6"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -12680,8 +12680,7 @@
   <object id="141" x="2070.88" y="63.625" width="50" height="13.125"/>
   <object id="142" x="2208" y="112" width="64" height="16"/>
   <object id="143" x="2218.55" y="128.364" width="41.2727" height="13.2727"/>
-  <object id="147" x="2368" y="80" width="32" height="80"/>
-  <object id="148" x="2375.25" y="160" width="24.75" height="14"/>
+  <object id="148" x="2370.52" y="136.182" width="29.4773" height="37.8182"/>
   <object id="165" x="2017.63" y="1" width="31.875" height="18.875"/>
   <object id="166" x="2025.38" y="19.5" width="31.75" height="10.75"/>
   <object id="167" x="2040.75" y="29.875" width="99.625" height="15.75"/>
@@ -12689,16 +12688,16 @@
   <object id="169" x="672.563" y="143.98" width="22.2841" height="18.0199"/>
   <object id="170" x="690.75" y="121.995" width="11" height="22.6818"/>
   <object id="172" x="2048.25" y="171.25" width="19" height="21.25"/>
-  <object id="173" x="2385.88" y="174.5" width="14" height="14"/>
+  <object id="173" x="2385.88" y="173.409" width="14" height="15.0909"/>
   <object id="174" x="2172.88" y="176.25" width="33.2727" height="16"/>
   <object id="176" x="289.5" y="144.063" width="59" height="17.0938"/>
   <object id="179" x="1378.01" y="48.4603" width="75.727" height="16.784"/>
   <object id="180" x="1276.84" y="48.4148" width="102.159" height="4.87495"/>
-  <object id="183" x="1888" y="144" width="16" height="16"/>
-  <object id="184" x="1984" y="144" width="16" height="16"/>
-  <object id="186" x="1936" y="145.063" width="16" height="14.9375"/>
+  <object id="183" x="1886.82" y="144" width="19.1818" height="17.9091"/>
+  <object id="184" x="1982.45" y="144" width="19" height="18"/>
+  <object id="186" x="1934.36" y="145.063" width="19.6364" height="17.5739"/>
   <object id="192" x="2240.5" y="96.875" width="31.375" height="16"/>
-  <object id="193" x="2339.82" y="96.7273" width="29.0568" height="40.5511"/>
+  <object id="193" x="2335.82" y="96.7273" width="63.7841" height="40.5511"/>
   <object id="195" x="2258.76" y="177.727" width="92.1515" height="11.4545"/>
   <object id="197" x="1426.24" y="96.6061" width="26.8485" height="16.1818"/>
   <object id="198" x="1430.64" y="112.106" width="18.0777" height="7.78783"/>
@@ -12727,7 +12726,7 @@
   <object id="196" x="1937.06" y="130.958" width="14.5208" height="14.875"/>
  </objectgroup>
  <objectgroup color="#00ff00" name="win_collider">
-  <object id="157" x="2390.91" y="78" width="9.09086" height="2"/>
+  <object id="157" x="2387.55" y="94.3636" width="12.0909" height="2"/>
  </objectgroup>
  <objectgroup color="#ffff00" name="player_spawn"/>
 </map>

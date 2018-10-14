@@ -26,6 +26,9 @@ bool j1Map::Awake(pugi::xml_node& config)
 
 	folder.create(config.child("folder").child_value());
 
+	bgBlitSpeed = config.child("blitSpeed").attribute("backgrounds").as_float();
+	fogBlitSpeed = config.child("blitSpeed").attribute("fog").as_float();
+
 	return ret;
 }
 
@@ -54,10 +57,10 @@ void j1Map::Draw()
 						SDL_Rect r = tileset->GetTileRect(tile_id);
 						iPoint pos = MapToWorld(x, y);
 						if (layer->data->name == "bg1" || layer->data->name == "bg2" || layer->data->name == "bg3")
-							App->render->Blit(tileset->texture, pos.x, pos.y, &r, SDL_FLIP_NONE, 0.7);
+							App->render->Blit(tileset->texture, pos.x, pos.y, &r, SDL_FLIP_NONE, bgBlitSpeed);
 						else if (layer->data->name == "Fog")
 						{
-							App->render->Blit(tileset->texture, pos.x, pos.y, &r, SDL_FLIP_NONE, 0.85);
+							App->render->Blit(tileset->texture, pos.x, pos.y, &r, SDL_FLIP_NONE, fogBlitSpeed);
 						}
 						else
 							App->render->Blit(tileset->texture, pos.x, pos.y, &r);

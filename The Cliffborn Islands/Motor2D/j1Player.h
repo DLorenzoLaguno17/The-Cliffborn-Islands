@@ -45,7 +45,6 @@ public:
 	SDL_Texture* graphics = nullptr;
 	Animation* current_animation = nullptr;
 	Collider* player = nullptr;
-	Collider* futurePlayer = nullptr;
 
 	// Animations of the player
 	Animation idle;
@@ -91,6 +90,7 @@ public:
 	bool playerIdle = false;
 	bool jumping = false;
 	bool freefall = false;
+	bool loading = false;
 	bool dead = false;
 
 };

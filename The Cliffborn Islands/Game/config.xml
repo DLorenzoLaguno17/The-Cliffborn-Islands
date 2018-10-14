@@ -34,6 +34,7 @@
   </player>
 
   <map>
+	<blitSpeed backgrounds="0.7f" fog="0.85f"/>
     <folder>maps/</folder>
   </map>  
   
