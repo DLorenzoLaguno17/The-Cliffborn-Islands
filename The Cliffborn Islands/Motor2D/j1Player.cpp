@@ -299,10 +299,18 @@ void j1Player::OnCollision(Collider* col_1, Collider* col_2)
 		
 		// GodMode only collides with COLLIDER_WIN
 		if (!GodMode) {
-
-			//If the collision is with a wall behind
+			
 			if (col_1->type == COLLIDER_WALL) {
 
+				//If the collision is with a wall in front
+				if (player->rect.x + player->rect.w >= col_1->rect.x
+					&& player->rect.y + player->rect.h >= col_1->rect.y + 3
+					&& player->rect.x < col_1->rect.x
+					&& player->rect.y < col_1->rect.y + col_1->rect.h) {
+
+					wallInFront = true;
+				}else 
+				//If the collision is with a wall behind
 				if (player->rect.x <= col_1->rect.x + col_1->rect.w
 					&& player->rect.y + player->rect.h >= col_1->rect.y + 3
 					&& player->rect.x + player->rect.w >= col_1->rect.x + col_1->rect.w
@@ -310,18 +318,20 @@ void j1Player::OnCollision(Collider* col_1, Collider* col_2)
 
 					wallBehind = true;
 				}
-				//If the collision is with a wall in front
-				else if (player->rect.x + player->rect.w >= col_1->rect.x
-					&& player->rect.y + player->rect.h >= col_1->rect.y + 3
-					&& player->rect.x < col_1->rect.x
-					&& player->rect.y < col_1->rect.y + col_1->rect.h) {
-
-					wallInFront = true;
-				}
 			}
-			//If the collision is with a wall behind
+			
 			else if (col_2->type == COLLIDER_WALL) {
 
+
+				//If the collision is with a wall in front
+				if (player->rect.x + player->rect.w >= col_2->rect.x
+					&& player->rect.y + player->rect.h >= col_2->rect.y + 3
+					&& player->rect.x < col_2->rect.x
+					&& player->rect.y < col_2->rect.y + col_2->rect.h) {
+
+					wallInFront = true;
+				}else 
+				//If the collision is with a wall behind
 				if (player->rect.x <= col_2->rect.x + col_2->rect.w
 					&& player->rect.y + player->rect.h >= col_2->rect.y + 3
 					&& player->rect.x + player->rect.w >= col_2->rect.x + col_2->rect.w
@@ -329,19 +339,11 @@ void j1Player::OnCollision(Collider* col_1, Collider* col_2)
 
 					wallBehind = true;
 				}
-				//If the collision is with a wall in front
-				else if (player->rect.x + player->rect.w >= col_2->rect.x
-					&& player->rect.y + player->rect.h >= col_2->rect.y + 3
-					&& player->rect.x < col_2->rect.x
-					&& player->rect.y < col_2->rect.y + col_2->rect.h) {
-
-					wallInFront = true;
-				}
 			}
 
 			//If the collision is with the ground
 			if (wallInFront == false) {
-
+				
 				if (col_1->type == COLLIDER_WALL) {
 
 					if (player->rect.y + player->rect.h >= col_1->rect.y

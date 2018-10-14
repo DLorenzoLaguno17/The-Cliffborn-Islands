@@ -7,12 +7,12 @@ Go to our GitHub: https://github.com/DLorenzoLaguno17/The-Cliffborn-Islands
 ### Gameplay
 * A - Move left
 * D - Move right
-* H - Throw the hook
 * Spacebar - Jump.
 
 ### Special keys
 * F1 - To start from the very first level
 * F2 - To start from the beginning of the current level
+* F3 - To start from the beggining of the second level
 * F5 - Save the current state
 * F6 - Load the previous state
 * F9 - To view colliders and logic of the game
@@ -21,8 +21,6 @@ Go to our GitHub: https://github.com/DLorenzoLaguno17/The-Cliffborn-Islands
 ## Special mechanics
 
 You can push yourself into the air once for each time you leave the ground. That means double jump when you leave the gound with a hop or one jump if you are already in a free fall.
-
-There is a hook you might need to use in order to complete the level. When you throw it, the hook goes horizontally perpendicular to the player, and if it touches a wall it drags the player towards said wall.
 
 ## Credits
 
