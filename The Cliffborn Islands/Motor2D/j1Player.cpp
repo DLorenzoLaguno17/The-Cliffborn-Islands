@@ -74,7 +74,7 @@ bool j1Player::Start() {
 
 //Call modules before each loop iteration
 bool j1Player::PreUpdate() {
-	loading = false;
+
 	return true;
 }
 
@@ -173,8 +173,10 @@ bool j1Player::Update(float dt) {
 			}
 			else {
 
-				position.y += verticalSpeed;
-				verticalSpeed += verticalAcceleration;			
+				if (!wallAbove) {
+					position.y += verticalSpeed;
+					verticalSpeed += verticalAcceleration;
+				}
 
 				// While the player is falling
 				if (verticalSpeed <= 0) {
@@ -224,6 +226,8 @@ bool j1Player::Update(float dt) {
 
 // Call modules after each loop iteration
 bool j1Player::PostUpdate() {
+
+	loading = false;
 
 	// Resetting the jump if touched the "ceiling"
 	wallAbove = false;
@@ -322,7 +326,6 @@ void j1Player::OnCollision(Collider* col_1, Collider* col_2)
 			
 			else if (col_2->type == COLLIDER_WALL) {
 
-
 				//If the collision is with a wall in front
 				if (player->rect.x + player->rect.w >= col_2->rect.x
 					&& player->rect.y + player->rect.h >= col_2->rect.y + 3
@@ -341,8 +344,32 @@ void j1Player::OnCollision(Collider* col_1, Collider* col_2)
 				}
 			}
 
+			//If the collision is with the "ceiling"
+			if (player->rect.y <= col_1->rect.y + col_1->rect.h
+				&& player->rect.x + player->rect.w >= col_1->rect.x
+				&& player->rect.y + player->rect.h > col_1->rect.y + col_1->rect.h
+				&& player->rect.x <= col_1->rect.x + col_1->rect.w) {
+
+				position.y = col_1->rect.y + col_1->rect.h;
+				wallAbove = true;
+				jumping = false;
+				fallingSpeed = initialFallingSpeed;
+				currentJumps++;
+			}
+			else if (player->rect.y <= col_2->rect.y + col_2->rect.h
+				&& player->rect.x + player->rect.w >= col_2->rect.x
+				&& player->rect.y + player->rect.h > col_2->rect.y + col_2->rect.h
+				&& player->rect.x <= col_2->rect.x + col_2->rect.w) {
+
+				position.y = col_2->rect.y + col_2->rect.h;
+				wallAbove = true;
+				jumping = false;
+				fallingSpeed = initialFallingSpeed;
+				currentJumps++;
+
+			}else 
 			//If the collision is with the ground
-			if (wallInFront == false) {
+			if (wallInFront == false && loading == false) {
 				
 				if (col_1->type == COLLIDER_WALL) {
 
@@ -358,9 +385,10 @@ void j1Player::OnCollision(Collider* col_1, Collider* col_2)
 						verticalSpeed = initialVerticalSpeed;
 						fallingSpeed = initialFallingSpeed;
 						currentJumps = initialJumps;
+
 					}
-				}
-				else if (col_2->type == COLLIDER_WALL) {
+					
+				}else if (col_2->type == COLLIDER_WALL) {
 
 					if (player->rect.y + player->rect.h >= col_2->rect.y
 						&& player->rect.x + player->rect.w >= col_2->rect.x
@@ -375,28 +403,8 @@ void j1Player::OnCollision(Collider* col_1, Collider* col_2)
 						fallingSpeed = initialFallingSpeed;
 						currentJumps = initialJumps;
 					}
-				}
+				}				
 			}
-
-			//If the collision is with a collider above
-			/*if (col_1->type == COLLIDER_WALL) {
-
-			if (position.y <= col_1->rect.y + col_1->rect.h && position.y > col_1->rect.y + 10
-			&& position.x + current_animation->GetCurrentFrame().w > col_1->rect.x
-			&& position.x < col_1->rect.x + col_1->rect.w) {
-			wallAbove = true;
-			fallingSpeed = initialFallingSpeed;
-			}
-			}
-			else if (col_2->type == COLLIDER_WALL) {
-
-			if (position.y <= col_2->rect.y + col_2->rect.h && position.y > col_2->rect.y + 10
-			&& position.x + current_animation->GetCurrentFrame().w > col_2->rect.x
-			&& position.x < col_2->rect.x + col_2->rect.w) {
-			wallAbove = true;
-			fallingSpeed = initialFallingSpeed;
-			}
-			}*/
 
 			//If the player collides with death_colliders
 			if (col_1->type == COLLIDER_DEATH || col_2->type == COLLIDER_DEATH)
