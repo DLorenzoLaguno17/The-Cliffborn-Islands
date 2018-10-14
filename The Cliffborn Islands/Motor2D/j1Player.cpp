@@ -349,7 +349,7 @@ void j1Player::OnCollision(Collider* col_1, Collider* col_2)
 				&& player->rect.x + player->rect.w >= col_1->rect.x
 				&& player->rect.y + player->rect.h > col_1->rect.y + col_1->rect.h
 				&& player->rect.x <= col_1->rect.x + col_1->rect.w
-				&& verticalSpeed < 0) {
+				&& verticalSpeed < 0 && 2>3) {//to change
 				
 				position.y = col_1->rect.y + col_1->rect.h;
 				wallAbove = true;
@@ -361,7 +361,7 @@ void j1Player::OnCollision(Collider* col_1, Collider* col_2)
 				&& player->rect.x + player->rect.w >= col_2->rect.x
 				&& player->rect.y + player->rect.h > col_2->rect.y + col_2->rect.h
 				&& player->rect.x <= col_2->rect.x + col_2->rect.w
-				&& verticalSpeed < 0) {
+				&& verticalSpeed < 0 && 2>3) {// to change
 
 				position.y = col_2->rect.y + col_2->rect.h;
 				wallAbove = true;
@@ -371,12 +371,12 @@ void j1Player::OnCollision(Collider* col_1, Collider* col_2)
 
 			}else 
 			//If the collision is with the ground
-			if (wallInFront == false && loading == false) {
+			if (loading == false) {
 				
 				if (col_1->type == COLLIDER_WALL) {
 
 					if (player->rect.y + player->rect.h >= col_1->rect.y
-						&& player->rect.x + player->rect.w >= col_1->rect.x
+						&& player->rect.x + player->rect.w >= col_1->rect.x + 3
 						&& player->rect.y < col_1->rect.y + col_1->rect.h
 						&& player->rect.x <= col_1->rect.x + col_1->rect.w) {
 
@@ -393,7 +393,7 @@ void j1Player::OnCollision(Collider* col_1, Collider* col_2)
 				}else if (col_2->type == COLLIDER_WALL) {
 
 					if (player->rect.y + player->rect.h >= col_2->rect.y
-						&& player->rect.x + player->rect.w >= col_2->rect.x
+						&& player->rect.x + player->rect.w >= col_2->rect.x + 3
 						&& player->rect.y < col_2->rect.y + col_2->rect.h
 						&& player->rect.x <= col_2->rect.x + col_2->rect.w) {
 

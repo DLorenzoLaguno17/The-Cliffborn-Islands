@@ -12,12 +12,12 @@
 		<activated true="true" />
 	</scene2>
 	<player>
-		<position x="621.999756" y="120" />
+		<position x="1992.9845" y="41" />
 		<godmode value="false" />
 	</player>
 	<fade />
 	<collisions />
 	<renderer>
-		<camera x="-2087" y="0" />
+		<camera x="-7571" y="0" />
 	</renderer>
 </game_state>
