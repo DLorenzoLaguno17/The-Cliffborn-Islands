@@ -79,6 +79,7 @@ bool j1Scene2::Update(float dt)
 
 	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
 	{
+		App->fade->FadeToBlack(this, App->scene2);
 		App->player->position.x = 0;
 		App->player->position.y = 40;
 		App->render->camera.x = 0;
