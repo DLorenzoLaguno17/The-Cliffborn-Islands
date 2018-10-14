@@ -6,19 +6,12 @@
 #include "p2Point.h"
 #include "j1Module.h"
 
-// ----------------------------------------------------
-struct Properties
-{
-};
-
-// ----------------------------------------------------
 struct MapLayer
 {
 	p2SString	name;
 	int			width;
 	int			height;
 	uint*		data;
-	Properties	properties;
 
 	MapLayer() : data(NULL)
 	{}
@@ -104,7 +97,6 @@ private:
 	bool LoadTilesetDetails(pugi::xml_node& tileset_node, TileSet* set);
 	bool LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set);
 	bool LoadLayer(pugi::xml_node& node, MapLayer* layer);
-	bool LoadProperties(pugi::xml_node& node, Properties& properties);
 	bool PutColliders(const char* file_name);
 
 	TileSet* GetTilesetFromTileId(int id) const;
