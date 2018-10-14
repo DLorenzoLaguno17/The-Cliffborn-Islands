@@ -144,12 +144,33 @@ bool j1Scene1::CleanUp()
 	return true;
 }
 
+
+bool j1Scene1::Load(pugi::xml_node& node)
+{
+	pugi::xml_node activated = node.child("activated");
+
+	bool scene_activated = activated.attribute("true").as_bool();
+
+	if ((scene_activated == false) && active)
+		ChangeScene(); 	
+
+	return true;
+}
+
+bool j1Scene1::Save(pugi::xml_node& node) const
+{
+	pugi::xml_node activated = node.append_child("activated");
+
+	activated.append_attribute("true") = active;
+
+	return true;
+}
+
 void j1Scene1::ChangeScene()
 {
 	App->scene2->active = true;
 	App->scene1->active = false;
 	CleanUp();
-	App->scene1->CleanUp();
 	App->fade->FadeToBlack(App->scene1, App->scene2, 0.8f);
 	App->player->Start();
 	App->render->camera = { 0,0 };
