@@ -8527,8 +8527,8 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="1"/>
-   <tile gid="3"/>
+   <tile gid="0"/>
+   <tile gid="503"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -8677,8 +8677,8 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="1"/>
-   <tile gid="77"/>
-   <tile gid="74"/>
+   <tile gid="2"/>
+   <tile gid="503"/>
    <tile gid="0"/>
    <tile gid="78"/>
    <tile gid="0"/>
@@ -12713,10 +12713,10 @@
   <object id="312" x="1105.51" y="144.33" width="28.7955" height="15.341"/>
   <object id="313" x="1065.42" y="159.352" width="62.0682" height="16.1591"/>
   <object id="314" x="609.352" y="0.60225" width="14.5455" height="57.0455"/>
-  <object id="315" x="641.602" y="64.2272" width="28.0455" height="42.0455"/>
+  <object id="315" x="641.602" y="60.9545" width="28.0455" height="45.3182"/>
   <object id="316" x="623.352" y="50.3522" width="18.2955" height="22.5455"/>
-  <object id="317" x="669.102" y="50.9772" width="17.2955" height="42.0455"/>
-  <object id="318" x="686.852" y="50.9773" width="32.0455" height="25.0455"/>
+  <object id="317" x="669.102" y="50.9772" width="17.2955" height="28.4091"/>
+  <object id="318" x="686.852" y="50.9773" width="32.0455" height="16.8637"/>
   <object id="319" x="734.227" y="16.9772" width="16.2955" height="25.7955"/>
   <object id="320" x="718.602" y="29.3522" width="16.0455" height="25.7955"/>
   <object id="321" x="750.102" y="13.1023" width="47.2955" height="17.0455"/>
@@ -12736,12 +12736,11 @@
   <object id="336" x="1553.53" y="176.511" width="44.4318" height="16.2273"/>
   <object id="337" x="1584.78" y="160.761" width="61.6818" height="16.7273"/>
   <object id="338" x="1632.78" y="143.761" width="45.9318" height="17.4773"/>
-  <object id="340" x="1648.42" y="129.102" width="30.1591" height="14.7955"/>
+  <object id="340" x="1665.17" y="129.102" width="13.4091" height="14.7955"/>
   <object id="341" x="1728.92" y="160.852" width="31.1591" height="32.7955"/>
   <object id="342" x="1645.67" y="160.727" width="33.1591" height="32.2955"/>
   <object id="343" x="1553.67" y="80.4356" width="30.4091" height="46.7122"/>
   <object id="344" x="1505.46" y="80.2272" width="48.4924" height="30.5455"/>
-  <object id="345" x="1555.3" y="126.227" width="25.4091" height="13.0455"/>
   <object id="346" x="1512.55" y="110.852" width="17.4091" height="12.7955"/>
   <object id="347" x="1599.57" y="94.2386" width="31.5455" height="14.9091"/>
   <object id="348" x="1599.77" y="79.7613" width="48.5682" height="15.2955"/>

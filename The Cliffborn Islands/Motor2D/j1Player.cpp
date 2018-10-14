@@ -346,7 +346,7 @@ void j1Player::OnCollision(Collider* col_1, Collider* col_2)
 		if (col_1->type == COLLIDER_WALL) {
 
 			if (player->rect.y + playerSize.y >= col_1->rect.y
-				&& player->rect.y + playerSize.y + 10 < col_1->rect.y + col_1->rect.h) {
+				&& player->rect.y + playerSize.y < col_1->rect.y + col_1->rect.h) {
 				feetOnGround = true;
 				jumping = false;
 				freefall = false;
@@ -358,7 +358,7 @@ void j1Player::OnCollision(Collider* col_1, Collider* col_2)
 		else if(col_2->type == COLLIDER_WALL) {
 
 			if (player->rect.y + playerSize.y >= col_2->rect.y
-				&& player->rect.y + playerSize.y + 10 < col_2->rect.y + col_2->rect.h) {
+				&& player->rect.y + playerSize.y < col_2->rect.y + col_2->rect.h) {
 				feetOnGround = true;
 				jumping = false;
 				freefall = false;
