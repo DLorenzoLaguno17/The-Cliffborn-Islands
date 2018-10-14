@@ -66,6 +66,7 @@ public:
 
 	uint currentJumps;
 	uint initialJumps;
+	uint colisionMargin;
 
 	float godModeSpeed;
 	float horizontalSpeed;

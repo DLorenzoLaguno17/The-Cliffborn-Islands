@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="150" height="12" tilewidth="16" tileheight="16" nextobjectid="374">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="150" height="12" tilewidth="16" tileheight="16" nextobjectid="376">
  <tileset firstgid="1" name="Tileset" tilewidth="16" tileheight="16" tilecount="1917" columns="71">
   <image source="Tileset.png" width="1136" height="432"/>
  </tileset>
@@ -12691,9 +12691,7 @@
   <object id="290" x="2146.44" y="177.313" width="108.125" height="15.625"/>
   <object id="291" x="2119.44" y="160.563" width="69.25" height="17.25"/>
   <object id="292" x="2211.88" y="160.625" width="69.25" height="17.25"/>
-  <object id="293" x="1456.75" y="128.936" width="30.1591" height="16.5455"/>
-  <object id="294" x="1442.33" y="144.784" width="44.4318" height="16.7273"/>
-  <object id="295" x="1442.15" y="160.693" width="76.0682" height="15.4773"/>
+  <object id="295" x="1486.7" y="160.693" width="31.5227" height="15.4773"/>
   <object id="296" x="1457.6" y="175.33" width="60.4318" height="17.7273"/>
   <object id="297" x="1377.78" y="176.511" width="45.6818" height="16.4773"/>
   <object id="298" x="1297.78" y="144.761" width="44.4318" height="34.9773"/>
@@ -12763,6 +12761,8 @@
   <object id="370" x="2000.69" y="64.5568" width="31.3409" height="16.75"/>
   <object id="371" x="1984.61" y="80.6136" width="62.606" height="16.6364"/>
   <object id="372" x="1950.41" y="160.292" width="26.0909" height="21.375"/>
+  <object id="374" x="1440.65" y="144.045" width="17.4318" height="38.9091"/>
+  <object id="375" x="1457.69" y="128.534" width="29.4318" height="47.0228"/>
  </objectgroup>
  <objectgroup color="#ff0000" name="death_collisions" opacity="0.9">
   <object id="204" x="1905.75" y="149.021" width="14.5" height="11.8333"/>
