@@ -301,134 +301,129 @@ void j1Player::OnCollision(Collider* col_1, Collider* col_2)
 			else if (App->scene2->active)
 				App->scene2->ChangeScene();
 		}
-		
-		// GodMode only collides with COLLIDER_WIN
-		if (!GodMode) {
 			
-			if (col_1->type == COLLIDER_WALL) {
+		if (col_1->type == COLLIDER_WALL) {
 
-				//If the collision is with a wall in front
-				if (player->rect.x + player->rect.w >= col_1->rect.x
-					&& player->rect.y + player->rect.h >= col_1->rect.y + colisionMargin
-					&& player->rect.x < col_1->rect.x
-					&& player->rect.y < col_1->rect.y + col_1->rect.h) {
+			//If the collision is with a wall in front
+			if (player->rect.x + player->rect.w >= col_1->rect.x
+				&& player->rect.y + player->rect.h >= col_1->rect.y + colisionMargin
+				&& player->rect.x < col_1->rect.x
+				&& player->rect.y < col_1->rect.y + col_1->rect.h) {
 
-					wallInFront = true;
-				}else 
-				//If the collision is with a wall behind
-				if (player->rect.x <= col_1->rect.x + col_1->rect.w
-					&& player->rect.y + player->rect.h >= col_1->rect.y + colisionMargin
-					&& player->rect.x + player->rect.w >= col_1->rect.x + col_1->rect.w
-					&& player->rect.y < col_1->rect.y + col_1->rect.h) {
-
-					wallBehind = true;
-				}
-			}
-			
-			else if (col_2->type == COLLIDER_WALL) {
-
-				//If the collision is with a wall in front
-				if (player->rect.x + player->rect.w >= col_2->rect.x
-					&& player->rect.y + player->rect.h >= col_2->rect.y + colisionMargin
-					&& player->rect.x < col_2->rect.x
-					&& player->rect.y < col_2->rect.y + col_2->rect.h) {
-
-					wallInFront = true;
-				}else 
-				//If the collision is with a wall behind
-				if (player->rect.x <= col_2->rect.x + col_2->rect.w
-					&& player->rect.y + player->rect.h >= col_2->rect.y + colisionMargin
-					&& player->rect.x + player->rect.w >= col_2->rect.x + col_2->rect.w
-					&& player->rect.y < col_2->rect.y + col_2->rect.h) {
-
-					wallBehind = true;
-				}
-			}
-
-			//If the collision is with the "ceiling"
-			if (player->rect.y <= col_1->rect.y + col_1->rect.h
-				&& player->rect.x + player->rect.w >= col_1->rect.x
-				&& player->rect.y + (player->rect.h / 2) > col_1->rect.y + col_1->rect.h
-				&& player->rect.x <= col_1->rect.x + col_1->rect.w
-				&& verticalSpeed < 0) {
-				
-				position.y = col_1->rect.y + col_1->rect.h;
-				wallAbove = true;
-				jumping = false;
-				fallingSpeed = initialFallingSpeed;
-				currentJumps++;
-			}
-			else if (player->rect.y <= col_2->rect.y + col_2->rect.h
-				&& player->rect.x + player->rect.w >= col_2->rect.x
-				&& player->rect.y + (player->rect.h / 2) > col_2->rect.y + col_2->rect.h
-				&& player->rect.x <= col_2->rect.x + col_2->rect.w
-				&& verticalSpeed < 0) {
-
-				position.y = col_2->rect.y + col_2->rect.h;
-				wallAbove = true;
-				jumping = false;
-				fallingSpeed = initialFallingSpeed;
-				currentJumps++;
-
+				wallInFront = true;
 			}else 
-			//If the collision is with the ground
-			if (wallInFront == false && loading == false) {
-				
-				if (col_1->type == COLLIDER_WALL) {
+			//If the collision is with a wall behind
+			if (player->rect.x <= col_1->rect.x + col_1->rect.w
+				&& player->rect.y + player->rect.h >= col_1->rect.y + colisionMargin
+				&& player->rect.x + player->rect.w >= col_1->rect.x + col_1->rect.w
+				&& player->rect.y < col_1->rect.y + col_1->rect.h) {
 
-					if (player->rect.y + player->rect.h >= col_1->rect.y
-						&& player->rect.x + player->rect.w >= col_1->rect.x + colisionMargin
-						&& player->rect.y < col_1->rect.y + col_1->rect.h
-						&& player->rect.x <= col_1->rect.x + col_1->rect.w) {
-
-						position.y = col_1->rect.y - player->rect.h;
-						feetOnGround = true;
-						jumping = false;
-						freefall = false;
-						verticalSpeed = initialVerticalSpeed;
-						fallingSpeed = initialFallingSpeed;
-						currentJumps = initialJumps;
-
-					}
-					
-				}else if (col_2->type == COLLIDER_WALL) {
-
-					if (player->rect.y + player->rect.h >= col_2->rect.y
-						&& player->rect.x + player->rect.w >= col_2->rect.x + colisionMargin
-						&& player->rect.y < col_2->rect.y + col_2->rect.h
-						&& player->rect.x <= col_2->rect.x + col_2->rect.w) {
-
-						position.y = col_2->rect.y - player->rect.h;
-						feetOnGround = true;
-						jumping = false;
-						freefall = false;
-						verticalSpeed = initialVerticalSpeed;
-						fallingSpeed = initialFallingSpeed;
-						currentJumps = initialJumps;
-					}
-				}				
+				wallBehind = true;
 			}
+		}
+			
+		else if (col_2->type == COLLIDER_WALL) {
 
-			//If the player collides with death_colliders
-			if (col_1->type == COLLIDER_DEATH || col_2->type == COLLIDER_DEATH)
-			{
-				App->fade->FadeToBlack(App->scene1, App->scene1);
-				fallingSpeed = initialFallingSpeed;
-				dead = true;
-				jumping = false;
-				currentJumps = initialJumps;
+			//If the collision is with a wall in front
+			if (player->rect.x + player->rect.w >= col_2->rect.x
+				&& player->rect.y + player->rect.h >= col_2->rect.y + colisionMargin
+				&& player->rect.x < col_2->rect.x
+				&& player->rect.y < col_2->rect.y + col_2->rect.h) {
 
-				if (App->fade->IsFading() == 0)
-				{
-					position.x = initialPosition.x;
-					position.y = initialPosition.y;
-					App->render->camera.x = App->render->initialCameraX;
-					App->render->camera.y = App->render->initialCameraY;
-					dead = false;
-				}
+				wallInFront = true;
+			}else 
+			//If the collision is with a wall behind
+			if (player->rect.x <= col_2->rect.x + col_2->rect.w
+				&& player->rect.y + player->rect.h >= col_2->rect.y + colisionMargin
+				&& player->rect.x + player->rect.w >= col_2->rect.x + col_2->rect.w
+				&& player->rect.y < col_2->rect.y + col_2->rect.h) {
+
+				wallBehind = true;
 			}
 		}
 
+		//If the collision is with the "ceiling"
+		if (player->rect.y <= col_1->rect.y + col_1->rect.h
+			&& player->rect.x + player->rect.w >= col_1->rect.x
+			&& player->rect.y + (player->rect.h / 2) > col_1->rect.y + col_1->rect.h
+			&& player->rect.x <= col_1->rect.x + col_1->rect.w
+			&& verticalSpeed < 0) {
+				
+			position.y = col_1->rect.y + col_1->rect.h;
+			wallAbove = true;
+			jumping = false;
+			fallingSpeed = initialFallingSpeed;
+			currentJumps++;
+	}
+	else if (player->rect.y <= col_2->rect.y + col_2->rect.h
+		&& player->rect.x + player->rect.w >= col_2->rect.x
+		&& player->rect.y + (player->rect.h / 2) > col_2->rect.y + col_2->rect.h
+		&& player->rect.x <= col_2->rect.x + col_2->rect.w
+		&& verticalSpeed < 0) {
+
+			position.y = col_2->rect.y + col_2->rect.h;
+			wallAbove = true;
+			jumping = false;
+			fallingSpeed = initialFallingSpeed;
+			currentJumps++;
+
+		}else 
+		//If the collision is with the ground
+		if (wallInFront == false && loading == false) {
+				
+			if (col_1->type == COLLIDER_WALL) {
+
+				if (player->rect.y + player->rect.h >= col_1->rect.y
+					&& player->rect.x + player->rect.w >= col_1->rect.x + colisionMargin
+					&& player->rect.y < col_1->rect.y + col_1->rect.h
+					&& player->rect.x <= col_1->rect.x + col_1->rect.w) {
+
+					position.y = col_1->rect.y - player->rect.h;
+					feetOnGround = true;
+					jumping = false;
+					freefall = false;
+					verticalSpeed = initialVerticalSpeed;
+					fallingSpeed = initialFallingSpeed;
+					currentJumps = initialJumps;
+
+				}
+					
+			}else if (col_2->type == COLLIDER_WALL) {
+
+				if (player->rect.y + player->rect.h >= col_2->rect.y
+					&& player->rect.x + player->rect.w >= col_2->rect.x + colisionMargin
+					&& player->rect.y < col_2->rect.y + col_2->rect.h
+					&& player->rect.x <= col_2->rect.x + col_2->rect.w) {
+
+					position.y = col_2->rect.y - player->rect.h;
+					feetOnGround = true;
+					jumping = false;
+					freefall = false;
+					verticalSpeed = initialVerticalSpeed;
+					fallingSpeed = initialFallingSpeed;
+					currentJumps = initialJumps;
+				}
+			}				
+		}
+
+		//If the player collides with death_colliders
+		if (col_1->type == COLLIDER_DEATH || col_2->type == COLLIDER_DEATH)
+		{
+			App->fade->FadeToBlack(App->scene1, App->scene1);
+			fallingSpeed = initialFallingSpeed;
+			dead = true;
+			jumping = false;
+			currentJumps = initialJumps;
+
+			if (App->fade->IsFading() == 0)
+			{
+				position.x = initialPosition.x;
+				position.y = initialPosition.y;
+				App->render->camera.x = App->render->initialCameraX;
+				App->render->camera.y = App->render->initialCameraY;
+				dead = false;
+			}
+		}
 	}
 
 };
