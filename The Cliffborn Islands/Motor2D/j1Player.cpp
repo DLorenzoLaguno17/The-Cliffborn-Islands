@@ -294,10 +294,10 @@ void j1Player::OnCollision(Collider* col_1, Collider* col_2)
 	if (col_1->type == COLLIDER_PLAYER || col_1->type == COLLIDER_NONE)
 	{
 		if (player->rect.y + player->rect.h >= col_2->rect.y + colisionMargin
-			&& player->rect.y < col_2->rect.y + col_2->rect.h) {
+			&& player->rect.y <= col_2->rect.y + col_2->rect.h) {
 			//If the collision is with a wall in front
-			if (player->rect.x + player->rect.w >= col_2->rect.x				
-				&& player->rect.x < col_2->rect.x) {
+			if (player->rect.x + player->rect.w >= col_2->rect.x
+				&& player->rect.x <= col_2->rect.x) {
 
 				wallInFront = true;
 			}
@@ -310,7 +310,7 @@ void j1Player::OnCollision(Collider* col_1, Collider* col_2)
 			}
 		}
 		
-		if (player->rect.x + player->rect.w >= col_2->rect.x + 1
+		if (player->rect.x + player->rect.w >= col_2->rect.x + colisionMargin
 			&& player->rect.x + 1 < col_2->rect.x + col_2->rect.w) {
 			//If the collision is with the "ceiling"
 			if (player->rect.y <= col_2->rect.y + col_2->rect.h
@@ -325,7 +325,7 @@ void j1Player::OnCollision(Collider* col_1, Collider* col_2)
 			}
 			else
 			//If the collision is with the ground
-			if (wallInFront == false && loading == false) {
+			if (loading == false) {
 
 				if (player->rect.y + player->rect.h >= col_2->rect.y					
 					&& player->rect.y < col_2->rect.y + col_2->rect.h) {
