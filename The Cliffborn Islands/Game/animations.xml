@@ -35,13 +35,41 @@
       <animation x="118" y="34" w="28" h="27"/>
 	</godmode>
 
-    <attack loop="false" speed="0.015f">
+    <attack loop="false" speed="0.15f">
       <animation x="1" y="272" w="29" h="27"/>
       <animation x="64" y="272" w="29" h="27"/>
       <animation x="135" y="272" w="35" h="27"/>
       <animation x="198" y="272" w="40" h="27"/>
       <animation x="253" y="272" w="42" h="27"/>
     </attack>
+	
+	<throwHook loop="false" speed="0.6f">
+      <animation x="1" y="2" w="66" h="23"/>
+      <animation x="1" y="26" w="66" h="23"/>
+      <animation x="1" y="50" w="66" h="23"/>
+      <animation x="1" y="74" w="66" h="23"/>
+      <animation x="1" y="98" w="66" h="23"/>
+      <animation x="1" y="122" w="66" h="23"/>
+      <animation x="1" y="146" w="66" h="23"/>
+      <animation x="1" y="170" w="66" h="23"/>
+      <animation x="1" y="194" w="66" h="23"/>
+      <animation x="1" y="218" w="66" h="23"/>
+    </throwHook>
+	
+	<returnHook loop="false" speed="0.6f">
+      <animation x="1" y="194" w="66" h="23"/>
+      <animation x="1" y="170" w="66" h="23"/>
+      <animation x="1" y="146" w="66" h="23"/>
+      <animation x="1" y="122" w="66" h="23"/>
+      <animation x="1" y="98" w="66" h="23"/>
+      <animation x="1" y="74" w="66" h="23"/>
+      <animation x="1" y="50" w="66" h="23"/>
+      <animation x="1" y="26" w="66" h="23"/>
+      <animation x="1" y="2" w="66" h="23"/>
+	</returnHook>
+	
+	<dragHook loop="false" speed="0.6f">
+	</dragHook>
 
   </player>
   

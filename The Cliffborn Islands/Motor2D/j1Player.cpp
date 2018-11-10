@@ -7,6 +7,7 @@
 #include "j1Player.h"
 #include "j1Render.h"
 #include "j1FadeToBlack.h"
+#include "j1Hook.h"
 #include "j1Scene1.h"
 #include "j1Scene2.h"
 
@@ -117,7 +118,7 @@ bool j1Player::Update(float dt) {
 
 		// Direction controls	
 		if (App->input->GetKey(SDL_SCANCODE_D) == j1KeyState::KEY_REPEAT) {
-			if (wallInFront == false && dead == false) {
+			if (wallInFront == false && dead == false && App->hook->thrown == false) {
 				position.x += horizontalSpeed;
 				facingRight = true;
 				current_animation = &run;
@@ -131,7 +132,7 @@ bool j1Player::Update(float dt) {
 		}
 
 		if (App->input->GetKey(SDL_SCANCODE_A) == j1KeyState::KEY_REPEAT) {
-			if (wallBehind == false && dead == false) {
+			if (wallBehind == false && dead == false && App->hook->thrown == false) {
 				position.x -= horizontalSpeed;
 				facingRight = false;
 				current_animation = &run;

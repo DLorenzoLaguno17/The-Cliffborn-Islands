@@ -25,30 +25,42 @@ j1Collisions::j1Collisions() : j1Module()
 	matrix[COLLIDER_NONE][COLLIDER_WALL] = false;
 	matrix[COLLIDER_NONE][COLLIDER_DEATH] = false;
 	matrix[COLLIDER_NONE][COLLIDER_WIN] = true;
+	matrix[COLLIDER_NONE][COLLIDER_HOOK] = false;
 
 	matrix[COLLIDER_PLAYER][COLLIDER_NONE] = false;
 	matrix[COLLIDER_PLAYER][COLLIDER_PLAYER] = false;
 	matrix[COLLIDER_PLAYER][COLLIDER_WALL] = true;
 	matrix[COLLIDER_PLAYER][COLLIDER_DEATH] = true;
 	matrix[COLLIDER_PLAYER][COLLIDER_WIN] = true;
+	matrix[COLLIDER_PLAYER][COLLIDER_HOOK] = false;
 	
 	matrix[COLLIDER_DEATH][COLLIDER_NONE] = false;
 	matrix[COLLIDER_DEATH][COLLIDER_PLAYER] = true;
 	matrix[COLLIDER_DEATH][COLLIDER_WALL] = false;
 	matrix[COLLIDER_DEATH][COLLIDER_DEATH] = false;
 	matrix[COLLIDER_DEATH][COLLIDER_WIN] = false;
+	matrix[COLLIDER_DEATH][COLLIDER_HOOK] = false;
 
 	matrix[COLLIDER_WIN][COLLIDER_NONE] = true;
 	matrix[COLLIDER_WIN][COLLIDER_PLAYER] = true;
 	matrix[COLLIDER_WIN][COLLIDER_WALL] = false;
 	matrix[COLLIDER_WIN][COLLIDER_DEATH] = false;
 	matrix[COLLIDER_WIN][COLLIDER_WIN] = false;
+	matrix[COLLIDER_WIN][COLLIDER_HOOK] = false;
 
 	matrix[COLLIDER_WALL][COLLIDER_NONE] = false;
 	matrix[COLLIDER_WALL][COLLIDER_PLAYER] = true;
 	matrix[COLLIDER_WALL][COLLIDER_WALL] = false;
 	matrix[COLLIDER_WALL][COLLIDER_DEATH] = false;
 	matrix[COLLIDER_WALL][COLLIDER_WIN] = false;
+	matrix[COLLIDER_WALL][COLLIDER_HOOK] = true;
+
+	matrix[COLLIDER_HOOK][COLLIDER_HOOK] = false; 
+	matrix[COLLIDER_HOOK][COLLIDER_NONE] = false;
+	matrix[COLLIDER_HOOK][COLLIDER_PLAYER] = false;
+	matrix[COLLIDER_HOOK][COLLIDER_WIN] = false;
+	matrix[COLLIDER_HOOK][COLLIDER_DEATH] = false;
+	matrix[COLLIDER_HOOK][COLLIDER_WALL] = true;
 }
 
 j1Collisions::~j1Collisions() {}
@@ -74,7 +86,7 @@ bool j1Collisions::PreUpdate()
 	{
 		if (colliders[i] == nullptr) continue;
 
-		if (colliders[i]->type == COLLIDER_PLAYER || colliders[i]->type == COLLIDER_NONE)
+		if (colliders[i]->type == COLLIDER_PLAYER || colliders[i]->type == COLLIDER_NONE || colliders[i]->type == COLLIDER_HOOK)
 		{
 
 			collider1 = colliders[i];
@@ -152,6 +164,9 @@ void j1Collisions::DrawColliders()
 			break;
 		case COLLIDER_PLAYER:	//Yellow
 			App->render->DrawQuad(colliders[i]->rect, 255, 255, 0, alpha);
+			break;
+		case COLLIDER_HOOK:		//Black
+			App->render->DrawQuad(colliders[i]->rect, 0, 0, 0, alpha);
 			break;
 		}
 	}

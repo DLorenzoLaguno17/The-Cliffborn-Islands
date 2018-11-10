@@ -2,7 +2,7 @@
 
 <config>
   <app>
-    <title>The Cliffborn Islands v0.1</title>
+    <title>The Cliffborn Islands v0.2</title>
     <organization>UPC</organization>
   </app>
 	
@@ -32,6 +32,12 @@
 		<physics initialFalling="0.0f" falling="0.0f" acceleration="0.15f"  jumpNumber="0"/>
 	</speed>
   </player>
+  
+  <hook speed="3">
+	<spawnPositionRight x="21" y="3"/>
+	<spawnPositionLeft x="-65" y="3"/>
+	<size width="11" height="13"/>
+  </hook>
 
   <map>
 	<blitSpeed backgrounds="0.7f" fog="0.85f"/>
