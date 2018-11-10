@@ -68,8 +68,27 @@
       <animation x="1" y="2" w="66" h="23"/>
 	</returnHook>
 	
-	<dragHook loop="false" speed="0.6f">
-	</dragHook>
+	<dragHookRight loop="false" speed="0.6f">
+      <animation x="1" y="423" w="66" h="23"/>
+      <animation x="8" y="399" w="59" h="23"/>
+      <animation x="15" y="375" w="52" h="23"/>
+      <animation x="22" y="351" w="45" h="23"/>
+      <animation x="29" y="327" w="38" h="23"/>
+      <animation x="36" y="303" w="31" h="23"/>
+      <animation x="43" y="279" w="24" h="23"/>
+      <animation x="50" y="255" w="17" h="23"/>
+	</dragHookRight>
+	
+	<dragHookLeft loop="false" speed="0.6f">
+      <animation x="73" y="423" w="66" h="23"/>
+      <animation x="73" y="399" w="59" h="23"/>
+      <animation x="73" y="375" w="52" h="23"/>
+      <animation x="73" y="351" w="45" h="23"/>
+      <animation x="73" y="327" w="38" h="23"/>
+      <animation x="73" y="303" w="31" h="23"/>
+      <animation x="73" y="279" w="24" h="23"/>
+      <animation x="73" y="255" w="17" h="23"/>
+	</dragHookLeft>
 
   </player>
   

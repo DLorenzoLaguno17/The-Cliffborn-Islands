@@ -11,13 +11,14 @@
 	<scene2>
 		<activated true="false" />
 	</scene2>
+	<hook />
 	<player>
-		<position x="1829.18579" y="137" />
+		<position x="1803.98169" y="137" />
 		<godmode value="false" />
 	</player>
 	<fade />
 	<collisions />
 	<renderer>
-		<camera x="-6916" y="0" />
+		<camera x="-6815" y="0" />
 	</renderer>
 </game_state>

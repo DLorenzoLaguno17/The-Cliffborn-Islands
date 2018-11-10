@@ -17,7 +17,8 @@ j1Hook::j1Hook() : j1Module()
 
 	throwHook.LoadAnimations("throwHook");
 	returnHook.LoadAnimations("returnHook");
-	dragHook.LoadAnimations("dragHook");
+	dragHookRight.LoadAnimations("dragHookRight");
+	dragHookLeft.LoadAnimations("dragHookLeft");
 
 	name.create("hook");
 }
@@ -62,28 +63,46 @@ bool j1Hook::Start() {
 // Call modules on each loop iteration
 bool j1Hook::Update(float dt) {	
 
-	if (App->input->GetKey(SDL_SCANCODE_H) == j1KeyState::KEY_DOWN) {		
-		thrown = true;
-		current_animation = &throwHook;
+	if (App->input->GetKey(SDL_SCANCODE_H) == j1KeyState::KEY_DOWN && thrown == false) {
 		returnHook.Reset();
+		dragHookRight.Reset();
+		dragHookLeft.Reset();
 		colliderPosition.x = 0;
 		somethingHit = false;
+		arrived = false;
+		thrown = true;
+		current_animation = &throwHook;
 	}
 
-	if (thrown) {	
+	// If the hook is thrown
+	if (thrown) {
+		hookCollider->type = COLLIDER_HOOK;
 
+		// If the hook hits something
 		if (somethingHit) {
-			if (App->player->facingRight) {
-				if (App->player->position.x < objectivePosition)
-					App->player->position.x += hookSpeed;
-				else
-					somethingHit = false;
+			if (!arrived) {
+				if (App->player->facingRight) {
+					if (App->player->position.x < objectivePosition) {
+						App->player->position.x += hookSpeed;
+						current_animation = &dragHookRight;
+					}
+					else {
+						somethingHit = false;
+						thrown = false;
+					}
+				}
+				else if (App->player->position.x > objectivePosition) {
+					App->player->position.x -= hookSpeed;
+					current_animation = &dragHookLeft;
+				}
 			}
-			else if (App->player->position.x > objectivePosition)
-				App->player->position.x -= hookSpeed;
-			else
+			else {
 				somethingHit = false;
-		}			
+				thrown = false;
+				throwHook.Reset();
+			}
+		}
+		// If the hook doesn't hit anything
 		else {
 			if (throwHook.Finished()) {
 				current_animation = &returnHook;
@@ -118,7 +137,10 @@ bool j1Hook::Update(float dt) {
 			hookPosition.x = App->player->position.x + spawnPositionLeft.x;
 			hookPosition.y = App->player->position.y + spawnPositionLeft.y;
 
-			App->render->Blit(graphics, (int)hookPosition.x, (int)hookPosition.y, &hook, SDL_FLIP_HORIZONTAL);
+			if(current_animation == &dragHookLeft)
+				App->render->Blit(graphics, (int)hookPosition.x + 5, (int)hookPosition.y, &hook, SDL_FLIP_NONE);
+			else
+				App->render->Blit(graphics, (int)hookPosition.x, (int)hookPosition.y, &hook, SDL_FLIP_HORIZONTAL);
 
 			// Update collider position to hook's claw position
 			if (!somethingHit) {
@@ -130,6 +152,23 @@ bool j1Hook::Update(float dt) {
 				hookCollider->SetPos(hookPosition.x + 57 + colliderPosition.x, hookPosition.y + 5);
 			}
 		}
+	}
+	// If the hook is not thrown
+	else {
+		if (App->player->facingRight) {
+			hookPosition.x = App->player->position.x + spawnPositionRight.x;
+			hookPosition.y = App->player->position.y + spawnPositionRight.y;
+
+			hookCollider->SetPos(hookPosition.x, hookPosition.y + 5);
+		}
+		else {
+			hookPosition.x = App->player->position.x + spawnPositionLeft.x;
+			hookPosition.y = App->player->position.y + spawnPositionLeft.y;
+
+			hookCollider->SetPos(hookPosition.x + 57, hookPosition.y + 5);
+		}
+			
+		hookCollider->type = COLLIDER_NONE;
 	}
 	
 	return true;
@@ -150,5 +189,8 @@ void j1Hook::OnCollision(Collider* col_1, Collider* col_2) {
 	if (col_1->type == COLLIDER_HOOK) {
 		somethingHit = true;
 		objectivePosition = col_2->rect.x;
+		/*App->player->feetOnGround = true;
+		App->player->fallingSpeed = App->player->initialFallingSpeed;
+		App->player->verticalSpeed = App->player->initialVerticalSpeed;*/
 	}
 }

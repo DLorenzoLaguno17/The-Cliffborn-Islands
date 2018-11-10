@@ -301,6 +301,7 @@ void j1Player::OnCollision(Collider* col_1, Collider* col_2)
 				&& player->rect.x <= col_2->rect.x) {
 
 				wallInFront = true;
+				App->hook->arrived = true;
 			}
 			else
 			//If the collision is with a wall behind
@@ -308,6 +309,7 @@ void j1Player::OnCollision(Collider* col_1, Collider* col_2)
 				&& player->rect.x + player->rect.w >= col_2->rect.x + col_2->rect.w) {
 
 				wallBehind = true;
+				App->hook->arrived = true;
 			}
 		}
 		

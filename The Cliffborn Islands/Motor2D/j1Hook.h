@@ -42,7 +42,8 @@ public:
 
 	Animation throwHook;
 	Animation returnHook;
-	Animation dragHook;
+	Animation dragHookRight;
+	Animation dragHookLeft;
 
 	int objectivePosition;
 	int hookSpeed;
@@ -55,6 +56,7 @@ public:
 
 	bool somethingHit = false;
 	bool thrown = false;
+	bool arrived = false;
 };
 
 #endif // __j1HOOK_H__

@@ -34,8 +34,8 @@
   </player>
   
   <hook speed="3">
-	<spawnPositionRight x="21" y="3"/>
-	<spawnPositionLeft x="-65" y="3"/>
+	<spawnPositionRight x="11" y="3"/>
+	<spawnPositionLeft x="-52" y="3"/>
 	<size width="11" height="13"/>
   </hook>
 
