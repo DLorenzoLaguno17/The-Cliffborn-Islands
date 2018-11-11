@@ -17,6 +17,7 @@
 #include "j1Hook.h"
 #include "j1App.h"
 #include "j1Collisions.h"
+#include "j1Pathfinding.h"
 
 // Constructor
 j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
@@ -33,9 +34,11 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	scene2 = new j1Scene2();
 	map = new j1Map();
 	player = new j1Player();
-	fade = new j1FadeToBlack();
 	collisions = new j1Collisions();
 	hook = new j1Hook();
+	path = new j1PathFinding();
+	fade = new j1FadeToBlack();
+
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -50,6 +53,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(player);
 	AddModule(fade);
 	AddModule(collisions);
+	AddModule(path);
 
 	// render last to swap buffer
 	AddModule(render);

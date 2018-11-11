@@ -55,6 +55,9 @@
     <ClCompile Include="j1Hook.cpp">
       <Filter>Development\Modules\Player</Filter>
     </ClCompile>
+    <ClCompile Include="j1Pathfinding.cpp">
+      <Filter>Development\Modules\Interactions</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1App.h">
@@ -131,6 +134,9 @@
     </ClInclude>
     <ClInclude Include="j1Hook.h">
       <Filter>Development\Modules\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Pathfinding.h">
+      <Filter>Development\Modules\Interactions</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

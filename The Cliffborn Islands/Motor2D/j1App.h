@@ -18,6 +18,7 @@ class j1Player;
 class j1FadeToBlack;
 class j1Collisions;
 class j1Hook;
+class j1PathFinding;
 
 class j1App
 {
@@ -93,6 +94,7 @@ public:
 	j1FadeToBlack*		fade;
 	j1Collisions*		collisions;
 	j1Hook*				hook;
+	j1PathFinding*		path;
 
 private:
 
