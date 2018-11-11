@@ -167,5 +167,8 @@
     <Filter Include="Development\Modules\Interactions">
       <UniqueIdentifier>{2b61e39a-7a6e-4fd6-91e0-a443829b55b8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Development\Modules\Enemies">
+      <UniqueIdentifier>{2602bd76-7163-4fd8-855a-6e49d5563390}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

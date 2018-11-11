@@ -40,6 +40,8 @@ public:
 
 private:
 
+	SDL_Texture* debug_tex;
+
 	int cameraLimit;
 	int playerLimit;
 };
