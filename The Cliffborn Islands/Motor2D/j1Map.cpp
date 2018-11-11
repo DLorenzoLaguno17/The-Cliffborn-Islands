@@ -32,49 +32,45 @@ bool j1Map::Awake(pugi::xml_node& config)
 	return ret;
 }
 
-// All layers are drawn
 void j1Map::Draw()
 {
 	if (map_loaded == false)
 		return;
 
-	p2List_item<MapLayer*>* layer;
+	p2List_item<MapLayer*>* item = data.layers.start;
 
-	int tile_num;
-	for (layer = data.layers.start; layer != nullptr; layer = layer->next)
+	for (; item != NULL; item = item->next)
 	{
-		tile_num = 0;
+		MapLayer* layer = item->data;
+
+		if (layer->properties.Get("Nodraw") != 0)
+			continue;
+
 		for (int y = 0; y < data.height; ++y)
 		{
 			for (int x = 0; x < data.width; ++x)
 			{
-				int tile_id = layer->data->data[tile_num];
+				int tile_id = layer->Get(x, y);
 				if (tile_id > 0)
 				{
 					TileSet* tileset = GetTilesetFromTileId(tile_id);
-					if (tileset != nullptr)
-					{
-						SDL_Rect r = tileset->GetTileRect(tile_id);
-						iPoint pos = MapToWorld(x, y);
-						if (layer->data->name == "bg1" || layer->data->name == "bg2" || layer->data->name == "bg3")
-							App->render->Blit(tileset->texture, pos.x, pos.y, &r, SDL_FLIP_NONE, bgBlitSpeed);
-						else if (layer->data->name == "Fog")
-						{
-							App->render->Blit(tileset->texture, pos.x, pos.y, &r, SDL_FLIP_NONE, fogBlitSpeed);
-						}
-						else
-							App->render->Blit(tileset->texture, pos.x, pos.y, &r);
-					}			
-				}
 
-				tile_num++;
+					SDL_Rect r = tileset->GetTileRect(tile_id);
+					iPoint pos = MapToWorld(x, y);
+
+					if (item->data->name == "bg1" || item->data->name == "bg2" || item->data->name == "bg3")
+						App->render->Blit(tileset->texture, pos.x, pos.y, &r, SDL_FLIP_NONE, bgBlitSpeed);
+					else if (item->data->name == "Fog")
+					{
+						App->render->Blit(tileset->texture, pos.x, pos.y, &r, SDL_FLIP_NONE, fogBlitSpeed);
+					}
+					else
+						App->render->Blit(tileset->texture, pos.x, pos.y, &r);
+				}
 			}
 		}
 	}
-
-
 }
-
 int Properties::Get(const char* value, int default_value) const
 {
 	p2List_item<Property*>* item = list.start;
