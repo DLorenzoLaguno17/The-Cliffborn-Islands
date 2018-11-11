@@ -23,7 +23,7 @@ Go to our GitHub: https://github.com/DLorenzoLaguno17/The-Cliffborn-Islands
 
 You can push yourself into the air once for each time you leave the ground. That means double jump when you leave the gound with a hop or one jump if you are already in a free fall.
 
-Using the hook on the air won't let you move neither backwards nor forwards with A or D keys, and might leave you in the middle of the abyss, so use it wisely.
+Using the hook on the air won't let you move neither backwards nor forwards with A or D keys, and might leave you in the middle of the abyss, so use it wisely. The hook cannot be used in GodMode.
 
 ## Innovation
 

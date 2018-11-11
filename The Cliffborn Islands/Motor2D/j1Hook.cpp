@@ -71,7 +71,8 @@ bool j1Hook::Update(float dt) {
 		}
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_H) == j1KeyState::KEY_DOWN && thrown == false) {
+	if (App->input->GetKey(SDL_SCANCODE_H) == j1KeyState::KEY_DOWN
+		&& thrown == false && App->player->GodMode == false) {
 		returnHook.Reset();
 		dragHookRight.Reset();
 		dragHookLeft.Reset();
