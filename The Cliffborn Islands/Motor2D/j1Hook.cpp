@@ -4,6 +4,7 @@
 #include "j1Textures.h"
 #include "j1Collisions.h"
 #include "j1Input.h"
+#include "j1Audio.h"
 #include "j1Player.h"
 #include "j1Hook.h"
 #include "j1Render.h"
@@ -53,6 +54,9 @@ bool j1Hook::Start() {
 	LOG("Loading player textures");
 	graphics = App->tex->Load("textures/character/hook.png");
 
+	// Audios are loaded
+	chain = App->audio->LoadFx("audio/fx/chain.wav");
+
 	current_animation = &throwHook;
 	
 	hookCollider = App->collisions->AddCollider({0, 0, hookSize.x, hookSize.y}, COLLIDER_HOOK, this);
@@ -64,7 +68,7 @@ bool j1Hook::Start() {
 bool j1Hook::Update(float dt) {	
 
 	if (somethingHit) {
-		if (arrived) {
+		if (arrived || dragHookLeft.Finished() || dragHookRight.Finished()) {
 			somethingHit = false;
 			thrown = false;
 			throwHook.Reset();
@@ -79,6 +83,7 @@ bool j1Hook::Update(float dt) {
 		colliderPosition.x = 0;
 		thrown = true;
 		current_animation = &throwHook;
+		App->audio->PlayFx(chain);
 	}
 
 	// If the hook is thrown
@@ -185,12 +190,31 @@ bool j1Hook::CleanUp() {
 
 // Detects collisions
 void j1Hook::OnCollision(Collider* col_1, Collider* col_2) {
-	if (col_1->type == COLLIDER_HOOK) {
-		somethingHit = true;
-		arrived = false;
-		objectivePosition = col_2->rect.x;
-		App->player->feetOnGround = true;
-		App->player->fallingSpeed = App->player->initialFallingSpeed;
-		App->player->currentJumps = App->player->initialJumps;
+	if (col_1->type == COLLIDER_HOOK && current_animation != &returnHook) {
+		// First we check if the collision is perpendicular
+		if (col_1->rect.y + col_1->rect.h >= col_2->rect.y
+			&& col_1->rect.y <= col_2->rect.y + col_2->rect.h){
+
+				// If the hook hits left
+			if ((App->player->facingRight == true
+				&& col_1->rect.x + col_1->rect.w >= col_2->rect.x
+				&& col_1->rect.x <= col_2->rect.x) ||
+				// If the hook hits left
+				(App->player->facingRight == false &&
+				col_1->rect.x <= col_2->rect.x + col_2->rect.w
+				&& col_1->rect.x + col_1->rect.w >= col_2->rect.x + col_2->rect.w)) {
+
+				somethingHit = true;
+				arrived = false;
+				App->player->feetOnGround = true;
+				App->player->fallingSpeed = App->player->initialFallingSpeed;
+				App->player->currentJumps = App->player->initialJumps;
+
+				if (App->player->facingRight)
+					objectivePosition = col_2->rect.x - App->player->player->rect.w - App->player->colisionMargin;
+				else
+					objectivePosition = col_2->rect.x + col_2->rect.w - App->player->colisionMargin;
+			}
+		}
 	}
 }

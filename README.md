@@ -19,15 +19,16 @@ Go to our GitHub: https://github.com/DLorenzoLaguno17/The-Cliffborn-Islands
 * F9 - To view colliders and logic of the game
 * F10 - God mode
 
+## Innovation
+
+We have implemented a hook which you may use to overcome the level. If it collides with a wall, it moves the player towards it, and if it collides with an enemy, it attracts the enemy to the player.
+
+
 ## Special mechanics
 
 You can push yourself into the air once for each time you leave the ground. That means double jump when you leave the gound with a hop or one jump if you are already in a free fall.
 
-Using the hook on the air won't let you move neither backwards nor forwards with A or D keys, and might leave you in the middle of the abyss, so use it wisely. The hook cannot be used in GodMode.
-
-## Innovation
-
-We have implemented a hook which you may use to overcome the level. If it collides with a wall, it moves the player towards it, and if it collides with an enemy, it attracts the enemy to the player.
+The hook will only work if it collides perpendicularly with a wall. Besides, using the hook on the air won't let you move neither backwards nor forwards with A or D keys, and might leave you in the middle of the abyss, so use it wisely. The hook cannot be used in GodMode.
 
 ## Credits
 

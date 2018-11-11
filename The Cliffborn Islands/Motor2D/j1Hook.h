@@ -57,6 +57,9 @@ public:
 	bool somethingHit = false;
 	bool thrown = false;
 	bool arrived = false;
+
+	// Audios
+	uint chain;
 };
 
 #endif // __j1HOOK_H__
