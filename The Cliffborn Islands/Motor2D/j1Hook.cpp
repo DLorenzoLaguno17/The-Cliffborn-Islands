@@ -63,13 +63,19 @@ bool j1Hook::Start() {
 // Call modules on each loop iteration
 bool j1Hook::Update(float dt) {	
 
+	if (somethingHit) {
+		if (arrived) {
+			somethingHit = false;
+			thrown = false;
+			throwHook.Reset();
+		}
+	}
+
 	if (App->input->GetKey(SDL_SCANCODE_H) == j1KeyState::KEY_DOWN && thrown == false) {
 		returnHook.Reset();
 		dragHookRight.Reset();
 		dragHookLeft.Reset();
 		colliderPosition.x = 0;
-		somethingHit = false;
-		arrived = false;
 		thrown = true;
 		current_animation = &throwHook;
 	}
@@ -79,16 +85,12 @@ bool j1Hook::Update(float dt) {
 		hookCollider->type = COLLIDER_HOOK;
 
 		// If the hook hits something
-		if (somethingHit) {
+		if (somethingHit) {			
 			if (!arrived) {
 				if (App->player->facingRight) {
 					if (App->player->position.x < objectivePosition) {
 						App->player->position.x += hookSpeed;
 						current_animation = &dragHookRight;
-					}
-					else {
-						somethingHit = false;
-						thrown = false;
 					}
 				}
 				else if (App->player->position.x > objectivePosition) {
@@ -96,14 +98,10 @@ bool j1Hook::Update(float dt) {
 					current_animation = &dragHookLeft;
 				}
 			}
-			else {
-				somethingHit = false;
-				thrown = false;
-				throwHook.Reset();
-			}
 		}
 		// If the hook doesn't hit anything
 		else {
+
 			if (throwHook.Finished()) {
 				current_animation = &returnHook;
 				throwHook.Reset();
@@ -188,9 +186,10 @@ bool j1Hook::CleanUp() {
 void j1Hook::OnCollision(Collider* col_1, Collider* col_2) {
 	if (col_1->type == COLLIDER_HOOK) {
 		somethingHit = true;
+		arrived = false;
 		objectivePosition = col_2->rect.x;
-		/*App->player->feetOnGround = true;
+		App->player->feetOnGround = true;
 		App->player->fallingSpeed = App->player->initialFallingSpeed;
-		App->player->verticalSpeed = App->player->initialVerticalSpeed;*/
+		App->player->currentJumps = App->player->initialJumps;
 	}
 }

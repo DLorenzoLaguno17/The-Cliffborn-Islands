@@ -5,6 +5,7 @@
 	<textures />
 	<audio />
 	<map />
+	<pathfinding />
 	<scene1>
 		<activated true="true" />
 	</scene1>
@@ -13,12 +14,12 @@
 	</scene2>
 	<hook />
 	<player>
-		<position x="1803.98169" y="137" />
+		<position x="1033.99316" y="90" />
 		<godmode value="false" />
 	</player>
 	<fade />
 	<collisions />
 	<renderer>
-		<camera x="-6815" y="0" />
+		<camera x="-3735" y="0" />
 	</renderer>
 </game_state>

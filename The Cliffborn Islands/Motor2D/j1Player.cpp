@@ -175,7 +175,7 @@ bool j1Player::Update(float dt) {
 			}
 			else {
 
-				if (!wallAbove) {
+				if (wallAbove == false && App->hook->somethingHit == false) {
 					position.y += verticalSpeed;
 					verticalSpeed += verticalAcceleration;
 				}

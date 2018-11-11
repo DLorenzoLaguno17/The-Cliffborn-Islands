@@ -45,7 +45,7 @@ public:
 	Animation dragHookRight;
 	Animation dragHookLeft;
 
-	int objectivePosition;
+	int objectivePosition = NULL;
 	int hookSpeed;
 	
 	iPoint spawnPositionRight;
