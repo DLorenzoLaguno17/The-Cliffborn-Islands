@@ -121,7 +121,7 @@ bool j1Player::Update(float dt) {
 			current_animation = &idle;		
 
 		// Direction controls	
-		if (App->input->GetKey(SDL_SCANCODE_D) == j1KeyState::KEY_REPEAT) {
+		if (App->input->GetKey(SDL_SCANCODE_D) == j1KeyState::KEY_REPEAT && attacking == false) {
 			if (wallInFront == false && dead == false && App->hook->thrown == false) {
 				position.x += horizontalSpeed;
 				facingRight = true;
@@ -135,7 +135,7 @@ bool j1Player::Update(float dt) {
 				current_animation = &idle;
 		}
 
-		if (App->input->GetKey(SDL_SCANCODE_A) == j1KeyState::KEY_REPEAT) {
+		if (App->input->GetKey(SDL_SCANCODE_A) == j1KeyState::KEY_REPEAT && attacking == false) {
 			if (wallBehind == false && dead == false && App->hook->thrown == false) {
 				position.x -= horizontalSpeed;
 				facingRight = false;
@@ -155,7 +155,9 @@ bool j1Player::Update(float dt) {
 			freefall = true;
 			position.y += fallingSpeed;
 			fallingSpeed += verticalAcceleration;
-			current_animation = &fall;
+
+			if(!attacking)
+				current_animation = &fall;
 		}
 
 		// Jump controls
@@ -185,11 +187,13 @@ bool j1Player::Update(float dt) {
 				}
 
 				// While the player is falling
-				if (verticalSpeed <= 0) {
-					current_animation = &jump;
-				}
-				else if (verticalSpeed > 0) {
-					current_animation = &fall;				
+				if (!attacking) {
+					if (verticalSpeed <= 0) {
+						current_animation = &jump;
+					}
+					else if (verticalSpeed > 0) {
+						current_animation = &fall;
+					}
 				}
 			}
 		}
@@ -240,10 +244,14 @@ bool j1Player::Update(float dt) {
 	SDL_Rect character = current_animation->GetCurrentFrame();
 
 	// Blitting the player
-	if (facingRight == true)
-		App->render->Blit(graphics, (int)position.x, (int)position.y, &character, SDL_FLIP_NONE);
-	else
-		App->render->Blit(graphics, (int)position.x, (int)position.y, &character, SDL_FLIP_HORIZONTAL);
+	if (!attacking) {
+		if (facingRight)
+			App->render->Blit(graphics, (int)position.x, (int)position.y, &character, SDL_FLIP_NONE);
+		else
+			App->render->Blit(graphics, (int)position.x, (int)position.y, &character, SDL_FLIP_HORIZONTAL);
+	}
+	else 
+		App->render->Blit(graphics, (int)position.x, (int)position.y - 2, &character, SDL_FLIP_NONE);
 
 	return true;
 }

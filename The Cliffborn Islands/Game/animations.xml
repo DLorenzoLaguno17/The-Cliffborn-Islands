@@ -36,11 +36,12 @@
 	</godmode>
 
     <attackRight loop="false" speed="0.32f">
-      <animation x="1" y="271" w="29" h="27"/>
-      <animation x="64" y="271" w="29" h="27"/>
-      <animation x="135" y="271" w="35" h="27"/>
-      <animation x="198" y="271" w="40" h="27"/>
-      <animation x="253" y="271" w="42" h="27"/>
+      <animation x="1" y="271" w="29" h="29"/>
+      <animation x="64" y="271" w="29" h="29"/>
+      <animation x="135" y="271" w="35" h="29"/>
+      <animation x="198" y="271" w="40" h="29"/>
+      <animation x="253" y="271" w="42" h="29"/>
+      <animation x="163" y="180" w="21" h="25"/>
     </attackRight>
 	
     <attackLeft loop="false" speed="0.32f">
@@ -99,8 +100,8 @@
 	</dragHookLeft>
 
   </player>
-  <enemies>
-    
+  
+  <enemies>    
     <harpy>
       
       <move loop ="true" speed="0.15f">
