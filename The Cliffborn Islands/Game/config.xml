@@ -32,11 +32,15 @@
 		<physics initialFalling="0.0f" falling="0.0f" acceleration="0.15f"  jumpNumber="0"/>
 	</speed>
   </player>
+
+  <harpy speed ="1">
+    <position x="150" y="30"/>
+  </harpy>
   
   <hook speed="3">
-	<spawnPositionRight x="11" y="3"/>
-	<spawnPositionLeft x="-52" y="3"/>
-	<size width="11" height="13"/>
+	  <spawnPositionRight x="11" y="3"/>
+  	<spawnPositionLeft x="-52" y="3"/>
+	  <size width="11" height="13"/>
   </hook>
 
   <map>

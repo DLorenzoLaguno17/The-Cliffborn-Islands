@@ -58,6 +58,25 @@ uchar j1PathFinding::GetTileAt(const iPoint& pos) const
 	return INVALID_WALK_CODE;
 }
 
+Movement j1PathFinding::CheckDirection(p2DynArray<iPoint>& path) const
+{
+	if (path.Count() >= 2)
+	{
+		iPoint tile = path[0];
+		iPoint next_tile = path[1];
+
+		int x_difference = next_tile.x - tile.x;
+		int y_difference = next_tile.y - tile.y;
+
+		if (x_difference == 1) return RIGHT;			
+		else if (x_difference == -1) return LEFT;
+		else if (y_difference == 1)	return DOWN;			
+		else if (y_difference == -1) return UP;
+	}
+
+	else return NONE;
+}
+
 // To request all tiles involved in the last generated path
 const p2DynArray<iPoint>* j1PathFinding::GetLastPath() const
 {
@@ -165,7 +184,7 @@ int PathNode::CalculateF(const iPoint& destination)
 // ----------------------------------------------------------------------------------
 // Actual A* algorithm: return number of steps in the creation of the path or -1 ----
 // ----------------------------------------------------------------------------------
-int j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
+p2DynArray<iPoint>* j1PathFinding::CreatePath(iPoint& origin, iPoint& destination)
 {
 	last_path.Clear();
 	// TODO 1: if origin or destination are not walkable, return -1
@@ -232,12 +251,11 @@ int j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 
 				// Use the Pathnode::parent and Flip() the path when you are finish
 				last_path.Flip();
-				return 1;
+				return &last_path;
 			}
-
 		}
 	}
 
-	return -1;
+	return nullptr;
 }
 

@@ -58,6 +58,9 @@
     <ClCompile Include="j1Pathfinding.cpp">
       <Filter>Development\Modules\Interactions</Filter>
     </ClCompile>
+    <ClCompile Include="j1Harpy.cpp">
+      <Filter>Development\Modules\Enemies</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1App.h">
@@ -137,6 +140,9 @@
     </ClInclude>
     <ClInclude Include="j1Pathfinding.h">
       <Filter>Development\Modules\Interactions</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Harpy.h">
+      <Filter>Development\Modules\Enemies</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

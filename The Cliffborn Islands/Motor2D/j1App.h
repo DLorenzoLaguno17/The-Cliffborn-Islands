@@ -19,6 +19,7 @@ class j1FadeToBlack;
 class j1Collisions;
 class j1Hook;
 class j1PathFinding;
+class j1Harpy;
 
 class j1App
 {
@@ -95,6 +96,7 @@ public:
 	j1Collisions*		collisions;
 	j1Hook*				hook;
 	j1PathFinding*		path;
+	j1Harpy*			harpy;
 
 private:
 

@@ -91,5 +91,32 @@
 	</dragHookLeft>
 
   </player>
-  
+  <enemies>
+    
+    <harpy>
+      
+      <move loop ="true" speed="0.15f">
+        <animation x="32" y="25" w="38" h="34"/>
+        <animation x="80" y="25" w="38" h="34"/>
+        <animation x="125" y="25" w="44" h="34"/>
+        <animation x="175" y="25" w="40" h="34"/>
+        <animation x="58" y="67" w="38" h="29"/>
+        <animation x="98" y="67" w="46" h="29"/>
+        <animation x="148" y="67" w="41" h="29"/>
+      </move>
+
+      <idle loop ="true" speed="0.1f">
+        <animation x="42" y="145" w="38" h="34"/>
+        <animation x="90" y="145" w="38" h="34"/>
+        <animation x="135" y="145" w="44" h="34"/>
+        <animation x="185" y="145" w="40" h="34"/>
+        <animation x="68" y="192" w="38" h="29"/>
+        <animation x="108" y="192" w="46" h="29"/>
+        <animation x="158" y="192" w="41" h="29"/>
+      </idle>
+      
+    </harpy>
+    
+  </enemies>
+
 </animations>

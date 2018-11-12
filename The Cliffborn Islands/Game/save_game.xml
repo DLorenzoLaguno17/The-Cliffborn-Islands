@@ -14,12 +14,13 @@
 	</scene2>
 	<hook />
 	<player>
-		<position x="1033.99316" y="90" />
+		<position x="1725.77466" y="25" />
 		<godmode value="false" />
 	</player>
+	<:anonymous />
 	<fade />
 	<collisions />
 	<renderer>
-		<camera x="-3735" y="0" />
+		<camera x="-6503" y="0" />
 	</renderer>
 </game_state>

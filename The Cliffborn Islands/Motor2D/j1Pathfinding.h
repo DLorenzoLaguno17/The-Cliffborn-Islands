@@ -4,6 +4,7 @@
 #include "j1Module.h"
 #include "p2Point.h"
 #include "p2DynArray.h"
+#include "p2List.h"
 
 #define DEFAULT_PATH_LENGTH 50
 #define INVALID_WALK_CODE 255
@@ -13,6 +14,15 @@
 // Intro: http://www.raywenderlich.com/4946/introduction-to-a-pathfinding
 // Details: http://theory.stanford.edu/~amitp/GameProgramming/
 // --------------------------------------------------
+
+enum Movement 
+{
+	NONE = -1,
+	UP,
+	DOWN,
+	RIGHT,
+	LEFT
+};
 
 class j1PathFinding : public j1Module
 {
@@ -30,7 +40,7 @@ public:
 	void SetMap(uint width, uint height, uchar* data);
 
 	// Main function to request a path from A to B
-	int CreatePath(const iPoint& origin, const iPoint& destination);
+	p2DynArray<iPoint>* CreatePath(iPoint& origin, iPoint& destination);
 
 	// To request all tiles involved in the last generated path
 	const p2DynArray<iPoint>* GetLastPath() const;
@@ -44,8 +54,10 @@ public:
 	// Utility: return the walkability value of a tile
 	uchar GetTileAt(const iPoint& pos) const;
 
-private:
+	Movement CheckDirection(p2DynArray<iPoint>& path)const;
 
+private:
+	p2DynArray<iPoint>*	_path = nullptr;
 	// size of the map
 	uint width;
 	uint height;
@@ -55,7 +67,7 @@ private:
 	p2DynArray<iPoint> last_path;
 };
 
-// forward declaration
+/// forward declaration
 struct PathList;
 
 // ---------------------------------------------------------------------
@@ -97,7 +109,6 @@ struct PathList
 	// The list itself, note they are not pointers!
 	p2List<PathNode> list;
 };
-
 
 
 #endif // __j1PATHFINDING_H__

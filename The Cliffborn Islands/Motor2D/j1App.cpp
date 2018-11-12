@@ -18,6 +18,7 @@
 #include "j1App.h"
 #include "j1Collisions.h"
 #include "j1Pathfinding.h"
+#include "j1Harpy.h"
 
 // Constructor
 j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
@@ -38,6 +39,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	hook = new j1Hook();
 	path = new j1PathFinding();
 	fade = new j1FadeToBlack();
+	harpy = new j1Harpy();
 
 
 	// Ordered for awake / Start / Update
@@ -52,9 +54,10 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(scene2);
 	AddModule(hook);
 	AddModule(player);
+	AddModule(harpy);
 	AddModule(fade);
 	AddModule(collisions);
-
+	
 	// render last to swap buffer
 	AddModule(render);
 }

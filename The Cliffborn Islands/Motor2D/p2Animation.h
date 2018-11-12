@@ -2,6 +2,7 @@
 #define __P2ANIMATION_H__
 
 #include "SDL/include/SDL_rect.h"
+#include "p2SString.h"
 #define MAX_FRAMES 100
 
 class Animation
@@ -31,6 +32,21 @@ public:
 		if (result != NULL)
 		{
 			pugi::xml_node animation_name = animations_file.child("animations").child("player").child(name.GetString());
+			loop = animation_name.attribute("loop").as_bool();
+			speed = animation_name.attribute("speed").as_float();
+			for (pugi::xml_node animation = animation_name.child("animation"); animation; animation = animation.next_sibling("animation"))
+			{
+				PushBack({ animation.attribute("x").as_int(), animation.attribute("y").as_int(), animation.attribute("w").as_int(), animation.attribute("h").as_int() });
+			}
+		}
+	}
+
+	void Animation::LoadEnemyAnimations(p2SString name, p2SString enemy)
+	{
+		pugi::xml_parse_result result = animations_file.load_file("animations.xml");
+		if (result != NULL)
+		{
+			pugi::xml_node animation_name = animations_file.child("animations").child("enemies").child(enemy.GetString()).child(name.GetString());
 			loop = animation_name.attribute("loop").as_bool();
 			speed = animation_name.attribute("speed").as_float();
 			for (pugi::xml_node animation = animation_name.child("animation"); animation; animation = animation.next_sibling("animation"))
