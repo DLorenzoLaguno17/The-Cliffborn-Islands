@@ -32,12 +32,6 @@
 		<physics initialFalling="0.0f" falling="0.0f" acceleration="0.15f"  jumpNumber="0"/>
 	</speed>
   </player>
-
-  <harpy speed="1">
-    <initialPosition x="200" y="20"/>
-	<margin x="0" y="10"/>
-	<colliderSize w="25" h="20"/>
-  </harpy>
   
   <hook speed="3" leftMargin="57">
 	  <spawnPositionRight x="11" y="3"/>
@@ -45,6 +39,12 @@
 	  <collider colliderPosition="0" heightMargin="5"/>
 	  <size width="11" height="13"/>
   </hook>
+  
+  <harpy speed="1">
+    <initialPosition x="200" y="20"/>
+	<margin x="10" y="10"/>
+	<colliderSize w="25" h="20"/>
+  </harpy>
 
   <map>
 	<blitSpeed backgrounds="0.7f" fog="0.85f"/>

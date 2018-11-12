@@ -144,7 +144,7 @@ bool j1Hook::Update(float dt) {
 			hookPosition.y = App->player->position.y + spawnPositionLeft.y;
 
 			if(current_animation == &dragHookLeft)
-				App->render->Blit(graphics, (int)hookPosition.x + 5, (int)hookPosition.y, &hook, SDL_FLIP_NONE);
+				App->render->Blit(graphics, (int)hookPosition.x + heightMargin, (int)hookPosition.y, &hook, SDL_FLIP_NONE);
 			else
 				App->render->Blit(graphics, (int)hookPosition.x, (int)hookPosition.y, &hook, SDL_FLIP_HORIZONTAL);
 
@@ -165,7 +165,7 @@ bool j1Hook::Update(float dt) {
 			hookPosition.x = App->player->position.x + spawnPositionRight.x;
 			hookPosition.y = App->player->position.y + spawnPositionRight.y;
 
-			hookCollider->SetPos(hookPosition.x, hookPosition.y + 5);
+			hookCollider->SetPos(hookPosition.x, hookPosition.y + heightMargin);
 		}
 		else {
 			hookPosition.x = App->player->position.x + spawnPositionLeft.x;
