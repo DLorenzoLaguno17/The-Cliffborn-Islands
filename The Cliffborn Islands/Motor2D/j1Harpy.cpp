@@ -27,8 +27,17 @@ bool j1Harpy::Awake(pugi::xml_node& config)
 {
 	speed = config.attribute("speed").as_int();
 
-	initialPosition.x = config.child("position").attribute("x").as_int();
-	initialPosition.y = config.child("position").attribute("y").as_int();
+	// Copying the values of the collider
+	margin.x = config.child("margin").attribute("x").as_int();
+	margin.y = config.child("margin").attribute("y").as_int();
+	colliderSize.x = config.child("colliderSize").attribute("w").as_int();
+	colliderSize.y = config.child("colliderSize").attribute("h").as_int();
+
+	colliderSize.x = 25;
+	colliderSize.y = 20;
+
+	initialPosition.x = 200;
+	initialPosition.y = 20;
 
 	return true;
 }
@@ -42,12 +51,10 @@ bool j1Harpy::Start()
 	current_animation = &idle;
 
 	// Setting harpy position
-	//position.x = initialPosition.x;
-	//position.y = initialPosition.y;
-	position.x = 250;
-	position.y = 20;
+	position.x = initialPosition.x;
+	position.y = initialPosition.y;
 
-	harpy = App->collisions->AddCollider({ (int)position.x - 10, (int)position.y - 10, 28, 19 }, COLLIDER_HARPY, this);
+	harpy = App->collisions->AddCollider({ (int)position.x - margin.x, (int)position.y - margin.y, colliderSize.x, colliderSize.y }, COLLIDER_ENEMY, this);
 
 	return true;
 }
@@ -65,7 +72,6 @@ bool j1Harpy::Update(float dt)
 		Move(*path, dt);
 		path_created = true;
 	}
-
 	else if (path_created)
 		path->Clear();
 	
@@ -89,13 +95,7 @@ bool j1Harpy::CleanUp()
 
 void j1Harpy::OnCollision(Collider * col_1, Collider * col_2)
 {
-	if (col_2->type == COLLIDER_PLAYER || col_1->type == COLLIDER_PLAYER)
-	{
-		App->fade->FadeToBlack(App->scene1, App->scene1);
-		App->player->position = App->player->initialPosition;
-		path->Clear();
-		position = { 250, 20 };
-	}
+
 }
 
 bool j1Harpy::Load(pugi::xml_node &)

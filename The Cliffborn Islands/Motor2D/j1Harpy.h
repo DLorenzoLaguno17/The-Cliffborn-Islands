@@ -8,7 +8,7 @@
 #include "p2DynArray.h"
 #include "j1Pathfinding.h"
 
-#define DETECTION_RANGE 150
+#define DETECTION_RANGE 80
 
 struct SDL_Texture;
 
@@ -53,6 +53,9 @@ public:
 public:
 	fPoint initialPosition;
 	fPoint position;
+
+	iPoint margin;
+	iPoint colliderSize;
 	
 	float speed;
 

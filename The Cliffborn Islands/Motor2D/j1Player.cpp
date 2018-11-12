@@ -384,15 +384,16 @@ void j1Player::OnCollision(Collider* col_1, Collider* col_2)
 		}
 
 		//If the player collides with death colliders
-		if (col_2->type == COLLIDER_DEATH)
+		if (col_2->type == COLLIDER_DEATH || col_2->type == COLLIDER_ENEMY)
 		{
 			App->fade->FadeToBlack(App->scene1, App->scene1);
 			fallingSpeed = initialFallingSpeed;
 			dead = true;
 			jumping = false;
 			currentJumps = initialJumps;
-			App->harpy->position = { 250, 20 };
-			App->harpy->path->Clear();
+
+			if(App->harpy->path_created)
+				App->harpy->path->Clear();
 
 			if (App->fade->IsFading() == 0)
 			{
@@ -400,6 +401,9 @@ void j1Player::OnCollision(Collider* col_1, Collider* col_2)
 				position.y = initialPosition.y;
 				App->render->camera.x = App->render->initialCameraX;
 				App->render->camera.y = App->render->initialCameraY;
+
+				App->harpy->position = App->harpy->initialPosition;
+
 				dead = false;
 			}
 		}

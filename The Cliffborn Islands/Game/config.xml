@@ -33,13 +33,15 @@
 	</speed>
   </player>
 
-  <harpy speed ="1">
-    <position x="150" y="30"/>
+  <harpy speed="1">
+    <initialPosition x="200" y="20"/>
+	<margin x="0" y="10"/>
+	<colliderSize w="25" h="20"/>
   </harpy>
   
   <hook speed="3">
 	  <spawnPositionRight x="11" y="3"/>
-  	<spawnPositionLeft x="-52" y="3"/>
+	  <spawnPositionLeft x="-52" y="3"/>
 	  <size width="11" height="13"/>
   </hook>
 
