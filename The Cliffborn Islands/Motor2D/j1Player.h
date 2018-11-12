@@ -51,8 +51,9 @@ public:
 	Animation run;
 	Animation jump;
 	Animation fall;
-	Animation attack;
 	Animation godmode;
+	Animation attackRight;
+	Animation attackLeft;
 
 	// To know the last direction the character was moving to
 	bool facingRight = true;
@@ -91,6 +92,7 @@ public:
 	bool freefall = false;
 	bool loading = false;
 	bool dead = false;
+	bool attacking = false;
 
 };
 

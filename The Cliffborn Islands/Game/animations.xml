@@ -35,13 +35,21 @@
       <animation x="118" y="34" w="28" h="27"/>
 	</godmode>
 
-    <attack loop="false" speed="0.15f">
-      <animation x="1" y="272" w="29" h="27"/>
-      <animation x="64" y="272" w="29" h="27"/>
-      <animation x="135" y="272" w="35" h="27"/>
-      <animation x="198" y="272" w="40" h="27"/>
-      <animation x="253" y="272" w="42" h="27"/>
-    </attack>
+    <attackRight loop="false" speed="0.32f">
+      <animation x="1" y="271" w="29" h="27"/>
+      <animation x="64" y="271" w="29" h="27"/>
+      <animation x="135" y="271" w="35" h="27"/>
+      <animation x="198" y="271" w="40" h="27"/>
+      <animation x="253" y="271" w="42" h="27"/>
+    </attackRight>
+	
+    <attackLeft loop="false" speed="0.32f">
+      <animation x="266" y="123" w="42" h="27"/>
+      <animation x="266" y="151" w="42" h="27"/>
+      <animation x="246" y="180" w="42" h="27"/>
+      <animation x="246" y="209" w="42" h="27"/>
+      <animation x="246" y="239" w="42" h="27"/>
+    </attackLeft>
 	
 	<throwHook loop="false" speed="0.6f">
       <animation x="1" y="2" w="66" h="23"/>
