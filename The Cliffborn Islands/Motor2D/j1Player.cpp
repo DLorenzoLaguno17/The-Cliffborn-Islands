@@ -10,6 +10,7 @@
 #include "j1Hook.h"
 #include "j1Scene1.h"
 #include "j1Scene2.h"
+#include "j1Harpy.h"
 
 j1Player::j1Player() : j1Module()
 {
@@ -361,6 +362,8 @@ void j1Player::OnCollision(Collider* col_1, Collider* col_2)
 			dead = true;
 			jumping = false;
 			currentJumps = initialJumps;
+			App->harpy->position = { 250, 20 };
+			App->harpy->path->Clear();
 
 			if (App->fade->IsFading() == 0)
 			{

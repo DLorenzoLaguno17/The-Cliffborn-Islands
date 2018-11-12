@@ -93,6 +93,7 @@ void j1Harpy::OnCollision(Collider * col_1, Collider * col_2)
 	{
 		App->fade->FadeToBlack(App->scene1, App->scene1);
 		App->player->position = App->player->initialPosition;
+		path->Clear();
 		position = { 250, 20 };
 	}
 }
