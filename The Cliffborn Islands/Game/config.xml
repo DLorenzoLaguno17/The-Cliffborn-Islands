@@ -39,9 +39,10 @@
 	<colliderSize w="25" h="20"/>
   </harpy>
   
-  <hook speed="3">
+  <hook speed="3" leftMargin="57">
 	  <spawnPositionRight x="11" y="3"/>
 	  <spawnPositionLeft x="-52" y="3"/>
+	  <collider colliderPosition="0" heightMargin="5"/>
 	  <size width="11" height="13"/>
   </hook>
 

@@ -31,10 +31,13 @@ bool j1Hook::Awake(pugi::xml_node& config) {
 
 	// Copying variables
 	hookSpeed = config.attribute("speed").as_int();
+	leftMargin = config.attribute("leftMargin").as_int();
 
-	// Copying the size of the collider
+	// Copying collider values
 	hookSize.x = config.child("size").attribute("width").as_int();
 	hookSize.y = config.child("size").attribute("height").as_int();
+	initialColliderPosition = config.child("collider").attribute("colliderPosition").as_int();
+	heightMargin = config.child("collider").attribute("heightMargin").as_int();
 
 	// Copying the spawning positions
 	spawnPositionRight.x = config.child("spawnPositionRight").attribute("x").as_int();
@@ -47,9 +50,7 @@ bool j1Hook::Awake(pugi::xml_node& config) {
 
 // Load assets
 bool j1Hook::Start() {
-
-	current_animation = NULL;
-
+	
 	// Textures are loaded
 	LOG("Loading player textures");
 	graphics = App->tex->Load("textures/character/hook.png");
@@ -59,7 +60,7 @@ bool j1Hook::Start() {
 
 	current_animation = &throwHook;
 	
-	hookCollider = App->collisions->AddCollider({0, 0, hookSize.x, hookSize.y}, COLLIDER_HOOK, this);
+	hookCollider = App->collisions->AddCollider({NULL, NULL, hookSize.x, hookSize.y}, COLLIDER_HOOK, this);
 
 	return true;
 }
@@ -67,6 +68,7 @@ bool j1Hook::Start() {
 // Call modules on each loop iteration
 bool j1Hook::Update(float dt) {	
 
+	// We reset the values if the player has arrived to it's hooked destination
 	if (somethingHit) {
 		if (arrived || dragHookLeft.Finished() || dragHookRight.Finished()) {
 			somethingHit = false;
@@ -80,7 +82,7 @@ bool j1Hook::Update(float dt) {
 		returnHook.Reset();
 		dragHookRight.Reset();
 		dragHookLeft.Reset();
-		colliderPosition.x = 0;
+		colliderPosition = initialColliderPosition;
 		thrown = true;
 		current_animation = &throwHook;
 		App->audio->PlayFx(chain);
@@ -127,14 +129,14 @@ bool j1Hook::Update(float dt) {
 
 			App->render->Blit(graphics, (int)hookPosition.x, (int)hookPosition.y, &hook, SDL_FLIP_NONE);
 
-			// Update collider position to hook's claw position
+			// Update collider position to hook's claw position with the player facing right
 			if (!somethingHit) {
 				if (current_animation == &throwHook)
-					colliderPosition.x += hookSpeed;
+					colliderPosition += hookSpeed;
 				else if (current_animation == &returnHook)
-					colliderPosition.x -= hookSpeed;
+					colliderPosition -= hookSpeed;
 
-				hookCollider->SetPos(hookPosition.x + colliderPosition.x, hookPosition.y + 5);
+				hookCollider->SetPos(hookPosition.x + colliderPosition, hookPosition.y + heightMargin);
 			}
 		}
 		else{
@@ -146,14 +148,14 @@ bool j1Hook::Update(float dt) {
 			else
 				App->render->Blit(graphics, (int)hookPosition.x, (int)hookPosition.y, &hook, SDL_FLIP_HORIZONTAL);
 
-			// Update collider position to hook's claw position
+			// Update collider position to hook's claw position with the player facing left
 			if (!somethingHit) {
 				if (current_animation == &throwHook)
-					colliderPosition.x -= hookSpeed;
+					colliderPosition -= hookSpeed;
 				else if (current_animation == &returnHook)
-					colliderPosition.x += hookSpeed;
+					colliderPosition += hookSpeed;
 
-				hookCollider->SetPos(hookPosition.x + 57 + colliderPosition.x, hookPosition.y + 5);
+				hookCollider->SetPos(hookPosition.x + leftMargin + colliderPosition, hookPosition.y + heightMargin);
 			}
 		}
 	}
@@ -169,7 +171,7 @@ bool j1Hook::Update(float dt) {
 			hookPosition.x = App->player->position.x + spawnPositionLeft.x;
 			hookPosition.y = App->player->position.y + spawnPositionLeft.y;
 
-			hookCollider->SetPos(hookPosition.x + 57, hookPosition.y + 5);
+			hookCollider->SetPos(hookPosition.x + leftMargin, hookPosition.y + heightMargin);
 		}
 			
 		hookCollider->type = COLLIDER_NONE;
@@ -191,11 +193,12 @@ bool j1Hook::CleanUp() {
 // Detects collisions
 void j1Hook::OnCollision(Collider* col_1, Collider* col_2) {
 	if (col_1->type == COLLIDER_HOOK && current_animation != &returnHook) {
+		
 		// First we check if the collision is perpendicular
 		if (col_1->rect.y + col_1->rect.h >= col_2->rect.y
 			&& col_1->rect.y <= col_2->rect.y + col_2->rect.h){
 
-				// If the hook hits left
+				// If the hook hits right
 			if ((App->player->facingRight == true
 				&& col_1->rect.x + col_1->rect.w >= col_2->rect.x
 				&& col_1->rect.x <= col_2->rect.x) ||

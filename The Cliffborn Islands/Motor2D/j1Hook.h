@@ -40,19 +40,23 @@ public:
 	Animation* current_animation = nullptr;
 	Collider* hookCollider = nullptr;
 
+	// Hook animations
 	Animation throwHook;
 	Animation returnHook;
 	Animation dragHookRight;
 	Animation dragHookLeft;
 
-	int objectivePosition = NULL;
+	int objectivePosition;
 	int hookSpeed;
+	int initialColliderPosition;
+	int colliderPosition;
+	int leftMargin;
+	int heightMargin;
 	
 	iPoint spawnPositionRight;
 	iPoint spawnPositionLeft;
 	iPoint hookPosition;
 	iPoint hookSize;
-	iPoint colliderPosition;
 
 	bool somethingHit = false;
 	bool thrown = false;
