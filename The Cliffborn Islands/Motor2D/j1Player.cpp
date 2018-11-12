@@ -21,6 +21,8 @@ j1Player::j1Player() : j1Module()
 	jump.LoadAnimations("jump");
 	fall.LoadAnimations("fall");
 	godmode.LoadAnimations("godmode");
+	attackRight.LoadAnimations("attackRight");
+	attackLeft.LoadAnimations("attackLeft");
 
 	name.create("player");
 }
@@ -114,7 +116,8 @@ bool j1Player::Update(float dt) {
 	else {
 		// Idle
 		if (App->input->GetKey(SDL_SCANCODE_D) == j1KeyState::KEY_IDLE
-			&& App->input->GetKey(SDL_SCANCODE_A) == j1KeyState::KEY_IDLE) 
+			&& App->input->GetKey(SDL_SCANCODE_A) == j1KeyState::KEY_IDLE
+			&& attacking == false) 
 			current_animation = &idle;		
 
 		// Direction controls	
@@ -190,6 +193,24 @@ bool j1Player::Update(float dt) {
 				}
 			}
 		}
+	}
+
+	// Attack control
+	if (App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN) {
+		attacking = true;
+
+		if (facingRight)
+			current_animation = &attackRight;
+		else
+			current_animation = &attackLeft;
+	}
+
+	if ((facingRight && attackRight.Finished())
+		|| (!facingRight && attackLeft.Finished())) {
+
+		attackLeft.Reset();
+		attackRight.Reset();
+		attacking = false;
 	}
 
 	// God mode
