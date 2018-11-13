@@ -32,12 +32,8 @@ bool j1Harpy::Awake(pugi::xml_node& config)
 	margin.y = config.child("margin").attribute("y").as_int();
 	colliderSize.x = config.child("colliderSize").attribute("w").as_int();
 	colliderSize.y = config.child("colliderSize").attribute("h").as_int();
-
-	colliderSize.x = 25;
-	colliderSize.y = 20;
-
-	initialPosition.x = 200;
-	initialPosition.y = 20;
+	initialPosition.x = config.child("initialPosition").attribute("x").as_int();
+	initialPosition.y = config.child("initialPosition").attribute("y").as_int();
 
 	return true;
 }

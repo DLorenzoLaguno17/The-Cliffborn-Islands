@@ -11,6 +11,7 @@
 #define DETECTION_RANGE 80
 
 struct SDL_Texture;
+//struct Collider;
 
 class j1Harpy : public j1Module
 {
@@ -62,7 +63,6 @@ public:
 	Movement direction;
 
 	p2DynArray<iPoint>* path;
-	p2SString	name;
 
 	bool path_created = false;
 
