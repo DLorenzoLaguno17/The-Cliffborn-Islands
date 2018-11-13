@@ -74,22 +74,24 @@ bool j1Scene1::PreUpdate()
 	static iPoint origin;
 	static bool origin_selected = false;
 
-	int x, y;
-	App->input->GetMousePosition(x, y);
-	iPoint p = App->render->ScreenToWorld(x, y);
-	p = App->map->WorldToMap(p.x, p.y);
+	if (App->collisions->debug) {
+		int x, y;
+		App->input->GetMousePosition(x, y);
+		iPoint p = App->render->ScreenToWorld(x, y);
+		p = App->map->WorldToMap(p.x, p.y);
 
-	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
-	{
-		if (origin_selected == true)
+		if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
 		{
-			App->path->CreatePath(origin, p);
-			origin_selected = false;
-		}
-		else
-		{
-			origin = p;
-			origin_selected = true;
+			if (origin_selected == true)
+			{
+				App->path->CreatePath(origin, p);
+				origin_selected = false;
+			}
+			else
+			{
+				origin = p;
+				origin_selected = true;
+			}
 		}
 	}
 
@@ -148,24 +150,26 @@ bool j1Scene1::Update(float dt)
 
 	App->map->Draw();
 
-	int x, y;
-	App->input->GetMousePosition(x, y);
-	iPoint map_coordinates = App->map->WorldToMap(x - App->render->camera.x, y - App->render->camera.y);
-	
-	// Debug pathfinding ------------------------------
-	App->input->GetMousePosition(x, y);
-	iPoint p = App->render->ScreenToWorld(x, y);
-	p = App->map->WorldToMap(p.x, p.y);
-	p = App->map->MapToWorld(p.x, p.y);
+	if (App->collisions->debug) {
+		int x, y;
+		App->input->GetMousePosition(x, y);
+		iPoint map_coordinates = App->map->WorldToMap(x - App->render->camera.x, y - App->render->camera.y);
 
-	App->render->Blit(debug_tex, p.x, p.y);
+		// Debug pathfinding ------------------------------
+		App->input->GetMousePosition(x, y);
+		iPoint p = App->render->ScreenToWorld(x, y);
+		p = App->map->WorldToMap(p.x, p.y);
+		p = App->map->MapToWorld(p.x, p.y);
 
-	const p2DynArray<iPoint>* path = App->path->GetLastPath();
+		App->render->Blit(debug_tex, p.x, p.y);
 
-	for (uint i = 0; i < path->Count(); ++i)
-	{
-		iPoint pos = App->map->MapToWorld(path->At(i)->x, path->At(i)->y);
-		App->render->Blit(debug_tex, pos.x, pos.y);
+		const p2DynArray<iPoint>* path = App->path->GetLastPath();
+
+		for (uint i = 0; i < path->Count(); ++i)
+		{
+			iPoint pos = App->map->MapToWorld(path->At(i)->x, path->At(i)->y);
+			App->render->Blit(debug_tex, pos.x, pos.y);
+		}
 	}
 
 	return true;
