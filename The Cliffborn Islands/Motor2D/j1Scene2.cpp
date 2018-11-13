@@ -8,6 +8,7 @@
 #include "j1Render.h"
 #include "j1Window.h"
 #include "j1Map.h"
+#include "j1Hook.h"
 #include "j1Player.h"
 #include "j1Scene2.h"
 #include "j1Scene1.h"
@@ -195,6 +196,7 @@ bool j1Scene2::CleanUp()
 	App->collisions->CleanUp();
 	App->tex->CleanUp();
 	App->player->CleanUp();
+	App->hook->CleanUp();
 
 	return true;
 }
@@ -227,6 +229,7 @@ void j1Scene2::ChangeScene()
 	CleanUp();
 	App->fade->FadeToBlack(App->scene2, App->scene1);
 	App->player->Start();
+	App->hook->Start();
 	App->render->camera = { 0,0 };
 	App->scene1->Start();
 }
