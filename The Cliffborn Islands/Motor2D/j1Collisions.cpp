@@ -150,7 +150,7 @@ bool j1Collisions::CleanUp()
 
 void j1Collisions::DrawColliders() 
 {
-	if (App->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)	
 		debug = !debug;
 
 	if (debug == false)
