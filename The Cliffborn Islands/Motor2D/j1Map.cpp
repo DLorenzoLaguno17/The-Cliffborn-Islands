@@ -43,7 +43,7 @@ void j1Map::Draw()
 	{
 		MapLayer* layer = item->data;
 
-		if (layer->properties.Get("MustDraw") != 0)
+		if (layer->properties.Get("Nodraw") != 0)
 			continue;
 
 		for (int y = 0; y < data.height; ++y)

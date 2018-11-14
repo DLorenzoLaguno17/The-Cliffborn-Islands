@@ -4,23 +4,20 @@
 #include "PugiXml/src/pugixml.hpp"
 #include "p2Point.h"
 #include "p2Animation.h"
-#include "j1Module.h"
+#include "j1Entity.h"
 
 struct SDL_Texture;
 struct Collider;
 
-class j1Player : public j1Module
+class j1Player : public j1Entity
 {
 
 public:
 
-	j1Player();
+	j1Player(int x, int y, ENTITY_TYPES type);
 
 	// Destructor
 	virtual ~j1Player();
-
-	// Called before render is available
-	bool Awake(pugi::xml_node& config);
 
 	// Called before the first frame
 	bool Start();
@@ -40,11 +37,9 @@ public:
 	bool Load(pugi::xml_node&);
 	bool Save(pugi::xml_node&) const;
 
-public:
+	void LoadPlayerProperties();
 
-	SDL_Texture* graphics = nullptr;
-	Animation* current_animation = nullptr;
-	Collider* player = nullptr;
+public:
 
 	// Animations of the player
 	Animation idle;
@@ -59,7 +54,6 @@ public:
 	bool facingRight = true;
 	
 	fPoint initialPosition;
-	fPoint position;
 
 	// Size of the player collider, where x = w and y = h
 	iPoint playerSize;
@@ -86,6 +80,7 @@ public:
 	bool wallBehind = false;
 	bool wallAbove = false;
 
+	bool player_start = false;
 	bool GodMode = false;
 	bool playerIdle = false;
 	bool jumping = false;

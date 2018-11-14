@@ -11,58 +11,43 @@
 #include "j1Map.h"
 #include "j1Scene1.h"
 
-j1Harpy::j1Harpy() : j1Module()
+j1Harpy::j1Harpy(int x, int y, ENTITY_TYPES type) : j1Entity(x, y, ENTITY_TYPES::PLAYER)
 {
-	current_animation = NULL;
+	animation = NULL;
 
 	idle.LoadEnemyAnimations("idle", "harpy");
 	move.LoadEnemyAnimations("move", "harpy");
 
-	name.create("harpy");
+	// Setting harpy position
+	initialPosition.x = position.x = x;
+	initialPosition.y = position.y = y;
 }
 
 j1Harpy::~j1Harpy() {}
-
-bool j1Harpy::Awake(pugi::xml_node& config)
-{
-	speed = config.attribute("speed").as_int();
-
-	// Copying the values of the collider
-	margin.x = config.child("margin").attribute("x").as_int();
-	margin.y = config.child("margin").attribute("y").as_int();
-	colliderSize.x = config.child("colliderSize").attribute("w").as_int();
-	colliderSize.y = config.child("colliderSize").attribute("h").as_int();
-	initialPosition.x = config.child("initialPosition").attribute("x").as_int();
-	initialPosition.y = config.child("initialPosition").attribute("y").as_int();
-
-	return true;
-}
 
 bool j1Harpy::Start()
 {
 	// Textures are loaded
 	LOG("Loading harpy textures");
-	graphics = App->tex->Load("textures/enemies/harpy/harpy.png");
+	sprites = App->tex->Load("textures/enemies/harpy/harpy.png");
 
-	current_animation = &idle;
+	LoadHarpyProperties();
 
-	// Setting harpy position
-	position.x = initialPosition.x;
-	position.y = initialPosition.y;
+	animation = &idle;
 
-	harpy = App->collisions->AddCollider({ (int)position.x - margin.x, (int)position.y - margin.y, colliderSize.x, colliderSize.y }, COLLIDER_ENEMY, this);
+	collider = App->collisions->AddCollider({ (int)position.x - margin.x, (int)position.y - margin.y, colliderSize.x, colliderSize.y }, COLLIDER_ENEMY, App->entity);
 
 	return true;
 }
 
 bool j1Harpy::Update(float dt)
 {
-	harpy->SetPos(position.x, position.y);
+	collider->SetPos(position.x, position.y);
 
-	if ((App->player->position.x - position.x) <= DETECTION_RANGE && (App->player->position.x - position.x) >= -DETECTION_RANGE && App->player->player->type == COLLIDER_PLAYER)
+	if ((App->entity->player->position.x - position.x) <= DETECTION_RANGE && (App->entity->player->position.x - position.x) >= -DETECTION_RANGE && App->entity->player->collider->type == COLLIDER_PLAYER)
 	{
 		iPoint origin = { App->map->WorldToMap((int)position.x + 16, (int)position.y - 16)};
-		iPoint destination = { App->map->WorldToMap((int)App->player->position.x + 8,(int)App->player->position.y) };
+		iPoint destination = { App->map->WorldToMap((int)App->entity->player->position.x + 8,(int)App->entity->player->position.y) };
 
 		path = App->path->CreatePath(origin, destination);
 		Move(*path, dt);
@@ -71,12 +56,13 @@ bool j1Harpy::Update(float dt)
 	else if (path_created)
 		path->Clear();
 	
-	SDL_Rect character = current_animation->GetCurrentFrame();
+	if (App->fade->IsFading() == 1)
+		position = initialPosition;
 
-	if (position.x - App->player->position.x >= 0)
-		App->render->Blit(graphics, (int)position.x - 10, (int)position.y - 10, &character, SDL_FLIP_HORIZONTAL);
+	if (position.x - App->entity->player->position.x >= 0)
+		Draw(-10, -10, true);
 	else
-		App->render->Blit(graphics, (int)position.x - 10, (int)position.y - 10, &character, SDL_FLIP_NONE);
+		Draw(-10, -10, false);
 
 	return true;
 }
@@ -84,14 +70,15 @@ bool j1Harpy::Update(float dt)
 bool j1Harpy::CleanUp()
 {
 	LOG("Unloading harpy");
-	App->tex->UnLoad(graphics);
+	App->tex->UnLoad(sprites);
+	if (collider != nullptr)
+		collider->to_delete = true;
 
 	return true;
 }
 
 void j1Harpy::OnCollision(Collider * col_1, Collider * col_2)
 {
-
 }
 
 bool j1Harpy::Load(pugi::xml_node &)
@@ -104,6 +91,24 @@ bool j1Harpy::Save(pugi::xml_node &) const
 	return true;
 }
 
+void j1Harpy::LoadHarpyProperties()
+{
+	pugi::xml_document config_file;
+	config_file.load_file("config.xml");
+	pugi::xml_node config;
+	config = config_file.child("config");
+	pugi::xml_node harpy;
+	harpy = config.child("harpy");
+
+	speed = harpy.attribute("speed").as_int();
+
+	// Copying the values of the collider
+	margin.x = harpy.child("margin").attribute("x").as_int();
+	margin.y = harpy.child("margin").attribute("y").as_int();
+	colliderSize.x = harpy.child("colliderSize").attribute("w").as_int();
+	colliderSize.y = harpy.child("colliderSize").attribute("h").as_int();
+}
+
 void j1Harpy::Move(p2DynArray<iPoint>& path, float dt)
 {
 	speed = 1.0f;
@@ -111,25 +116,25 @@ void j1Harpy::Move(p2DynArray<iPoint>& path, float dt)
 
 	if (direction == Movement::DOWN)
 	{
-		current_animation = &move;
+		animation = &move;
 		position.y += speed;
 	}
 	
 	if (direction == Movement::UP)
 	{
-		current_animation = &move;
+		animation = &move;
 		position.y -= speed;
 	}
 
 	if (direction == Movement::RIGHT)
 	{
-		current_animation = &move;
+		animation = &move;
 		position.x += speed;
 	}
 	
 	if (direction == Movement::LEFT)
 	{
-		current_animation = &move;
+		animation = &move;
 		position.x -= speed;
 	}
 }

@@ -4,23 +4,20 @@
 #include "PugiXml/src/pugixml.hpp"
 #include "p2Point.h"
 #include "p2Animation.h"
-#include "j1Module.h"
+#include "j1Entity.h"
 
 struct SDL_Texture;
 struct Collider;
 
-class j1Hook : public j1Module
+class j1Hook : public j1Entity
 {
 
 public:
 
-	j1Hook();
+	j1Hook(int x, int y, ENTITY_TYPES type);
 
 	// Destructor
 	virtual ~j1Hook();
-
-	// Called before render is available
-	bool Awake(pugi::xml_node& config);
 
 	// Called before the first frame
 	bool Start();
@@ -34,11 +31,9 @@ public:
 	// Called to check collisions
 	void OnCollision(Collider* col_1, Collider* col_2);
 
-public:
+	void LoadHookProperties();
 
-	SDL_Texture * graphics = nullptr;
-	Animation* current_animation = nullptr;
-	Collider* hookCollider = nullptr;
+public:
 
 	// Hook animations
 	Animation throwHook;
@@ -55,7 +50,6 @@ public:
 	
 	iPoint spawnPositionRight;
 	iPoint spawnPositionLeft;
-	iPoint hookPosition;
 	iPoint hookSize;
 
 	bool somethingHit = false;

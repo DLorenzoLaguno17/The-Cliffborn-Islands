@@ -14,12 +14,10 @@ class j1Audio;
 class j1Scene1;
 class j1Scene2;
 class j1Map;
-class j1Player;
 class j1FadeToBlack;
 class j1Collisions;
-class j1Hook;
 class j1PathFinding;
-class j1Harpy;
+class j1EntityManager;
 
 class j1App
 {
@@ -91,12 +89,10 @@ public:
 	j1Scene1*			scene1;
 	j1Scene2*			scene2;
 	j1Map*				map;
-	j1Player*			player;
 	j1FadeToBlack*		fade;
 	j1Collisions*		collisions;
-	j1Hook*				hook;
 	j1PathFinding*		path;
-	j1Harpy*			harpy;
+	j1EntityManager*	entity;
 
 private:
 

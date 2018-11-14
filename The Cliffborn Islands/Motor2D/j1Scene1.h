@@ -42,6 +42,8 @@ private:
 
 	SDL_Texture* debug_tex;
 
+	bool player_created = false;
+
 	int cameraLimit;
 	int playerLimit;
 };

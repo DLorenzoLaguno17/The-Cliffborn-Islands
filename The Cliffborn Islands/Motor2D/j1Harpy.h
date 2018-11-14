@@ -4,25 +4,22 @@
 #include "PugiXml/src/pugixml.hpp"
 #include "p2Point.h"
 #include "p2Animation.h"
-#include "j1Module.h"
 #include "p2DynArray.h"
 #include "j1Pathfinding.h"
+#include "j1Entity.h"
 
 #define DETECTION_RANGE 80
 
 struct SDL_Texture;
 //struct Collider;
 
-class j1Harpy : public j1Module
+class j1Harpy : public j1Entity
 {
 public:
-	j1Harpy();
+	j1Harpy(int x, int y, ENTITY_TYPES type);
 
 	// Destructor
 	virtual ~j1Harpy();
-
-	// Called before render is available
-	bool Awake(pugi::xml_node& config);
 
 	// Called before the first frame
 	bool Start();
@@ -40,20 +37,16 @@ public:
 	bool Load(pugi::xml_node&);
 	bool Save(pugi::xml_node&) const;
 
+	void LoadHarpyProperties();
 	void Move(p2DynArray<iPoint>& path, float dt);
 
 public:
-	SDL_Texture* graphics = nullptr;
-	Animation* current_animation = nullptr;
 
 	Animation idle;
 	Animation move;
 
-	Collider* harpy = nullptr;
-
 public:
 	fPoint initialPosition;
-	fPoint position;
 
 	iPoint margin;
 	iPoint colliderSize;

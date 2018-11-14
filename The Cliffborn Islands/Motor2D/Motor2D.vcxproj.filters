@@ -32,7 +32,7 @@
       <Filter>Development\Tools</Filter>
     </ClCompile>
     <ClCompile Include="j1Player.cpp">
-      <Filter>Development\Modules\Player</Filter>
+      <Filter>Development\Modules\Entities\Player</Filter>
     </ClCompile>
     <ClCompile Include="j1Window.cpp">
       <Filter>Development\Modules\Media</Filter>
@@ -53,13 +53,19 @@
       <Filter>Development\Modules\Interactions</Filter>
     </ClCompile>
     <ClCompile Include="j1Hook.cpp">
-      <Filter>Development\Modules\Player</Filter>
+      <Filter>Development\Modules\Entities\Player</Filter>
     </ClCompile>
     <ClCompile Include="j1Pathfinding.cpp">
       <Filter>Development\Modules\Interactions</Filter>
     </ClCompile>
     <ClCompile Include="j1Harpy.cpp">
-      <Filter>Development\Modules\Enemies</Filter>
+      <Filter>Development\Modules\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="j1Entity.cpp">
+      <Filter>Development\Modules\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="j1EntityManager.cpp">
+      <Filter>Development\Modules\Entities</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -115,7 +121,7 @@
       <Filter>Development\Tools</Filter>
     </ClInclude>
     <ClInclude Include="j1Player.h">
-      <Filter>Development\Modules\Player</Filter>
+      <Filter>Development\Modules\Entities\Player</Filter>
     </ClInclude>
     <ClInclude Include="j1Window.h">
       <Filter>Development\Modules\Media</Filter>
@@ -136,13 +142,19 @@
       <Filter>Development\Modules\Interactions</Filter>
     </ClInclude>
     <ClInclude Include="j1Hook.h">
-      <Filter>Development\Modules\Player</Filter>
+      <Filter>Development\Modules\Entities\Player</Filter>
     </ClInclude>
     <ClInclude Include="j1Pathfinding.h">
       <Filter>Development\Modules\Interactions</Filter>
     </ClInclude>
     <ClInclude Include="j1Harpy.h">
-      <Filter>Development\Modules\Enemies</Filter>
+      <Filter>Development\Modules\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Entity.h">
+      <Filter>Development\Modules\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="j1EntityManager.h">
+      <Filter>Development\Modules\Entities</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -164,17 +176,17 @@
     <Filter Include="Development\Modules">
       <UniqueIdentifier>{244722d1-90ce-423d-8e7a-556211865a32}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Development\Modules\Player">
-      <UniqueIdentifier>{60fc6ea4-d366-47bf-adf2-49e7c5fba259}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Development\Modules\Media">
       <UniqueIdentifier>{34972cc5-2a08-44c7-8820-dc864e675500}</UniqueIdentifier>
     </Filter>
     <Filter Include="Development\Modules\Interactions">
       <UniqueIdentifier>{2b61e39a-7a6e-4fd6-91e0-a443829b55b8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Development\Modules\Enemies">
+    <Filter Include="Development\Modules\Entities">
       <UniqueIdentifier>{2602bd76-7163-4fd8-855a-6e49d5563390}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Development\Modules\Entities\Player">
+      <UniqueIdentifier>{60fc6ea4-d366-47bf-adf2-49e7c5fba259}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

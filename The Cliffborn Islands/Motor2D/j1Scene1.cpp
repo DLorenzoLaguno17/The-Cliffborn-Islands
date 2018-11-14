@@ -62,6 +62,19 @@ bool j1Scene1::Start()
 
 		// The audio is played
 		App->audio->PlayMusic("audio/music/level1_music.ogg", 1.0f);
+
+		if (!player_created)
+		{
+			App->entity->CreatePlayer();
+			player_created = true;
+		}
+		
+
+		App->entity->AddEnemy(150, 20, HARPY);
+		App->entity->AddEnemy(250, 50, HARPY);
+		App->entity->AddEnemy(400, 20, HARPY);
+		App->entity->AddEnemy(600, 20, HARPY);
+
 	}
 
 	return true;
@@ -124,8 +137,8 @@ bool j1Scene1::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN) 
 	{
 		App->fade->FadeToBlack(this, App->scene1);
-		App->player->position.x = 0;
-		App->player->position.y = 20;
+		App->entity->player->position.x = 0;
+		App->entity->player->position.y = 20;
 		App->render->camera.x = 0;
 	}
 
@@ -136,17 +149,17 @@ bool j1Scene1::Update(float dt)
 	// Camera control
 	if (App->render->camera.x > cameraLimit)
 	{
-		App->render->camera.x = -App->player->position.x * 4 + 400;
+		App->render->camera.x = -App->entity->player->position.x * 4 + 400;
 		if (App->render->camera.x > 0)
 			App->render->camera.x = 0;
 	}		
 	
 	// Limit player X position
-	if (App->player->position.x > playerLimit)
-		App->player->position.x = playerLimit;
+	if (App->entity->player->position.x > playerLimit)
+		App->entity->player->position.x = playerLimit;
 
-	if (App->player->position.x < 0)
-		App->player->position.x = 0;
+	if (App->entity->player->position.x < 0)
+		App->entity->player->position.x = 0;
 
 	App->map->Draw();
 
@@ -194,8 +207,8 @@ bool j1Scene1::CleanUp()
 	App->map->CleanUp();
 	App->collisions->CleanUp();
 	App->tex->CleanUp();
-	App->player->CleanUp();
-	App->hook->CleanUp();
+	App->entity->CleanUp();
+	App->path->CleanUp();
 
 	return true;
 }
@@ -228,8 +241,8 @@ void j1Scene1::ChangeScene()
 	App->scene1->active = false;
 	CleanUp();
 	App->fade->FadeToBlack(App->scene1, App->scene2);
-	App->player->Start();
-	App->hook->Start();
+	App->entity->CreatePlayer();
+	App->entity->Start();
 	App->render->camera = { 0,0 };
 	App->scene2->Start();
 }

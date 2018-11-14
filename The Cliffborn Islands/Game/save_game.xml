@@ -7,20 +7,17 @@
 	<map />
 	<pathfinding />
 	<scene1>
-		<activated true="true" />
+		<activated true="false" />
 	</scene1>
 	<scene2>
-		<activated true="false" />
+		<activated true="true" />
 	</scene2>
-	<hook />
-	<player>
-		<position x="1725.77466" y="25" />
-		<godmode value="false" />
-	</player>
-	<:anonymous />
+	<entity>
+		<harpy />
+	</entity>
 	<fade />
 	<collisions />
 	<renderer>
-		<camera x="-6503" y="0" />
+		<camera x="0" y="0" />
 	</renderer>
 </game_state>

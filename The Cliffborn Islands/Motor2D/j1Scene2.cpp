@@ -112,16 +112,16 @@ bool j1Scene2::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 	{
 		ChangeScene();
-		App->player->position.x = 0;
-		App->player->position.y = 20;
+		App->entity->player->position.x = 0;
+		App->entity->player->position.y = 20;
 		App->render->camera.x = 0;
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
 	{
 		App->fade->FadeToBlack(this, App->scene2);
-		App->player->position.x = 0;
-		App->player->position.y = 40;
+		App->entity->player->position.x = 0;
+		App->entity->player->position.y = 40;
 		App->render->camera.x = 0;
 	}
 
@@ -141,17 +141,17 @@ bool j1Scene2::Update(float dt)
 	// Camera control
 	if (App->render->camera.x > CAMERA_LIMIT)  //need to put the X value in XML
 	{
-		App->render->camera.x = -App->player->position.x * 4 + 400;
+		App->render->camera.x = -App->entity->player->position.x * 4 + 400;
 		if (App->render->camera.x > 0)
 			App->render->camera.x = 0;
 	}
 
 	// Limit player X position
-	if (App->player->position.x > PLAYER_LIMIT)
-		App->player->position.x = PLAYER_LIMIT;
+	if (App->entity->player->position.x > PLAYER_LIMIT)
+		App->entity->player->position.x = PLAYER_LIMIT;
 
-	if (App->player->position.x < 0)
-		App->player->position.x = 0;
+	if (App->entity->player->position.x < 0)
+		App->entity->player->position.x = 0;
 
 	App->map->Draw();
 
@@ -199,8 +199,8 @@ bool j1Scene2::CleanUp()
 	App->map->CleanUp();
 	App->collisions->CleanUp();
 	App->tex->CleanUp();
-	App->player->CleanUp();
-	App->hook->CleanUp();
+	App->entity->CleanUp();
+	App->path->CleanUp();
 
 	return true;
 }
@@ -232,8 +232,8 @@ void j1Scene2::ChangeScene()
 	App->scene2->active = false;
 	CleanUp();
 	App->fade->FadeToBlack(App->scene2, App->scene1);
-	App->player->Start();
-	App->hook->Start();
+	App->entity->CreatePlayer();
+	App->entity->Start();
 	App->render->camera = { 0,0 };
 	App->scene1->Start();
 }
