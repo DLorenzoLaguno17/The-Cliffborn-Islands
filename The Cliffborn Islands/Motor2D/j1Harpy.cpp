@@ -11,7 +11,7 @@
 #include "j1Map.h"
 #include "j1Scene1.h"
 
-j1Harpy::j1Harpy(int x, int y, ENTITY_TYPES type) : j1Entity(x, y, ENTITY_TYPES::PLAYER)
+j1Harpy::j1Harpy(int x, int y, ENTITY_TYPES type) : j1Entity(x, y, ENTITY_TYPES::HARPY)
 {
 	animation = NULL;
 

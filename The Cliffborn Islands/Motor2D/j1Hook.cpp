@@ -25,8 +25,7 @@ j1Hook::j1Hook(int x, int y, ENTITY_TYPES type) : j1Entity(x, y, ENTITY_TYPES::H
 j1Hook::~j1Hook() {}
 
 // Load assets
-bool j1Hook::Start() 
-{
+bool j1Hook::Start() {
 	
 	LoadHookProperties();
 
@@ -49,18 +48,21 @@ bool j1Hook::Update(float dt) {
 
 	// We reset the values if the player has arrived to it's hooked destination
 	if (somethingHit) {
-		if (arrived || dragHookLeft.Finished() || dragHookRight.Finished()) {
+		if (arrived || (animation == &dragHookLeft && dragHookLeft.Finished()) 
+			|| (animation == &dragHookRight && dragHookRight.Finished())) {
 			somethingHit = false;
 			thrown = false;
 			throwHook.Reset();
+			dragHookRight.Reset();
+			dragHookLeft.Reset();
 		}
 	}
 
+	// Check if the key is pressed and the hook can be thrown
 	if (App->input->GetKey(SDL_SCANCODE_O) == j1KeyState::KEY_DOWN
-		&& thrown == false && App->entity->player->GodMode == false) {
-		returnHook.Reset();
-		dragHookRight.Reset();
-		dragHookLeft.Reset();
+		&& thrown == false && App->entity->player->GodMode == false 
+		&& App->entity->player->dead == false) {
+
 		colliderPosition = initialColliderPosition;
 		thrown = true;
 		animation = &throwHook;
@@ -96,11 +98,12 @@ bool j1Hook::Update(float dt) {
 
 			if (returnHook.Finished()) {
 				thrown = false;
+				returnHook.Reset();
 			}
 		}
 
 		// Blitting the hook
-		if (App->entity->player->facingRight) {
+		if (App->entity->player->facingRight && thrown != false) {
 			position.x = App->entity->player->position.x + spawnPositionRight.x;
 			position.y = App->entity->player->position.y + spawnPositionRight.y;
 
@@ -116,7 +119,7 @@ bool j1Hook::Update(float dt) {
 				collider->SetPos(position.x + colliderPosition, position.y + heightMargin);
 			}
 		}
-		else{
+		else if (thrown != false){
 			position.x = App->entity->player->position.x + spawnPositionLeft.x;
 			position.y = App->entity->player->position.y + spawnPositionLeft.y;
 

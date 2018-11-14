@@ -125,19 +125,6 @@ bool j1Scene2::Update(float dt)
 		App->render->camera.x = 0;
 	}
 
-	// Control of the camera
-	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
-		App->render->camera.y += 5;
-
-	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
-		App->render->camera.y -= 5;
-
-	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
-		App->render->camera.x += 5;
-
-	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
-		App->render->camera.x -= 5;
-
 	// Camera control
 	if (App->render->camera.x > CAMERA_LIMIT)  //need to put the X value in XML
 	{

@@ -2785,8 +2785,8 @@
    <tile gid="462"/>
    <tile gid="463"/>
    <tile gid="464"/>
-   <tile gid="465"/>
-   <tile gid="466"/>
+   <tile gid="445"/>
+   <tile gid="446"/>
    <tile gid="467"/>
    <tile gid="468"/>
    <tile gid="469"/>
@@ -2935,8 +2935,8 @@
    <tile gid="533"/>
    <tile gid="534"/>
    <tile gid="535"/>
-   <tile gid="536"/>
-   <tile gid="537"/>
+   <tile gid="516"/>
+   <tile gid="517"/>
    <tile gid="538"/>
    <tile gid="539"/>
    <tile gid="540"/>
@@ -5421,7 +5421,7 @@
    <tile gid="839"/>
   </data>
  </layer>
- <layer name="map" width="150" height="12">
+ <layer name="map" width="150" height="12" visible="0">
   <data>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -7225,7 +7225,7 @@
    <tile gid="1451"/>
   </data>
  </layer>
- <layer name="decoration" width="150" height="12">
+ <layer name="decoration" width="150" height="12" visible="0">
   <data>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -9029,7 +9029,7 @@
    <tile gid="0"/>
   </data>
  </layer>
- <layer name="deocration 2" width="150" height="12">
+ <layer name="deocration 2" width="150" height="12" visible="0">
   <data>
    <tile gid="0"/>
    <tile gid="0"/>

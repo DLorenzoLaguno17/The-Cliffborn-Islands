@@ -130,8 +130,8 @@ void j1EntityManager::SpawnEnemy(const EnemyInfo& info)
 
 void j1EntityManager::CreatePlayer() 
 {
-	player = (j1Player*)CreateEntity(PLAYER);
 	hook = (j1Hook*)CreateEntity(HOOK);
+	player = (j1Player*)CreateEntity(PLAYER);
 }
 
 void j1EntityManager::OnCollision(Collider* c1, Collider* c2)
