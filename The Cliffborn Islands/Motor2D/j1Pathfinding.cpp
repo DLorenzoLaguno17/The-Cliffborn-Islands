@@ -68,7 +68,11 @@ Movement j1PathFinding::CheckDirection(p2DynArray<iPoint>& path) const
 		int x_difference = next_tile.x - tile.x;
 		int y_difference = next_tile.y - tile.y;
 
-		if (x_difference == 1) return RIGHT;			
+		if (x_difference == 1 && y_difference == 1) return DOWN_RIGHT;
+		else if (x_difference == 1 && y_difference == -1) return UP_RIGHT;
+		else if (x_difference == -1 && y_difference == 1) return DOWN_LEFT;
+		else if (x_difference == -1 && y_difference == -1) return UP_LEFT;
+		else if (x_difference == 1) return RIGHT;			
 		else if (x_difference == -1) return LEFT;
 		else if (y_difference == 1)	return DOWN;			
 		else if (y_difference == -1) return UP;
@@ -139,6 +143,27 @@ uint PathNode::FindWalkableAdjacents(PathList& list_to_fill) const
 	iPoint cell;
 	uint before = list_to_fill.list.count();
 
+
+	//north-east
+	cell.create(pos.x + 1, pos.y + 1);
+	if (App->path->IsWalkable(cell))
+		list_to_fill.list.add(PathNode(-1, -1, cell, this));
+
+	//north-west
+	cell.create(pos.x - 1, pos.y + 1);
+	if (App->path->IsWalkable(cell))
+		list_to_fill.list.add(PathNode(-1, -1, cell, this));
+
+	// south-east
+	cell.create(pos.x + 1, pos.y - 1);
+	if (App->path->IsWalkable(cell))
+		list_to_fill.list.add(PathNode(-1, -1, cell, this));
+
+	// south-west
+	cell.create(pos.x - 1, pos.y - 1);
+	if (App->path->IsWalkable(cell))
+		list_to_fill.list.add(PathNode(-1, -1, cell, this));
+
 	// north
 	cell.create(pos.x, pos.y + 1);
 	if (App->path->IsWalkable(cell))
@@ -158,6 +183,8 @@ uint PathNode::FindWalkableAdjacents(PathList& list_to_fill) const
 	cell.create(pos.x - 1, pos.y);
 	if (App->path->IsWalkable(cell))
 		list_to_fill.list.add(PathNode(-1, -1, cell, this));
+
+
 
 	return list_to_fill.list.count();
 }

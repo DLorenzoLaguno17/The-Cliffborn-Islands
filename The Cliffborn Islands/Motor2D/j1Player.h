@@ -50,14 +50,14 @@ public:
 	Animation attackRight;
 	Animation attackLeft;
 	Animation death;
-	
+
 	// Sounds
 	uint deathSound;
 	uint playerHurt;
 
 	// To know the last direction the character was moving to
 	bool facingRight = true;
-	
+
 	fPoint initialPosition;
 
 	// Size of the player collider, where x = w and y = h

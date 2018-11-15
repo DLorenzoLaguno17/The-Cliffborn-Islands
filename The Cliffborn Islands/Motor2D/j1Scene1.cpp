@@ -71,7 +71,7 @@ bool j1Scene1::Start()
 			player_created = true;
 		}
 		
-		App->entity->AddEnemy(150, 20, HARPY);
+		App->entity->AddEnemy(220, 20, HARPY);
 		
 		/*App->entity->AddEnemy(250, 50, HARPY);
 		App->entity->AddEnemy(400, 20, HARPY);
@@ -119,6 +119,14 @@ bool j1Scene1::PreUpdate()
 bool j1Scene1::Update(float dt)
 {
 	BROFILER_CATEGORY("Level1Update", Profiler::Color::LightSeaGreen)
+	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
+		App->render->camera.y += 5;
+	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
+		App->render->camera.y -= 5;
+	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
+		App->render->camera.x += 5;
+	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
+		App->render->camera.x -= 5;
 
 	// Load and Save
 	if(App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)

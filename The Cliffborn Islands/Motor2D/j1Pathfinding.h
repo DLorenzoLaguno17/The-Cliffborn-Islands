@@ -21,7 +21,11 @@ enum Movement
 	UP,
 	DOWN,
 	RIGHT,
-	LEFT
+	LEFT,
+	UP_RIGHT,
+	UP_LEFT,
+	DOWN_RIGHT,
+	DOWN_LEFT
 };
 
 class j1PathFinding : public j1Module

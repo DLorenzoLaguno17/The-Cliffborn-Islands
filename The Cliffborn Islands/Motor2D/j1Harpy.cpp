@@ -46,20 +46,30 @@ bool j1Harpy::Update(float dt)
 {
 	BROFILER_CATEGORY("HarpyUpdate", Profiler::Color::LightSeaGreen)
 
-	collider->SetPos(position.x, position.y);
+		collider->SetPos(position.x, position.y);
+	if (App->entity->player->dead)
+		path->Clear();
 
 	if ((App->entity->player->position.x - position.x) <= DETECTION_RANGE && (App->entity->player->position.x - position.x) >= -DETECTION_RANGE && App->entity->player->collider->type == COLLIDER_PLAYER)
 	{
-		iPoint origin = { App->map->WorldToMap((int)position.x + 16, (int)position.y - 16)};
-		iPoint destination = { App->map->WorldToMap((int)App->entity->player->position.x + 8,(int)App->entity->player->position.y) };
+		iPoint origin = { App->map->WorldToMap((int)position.x + colliderSize.x / 2, (int)position.y + colliderSize.y / 2) };
+		iPoint destination;
+		if (position.x < App->entity->player->position.x)
+			destination = { App->map->WorldToMap((int)App->entity->player->position.x + App->entity->player->playerSize.x + 1, (int)App->entity->player->position.y + App->entity->player->playerSize.y / 2) };
+		else
+			destination = { App->map->WorldToMap((int)App->entity->player->position.x, (int)App->entity->player->position.y + App->entity->player->playerSize.y / 2) };
 
-		path = App->path->CreatePath(origin, destination);
-		Move(*path, dt);
-		path_created = true;
+		if (!App->entity->player->dead && App->path->IsWalkable(destination) && App->path->IsWalkable(origin))
+		{
+			path = App->path->CreatePath(origin, destination);
+			Move(*path, dt);
+			path_created = true;
+		}
 	}
+
 	else if (path_created)
 		path->Clear();
-	
+
 	if (App->entity->player->position == App->entity->player->initialPosition)
 		position = initialPosition;
 
@@ -118,28 +128,55 @@ void j1Harpy::Move(p2DynArray<iPoint>& path, float dt)
 	speed = 1.0f;
 	direction = App->path->CheckDirection(path);
 
-	if (direction == Movement::DOWN)
+	if (direction == Movement::DOWN_RIGHT)
+	{
+		animation = &move;
+		position.y += speed;
+		position.x += speed;
+	}
+
+	else if (direction == Movement::DOWN_LEFT)
+	{
+		animation = &move;
+		position.y += speed;
+		position.x -= speed;
+	}
+
+	else if (direction == Movement::UP_RIGHT)
+	{
+		animation = &move;
+		position.y -= speed;
+		position.x += speed;
+	}
+
+	else if (direction == Movement::UP_LEFT)
+	{
+		animation = &move;
+		position.y -= speed;
+		position.x -= speed;
+	}
+
+	else if (direction == Movement::DOWN)
 	{
 		animation = &move;
 		position.y += speed;
 	}
-	
-	if (direction == Movement::UP)
+
+	else if (direction == Movement::UP)
 	{
 		animation = &move;
 		position.y -= speed;
 	}
 
-	if (direction == Movement::RIGHT)
+	else if (direction == Movement::RIGHT)
 	{
 		animation = &move;
 		position.x += speed;
 	}
-	
-	if (direction == Movement::LEFT)
+
+	else if (direction == Movement::LEFT)
 	{
 		animation = &move;
 		position.x -= speed;
 	}
 }
-
