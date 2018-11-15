@@ -61,6 +61,8 @@ bool j1EntityManager::Update(float dt)
 
 bool j1EntityManager::PostUpdate()
 {
+	BROFILER_CATEGORY("EntityManagerPostUpdate", Profiler::Color::Yellow)
+
 	for (p2List_item<j1Entity*>* iterator = entities.start; iterator != nullptr; iterator = iterator->next)
 	{
 		iterator->data->PostUpdate();

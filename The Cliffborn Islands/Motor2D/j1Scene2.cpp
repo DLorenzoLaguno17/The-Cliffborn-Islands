@@ -176,6 +176,7 @@ bool j1Scene2::Update(float dt)
 // Called each loop iteration
 bool j1Scene2::PostUpdate()
 {
+	BROFILER_CATEGORY("Level2PostUpdate", Profiler::Color::Yellow)
 	bool ret = true;
 
 	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)

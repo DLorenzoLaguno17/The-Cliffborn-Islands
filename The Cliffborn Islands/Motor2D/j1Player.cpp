@@ -257,6 +257,8 @@ bool j1Player::Update(float dt) {
 // Call modules after each loop iteration
 bool j1Player::PostUpdate() {
 
+	BROFILER_CATEGORY("PlayerPostUpdate", Profiler::Color::Yellow)
+
 	loading = false;
 
 	// Resetting the jump if touched the "ceiling"

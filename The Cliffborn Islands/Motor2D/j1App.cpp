@@ -18,6 +18,8 @@
 #include "j1Pathfinding.h"
 #include "j1EntityManager.h"
 
+#include "Brofiler/Brofiler.h"
+
 // Constructor
 j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 {
@@ -36,7 +38,6 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	entity = new j1EntityManager();
 	path = new j1PathFinding();
 	fade = new j1FadeToBlack();
-
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -75,7 +76,6 @@ void j1App::AddModule(j1Module* module)
 {
 	module->Init();
 	modules.add(module);
-
 }
 
 // Called before render is available
@@ -132,6 +132,8 @@ bool j1App::Start()
 // Called each loop iteration
 bool j1App::Update()
 {
+	BROFILER_CATEGORY("AppUpdate", Profiler::Color::LightSeaGreen)
+
 	bool ret = true;
 	PrepareUpdate();
 
@@ -184,6 +186,8 @@ void j1App::FinishUpdate()
 // Call modules before each loop iteration
 bool j1App::PreUpdate()
 {
+	BROFILER_CATEGORY("AppPreUpdate", Profiler::Color::Orange)
+
 	bool ret = true;
 	p2List_item<j1Module*>* item;
 	item = modules.start;
@@ -228,6 +232,8 @@ bool j1App::DoUpdate()
 // Call modules after each loop iteration
 bool j1App::PostUpdate()
 {
+	BROFILER_CATEGORY("AppPostUpdate", Profiler::Color::Yellow)
+
 	bool ret = true;
 	p2List_item<j1Module*>* item;
 	j1Module* pModule = NULL;
