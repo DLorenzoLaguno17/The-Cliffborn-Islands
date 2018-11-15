@@ -1,4 +1,4 @@
-#include "j1Harpy.h"
+#include "j1Skeleton.h"
 #include "p2Defs.h"
 #include "p2Log.h"
 #include "j1App.h"
@@ -13,27 +13,27 @@
 
 #include "Brofiler/Brofiler.h"
 
-j1Harpy::j1Harpy(int x, int y, ENTITY_TYPES type) : j1Entity(x, y, ENTITY_TYPES::HARPY)
+j1Skeleton::j1Skeleton(int x, int y, ENTITY_TYPES type) : j1Entity(x, y, ENTITY_TYPES::SKELETON)
 {
 	animation = NULL;
 
-	idle.LoadEnemyAnimations("idle", "harpy");
-	move.LoadEnemyAnimations("move", "harpy");
+	idle.LoadEnemyAnimations("idle", "skeleton");
+	move.LoadEnemyAnimations("move", "skeleton");
 
-	// Setting harpy position
+	// Setting skeleton position
 	initialPosition.x = position.x = x;
 	initialPosition.y = position.y = y;
 }
 
-j1Harpy::~j1Harpy() {}
+j1Skeleton::~j1Skeleton() {}
 
-bool j1Harpy::Start()
+bool j1Skeleton::Start()
 {
 	// Textures are loaded
-	LOG("Loading harpy textures");
-	sprites = App->tex->Load("textures/enemies/harpy/harpy.png");
+	LOG("Loading skeleton textures");
+	sprites = App->tex->Load("textures/enemies/skeleton/zombie&skeleton.png");
 
-	LoadHarpyProperties();
+	LoadSkeletonProperties();
 
 	animation = &idle;
 
@@ -42,11 +42,11 @@ bool j1Harpy::Start()
 	return true;
 }
 
-bool j1Harpy::Update(float dt)
+bool j1Skeleton::Update(float dt)
 {
-	BROFILER_CATEGORY("HarpyUpdate", Profiler::Color::LightSeaGreen)
+	BROFILER_CATEGORY("SkeletonUpdate", Profiler::Color::LightSeaGreen)
 
-	collider->SetPos(position.x, position.y);
+		collider->SetPos(position.x, position.y);
 
 	if ((App->entity->player->position.x - position.x) <= DETECTION_RANGE && (App->entity->player->position.x - position.x) >= -DETECTION_RANGE && App->entity->player->collider->type == COLLIDER_PLAYER)
 	{
@@ -79,9 +79,9 @@ bool j1Harpy::Update(float dt)
 	return true;
 }
 
-bool j1Harpy::CleanUp()
+bool j1Skeleton::CleanUp()
 {
-	LOG("Unloading harpy");
+	LOG("Unloading skeleton");
 	App->tex->UnLoad(sprites);
 	if (collider != nullptr)
 		collider->to_delete = true;
@@ -89,21 +89,21 @@ bool j1Harpy::CleanUp()
 	return true;
 }
 
-void j1Harpy::OnCollision(Collider * col_1, Collider * col_2)
+void j1Skeleton::OnCollision(Collider * col_1, Collider * col_2)
 {
 }
 
-bool j1Harpy::Load(pugi::xml_node &)
-{
-	return true;
-}
-
-bool j1Harpy::Save(pugi::xml_node &) const
+bool j1Skeleton::Load(pugi::xml_node &)
 {
 	return true;
 }
 
-void j1Harpy::LoadHarpyProperties()
+bool j1Skeleton::Save(pugi::xml_node &) const
+{
+	return true;
+}
+
+void j1Skeleton::LoadSkeletonProperties()
 {
 	pugi::xml_document config_file;
 	config_file.load_file("config.xml");
@@ -121,7 +121,7 @@ void j1Harpy::LoadHarpyProperties()
 	colliderSize.y = harpy.child("colliderSize").attribute("h").as_int();
 }
 
-void j1Harpy::Move(p2DynArray<iPoint>& path, float dt)
+void j1Skeleton::Move(p2DynArray<iPoint>& path, float dt)
 {
 	speed = 1.0f;
 	direction = App->path->CheckDirection(path);

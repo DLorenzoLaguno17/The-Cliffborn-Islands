@@ -133,6 +133,11 @@
       </idle>
       
     </harpy>
+	
+	<skeleton>
+	  <move loop ="true" speed="0.1f">
+	  </move>
+	</skeleton>
     
   </enemies>
 

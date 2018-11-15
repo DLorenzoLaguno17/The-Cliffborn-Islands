@@ -67,6 +67,9 @@
     <ClCompile Include="j1Main.cpp">
       <Filter>Development\Core</Filter>
     </ClCompile>
+    <ClCompile Include="j1Skeleton.cpp">
+      <Filter>Development\Modules\Entities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Textures.h">
@@ -155,6 +158,9 @@
     </ClInclude>
     <ClInclude Include="j1App.h">
       <Filter>Development\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Skeleton.h">
+      <Filter>Development\Modules\Entities</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

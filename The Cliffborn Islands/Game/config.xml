@@ -41,10 +41,16 @@
   </hook>
   
   <harpy speed="1">
-    <initialPosition x="200" y="20"/>
+	  <initialPosition x="200" y="20"/>
 	  <margin x="10" y="10"/>
 	  <colliderSize w="25" h="20"/>
   </harpy>
+  
+  <skeleton speed="1">
+      <initialPosition x="200" y="20"/>
+	  <margin x="10" y="10"/>
+	  <colliderSize w="25" h="20"/>
+  </skeleton>
 
   <map>
 	<blitSpeed backgrounds="0.7f" fog="0.85f"/>
