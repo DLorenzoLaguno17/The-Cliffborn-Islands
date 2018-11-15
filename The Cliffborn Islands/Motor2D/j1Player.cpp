@@ -12,6 +12,8 @@
 #include "j1Scene2.h"
 #include "j1Harpy.h"
 
+#include "Brofiler/Brofiler.h"
+
 j1Player::j1Player(int x, int y, ENTITY_TYPES type) : j1Entity(x, y, ENTITY_TYPES::PLAYER)
 {
 	animation = NULL;
@@ -52,11 +54,15 @@ bool j1Player::Start() {
 //Call modules before each loop iteration
 bool j1Player::PreUpdate() {
 
+	BROFILER_CATEGORY("PlayerPreUpdate", Profiler::Color::Orange)
+
 	return true;
 }
 
 // Call modules on each loop iteration
 bool j1Player::Update(float dt) {
+
+	BROFILER_CATEGORY("PlayerUpdate", Profiler::Color::LightSeaGreen)
 
 	// ---------------------------------------------------------------------------------------------------------------------
 	// CONTROL OF THE PLAYER

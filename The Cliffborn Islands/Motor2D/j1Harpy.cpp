@@ -11,6 +11,8 @@
 #include "j1Map.h"
 #include "j1Scene1.h"
 
+#include "Brofiler/Brofiler.h"
+
 j1Harpy::j1Harpy(int x, int y, ENTITY_TYPES type) : j1Entity(x, y, ENTITY_TYPES::HARPY)
 {
 	animation = NULL;
@@ -42,6 +44,8 @@ bool j1Harpy::Start()
 
 bool j1Harpy::Update(float dt)
 {
+	BROFILER_CATEGORY("HarpyUpdate", Profiler::Color::LightSeaGreen)
+
 	collider->SetPos(position.x, position.y);
 
 	if ((App->entity->player->position.x - position.x) <= DETECTION_RANGE && (App->entity->player->position.x - position.x) >= -DETECTION_RANGE && App->entity->player->collider->type == COLLIDER_PLAYER)

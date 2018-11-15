@@ -12,6 +12,8 @@
 #include "j1Scene1.h"
 #include "j1Scene2.h"
 
+#include "Brofiler/Brofiler.h"
+
 j1Hook::j1Hook(int x, int y, ENTITY_TYPES type) : j1Entity(x, y, ENTITY_TYPES::HOOK)
 {
 	animation = NULL;
@@ -45,6 +47,8 @@ bool j1Hook::Start() {
 
 // Call modules on each loop iteration
 bool j1Hook::Update(float dt) {	
+
+	BROFILER_CATEGORY("HookUpdate", Profiler::Color::LightSeaGreen)
 
 	// We reset the values if the player has arrived to it's hooked destination
 	if (somethingHit) {

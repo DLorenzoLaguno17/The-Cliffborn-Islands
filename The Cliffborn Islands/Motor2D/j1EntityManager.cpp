@@ -12,6 +12,8 @@
 #include "j1Player.h"
 #include "j1Hook.h"
 
+#include "Brofiler/Brofiler.h"
+
 j1EntityManager::j1EntityManager()
 {
 	name.create("entity");
@@ -30,7 +32,9 @@ bool j1EntityManager::Start()
 }
 
 bool j1EntityManager::PreUpdate()
-{	
+{
+	BROFILER_CATEGORY("EntityManagerPreUpdate", Profiler::Color::Orange)
+
 	for (uint i = 0; i < MAX_ENEMIES; ++i)
 	{
 		if (queue[i].type != ENTITY_TYPES::UNKNOWN)
@@ -45,6 +49,8 @@ bool j1EntityManager::PreUpdate()
 
 bool j1EntityManager::Update(float dt)
 {
+	BROFILER_CATEGORY("EntityManagerUpdate", Profiler::Color::LightSeaGreen)
+
 	for (p2List_item<j1Entity*>* iterator = entities.start; iterator != nullptr; iterator = iterator->next)
 	{
 		iterator->data->Update(dt);

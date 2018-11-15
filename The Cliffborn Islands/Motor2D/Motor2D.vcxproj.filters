@@ -1,12 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="j1App.cpp">
-      <Filter>Development</Filter>
-    </ClCompile>
-    <ClCompile Include="j1Main.cpp">
-      <Filter>Development</Filter>
-    </ClCompile>
     <ClCompile Include="j1Textures.cpp">
       <Filter>Development\Modules</Filter>
     </ClCompile>
@@ -67,14 +61,14 @@
     <ClCompile Include="j1EntityManager.cpp">
       <Filter>Development\Modules\Entities</Filter>
     </ClCompile>
+    <ClCompile Include="j1App.cpp">
+      <Filter>Development\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="j1Main.cpp">
+      <Filter>Development\Core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="j1App.h">
-      <Filter>Development</Filter>
-    </ClInclude>
-    <ClInclude Include="j1Module.h">
-      <Filter>Development</Filter>
-    </ClInclude>
     <ClInclude Include="j1Textures.h">
       <Filter>Development\Modules</Filter>
     </ClInclude>
@@ -156,6 +150,12 @@
     <ClInclude Include="j1EntityManager.h">
       <Filter>Development\Modules\Entities</Filter>
     </ClInclude>
+    <ClInclude Include="j1Module.h">
+      <Filter>Development\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="j1App.h">
+      <Filter>Development\Core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Programation 2">
@@ -187,6 +187,9 @@
     </Filter>
     <Filter Include="Development\Modules\Entities\Player">
       <UniqueIdentifier>{60fc6ea4-d366-47bf-adf2-49e7c5fba259}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Development\Core">
+      <UniqueIdentifier>{4e40a7e1-5ec2-4dd0-9d4b-62cd6e2ce8e6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

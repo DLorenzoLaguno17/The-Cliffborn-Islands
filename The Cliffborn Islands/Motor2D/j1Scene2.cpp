@@ -15,6 +15,8 @@
 #include "j1FadeToBlack.h"
 #include "j1Pathfinding.h"
 
+#include "Brofiler/Brofiler.h"
+
 #define CAMERA_LIMIT -8570
 #define PLAYER_LIMIT 2374
 
@@ -71,6 +73,8 @@ bool j1Scene2::Start()
 // Called each loop iteration
 bool j1Scene2::PreUpdate()
 {
+	BROFILER_CATEGORY("Level2PreUpdate", Profiler::Color::Orange)
+
 	// debug pathfing ------------------
 	static iPoint origin;
 	static bool origin_selected = false;
@@ -102,6 +106,8 @@ bool j1Scene2::PreUpdate()
 // Called each loop iteration
 bool j1Scene2::Update(float dt)
 {
+	BROFILER_CATEGORY("Level2Update", Profiler::Color::LightSeaGreen)
+
 	// Load and Save
 	if (App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
 		App->LoadGame("save_game.xml");

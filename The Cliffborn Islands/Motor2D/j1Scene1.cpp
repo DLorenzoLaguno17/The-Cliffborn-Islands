@@ -15,6 +15,8 @@
 #include "j1FadeToBlack.h"
 #include "j1Pathfinding.h"
 
+#include "Brofiler/Brofiler.h"
+
 j1Scene1::j1Scene1() : j1Module()
 {
 	name.create("scene1");
@@ -83,6 +85,8 @@ bool j1Scene1::Start()
 // Called each loop iteration
 bool j1Scene1::PreUpdate()
 {
+	BROFILER_CATEGORY("Level1PreUpdate", Profiler::Color::Orange)
+
 	// debug pathfing ------------------
 	static iPoint origin;
 	static bool origin_selected = false;
@@ -114,6 +118,8 @@ bool j1Scene1::PreUpdate()
 // Called each loop iteration
 bool j1Scene1::Update(float dt)
 {
+	BROFILER_CATEGORY("Level1Update", Profiler::Color::LightSeaGreen)
+
 	// Load and Save
 	if(App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
 		App->LoadGame("save_game.xml");

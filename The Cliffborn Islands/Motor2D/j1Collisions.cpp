@@ -8,6 +8,7 @@
 #include "p2Log.h"
 #include "j1Map.h"
 
+#include "Brofiler/Brofiler.h"
 #include "SDL\include\SDL.h"
 
 j1Collisions::j1Collisions() : j1Module()
@@ -81,6 +82,8 @@ j1Collisions::~j1Collisions() {}
 
 bool j1Collisions::PreUpdate()
 {
+	BROFILER_CATEGORY("CollisionPreUpdate", Profiler::Color::Orange)
+
 	for (uint i = 0; i < MAX_COLLIDERS; ++i)
 	{
 		if (colliders[i] != nullptr) 
@@ -127,6 +130,8 @@ bool j1Collisions::PreUpdate()
 
 bool j1Collisions::Update(float dt) 
 {
+	BROFILER_CATEGORY("CollisionUpdate", Profiler::Color::LightSeaGreen)
+
 	DrawColliders();
 
 	return true;
