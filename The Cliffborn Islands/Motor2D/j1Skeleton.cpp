@@ -109,21 +109,20 @@ void j1Skeleton::LoadSkeletonProperties()
 	config_file.load_file("config.xml");
 	pugi::xml_node config;
 	config = config_file.child("config");
-	pugi::xml_node harpy;
-	harpy = config.child("harpy");
+	pugi::xml_node skeleton;
+	skeleton = config.child("skeleton");
 
-	speed = harpy.attribute("speed").as_int();
+	speed = skeleton.attribute("speed").as_int();
 
 	// Copying the values of the collider
-	margin.x = harpy.child("margin").attribute("x").as_int();
-	margin.y = harpy.child("margin").attribute("y").as_int();
-	colliderSize.x = harpy.child("colliderSize").attribute("w").as_int();
-	colliderSize.y = harpy.child("colliderSize").attribute("h").as_int();
+	margin.x = skeleton.child("margin").attribute("x").as_int();
+	margin.y = skeleton.child("margin").attribute("y").as_int();
+	colliderSize.x = skeleton.child("colliderSize").attribute("w").as_int();
+	colliderSize.y = skeleton.child("colliderSize").attribute("h").as_int();
 }
 
 void j1Skeleton::Move(p2DynArray<iPoint>& path, float dt)
 {
-	speed = 1.0f;
 	direction = App->path->CheckDirection(path);
 
 	if (direction == Movement::DOWN_RIGHT)

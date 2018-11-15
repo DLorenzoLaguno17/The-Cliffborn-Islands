@@ -123,7 +123,6 @@ void j1Harpy::LoadHarpyProperties()
 
 void j1Harpy::Move(p2DynArray<iPoint>& path, float dt)
 {
-	speed = 1.0f;
 	direction = App->path->CheckDirection(path);
 
 	if (direction == Movement::DOWN_RIGHT)

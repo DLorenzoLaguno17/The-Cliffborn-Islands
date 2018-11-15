@@ -11,6 +11,7 @@
 #include "j1Harpy.h"
 #include "j1Player.h"
 #include "j1Hook.h"
+#include "j1Skeleton.h"
 
 #include "Brofiler/Brofiler.h"
 
@@ -129,6 +130,9 @@ void j1EntityManager::SpawnEnemy(const EnemyInfo& info)
 			j1Entity* entity;
 			if (queue[i].type == HARPY) 
 				entity = new j1Harpy(info.position.x, info.position.y, info.type); 
+
+			else if (queue[i].type == SKELETON)
+				entity = new j1Skeleton(info.position.x, info.position.y, info.type);
 
 			entities.add(entity);
 			entity->Start();

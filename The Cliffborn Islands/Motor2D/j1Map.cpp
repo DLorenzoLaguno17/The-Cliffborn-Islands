@@ -64,10 +64,10 @@ void j1Map::Draw()
 
 					if (item->data->name == "bg1" || item->data->name == "bg2" || item->data->name == "bg3")
 						App->render->Blit(tileset->texture, pos.x, pos.y, &r, SDL_FLIP_NONE, bgBlitSpeed);
+					
 					else if (item->data->name == "Fog")
-					{
 						App->render->Blit(tileset->texture, pos.x, pos.y, &r, SDL_FLIP_NONE, fogBlitSpeed);
-					}
+
 					else
 						App->render->Blit(tileset->texture, pos.x, pos.y, &r);
 				}
@@ -75,6 +75,7 @@ void j1Map::Draw()
 		}
 	}
 }
+
 int Properties::Get(const char* value, int default_value) const
 {
 	p2List_item<Property*>* item = list.start;
