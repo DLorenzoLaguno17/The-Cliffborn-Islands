@@ -60,7 +60,7 @@ bool j1Harpy::Update(float dt)
 	else if (path_created)
 		path->Clear();
 	
-	if (App->fade->IsFading() == 1)
+	if (App->entity->player->position == App->entity->player->initialPosition)
 		position = initialPosition;
 
 	if (position.x - App->entity->player->position.x >= 0)

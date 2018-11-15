@@ -8,6 +8,7 @@
 #include "j1Render.h"
 #include "j1FadeToBlack.h"
 #include "j1Hook.h"
+#include "j1Audio.h"
 #include "j1Scene1.h"
 #include "j1Scene2.h"
 #include "j1Harpy.h"
@@ -25,6 +26,7 @@ j1Player::j1Player(int x, int y, ENTITY_TYPES type) : j1Entity(x, y, ENTITY_TYPE
 	godmode.LoadAnimations("godmode");
 	attackRight.LoadAnimations("attackRight");
 	attackLeft.LoadAnimations("attackLeft");
+	death.LoadAnimations("death");
 }
 
 j1Player::~j1Player() {}
@@ -35,6 +37,11 @@ bool j1Player::Start() {
 	// Textures are loaded
 	LOG("Loading player textures");
 	sprites = App->tex->Load("textures/character/character.png");
+
+	// Audios are loaded
+	LOG("Loading player audios");
+	deathSound = App->audio->LoadFx("audio/fx/death.wav");
+	playerHurt = App->audio->LoadFx("audio/fx/playerHurt.wav");
 
 	LoadPlayerProperties();
 
@@ -215,8 +222,12 @@ bool j1Player::Update(float dt) {
 		}
 	}
 
-	// Restarting the level in case the player dies
 	if (dead) {
+		// Death animation is not shown if the player dies by falling
+		if (!deathByFall)
+			animation = &death;
+
+		// Restarting the level in case the player dies
 		if (App->fade->IsFading() == 0)
 		{
 			fallingSpeed = initialFallingSpeed;
@@ -227,9 +238,14 @@ bool j1Player::Update(float dt) {
 			jumping = false;
 			currentJumps = initialJumps;
 			facingRight = true;
+			deathByFall = false;
+			playedSound = false;
+
+			// Resetting the animation
+			animation = &idle;
+			death.Reset();
 
 			dead = false;
-
 		}
 	}
 
@@ -337,13 +353,13 @@ void j1Player::OnCollision(Collider* col_1, Collider* col_2)
 					App->entity->hook->arrived = true;
 				}
 				else
-					//If the collision is with a wall behind
-					if (collider->rect.x <= col_2->rect.x + col_2->rect.w
-						&& collider->rect.x + collider->rect.w >= col_2->rect.x + col_2->rect.w) {
+				//If the collision is with a wall behind
+				if (collider->rect.x <= col_2->rect.x + col_2->rect.w
+					&& collider->rect.x + collider->rect.w >= col_2->rect.x + col_2->rect.w) {
 
-						wallBehind = true;
-						App->entity->hook->arrived = true;
-					}
+					wallBehind = true;
+					App->entity->hook->arrived = true;
+				}
 			}
 
 			if (collider->rect.x + collider->rect.w >= col_2->rect.x + colisionMargin
@@ -360,21 +376,21 @@ void j1Player::OnCollision(Collider* col_1, Collider* col_2)
 					currentJumps++;
 				}
 				else
-					//If the collision is with the ground
-					if (loading == false) {
+				//If the collision is with the ground
+				if (loading == false) {
 
-						if (collider->rect.y + collider->rect.h >= col_2->rect.y
-							&& collider->rect.y < col_2->rect.y + col_2->rect.h) {
+					if (collider->rect.y + collider->rect.h >= col_2->rect.y
+						&& collider->rect.y < col_2->rect.y + col_2->rect.h) {
 
-							position.y = col_2->rect.y - collider->rect.h;
-							feetOnGround = true;
-							jumping = false;
-							freefall = false;
-							verticalSpeed = initialVerticalSpeed;
-							fallingSpeed = initialFallingSpeed;
-							currentJumps = initialJumps;
-						}
+						position.y = col_2->rect.y - collider->rect.h;
+						feetOnGround = true;
+						jumping = false;
+						freefall = false;
+						verticalSpeed = initialVerticalSpeed;
+						fallingSpeed = initialFallingSpeed;
+						currentJumps = initialJumps;
 					}
+				}
 			}
 		}
 
@@ -390,8 +406,23 @@ void j1Player::OnCollision(Collider* col_1, Collider* col_2)
 		//If the player collides with death colliders
 		if (col_2->type == COLLIDER_DEATH || col_2->type == COLLIDER_ENEMY)
 		{
- 			App->fade->FadeToBlack(App->scene1, App->scene1);
+			if (col_2->rect.h < 8)
+				deathByFall = true;
+			else {
+				if (!playedSound) {
+					App->audio->PlayFx(playerHurt);
+					playedSound = true;
+				}
+
+				jumping = false;
+				fallingSpeed = initialFallingSpeed;
+			}
+
+ 			App->fade->FadeToBlack(App->scene1, App->scene1, 3.0f);			
 			dead = true;
+			App->audio->PlayFx(deathSound);
+
+			
 		}
 	}
 };

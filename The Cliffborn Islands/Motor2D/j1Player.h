@@ -49,6 +49,11 @@ public:
 	Animation godmode;
 	Animation attackRight;
 	Animation attackLeft;
+	Animation death;
+	
+	// Sounds
+	uint deathSound;
+	uint playerHurt;
 
 	// To know the last direction the character was moving to
 	bool facingRight = true;
@@ -80,13 +85,16 @@ public:
 	bool wallBehind = false;
 	bool wallAbove = false;
 
-	bool player_start = false;
 	bool GodMode = false;
 	bool playerIdle = false;
 	bool jumping = false;
 	bool freefall = false;
+
+	bool player_start = false;
 	bool loading = false;
 	bool dead = false;
+	bool playedSound = false;
+	bool deathByFall = false;
 	bool attacking = false;
 
 };

@@ -97,8 +97,17 @@
       <animation x="73" y="279" w="24" h="23"/>
       <animation x="73" y="255" w="17" h="23"/>
 	</dragHookLeft>
-
-  </player>
+	
+	<death loop="false" speed="0.23f">
+      <animation x="1" y="128" w="30" h="28"/>
+      <animation x="34" y="128" w="30" h="28"/>
+      <animation x="69" y="128" w="30" h="28"/>
+      <animation x="119" y="128" w="30" h="28"/>
+      <animation x="169" y="128" w="30" h="28"/>
+      <animation x="219" y="128" w="30" h="28"/>
+      <animation x="0" y="0" w="0" h="0"/>
+	</death>
+</player>
   
   <enemies>    
     <harpy>
