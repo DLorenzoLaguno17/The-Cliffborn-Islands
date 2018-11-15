@@ -48,8 +48,6 @@ bool j1Render::Awake(pugi::xml_node& config)
 		camera.h = App->win->screen_surface->h;
 		camera.x = initialCameraX = config.child("camera").attribute("initialX").as_int();
 		camera.y = initialCameraY = config.child("camera").attribute("initialY").as_int();
-		cameraLimit = config.child("camera").attribute("cameraLimit").as_int();
-		playerLimit = config.child("camera").attribute("playerLimit").as_int();
 	}
 
 	
@@ -75,21 +73,6 @@ bool j1Render::PreUpdate()
 
 bool j1Render::Update(float dt)
 {
-	// Camera control
-		if (camera.x > cameraLimit)
-		{
-			camera.x = -App->entity->player->position.x * 4 + 400;
-			if (App->render->camera.x > 0)
-				App->render->camera.x = 0;
-		}
-
-	// Limit player X position
-	if (App->entity->player->position.x > playerLimit)
-		App->entity->player->position.x = playerLimit;
-
-	if (App->entity->player->position.x < 0)
-		App->entity->player->position.x = 0;
-
 	return true;
 }
 

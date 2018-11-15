@@ -46,9 +46,7 @@ bool j1Harpy::Update(float dt)
 {
 	BROFILER_CATEGORY("HarpyUpdate", Profiler::Color::LightSeaGreen)
 
-		collider->SetPos(position.x, position.y);
-	if (App->entity->player->dead)
-		path->Clear();
+	collider->SetPos(position.x, position.y);
 
 	if ((App->entity->player->position.x - position.x) <= DETECTION_RANGE && (App->entity->player->position.x - position.x) >= -DETECTION_RANGE && App->entity->player->collider->type == COLLIDER_PLAYER)
 	{

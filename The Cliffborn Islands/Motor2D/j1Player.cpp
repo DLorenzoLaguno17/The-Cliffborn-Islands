@@ -420,9 +420,7 @@ void j1Player::OnCollision(Collider* col_1, Collider* col_2)
 
  			App->fade->FadeToBlack(App->scene1, App->scene1, 3.0f);			
 			dead = true;
-			App->audio->PlayFx(deathSound);
-
-			
+			App->audio->PlayFx(deathSound);		
 		}
 	}
 };
