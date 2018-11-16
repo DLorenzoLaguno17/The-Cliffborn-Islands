@@ -59,6 +59,7 @@ bool j1Hook::Update(float dt) {
 			throwHook.Reset();
 			dragHookRight.Reset();
 			dragHookLeft.Reset();
+			colliderPosition = initialColliderPosition;
 		}
 	}
 

@@ -109,10 +109,12 @@ bool j1Player::Update(float dt) {
 
 			// Direction controls	
 			if (App->input->GetKey(SDL_SCANCODE_D) == j1KeyState::KEY_REPEAT && attacking == false) {
-				if (wallInFront == false && dead == false && App->entity->hook->thrown == false) {
+				if (wallInFront == false && dead == false) {
 					position.x += horizontalSpeed;
-					facingRight = true;
 					animation = &run;
+
+					if (App->entity->hook->thrown == false)
+						facingRight = true;
 				}
 				else if (dead == true) {
 					facingRight = true;
@@ -123,10 +125,12 @@ bool j1Player::Update(float dt) {
 			}
 
 			if (App->input->GetKey(SDL_SCANCODE_A) == j1KeyState::KEY_REPEAT && attacking == false) {
-			if (wallBehind == false && dead == false && App->entity->hook->thrown == false) {
+				if (wallBehind == false && dead == false) {
 					position.x -= horizontalSpeed;
-					facingRight = false;
 					animation = &run;
+
+					if (App->entity->hook->thrown == false)
+						facingRight = false;
 				}
 				else if (dead == true) {
 					facingRight = false;
@@ -205,7 +209,7 @@ bool j1Player::Update(float dt) {
 		}
 
 		// God mode
-		if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)
+		if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN && dead == false)
 		{
 			GodMode = !GodMode;
 

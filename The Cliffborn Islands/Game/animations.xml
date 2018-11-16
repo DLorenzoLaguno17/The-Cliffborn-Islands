@@ -112,7 +112,7 @@
   <enemies>    
     <harpy>
       
-      <move loop ="true" speed="0.15f">
+      <move loop ="true" speed="0.20f">
         <animation x="32" y="25" w="38" h="34"/>
         <animation x="80" y="25" w="38" h="34"/>
         <animation x="125" y="25" w="44" h="34"/>
@@ -122,7 +122,7 @@
         <animation x="148" y="67" w="41" h="29"/>
       </move>
 
-      <idle loop ="true" speed="0.1f">
+      <idle loop ="true" speed="0.20f">
         <animation x="42" y="145" w="38" h="34"/>
         <animation x="90" y="145" w="38" h="34"/>
         <animation x="135" y="145" w="44" h="34"/>
