@@ -42,6 +42,7 @@ bool j1Player::Start() {
 	LOG("Loading player audios");
 	deathSound = App->audio->LoadFx("audio/fx/death.wav");
 	playerHurt = App->audio->LoadFx("audio/fx/playerHurt.wav");
+	jumpSound = App->audio->LoadFx("audio/fx/jump.wav");
 
 	LoadPlayerProperties();
 
@@ -157,13 +158,18 @@ bool j1Player::Update(float dt) {
 					jumping = true;
 					verticalSpeed = initialVerticalSpeed;
 					currentJumps++;
+
+					if(freefall == true || (currentJumps > 1 && freefall == false))
+						App->audio->PlayFx(jumpSound);
 				}
 			}
 
 			// Reseting the jump every frame
 			feetOnGround = false;
+			if (dead)
+				animation = &death;
 
-			if (jumping == true) {
+			if (jumping == true && animation != &death) {
 				// If the player touches a wall collider
 				if (feetOnGround) {
 
@@ -240,7 +246,6 @@ bool j1Player::Update(float dt) {
 			App->render->camera.x = App->render->initialCameraX;
 			App->render->camera.y = App->render->initialCameraY;
 			jumping = false;
-			currentJumps = initialJumps;
 			facingRight = true;
 			deathByFall = false;
 			playedSound = false;
@@ -345,7 +350,38 @@ bool j1Player::CleanUp() {
 void j1Player::OnCollision(Collider* col_1, Collider* col_2)
 {
 	if (col_1->type == COLLIDER_PLAYER || col_1->type == COLLIDER_NONE)
-	{
+	{		
+		//If the player collides with win colliders
+		if (col_2->type == COLLIDER_WIN)
+		{
+			if (App->scene1->active)
+				App->scene1->ChangeScene();
+			else if (App->scene2->active)
+				App->scene2->ChangeScene();
+		}
+
+		//If the player collides with death colliders
+		if (col_2->type == COLLIDER_DEATH || col_2->type == COLLIDER_ENEMY)
+		{
+			if (col_2->rect.h < 8)
+				deathByFall = true;
+			else {
+				if (!playedSound) {
+					App->audio->PlayFx(playerHurt);
+					playedSound = true;
+				}
+
+				jumping = false;
+				fallingSpeed = initialFallingSpeed;
+			}
+
+			App->fade->FadeToBlack(App->scene1, App->scene1, 3.0f);
+			dead = true;
+			App->audio->PlayFx(deathSound);
+			currentJumps == 2;
+		}
+
+		// If the player collides with a wall
 		if (col_2->type == COLLIDER_WALL) {
 			if (collider->rect.y + collider->rect.h >= col_2->rect.y + colisionMargin
 				&& collider->rect.y <= col_2->rect.y + col_2->rect.h) {
@@ -396,35 +432,6 @@ void j1Player::OnCollision(Collider* col_1, Collider* col_2)
 					}
 				}
 			}
-		}
-
-		//If the player collides with win colliders
-		if (col_2->type == COLLIDER_WIN)
-		{
-			if (App->scene1->active)
-				App->scene1->ChangeScene();
-			else if (App->scene2->active)
-				App->scene2->ChangeScene();
-		}
-
-		//If the player collides with death colliders
-		if (col_2->type == COLLIDER_DEATH || col_2->type == COLLIDER_ENEMY)
-		{
-			if (col_2->rect.h < 8)
-				deathByFall = true;
-			else {
-				if (!playedSound) {
-					App->audio->PlayFx(playerHurt);
-					playedSound = true;
-				}
-
-				jumping = false;
-				fallingSpeed = initialFallingSpeed;
-			}
-
- 			App->fade->FadeToBlack(App->scene1, App->scene1, 3.0f);			
-			dead = true;
-			App->audio->PlayFx(deathSound);		
 		}
 	}
 };

@@ -53,6 +53,7 @@ public:
 
 	// Sounds
 	uint deathSound;
+	uint jumpSound;
 	uint playerHurt;
 
 	// To know the last direction the character was moving to
