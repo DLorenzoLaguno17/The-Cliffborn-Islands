@@ -128,52 +128,52 @@ void j1Harpy::Move(p2DynArray<iPoint>& path, float dt)
 	if (direction == Movement::DOWN_RIGHT)
 	{
 		animation = &move;
-		position.y += speed;
-		position.x += speed;
+		position.y += speed * dt;
+		position.x += speed * dt;
 	}
 
 	else if (direction == Movement::DOWN_LEFT)
 	{
 		animation = &move;
-		position.y += speed;
-		position.x -= speed;
+		position.y += speed * dt;
+		position.x -= speed * dt;
 	}
 
 	else if (direction == Movement::UP_RIGHT)
 	{
 		animation = &move;
-		position.y -= speed;
-		position.x += speed;
+		position.y -= speed * dt;
+		position.x += speed * dt;
 	}
 
 	else if (direction == Movement::UP_LEFT)
 	{
 		animation = &move;
-		position.y -= speed;
-		position.x -= speed;
+		position.y -= speed * dt;
+		position.x -= speed * dt;
 	}
 
 	else if (direction == Movement::DOWN)
 	{
 		animation = &move;
-		position.y += speed;
+		position.y += speed * dt;
 	}
 
 	else if (direction == Movement::UP)
 	{
 		animation = &move;
-		position.y -= speed;
+		position.y -= speed * dt;
 	}
 
 	else if (direction == Movement::RIGHT)
 	{
 		animation = &move;
-		position.x += speed;
+		position.x += speed * dt;
 	}
 
 	else if (direction == Movement::LEFT)
 	{
 		animation = &move;
-		position.x -= speed;
+		position.x -= speed * dt;
 	}
 }

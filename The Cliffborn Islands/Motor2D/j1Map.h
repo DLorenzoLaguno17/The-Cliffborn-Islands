@@ -110,7 +110,7 @@ public:
 	bool Awake(pugi::xml_node& conf);
 
 	// Called each loop iteration
-	void Draw();
+	void Draw(float dt);
 
 	// Called before quitting
 	bool CleanUp();
@@ -142,6 +142,7 @@ private:
 
 	float bgBlitSpeed;
 	float fogBlitSpeed;
+	float mapBlitSpeed;
 
 	pugi::xml_document	map_file;
 	p2SString			folder;

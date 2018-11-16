@@ -30,11 +30,12 @@ bool j1Map::Awake(pugi::xml_node& config)
 
 	bgBlitSpeed = config.child("blitSpeed").attribute("backgrounds").as_float();
 	fogBlitSpeed = config.child("blitSpeed").attribute("fog").as_float();
+	mapBlitSpeed = config.child("blitSpeed").attribute("map").as_float();
 
 	return ret;
 }
 
-void j1Map::Draw()
+void j1Map::Draw(float dt)
 {
 	BROFILER_CATEGORY("MapDraw", Profiler::Color::Red)
 
@@ -64,12 +65,12 @@ void j1Map::Draw()
 
 					if (item->data->name == "bg1" || item->data->name == "bg2" || item->data->name == "bg3")
 						App->render->Blit(tileset->texture, pos.x, pos.y, &r, SDL_FLIP_NONE, bgBlitSpeed);
-					
+
 					else if (item->data->name == "Fog")
 						App->render->Blit(tileset->texture, pos.x, pos.y, &r, SDL_FLIP_NONE, fogBlitSpeed);
 
 					else
-						App->render->Blit(tileset->texture, pos.x, pos.y, &r);
+						App->render->Blit(tileset->texture, pos.x, pos.y, &r, SDL_FLIP_NONE, mapBlitSpeed);
 				}
 			}
 		}

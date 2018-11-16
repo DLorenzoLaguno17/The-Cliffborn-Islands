@@ -121,14 +121,6 @@ bool j1Scene1::PreUpdate()
 bool j1Scene1::Update(float dt)
 {
 	BROFILER_CATEGORY("Level1Update", Profiler::Color::LightSeaGreen)
-	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
-		App->render->camera.y += 5;
-	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
-		App->render->camera.y -= 5;
-	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
-		App->render->camera.x += 5;
-	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
-		App->render->camera.x -= 5;
 
 	// Load and Save
 	if(App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
@@ -164,7 +156,7 @@ bool j1Scene1::Update(float dt)
 	if (App->entity->player->position.x < 0)
 		App->entity->player->position.x = 0;
 
-	App->map->Draw();
+	App->map->Draw(dt);
 
 	if (App->collisions->debug) {
 		int x, y;

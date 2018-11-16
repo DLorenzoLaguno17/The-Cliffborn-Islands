@@ -83,12 +83,12 @@ bool j1Hook::Update(float dt) {
 			if (!arrived) {
 				if (App->entity->player->facingRight) {
 					if (App->entity->player->position.x < objectivePosition) {
-						App->entity->player->position.x += hookSpeed;
+						App->entity->player->position.x += hookSpeed * dt;
 						animation = &dragHookRight;
 					}
 				}
 				else if (App->entity->player->position.x > objectivePosition) {
-					App->entity->player->position.x -= hookSpeed;
+					App->entity->player->position.x -= hookSpeed * dt;
 					animation = &dragHookLeft;
 				}
 			}
@@ -117,9 +117,9 @@ bool j1Hook::Update(float dt) {
 			// Update collider position to hook's claw position with the player facing right
 			if (!somethingHit) {
 				if (animation == &throwHook)
-					colliderPosition += hookSpeed;
+					colliderPosition += hookSpeed * dt;
 				else if (animation == &returnHook)
-					colliderPosition -= hookSpeed;
+					colliderPosition -= hookSpeed * dt;
 
 				collider->SetPos(position.x + colliderPosition, position.y + heightMargin);
 			}
@@ -136,9 +136,9 @@ bool j1Hook::Update(float dt) {
 			// Update collider position to hook's claw position with the player facing left
 			if (!somethingHit) {
 				if (animation == &throwHook)
-					colliderPosition -= hookSpeed;
+					colliderPosition -= hookSpeed * dt;
 				else if (animation == &returnHook)
-					colliderPosition += hookSpeed;
+					colliderPosition += hookSpeed * dt;
 
 				collider->SetPos(position.x + leftMargin + colliderPosition, position.y + heightMargin);
 			}

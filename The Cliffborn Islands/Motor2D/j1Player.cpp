@@ -83,21 +83,21 @@ bool j1Player::Update(float dt) {
 			animation = &godmode;
 
 			if (App->input->GetKey(SDL_SCANCODE_D) == j1KeyState::KEY_REPEAT) {
-				position.x += godModeSpeed;
+				position.x += godModeSpeed * dt;
 				facingRight = true;
 			}
 
 			if (App->input->GetKey(SDL_SCANCODE_A) == j1KeyState::KEY_REPEAT) {
-				position.x -= godModeSpeed;
+				position.x -= godModeSpeed * dt;
 				facingRight = false;
 			}
 
 			if (App->input->GetKey(SDL_SCANCODE_W) == j1KeyState::KEY_REPEAT) {
-				position.y -= godModeSpeed;
+				position.y -= godModeSpeed * dt;
 			}
 
 			if (App->input->GetKey(SDL_SCANCODE_S) == j1KeyState::KEY_REPEAT) {
-				position.y += godModeSpeed;
+				position.y += godModeSpeed * dt;
 			}
 		}
 		else {
@@ -110,7 +110,7 @@ bool j1Player::Update(float dt) {
 			// Direction controls	
 			if (App->input->GetKey(SDL_SCANCODE_D) == j1KeyState::KEY_REPEAT && attacking == false) {
 				if (wallInFront == false && dead == false) {
-					position.x += horizontalSpeed;
+					position.x += horizontalSpeed * dt;
 					animation = &run;
 
 					if (App->entity->hook->thrown == false)
@@ -126,7 +126,7 @@ bool j1Player::Update(float dt) {
 
 			if (App->input->GetKey(SDL_SCANCODE_A) == j1KeyState::KEY_REPEAT && attacking == false) {
 				if (wallBehind == false && dead == false) {
-					position.x -= horizontalSpeed;
+					position.x -= horizontalSpeed * dt;
 					animation = &run;
 
 					if (App->entity->hook->thrown == false)
@@ -144,8 +144,8 @@ bool j1Player::Update(float dt) {
 			if (feetOnGround == false && jumping == false) {
 
 				freefall = true;
-				position.y += fallingSpeed;
-				fallingSpeed += verticalAcceleration;
+				position.y += fallingSpeed * dt;
+				fallingSpeed += verticalAcceleration * dt;
 
 				if (!attacking)
 					animation = &fall;
@@ -173,8 +173,8 @@ bool j1Player::Update(float dt) {
 				else {
 
 					if (wallAbove == false && App->entity->hook->somethingHit == false) {
-						position.y += verticalSpeed;
-						verticalSpeed += verticalAcceleration;
+						position.y += verticalSpeed * dt;
+						verticalSpeed += verticalAcceleration * dt;
 					}
 
 					// While the player is falling
@@ -191,7 +191,7 @@ bool j1Player::Update(float dt) {
 		}
 
 		// Attack control
-		if (App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN) {
+		if (App->input->GetKey(SDL_SCANCODE_P) == j1KeyState::KEY_DOWN) {
 			attacking = true;
 
 			if (facingRight)
@@ -209,7 +209,7 @@ bool j1Player::Update(float dt) {
 		}
 
 		// God mode
-		if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN && dead == false)
+		if (App->input->GetKey(SDL_SCANCODE_F10) == j1KeyState::KEY_DOWN && dead == false)
 		{
 			GodMode = !GodMode;
 
