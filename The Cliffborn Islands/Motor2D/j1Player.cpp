@@ -376,7 +376,7 @@ void j1Player::OnCollision(Collider* col_1, Collider* col_2)
 			}
 
 			if (collider->rect.x + collider->rect.w >= col_2->rect.x + colisionMargin
-				&& collider->rect.x + 1 < col_2->rect.x + col_2->rect.w) {
+				&& collider->rect.x < col_2->rect.x + col_2->rect.w) {
 				//If the collision is with the "ceiling"
 				if (collider->rect.y <= col_2->rect.y + col_2->rect.h
 					&& collider->rect.y + (collider->rect.h / 2) > col_2->rect.y + col_2->rect.h

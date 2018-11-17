@@ -137,8 +137,7 @@ bool j1Scene1::Update(float dt)
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
-		ChangeScene();
-		
+		ChangeScene();		
 
 	// Camera control
 	if (App->render->camera.x > cameraLimit)
