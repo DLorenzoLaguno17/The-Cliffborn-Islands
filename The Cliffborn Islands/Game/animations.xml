@@ -132,10 +132,21 @@
       </idle>      
     </harpy>
 	
-	<skeleton>
-	  <move loop ="true" speed="10.0f">
-	  </move>
-	</skeleton>
+	  <skeleton>
+	    <move loop ="true" speed="1.0f">
+         <animation x="30" y="89" w="13" h="22"/>
+         <animation x="47" y="89" w="13" h="22"/>
+         <animation x="64" y="89" w="13" h="22"/>
+        <animation x="81" y="89" w="13" h="22"/>
+      </move>
+
+      <idle loop ="true" speed="1.0f">
+        <animation x="13" y="14" w="22" h="22"/>
+        <animation x="37" y="14" w="13" h="22"/>
+        <animation x="52" y="13" w="16" h="22"/>
+        <animation x="37" y="14" w="13" h="22"/>
+      </idle>
+	  </skeleton>
     
   </enemies>
 

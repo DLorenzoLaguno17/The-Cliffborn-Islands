@@ -110,7 +110,10 @@ bool j1Scene2::Update(float dt)
 
 	// Load and Save
 	if (App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
+	{
+		App->entity->DestroyEnemies();
 		App->LoadGame("save_game.xml");
+	}
 
 	if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
 		App->SaveGame("save_game.xml");
@@ -227,6 +230,7 @@ void j1Scene2::ChangeScene()
 	CleanUp();
 	App->fade->FadeToBlack(App->scene2, App->scene1);
 	App->entity->CreatePlayer();
+	App->entity->DestroyEnemies();
 	App->entity->Start();
 	App->render->camera = { 0,0 };
 	App->scene1->Start();

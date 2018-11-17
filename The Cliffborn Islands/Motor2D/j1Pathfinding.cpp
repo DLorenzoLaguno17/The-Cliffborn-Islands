@@ -81,6 +81,25 @@ Movement j1PathFinding::CheckDirection(p2DynArray<iPoint>& path) const
 	else return NONE;
 }
 
+Movement j1PathFinding::CheckDirectionGround(p2DynArray<iPoint>& path) const
+{
+	if (path.Count() >= 2)
+	{
+		iPoint tile = path[0];
+		iPoint next_tile = path[1];
+
+		int x_difference = next_tile.x - tile.x;
+		int y_difference = next_tile.y - tile.y;
+
+		if (x_difference == 1) return RIGHT;
+		else if (x_difference == -1) return LEFT;
+		else if (y_difference == 1)	return DOWN;
+		else if (y_difference == -1) return UP;
+	}
+
+	else return NONE;
+}
+
 // To request all tiles involved in the last generated path
 const p2DynArray<iPoint>* j1PathFinding::GetLastPath() const
 {

@@ -72,7 +72,7 @@ bool j1Scene1::Start()
 		}
 		
 		App->entity->AddEnemy(220, 20, HARPY);
-		//App->entity->AddEnemy(150, 50, SKELETON);
+		App->entity->AddEnemy(150, 120, SKELETON);
 		
 		/*App->entity->AddEnemy(250, 50, HARPY);
 		App->entity->AddEnemy(400, 20, HARPY);
@@ -122,8 +122,12 @@ bool j1Scene1::Update(float dt)
 	BROFILER_CATEGORY("Level1Update", Profiler::Color::LightSeaGreen)
 
 	// Load and Save
-	if(App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
+	{
+		App->entity->DestroyEnemies();
 		App->LoadGame("save_game.xml");
+	}
+
 
 	if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
 		App->SaveGame("save_game.xml");

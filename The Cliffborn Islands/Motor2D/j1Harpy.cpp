@@ -70,7 +70,10 @@ bool j1Harpy::Update(float dt, bool do_logic)
 	}
 
 	if (App->entity->player->position == App->entity->player->initialPosition)
+	{
+		animation = &idle;
 		position = initialPosition;
+	}
 
 	// Drawing the harpy
 	SDL_Rect r = animation->GetCurrentFrame(dt);

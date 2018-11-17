@@ -13,6 +13,8 @@
 
 #include "Brofiler/Brofiler.h"
 
+#define GRAVITY 1
+
 j1Skeleton::j1Skeleton(int x, int y, ENTITY_TYPES type) : j1Entity(x, y, ENTITY_TYPES::SKELETON)
 {
 	animation = NULL;
@@ -48,6 +50,8 @@ bool j1Skeleton::Update(float dt, bool do_logic)
 
 		collider->SetPos(position.x, position.y);
 
+	position.y += GRAVITY + GRAVITY * dt;
+
 	if (do_logic || path_created) {
 		if ((App->entity->player->position.x - position.x) <= DETECTION_RANGE && (App->entity->player->position.x - position.x) >= -DETECTION_RANGE && App->entity->player->collider->type == COLLIDER_PLAYER)
 		{
@@ -70,15 +74,18 @@ bool j1Skeleton::Update(float dt, bool do_logic)
 	}
 
 	if (App->entity->player->position == App->entity->player->initialPosition)
+	{
+		animation = &idle;
 		position = initialPosition;
+	}
 
 	// Blitting the skeleton
 	SDL_Rect r = animation->GetCurrentFrame(dt);
 
 	if (position.x - App->entity->player->position.x >= 0)
-		Draw(r, true, -10, -10);
+		Draw(r, false, 0, 0);
 	else
-		Draw(r, false, -10, -10);
+		Draw(r, true, 0, 0);
 
 	return true;
 }
@@ -95,6 +102,24 @@ bool j1Skeleton::CleanUp()
 
 void j1Skeleton::OnCollision(Collider * col_1, Collider * col_2)
 {
+	COLLISION_DIRECTION direction;
+
+	if (col_2->type == COLLIDER_WALL)
+	{
+		direction = col_1->CheckDirection(col_2->rect);
+	
+		if (direction == UP_COLLISION)
+			position.y = col_2->rect.y - colliderSize.y;
+		
+		else if (direction == DOWN_COLLISION)
+			position.y = col_2->rect.y + col_2->rect.h;
+		
+		else if (direction == RIGHT_COLLISION)
+			position.x = col_2->rect.x + col_2->rect.w;
+		
+		else if (direction == LEFT_COLLISION)
+			position.x = col_2->rect.x - colliderSize.x;
+	}
 }
 
 bool j1Skeleton::Load(pugi::xml_node& data)
@@ -132,37 +157,9 @@ void j1Skeleton::LoadSkeletonProperties()
 
 void j1Skeleton::Move(p2DynArray<iPoint>& path, float dt)
 {
-	direction = App->path->CheckDirection(path);
+	direction = App->path->CheckDirectionGround(path);
 
-	if (direction == Movement::DOWN_RIGHT)
-	{
-		animation = &move;
-		position.y += speed;
-		position.x += speed;
-	}
-
-	else if (direction == Movement::DOWN_LEFT)
-	{
-		animation = &move;
-		position.y += speed;
-		position.x -= speed;
-	}
-
-	else if (direction == Movement::UP_RIGHT)
-	{
-		animation = &move;
-		position.y -= speed;
-		position.x += speed;
-	}
-
-	else if (direction == Movement::UP_LEFT)
-	{
-		animation = &move;
-		position.y -= speed;
-		position.x -= speed;
-	}
-
-	else if (direction == Movement::DOWN)
+	if (direction == Movement::DOWN)
 	{
 		animation = &move;
 		position.y += speed;

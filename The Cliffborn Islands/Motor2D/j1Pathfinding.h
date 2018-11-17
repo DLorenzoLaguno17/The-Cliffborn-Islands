@@ -59,6 +59,8 @@ public:
 	uchar GetTileAt(const iPoint& pos) const;
 
 	Movement CheckDirection(p2DynArray<iPoint>& path)const;
+	Movement CheckDirectionGround(p2DynArray<iPoint>& path)const;
+
 
 private:
 	p2DynArray<iPoint>*	_path = nullptr;

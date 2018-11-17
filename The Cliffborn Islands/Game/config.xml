@@ -51,7 +51,7 @@
   <skeleton speed="1">
       <initialPosition x="200" y="20"/>
 	  <margin x="10" y="10"/>
-	  <colliderSize w="25" h="20"/>
+	  <colliderSize w="13" h="22"/>
   </skeleton>
 
   <map>
