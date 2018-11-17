@@ -109,7 +109,7 @@ void j1Skeleton::OnCollision(Collider * col_1, Collider * col_2)
 		direction = col_1->CheckDirection(col_2->rect);
 	
 		if (direction == UP_COLLISION)
-			position.y = col_2->rect.y - colliderSize.y;
+			position.y = col_2->rect.y - colliderSize.y + 1;
 		
 		else if (direction == DOWN_COLLISION)
 			position.y = col_2->rect.y + col_2->rect.h;

@@ -35,7 +35,6 @@ bool j1Scene1::Awake(pugi::xml_node& config)
 	cameraLimit = config.child("camera").attribute("cameraLimit").as_int();
 	playerLimit = config.child("camera").attribute("playerLimit").as_int();
 
-
 	return ret;
 }
 
@@ -72,7 +71,7 @@ bool j1Scene1::Start()
 		}
 		
 		App->entity->AddEnemy(220, 20, HARPY);
-		App->entity->AddEnemy(150, 120, SKELETON);
+		App->entity->AddEnemy(210, 120, SKELETON);
 		
 		/*App->entity->AddEnemy(250, 50, HARPY);
 		App->entity->AddEnemy(400, 20, HARPY);
