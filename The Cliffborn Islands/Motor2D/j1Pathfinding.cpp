@@ -203,7 +203,11 @@ int PathNode::Score() const
 int PathNode::CalculateF(const iPoint& destination)
 {
 	g = parent->g + 1;
-	h = pos.DistanceTo(destination);
+
+	int x_distance = abs(pos.x - destination.x);
+	int y_distance = abs(pos.y - destination.y);
+
+	h = (x_distance + y_distance) * min(x_distance, y_distance);
 
 	return g + h;
 }
