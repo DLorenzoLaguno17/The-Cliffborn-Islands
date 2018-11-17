@@ -220,6 +220,6 @@ bool Collider::CheckCollision(const SDL_Rect& r) const
 
 COLLISION_DIRECTION Collider::CheckDirection(const SDL_Rect& r) const 
 {
-
+	
+	return NONE_COLLISION;
 }
-

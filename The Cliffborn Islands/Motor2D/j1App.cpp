@@ -200,18 +200,37 @@ void j1App::FinishUpdate()
 		last_sec_frame_count = 0;
 	}
 
+	// We can cap and uncap FPS by pressing F11
+	if (App->input->GetKey(SDL_SCANCODE_F11) == j1KeyState::KEY_DOWN) {
+		cappedFPS = !cappedFPS;
+		frame_count = 0;
+	}
+
 	float avg_fps = float(frame_count) / startup_time.ReadSec();
 	float seconds_since_startup = startup_time.ReadSec();
 	uint32 last_frame_ms = frame_time.Read();
 	uint32 frames_on_last_update = prev_last_sec_frame_count;
 
 	static char title[256];
-	sprintf_s(title, 256, "Av.FPS: %.2f Last Frame Ms: %02u Last sec frames: %i  Time since startup: %.3f Frame Count: %lu ",
-		avg_fps, last_frame_ms, frames_on_last_update, seconds_since_startup, frame_count);
+	char* cap;
+	char* vsync;
+
+	if (cappedFPS)
+		cap = "on";
+	else
+		cap = "off";
+	
+	if (App->render->usingVsync)
+		vsync = "on";
+	else
+		vsync = "off";
+
+	sprintf_s(title, 256, "The Cliffborn Islands v0.2 ~ FPS: %d / Av.FPS: %.2f / Last Frame Ms: %02u / Cap %s / VSYNC %s",
+		frames_on_last_update, avg_fps, last_frame_ms, cap, vsync);
 	App->win->SetTitle(title);
 
 	// We use SDL_Delay to make sure you get your capped framerate
-	if (last_frame_ms < (1000 / framerate_cap)) {
+	if ((last_frame_ms < (1000 / framerate_cap)) && cappedFPS) {
 		SDL_Delay((1000 / framerate_cap) - last_frame_ms);
 	}
 
