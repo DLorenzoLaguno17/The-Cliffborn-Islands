@@ -166,7 +166,9 @@ void j1EntityManager::DestroyEnemies()
 	}	
 	
 	for (p2List_item<j1Entity*>* iterator = entities.start; iterator; iterator = iterator->next) {
-		if (iterator->data->type != ENTITY_TYPES::PLAYER)
+
+		// We destroy each entity which is not he hook or the player
+		if (iterator->data->type != ENTITY_TYPES::PLAYER && iterator->data->type != ENTITY_TYPES::HOOK)
 		{
 			iterator->data->CleanUp();
 			int num = entities.find(iterator->data);

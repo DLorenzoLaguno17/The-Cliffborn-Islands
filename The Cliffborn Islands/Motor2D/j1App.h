@@ -121,7 +121,6 @@ private:
 	uint32				framerate_cap = 0;
 
 	float				dt = 0.0f;
-
 	bool				cappedFPS = true;
 };
 

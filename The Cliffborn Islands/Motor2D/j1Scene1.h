@@ -38,6 +38,8 @@ public:
 	bool Load(pugi::xml_node&);
 	bool Save(pugi::xml_node&) const;
 
+	fPoint initialScene1Position;
+
 private:
 
 	SDL_Texture* debug_tex;

@@ -37,6 +37,10 @@ bool j1Scene2::Awake(pugi::xml_node& config)
 	cameraLimit = config.child("camera").attribute("cameraLimit").as_int();
 	playerLimit = config.child("camera").attribute("playerLimit").as_int();
 
+	// Copying the position of the player
+	initialScene2Position.x = config.child("initialPlayerPosition").attribute("x").as_int();
+	initialScene2Position.y = config.child("initialPlayerPosition").attribute("y").as_int();
+
 	if (App->scene1->active == true) 
 		active = false; 
 
@@ -121,9 +125,6 @@ bool j1Scene2::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 	{
 		ChangeScene();
-		App->entity->player->position.x = 0;
-		App->entity->player->position.y = 20;
-		App->render->camera.x = 0;
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)

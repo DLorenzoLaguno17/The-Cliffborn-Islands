@@ -35,6 +35,10 @@ bool j1Scene1::Awake(pugi::xml_node& config)
 	cameraLimit = config.child("camera").attribute("cameraLimit").as_int();
 	playerLimit = config.child("camera").attribute("playerLimit").as_int();
 
+	// Copying the position of the player
+	initialScene1Position.x = config.child("initialPlayerPosition").attribute("x").as_int();
+	initialScene1Position.y = config.child("initialPlayerPosition").attribute("y").as_int();
+
 	return ret;
 }
 
@@ -53,8 +57,7 @@ bool j1Scene1::Start()
 			if (App->map->CreateWalkabilityMap(w, h, &data))
 			{
 				App->path->SetMap(w, h, data);
-			}
-				
+			}				
 
 			RELEASE_ARRAY(data);
 		}
@@ -70,8 +73,8 @@ bool j1Scene1::Start()
 			player_created = true;
 		}
 		
-		App->entity->AddEnemy(220, 20, HARPY);
-		App->entity->AddEnemy(210, 120, SKELETON);
+		//App->entity->AddEnemy(220, 20, HARPY);
+		//App->entity->AddEnemy(210, 120, SKELETON);
 		
 		/*App->entity->AddEnemy(250, 50, HARPY);
 		App->entity->AddEnemy(400, 20, HARPY);
@@ -127,13 +130,12 @@ bool j1Scene1::Update(float dt)
 		App->LoadGame("save_game.xml");
 	}
 
-
 	if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
 		App->SaveGame("save_game.xml");
 
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN) 
 	{
-		App->fade->FadeToBlack(this, App->scene1);
+		App->fade->FadeToBlack(App->scene1, App->scene1);
 		App->entity->player->position.x = 0;
 		App->entity->player->position.y = 20;
 		App->render->camera.x = 0;
@@ -240,6 +242,7 @@ void j1Scene1::ChangeScene()
 	CleanUp();
 	App->fade->FadeToBlack(App->scene1, App->scene2);
 	App->entity->CreatePlayer();
+	App->entity->DestroyEnemies();
 	App->entity->Start();
 	App->render->camera = { 0,0 };
 	App->scene2->Start();

@@ -50,6 +50,11 @@ bool j1Player::Start() {
 	currentJumps = initialJumps;
 	
 	// Setting player position
+	if (App->scene1->active)
+		initialPosition = App->scene1->initialScene1Position;
+	else if (App->scene2->active)
+		initialPosition = App->scene2->initialScene2Position;
+
 	position.x = initialPosition.x;
 	position.y = initialPosition.y;
 
@@ -364,6 +369,9 @@ void j1Player::OnCollision(Collider* col_1, Collider* col_2)
 
 					wallInFront = true;
 					App->entity->hook->arrived = true;
+
+					if(position.x + (collider->rect.w * 3 / 4) < col_2->rect.x)
+						position.x = col_2->rect.x - collider->rect.w;
 				}
 				else
 				//If the collision is with a wall behind
@@ -372,6 +380,8 @@ void j1Player::OnCollision(Collider* col_1, Collider* col_2)
 
 					wallBehind = true;
 					App->entity->hook->arrived = true;
+					if(position.x + (collider->rect.w / 4) > col_2->rect.x + col_2->rect.w)
+						position.x = col_2->rect.x + col_2->rect.w - colisionMargin;
 				}
 			}
 
@@ -394,9 +404,10 @@ void j1Player::OnCollision(Collider* col_1, Collider* col_2)
 				if (loading == false) {
 
 					if (collider->rect.y + collider->rect.h >= col_2->rect.y
-						&& collider->rect.y + (collider->rect.h / 2) < col_2->rect.y) {
+						&& collider->rect.y < col_2->rect.y) {
 
 						position.y = col_2->rect.y - collider->rect.h;
+
 						feetOnGround = true;
 						jumping = false;
 						freefall = false;
@@ -448,11 +459,7 @@ void j1Player::LoadPlayerProperties() {
 	config = config_file.child("config");
 	pugi::xml_node player;
 	player = config.child("player");
-
-	// Copying the position of the player
-	initialPosition.x = player.child("position").attribute("x").as_int();
-	initialPosition.y = player.child("position").attribute("y").as_int();
-
+	
 	// Copying the size of the player
 	playerSize.x = player.child("size").attribute("width").as_int();
 	playerSize.y = player.child("size").attribute("height").as_int();
