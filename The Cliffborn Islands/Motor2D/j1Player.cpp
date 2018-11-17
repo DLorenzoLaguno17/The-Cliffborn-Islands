@@ -154,7 +154,7 @@ bool j1Player::Update(float dt) {
 
 			// Jump controls
 			if (App->input->GetKey(SDL_SCANCODE_SPACE) == j1KeyState::KEY_DOWN) {
-				if ((currentJumps == 0 && freefall == true) || (currentJumps <= 1 && freefall == false)) {
+				if ((currentJumps == initialJumps && freefall == true) || (currentJumps < maxJumps && freefall == false)) {
 					jumping = true;
 					verticalSpeed = initialVerticalSpeed;
 					currentJumps++;
@@ -271,9 +271,9 @@ bool j1Player::Update(float dt) {
 
 	if (!attacking) {
 		if (facingRight)
-			Draw(r, false, 0, 0);
+			Draw(r);
 		else
-			Draw(r, true, 0, 0);
+			Draw(r, true);
 	}
 	else 
 		Draw(r, false, 0, -2);
@@ -354,36 +354,6 @@ void j1Player::OnCollision(Collider* col_1, Collider* col_2)
 {
 	if (col_1->type == COLLIDER_PLAYER || col_1->type == COLLIDER_NONE)
 	{		
-		//If the player collides with win colliders
-		if (col_2->type == COLLIDER_WIN)
-		{
-			if (App->scene1->active)
-				App->scene1->ChangeScene();
-			else if (App->scene2->active)
-				App->scene2->ChangeScene();
-		}
-
-		//If the player collides with death colliders
-		if (col_2->type == COLLIDER_DEATH || col_2->type == COLLIDER_ENEMY)
-		{
-			if (col_2->rect.h < 8)
-				deathByFall = true;
-			else {
-				if (!playedSound) {
-					App->audio->PlayFx(playerHurt);
-					playedSound = true;
-				}
-
-				jumping = false;
-				fallingSpeed = initialFallingSpeed;
-			}
-
-			App->fade->FadeToBlack(App->scene1, App->scene1, 3.0f);
-			dead = true;
-			App->audio->PlayFx(deathSound);
-			currentJumps == 2;
-		}
-
 		// If the player collides with a wall
 		if (col_2->type == COLLIDER_WALL) {
 			if (collider->rect.y + collider->rect.h >= col_2->rect.y + colisionMargin
@@ -436,6 +406,36 @@ void j1Player::OnCollision(Collider* col_1, Collider* col_2)
 				}
 			}
 		}
+
+		//If the player collides with win colliders
+		if (col_2->type == COLLIDER_WIN)
+		{
+			if (App->scene1->active)
+				App->scene1->ChangeScene();
+			else if (App->scene2->active)
+				App->scene2->ChangeScene();
+		}
+
+		//If the player collides with death colliders
+		if (col_2->type == COLLIDER_DEATH || col_2->type == COLLIDER_ENEMY)
+		{
+			if (col_2->rect.h < 8)
+				deathByFall = true;
+			else {
+				if (!playedSound) {
+					App->audio->PlayFx(playerHurt);
+					playedSound = true;
+				}
+
+				jumping = false;
+				fallingSpeed = initialFallingSpeed;
+			}
+
+			App->fade->FadeToBlack(App->scene1, App->scene1, 3.0f);
+			dead = true;
+			App->audio->PlayFx(deathSound);
+			currentJumps == maxJumps;
+		}
 	}
 };
 
@@ -470,4 +470,5 @@ void j1Player::LoadPlayerProperties() {
 	fallingSpeed = speed.child("physics").attribute("falling").as_float();
 	verticalAcceleration = speed.child("physics").attribute("acceleration").as_float();
 	initialJumps = speed.child("physics").attribute("jumpNumber").as_uint();
+	maxJumps = speed.child("physics").attribute("maxJumps").as_uint();
 }

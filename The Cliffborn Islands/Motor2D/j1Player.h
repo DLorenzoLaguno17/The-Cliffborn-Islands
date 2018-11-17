@@ -67,6 +67,7 @@ public:
 
 	uint currentJumps;
 	uint initialJumps;
+	uint maxJumps;
 	uint colisionMargin;
 
 	float godModeSpeed;
