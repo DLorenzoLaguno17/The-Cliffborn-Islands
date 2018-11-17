@@ -21,7 +21,7 @@ public:
 	virtual bool Start() {
 		return true;
 	};
-	virtual bool Update(float dt) {
+	virtual bool Update(float dt, bool do_logic) {
 		return true;
 	};
 	virtual bool PostUpdate() {

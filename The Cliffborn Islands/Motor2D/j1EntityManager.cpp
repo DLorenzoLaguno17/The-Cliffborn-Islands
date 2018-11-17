@@ -17,7 +17,7 @@
 
 j1EntityManager::j1EntityManager()
 {
-	name.create("entity");
+	name.create("entityManager");
 }
 
 j1EntityManager::~j1EntityManager() {}
@@ -48,13 +48,30 @@ bool j1EntityManager::PreUpdate()
 	return true;
 }
 
+bool j1EntityManager::Awake(pugi::xml_node& config)
+{
+	LOG("Awaking Entity manager");
+	updateMsCycle = config.attribute("updateMsCycle").as_float();
+
+	return true;
+}
+
 bool j1EntityManager::Update(float dt)
 {
 	BROFILER_CATEGORY("EntityManagerUpdate", Profiler::Color::LightSeaGreen)
 
+	accumulatedTime += dt;
+	if (accumulatedTime >= updateMsCycle)
+		do_logic = true;
+
 	for (p2List_item<j1Entity*>* iterator = entities.start; iterator != nullptr; iterator = iterator->next)
 	{
-		iterator->data->Update(dt);
+		iterator->data->Update(dt, do_logic);
+	}
+
+	if (do_logic) {
+		accumulatedTime = 0.0f;
+		do_logic = false;
 	}
 
 	return true;

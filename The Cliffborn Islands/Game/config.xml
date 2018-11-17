@@ -40,6 +40,8 @@
 	  <size width="11" height="13"/>
   </hook>
   
+  <entityManager updateMsCycle="0.1f"/>
+  
   <harpy speed="70.0f">
 	  <initialPosition x="200" y="20"/>
 	  <margin x="10" y="10"/>

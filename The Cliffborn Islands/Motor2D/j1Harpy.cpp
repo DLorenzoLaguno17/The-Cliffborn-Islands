@@ -42,31 +42,32 @@ bool j1Harpy::Start()
 	return true;
 }
 
-bool j1Harpy::Update(float dt)
+bool j1Harpy::Update(float dt, bool do_logic)
 {
 	BROFILER_CATEGORY("HarpyUpdate", Profiler::Color::LightSeaGreen)
 
 	collider->SetPos(position.x, position.y);
 
-	if ((App->entity->player->position.x - position.x) <= DETECTION_RANGE && (App->entity->player->position.x - position.x) >= -DETECTION_RANGE && App->entity->player->collider->type == COLLIDER_PLAYER)
-	{
-		iPoint origin = { App->map->WorldToMap((int)position.x + colliderSize.x / 2, (int)position.y + colliderSize.y / 2) };
-		iPoint destination;
-		if (position.x < App->entity->player->position.x)
-			destination = { App->map->WorldToMap((int)App->entity->player->position.x + App->entity->player->playerSize.x + 1, (int)App->entity->player->position.y + App->entity->player->playerSize.y / 2) };
-		else
-			destination = { App->map->WorldToMap((int)App->entity->player->position.x, (int)App->entity->player->position.y + App->entity->player->playerSize.y / 2) };
-
-		if (!App->entity->player->dead && App->path->IsWalkable(destination) && App->path->IsWalkable(origin))
+	if (do_logic || path_created) {
+		if ((App->entity->player->position.x - position.x) <= DETECTION_RANGE && (App->entity->player->position.x - position.x) >= -DETECTION_RANGE && App->entity->player->collider->type == COLLIDER_PLAYER)
 		{
-			path = App->path->CreatePath(origin, destination);
-			Move(*path, dt);
-			path_created = true;
-		}
-	}
+			iPoint origin = { App->map->WorldToMap((int)position.x + colliderSize.x / 2, (int)position.y + colliderSize.y / 2) };
+			iPoint destination;
+			if (position.x < App->entity->player->position.x)
+				destination = { App->map->WorldToMap((int)App->entity->player->position.x + App->entity->player->playerSize.x + 1, (int)App->entity->player->position.y + App->entity->player->playerSize.y / 2) };
+			else
+				destination = { App->map->WorldToMap((int)App->entity->player->position.x, (int)App->entity->player->position.y + App->entity->player->playerSize.y / 2) };
 
-	else if (path_created)
-		path->Clear();
+			if (!App->entity->player->dead && App->path->IsWalkable(destination) && App->path->IsWalkable(origin))
+			{
+				path = App->path->CreatePath(origin, destination);
+				Move(*path, dt);
+				path_created = true;
+			}
+		}
+		else if (path_created)
+			path->Clear();
+	}
 
 	if (App->entity->player->position == App->entity->player->initialPosition)
 		position = initialPosition;

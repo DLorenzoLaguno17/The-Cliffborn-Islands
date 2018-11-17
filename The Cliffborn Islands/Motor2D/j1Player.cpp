@@ -68,7 +68,7 @@ bool j1Player::PreUpdate() {
 }
 
 // Call modules on each loop iteration
-bool j1Player::Update(float dt) {
+bool j1Player::Update(float dt, bool do_logic) {
 
 	BROFILER_CATEGORY("PlayerUpdate", Profiler::Color::LightSeaGreen)
 

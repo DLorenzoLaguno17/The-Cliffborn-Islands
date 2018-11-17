@@ -33,14 +33,20 @@ struct EnemyInfo
 class j1EntityManager : public j1Module
 {
 public:
-
+	// Constructor
 	j1EntityManager();
+
+	// Destructor
 	~j1EntityManager();
-	
+
+	bool Awake(pugi::xml_node&);
 	bool Start();
+
+	// Called every frame
 	bool PreUpdate();
 	bool Update(float dt);
 	bool PostUpdate();
+
 	bool CleanUp();
 	bool Load(pugi::xml_node&);
 	bool Save(pugi::xml_node&) const;
@@ -69,6 +75,9 @@ public:
 private:
 
 	EnemyInfo			queue[MAX_ENEMIES];
+	bool				do_logic = false;
+	float				accumulatedTime = 0.0f;
+	float				updateMsCycle = 0.0f;
 
 };
 

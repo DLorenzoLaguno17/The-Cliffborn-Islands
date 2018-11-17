@@ -23,7 +23,7 @@ public:
 	bool Start();
 
 	// Called each loop iteration
-	bool Update(float dt);
+	bool Update(float dt, bool do_logic);
 
 	// Called before quitting
 	bool CleanUp();

@@ -47,7 +47,7 @@ bool j1Hook::Start() {
 }
 
 // Call modules on each loop iteration
-bool j1Hook::Update(float dt) {	
+bool j1Hook::Update(float dt, bool do_logic) {	
 
 	BROFILER_CATEGORY("HookUpdate", Profiler::Color::LightSeaGreen)
 
