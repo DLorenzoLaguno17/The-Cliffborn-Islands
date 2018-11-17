@@ -162,24 +162,24 @@ void j1Skeleton::Move(p2DynArray<iPoint>& path, float dt)
 	if (direction == Movement::DOWN)
 	{
 		animation = &move;
-		position.y += speed;
+		position.y += speed * dt;
 	}
 
 	else if (direction == Movement::UP)
 	{
 		animation = &move;
-		position.y -= speed;
+		position.y -= speed * dt;
 	}
 
 	else if (direction == Movement::RIGHT)
 	{
 		animation = &move;
-		position.x += speed;
+		position.x += speed * dt;
 	}
 
 	else if (direction == Movement::LEFT)
 	{
 		animation = &move;
-		position.x -= speed;
+		position.x -= speed * dt;
 	}
 }

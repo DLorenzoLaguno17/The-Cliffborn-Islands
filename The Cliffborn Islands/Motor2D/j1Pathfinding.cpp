@@ -91,7 +91,7 @@ Movement j1PathFinding::CheckDirectionGround(p2DynArray<iPoint>& path) const
 		int x_difference = next_tile.x - tile.x;
 		int y_difference = next_tile.y - tile.y;
 
-		if (x_difference == 1) return RIGHT;
+		 if (x_difference == 1) return RIGHT;
 		else if (x_difference == -1) return LEFT;
 		else if (y_difference == 1)	return DOWN;
 		else if (y_difference == -1) return UP;

@@ -48,7 +48,7 @@
 	  <colliderSize w="25" h="23"/>
   </harpy>
   
-  <skeleton speed="1">
+  <skeleton speed="50.0f">
       <initialPosition x="200" y="20"/>
 	  <margin x="10" y="10"/>
 	  <colliderSize w="13" h="22"/>
