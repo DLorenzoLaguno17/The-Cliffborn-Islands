@@ -297,6 +297,7 @@ bool j1Player::PostUpdate() {
 }
 
 // Load game state
+// Load game state
 bool j1Player::Load(pugi::xml_node& data) {
 
 	position.x = data.child("player").child("position").attribute("x").as_int();
@@ -322,12 +323,12 @@ bool j1Player::Load(pugi::xml_node& data) {
 // Save game state
 bool j1Player::Save(pugi::xml_node& data) const {
 
-	pugi::xml_node playerPosition = data.child("player").append_child("position");
+	pugi::xml_node pos = data.append_child("position");
 
-	playerPosition.append_attribute("x") = position.x;
-	playerPosition.append_attribute("y") = position.y;
+	pos.append_attribute("x") = position.x;
+	pos.append_attribute("y") = position.y;
 
-	pugi::xml_node godmode = data.child("player").append_child("godmode");
+	pugi::xml_node godmode = data.append_child("godmode");
 
 	godmode.append_attribute("value") = GodMode;
 

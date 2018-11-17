@@ -98,8 +98,13 @@ bool j1Harpy::Load(pugi::xml_node &)
 	return true;
 }
 
-bool j1Harpy::Save(pugi::xml_node &) const
+bool j1Harpy::Save(pugi::xml_node& data) const
 {
+	pugi::xml_node pos = data.append_child("position");
+
+	pos.append_attribute("x") = position.x;
+	pos.append_attribute("y") = position.y;
+
 	return true;
 }
 

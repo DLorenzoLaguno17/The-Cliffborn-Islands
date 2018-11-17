@@ -46,7 +46,6 @@ public:
 	Animation move;
 
 public:
-	fPoint initialPosition;
 
 	iPoint margin;
 	iPoint colliderSize;

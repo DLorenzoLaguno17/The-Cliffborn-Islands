@@ -44,6 +44,7 @@ public:
 
 	ENTITY_TYPES type;
 
+	fPoint original_pos;
 	fPoint position;
 	fPoint initialPosition;
 	float speed;

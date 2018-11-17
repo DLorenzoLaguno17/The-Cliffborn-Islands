@@ -140,6 +140,24 @@ void j1EntityManager::SpawnEnemy(const EnemyInfo& info)
 	}
 }
 
+void j1EntityManager::DestroyEnemies()
+{
+	for (int i = 0; i < MAX_ENEMIES; i++) 
+	{ 
+		queue[i].type = ENTITY_TYPES::UNKNOWN; 
+	}	
+	
+	for (p2List_item<j1Entity*>* iterator = entities.start; iterator; iterator = iterator->next) {
+		if (iterator->data->type != ENTITY_TYPES::PLAYER)
+		{
+			iterator->data->CleanUp();
+			int num = entities.find(iterator->data);
+			RELEASE(entities.At(num)->data);
+			entities.del(entities.At(num));
+		}
+	}
+}
+
 void j1EntityManager::CreatePlayer() 
 {
 	hook = (j1Hook*)CreateEntity(HOOK);
@@ -148,7 +166,7 @@ void j1EntityManager::CreatePlayer()
 
 void j1EntityManager::OnCollision(Collider* c1, Collider* c2)
 {
-	for (p2List_item<j1Entity*>* iterator = entities.start; iterator != NULL; iterator = iterator->next)
+	for (p2List_item<j1Entity*>* iterator = entities.start; iterator != nullptr; iterator = iterator->next)
 	{
 		if (iterator->data->collider == c1) 
 		{ 
@@ -175,17 +193,33 @@ bool j1EntityManager::Load(pugi::xml_node& data)
 
 bool j1EntityManager::Save(pugi::xml_node& data) const
 {
-	if (player != nullptr)
-	{
-		player->Save(data);
-	}
+	player->Save(data.append_child("player"));
 
 	pugi::xml_node harpy = data.append_child("harpy");
+	pugi::xml_node skeleton = data.append_child("skeleton");
 
 	for (p2List_item<j1Entity*>* iterator = entities.start; iterator; iterator = iterator->next)
 	{
 		if (iterator->data->type == HARPY)
 			iterator->data->Save(harpy);
+		if (iterator->data->type == SKELETON)
+			iterator->data->Save(skeleton);
+	}
+
+	for (int i = 0; i < MAX_ENEMIES; ++i)
+	{
+		if (queue[i].type != ENTITY_TYPES::UNKNOWN) {
+			if (queue[i].type == HARPY) {
+				pugi::xml_node position = harpy.append_child("position");
+				position.append_attribute("x") = queue[i].position.x;
+				position.append_attribute("y") = queue[i].position.y;
+			}
+			if (queue[i].type == SKELETON) {
+				pugi::xml_node position = skeleton.append_child("position");
+				position.append_attribute("x") = queue[i].position.x;
+				position.append_attribute("y") = queue[i].position.y;
+			}
+		}
 	}
 
 	return true;

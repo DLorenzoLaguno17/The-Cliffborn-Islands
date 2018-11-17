@@ -93,13 +93,18 @@ void j1Skeleton::OnCollision(Collider * col_1, Collider * col_2)
 {
 }
 
-bool j1Skeleton::Load(pugi::xml_node &)
+bool j1Skeleton::Load(pugi::xml_node& data)
 {
 	return true;
 }
 
-bool j1Skeleton::Save(pugi::xml_node &) const
+bool j1Skeleton::Save(pugi::xml_node& data) const
 {
+	pugi::xml_node pos = data.append_child("position");
+
+	pos.append_attribute("x") = position.x;
+	pos.append_attribute("y") = position.y;
+
 	return true;
 }
 

@@ -71,7 +71,7 @@ bool j1Scene1::Start()
 			player_created = true;
 		}
 		
-		//App->entity->AddEnemy(220, 20, HARPY);
+		App->entity->AddEnemy(220, 20, HARPY);
 		//App->entity->AddEnemy(150, 50, SKELETON);
 		
 		/*App->entity->AddEnemy(250, 50, HARPY);
