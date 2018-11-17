@@ -215,7 +215,7 @@ void j1App::FinishUpdate()
 		SDL_Delay((1000 / framerate_cap) - last_frame_ms);
 	}
 
-	LOG("We waited for %d miliseconds and we got back in %d", (1000 / framerate_cap) - last_frame_ms, last_frame_ms);
+	//LOG("We waited for %d miliseconds and we got back in %d", (1000 / framerate_cap) - last_frame_ms, last_frame_ms);
 }
 
 // Call modules before each loop iteration

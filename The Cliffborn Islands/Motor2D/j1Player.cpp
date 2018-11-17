@@ -166,7 +166,7 @@ bool j1Player::Update(float dt) {
 
 			// Reseting the jump every frame
 			feetOnGround = false;
-			if (dead)
+			if (dead && deathByFall == false)
 				animation = &death;
 
 			if (jumping == true && animation != &death) {

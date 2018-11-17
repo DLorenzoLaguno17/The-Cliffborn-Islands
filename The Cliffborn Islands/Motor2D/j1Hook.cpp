@@ -11,6 +11,7 @@
 #include "j1FadeToBlack.h"
 #include "j1Scene1.h"
 #include "j1Scene2.h"
+#include <cassert>
 
 #include "Brofiler/Brofiler.h"
 
@@ -49,12 +50,6 @@ bool j1Hook::Start() {
 bool j1Hook::Update(float dt) {	
 
 	BROFILER_CATEGORY("HookUpdate", Profiler::Color::LightSeaGreen)
-
-	// Specifying the speed of the animation each frame
-	throwHook.speed *= dt;
-	returnHook.speed *= dt;
-	dragHookRight.speed *= dt;
-	dragHookLeft.speed *= dt;
 
 	// We reset the values if the player has arrived to it's hooked destination
 	if (somethingHit) {
@@ -115,40 +110,44 @@ bool j1Hook::Update(float dt) {
 
 		SDL_Rect r = animation->GetCurrentFrame(dt);
 
-		// Blitting the hook
-		if (App->entity->player->facingRight && thrown != false) {
-			position.x = App->entity->player->position.x + spawnPositionRight.x;
-			position.y = App->entity->player->position.y + spawnPositionRight.y;
+		assert(animation->speed > 0.002, "Speed too slow");
 
-			Draw(r);
+		// Blitting the hook if it is still thrown
+		if (thrown) {
+			if (App->entity->player->facingRight) {
+				position.x = App->entity->player->position.x + spawnPositionRight.x;
+				position.y = App->entity->player->position.y + spawnPositionRight.y;
 
-			// Update collider position to hook's claw position with the player facing right
-			if (!somethingHit) {
-				if (animation == &throwHook)
-					colliderPosition += hookSpeed * dt;
-				else if (animation == &returnHook)
-					colliderPosition -= hookSpeed * dt;
-
-				collider->SetPos(position.x + colliderPosition, position.y + heightMargin);
-			}
-		}
-		else if (thrown != false){
-			position.x = App->entity->player->position.x + spawnPositionLeft.x;
-			position.y = App->entity->player->position.y + spawnPositionLeft.y;
-
-			if (animation == &dragHookLeft)
 				Draw(r);
-			else
-				Draw(r, 0, 0, true);
 
-			// Update collider position to hook's claw position with the player facing left
-			if (!somethingHit) {
-				if (animation == &throwHook)
-					colliderPosition -= hookSpeed * dt;
-				else if (animation == &returnHook)
-					colliderPosition += hookSpeed * dt;
+				// Update collider position to hook's claw position with the player facing right
+				if (!somethingHit) {
+					if (animation == &throwHook)
+						colliderPosition += hookSpeed * dt;
+					else if (animation == &returnHook)
+						colliderPosition -= hookSpeed * dt;
 
-				collider->SetPos(position.x + leftMargin + colliderPosition, position.y + heightMargin);
+					collider->SetPos(position.x + colliderPosition, position.y + heightMargin);
+				}
+			}
+			else {
+				position.x = App->entity->player->position.x + spawnPositionLeft.x;
+				position.y = App->entity->player->position.y + spawnPositionLeft.y;
+
+				if (animation == &dragHookLeft)
+					Draw(r);
+				else
+					Draw(r, true);
+
+				// Update collider position to hook's claw position with the player facing left
+				if (!somethingHit) {
+					if (animation == &throwHook)
+						colliderPosition -= hookSpeed * dt;
+					else if (animation == &returnHook)
+						colliderPosition += hookSpeed * dt;
+
+					collider->SetPos(position.x + leftMargin + colliderPosition, position.y + heightMargin);
+				}
 			}
 		}
 	}

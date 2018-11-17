@@ -51,7 +51,7 @@
       <animation x="246" y="239" w="42" h="27"/>
     </attackLeft>
 	
-	<throwHook loop="false" speed="30.0f">
+	<throwHook loop="false" speed="38.0f">
       <animation x="1" y="2" w="66" h="23"/>
       <animation x="1" y="26" w="66" h="23"/>
       <animation x="1" y="50" w="66" h="23"/>
@@ -64,7 +64,7 @@
       <animation x="1" y="218" w="66" h="23"/>
     </throwHook>
 	
-	<returnHook loop="false" speed="15.0f">
+	<returnHook loop="false" speed="38.0f">
       <animation x="1" y="194" w="66" h="23"/>
       <animation x="1" y="170" w="66" h="23"/>
       <animation x="1" y="146" w="66" h="23"/>
@@ -76,7 +76,7 @@
       <animation x="1" y="2" w="66" h="23"/>
 	</returnHook>
 	
-	<dragHookRight loop="false" speed="1.3f">
+	<dragHookRight loop="false" speed="33.0f">
       <animation x="1" y="423" w="66" h="23"/>
       <animation x="8" y="399" w="59" h="23"/>
       <animation x="15" y="375" w="52" h="23"/>
@@ -87,7 +87,7 @@
       <animation x="50" y="255" w="17" h="23"/>
 	</dragHookRight>
 	
-	<dragHookLeft loop="false" speed="1.3f">
+	<dragHookLeft loop="false" speed="33.0f">
       <animation x="73" y="423" w="66" h="23"/>
       <animation x="73" y="399" w="59" h="23"/>
       <animation x="73" y="375" w="52" h="23"/>
