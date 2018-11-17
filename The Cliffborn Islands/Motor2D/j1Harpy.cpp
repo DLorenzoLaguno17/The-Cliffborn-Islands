@@ -71,10 +71,13 @@ bool j1Harpy::Update(float dt)
 	if (App->entity->player->position == App->entity->player->initialPosition)
 		position = initialPosition;
 
+	// Drawing the harpy
+	SDL_Rect r = animation->GetCurrentFrame(dt);
+
 	if (position.x - App->entity->player->position.x >= 0)
-		Draw(-10, -10, true);
+		Draw(r, true, -10, -10);
 	else
-		Draw(-10, -10, false);
+		Draw(r, false, -10, -10);
 
 	return true;
 }

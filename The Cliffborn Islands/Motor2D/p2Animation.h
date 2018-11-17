@@ -41,7 +41,7 @@ public:
 		}
 	}
 
-	void Animation::LoadEnemyAnimations(p2SString name, p2SString enemy)
+	void LoadEnemyAnimations(p2SString name, p2SString enemy)
 	{
 		pugi::xml_parse_result result = animations_file.load_file("animations.xml");
 		if (result != NULL)
@@ -56,11 +56,11 @@ public:
 		}
 	}
 
-	SDL_Rect& GetCurrentFrame()
+	SDL_Rect& GetCurrentFrame(float dt)
 	{
 		if (this)
 		{
-			current_frame += speed;
+			current_frame += speed * dt;
 			if (current_frame >= last_frame)
 			{
 				current_frame = (loop) ? 0.0f : last_frame - 1;

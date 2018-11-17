@@ -35,7 +35,7 @@ bool j1Map::Awake(pugi::xml_node& config)
 	return ret;
 }
 
-void j1Map::Draw(float dt)
+void j1Map::Draw()
 {
 	BROFILER_CATEGORY("MapDraw", Profiler::Color::Red)
 

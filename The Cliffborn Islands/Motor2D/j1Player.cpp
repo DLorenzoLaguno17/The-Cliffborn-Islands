@@ -267,14 +267,16 @@ bool j1Player::Update(float dt) {
 	// ---------------------------------------------------------------------------------------------------------------------	
 
 	// Blitting the player
+	SDL_Rect r = animation->GetCurrentFrame(dt);
+
 	if (!attacking) {
 		if (facingRight)
-			Draw();
+			Draw(r, false, 0, 0);
 		else
-			Draw(0, 0, true);
+			Draw(r, true, 0, 0);
 	}
 	else 
-		Draw(0, -2);
+		Draw(r, false, 0, -2);
 
 	return true;
 }

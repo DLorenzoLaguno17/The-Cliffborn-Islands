@@ -50,6 +50,12 @@ bool j1Hook::Update(float dt) {
 
 	BROFILER_CATEGORY("HookUpdate", Profiler::Color::LightSeaGreen)
 
+	// Specifying the speed of the animation each frame
+	throwHook.speed *= dt;
+	returnHook.speed *= dt;
+	dragHookRight.speed *= dt;
+	dragHookLeft.speed *= dt;
+
 	// We reset the values if the player has arrived to it's hooked destination
 	if (somethingHit) {
 		if (arrived || (animation == &dragHookLeft && dragHookLeft.Finished()) 
@@ -107,12 +113,14 @@ bool j1Hook::Update(float dt) {
 			}
 		}
 
+		SDL_Rect r = animation->GetCurrentFrame(dt);
+
 		// Blitting the hook
 		if (App->entity->player->facingRight && thrown != false) {
 			position.x = App->entity->player->position.x + spawnPositionRight.x;
 			position.y = App->entity->player->position.y + spawnPositionRight.y;
 
-			Draw();
+			Draw(r);
 
 			// Update collider position to hook's claw position with the player facing right
 			if (!somethingHit) {
@@ -129,9 +137,9 @@ bool j1Hook::Update(float dt) {
 			position.y = App->entity->player->position.y + spawnPositionLeft.y;
 
 			if (animation == &dragHookLeft)
-				Draw();
+				Draw(r);
 			else
-				Draw(0, 0, true);
+				Draw(r, 0, 0, true);
 
 			// Update collider position to hook's claw position with the player facing left
 			if (!somethingHit) {

@@ -6,11 +6,10 @@ j1Entity::j1Entity(int x, int y, ENTITY_TYPES type) : position(x,y), type(type)
 {
 }
 
-void j1Entity::Draw(int x, int y, bool flip)
+void j1Entity::Draw(SDL_Rect r, bool flip, int x, int y)
 {
 	if (flip == false)
-		App->render->Blit(sprites, (int)position.x + x, (int)position.y + y, &(animation->GetCurrentFrame()), SDL_FLIP_NONE);
+		App->render->Blit(sprites, (int)position.x + x, (int)position.y + y, &r, SDL_FLIP_NONE);
 	else 
-		App->render->Blit(sprites, (int)position.x + x, (int)position.y + y, &(animation->GetCurrentFrame()), SDL_FLIP_HORIZONTAL);
+		App->render->Blit(sprites, (int)position.x + x, (int)position.y + y, &r, SDL_FLIP_HORIZONTAL);
 }
-

@@ -155,7 +155,7 @@ bool j1Scene1::Update(float dt)
 	if (App->entity->player->position.x < 0)
 		App->entity->player->position.x = 0;
 
-	App->map->Draw(dt);
+	App->map->Draw();
 
 	if (App->collisions->debug) {
 		int x, y;
