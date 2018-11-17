@@ -383,6 +383,7 @@ void j1Player::OnCollision(Collider* col_1, Collider* col_2)
 					&& verticalSpeed < 0) {
 
 					position.y = col_2->rect.y + col_2->rect.h;
+
 					wallAbove = true;
 					jumping = false;
 					fallingSpeed = initialFallingSpeed;
@@ -393,7 +394,7 @@ void j1Player::OnCollision(Collider* col_1, Collider* col_2)
 				if (loading == false) {
 
 					if (collider->rect.y + collider->rect.h >= col_2->rect.y
-						&& collider->rect.y < col_2->rect.y + col_2->rect.h) {
+						&& collider->rect.y + (collider->rect.h / 2) < col_2->rect.y) {
 
 						position.y = col_2->rect.y - collider->rect.h;
 						feetOnGround = true;

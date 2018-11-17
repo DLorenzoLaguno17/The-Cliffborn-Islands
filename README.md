@@ -18,10 +18,11 @@ Go to our GitHub: https://github.com/DLorenzoLaguno17/The-Cliffborn-Islands
 * F6 - Load the previous state
 * F9 - To view colliders and logic of the game
 * F10 - God mode
+* F11 - Enable / Disable the FPS cap to 30
 
 ## Innovation
 
-We have implemented a hook which you may use to overcome the level. If it collides with a wall, it moves the player towards it, and if it collides with an enemy, it attracts the enemy to the player.
+We have implemented a hook which you need to use to overcome the level. If it collides with a wall, it moves the player towards it, and if it collides with an enemy, it attracts the enemy to the player.
 
 
 ## Special mechanics

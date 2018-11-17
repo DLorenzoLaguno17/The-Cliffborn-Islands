@@ -179,7 +179,6 @@ void j1App::PrepareUpdate()
 
 	// We calculate the dt: differential time since last frame
 	dt = frame_time.ReadSec();
-	LOG("The delta time is %f", dt);
 
 	frame_time.Start();
 }
@@ -233,8 +232,6 @@ void j1App::FinishUpdate()
 	if ((last_frame_ms < (1000 / framerate_cap)) && cappedFPS) {
 		SDL_Delay((1000 / framerate_cap) - last_frame_ms);
 	}
-
-	//LOG("We waited for %d miliseconds and we got back in %d", (1000 / framerate_cap) - last_frame_ms, last_frame_ms);
 }
 
 // Call modules before each loop iteration
