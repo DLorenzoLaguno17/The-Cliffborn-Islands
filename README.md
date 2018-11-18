@@ -52,12 +52,12 @@ The hook will only work if it collides perpendicularly with a wall, and it canno
 
 ## Task List
 	- Òscar Faura: 
-		* Implemented pathfinding and enemiess movement
-		* Create and implement the enemies
+		* Implemented pathfinding and enemies' movement
+		* Created and implemented the enemies
 		* Created and implemented entity system
 		* Implemented Save & Load
 	- Dani Lorenzo: 
-		* Capped FPS and normalizd movement using dt
+		* Capped FPS and normalized movement using dt
 		* Implemented the hook
 		* Created player death and hook animations
 		* Implemented the attack of the player
