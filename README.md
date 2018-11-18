@@ -51,10 +51,10 @@ The hook will only work if it collides perpendicularly with a wall, and it canno
 	Player attack and jump: Link from Super Smash Bros.
 
 ## Task List
-	- Òscar Faura: 
+	- Ã’scar Faura: 
 		* Implemented pathfinding and enemiess movement
 		* Create and implement the enemies
-		* Created and Implemented entity system
+		* Created and implemented entity system
 		* Implemented Save & Load
 	- Dani Lorenzo: 
 		* Capped FPS and normalizd movement using dt
@@ -63,5 +63,5 @@ The hook will only work if it collides perpendicularly with a wall, and it canno
 		* Implemented the attack of the player
 		* Created the UML
 
-This game has been created by Òscar Faura and Daniel Lorenzo.
+This game has been created by Ã’scar Faura and Daniel Lorenzo.
 Licensed under the [MIT License](LICENSE).
