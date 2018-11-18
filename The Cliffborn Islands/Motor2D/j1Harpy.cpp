@@ -101,6 +101,27 @@ bool j1Harpy::CleanUp()
 
 void j1Harpy::OnCollision(Collider * col_1, Collider * col_2)
 {
+	COLLISION_DIRECTION direction;
+
+	if (col_2->type == COLLIDER_WALL)
+	{
+		direction = col_1->CheckDirection(col_2->rect);
+
+		if (direction == RIGHT_COLLISION)
+			position.x = col_2->rect.x + col_2->rect.w;
+
+		else if (direction == LEFT_COLLISION)
+			position.x = col_2->rect.x - colliderSize.x;
+
+		else if (direction == UP_COLLISION)
+			position.y = col_2->rect.y - colliderSize.y + 1;
+
+		else if (direction == DOWN_COLLISION)
+			position.y = col_2->rect.y + col_2->rect.h;
+
+		
+	}
+
 	if (col_2->type == COLLIDER_ATTACK) {
 		CleanUp();
 	}

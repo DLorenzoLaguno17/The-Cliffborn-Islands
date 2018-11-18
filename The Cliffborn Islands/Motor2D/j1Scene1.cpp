@@ -201,12 +201,21 @@ bool j1Scene1::Save(pugi::xml_node& node) const
 
 void j1Scene1::PlaceEnemies()
 {
-
-	App->entity->AddEnemy(220, 20, HARPY);
 	App->entity->AddEnemy(210, 120, SKELETON);
+	App->entity->AddEnemy(613, 73, SKELETON);
+	App->entity->AddEnemy(1676, 9, SKELETON);
+	App->entity->AddEnemy(2146, 104, SKELETON);
+
 	App->entity->AddEnemy(250, 50, HARPY);
 	App->entity->AddEnemy(400, 20, HARPY);
 	App->entity->AddEnemy(600, 20, HARPY);
+	App->entity->AddEnemy(917, 13, HARPY);
+	App->entity->AddEnemy(1079, 17, HARPY);
+	App->entity->AddEnemy(1345, 8, HARPY);
+	App->entity->AddEnemy(1772, 73, HARPY);
+	App->entity->AddEnemy(1919, 73, HARPY);
+	App->entity->AddEnemy(2193, 33, HARPY);
+	App->entity->AddEnemy(2355, 32, HARPY);
 }
 
 // Called before quitting

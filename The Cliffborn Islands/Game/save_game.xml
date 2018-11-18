@@ -14,22 +14,28 @@
 	</scene2>
 	<entityManager>
 		<player>
-			<position x="110.600014" y="138" />
+			<position x="92.760025" y="138" />
 			<godmode value="false" />
 		</player>
 		<harpy>
-			<position x="144.329956" y="76.9100113" />
 			<position x="250" y="50" />
 			<position x="400" y="20" />
-			<position x="600" y="20" />
+			<position x="600" y="-22" />
+			<position x="917" y="13" />
+			<position x="1079" y="17" />
+			<position x="1345" y="8" />
+			<position x="1772" y="73" />
+			<position x="1919" y="73" />
+			<position x="2193" y="33" />
+			<position x="2355" y="32" />
 		</harpy>
 		<skeleton>
-			<position x="150.850143" y="124.039001" />
+			<position x="127.85022" y="133.333984" />
 		</skeleton>
 	</entityManager>
 	<fade />
 	<collisions />
 	<renderer>
-		<camera x="-42" y="0" />
+		<camera x="0" y="0" />
 	</renderer>
 </game_state>
