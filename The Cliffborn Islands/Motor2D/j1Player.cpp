@@ -43,7 +43,7 @@ bool j1Player::Start() {
 	deathSound = App->audio->LoadFx("audio/fx/death.wav");
 	playerHurt = App->audio->LoadFx("audio/fx/playerHurt.wav");
 	jumpSound = App->audio->LoadFx("audio/fx/jump.wav");
-
+	attackSound = App->audio->LoadFx("audio/fx/attack.wav");
 
 	LoadPlayerProperties();
 
@@ -205,6 +205,7 @@ bool j1Player::Update(float dt, bool do_logic) {
 		// Attack control
 		if (App->input->GetKey(SDL_SCANCODE_P) == j1KeyState::KEY_DOWN && attacking == false && GodMode == false) {
 			attacking = true;
+			App->audio->PlayFx(attackSound);
 						
 			if (facingRight) {
 				attackCollider = App->collisions->AddCollider({ (int)position.x + 20, (int)position.y + margin.y, playerSize.x, playerSize.y }, COLLIDER_ATTACK, App->entity);

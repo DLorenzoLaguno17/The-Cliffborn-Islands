@@ -57,6 +57,7 @@ public:
 	uint deathSound;
 	uint jumpSound;
 	uint playerHurt;
+	uint attackSound;
 
 	// To know the last direction the character was moving to
 	bool facingRight = true;
