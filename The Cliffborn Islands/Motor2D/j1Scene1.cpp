@@ -69,13 +69,8 @@ bool j1Scene1::Start()
 			App->entity->CreatePlayer();
 			player_created = true;
 		}
-		
-		App->entity->AddEnemy(220, 20, HARPY);
-		App->entity->AddEnemy(210, 120, SKELETON);
-		
-		App->entity->AddEnemy(250, 50, HARPY);
-		App->entity->AddEnemy(400, 20, HARPY);
-		App->entity->AddEnemy(600, 20, HARPY);
+
+		PlaceEnemies();
 	}
 
 	return true;
@@ -123,7 +118,6 @@ bool j1Scene1::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
 	{
 		App->entity->DestroyEntities();
-		App->entity->CreatePlayer();
 		App->entity->hook->Start();
 		App->entity->player->Start();
 		App->LoadGame("save_game.xml");
@@ -203,6 +197,16 @@ bool j1Scene1::Save(pugi::xml_node& node) const
 	activated.append_attribute("true") = active;
 
 	return true;
+}
+
+void j1Scene1::PlaceEnemies()
+{
+
+	App->entity->AddEnemy(220, 20, HARPY);
+	App->entity->AddEnemy(210, 120, SKELETON);
+	App->entity->AddEnemy(250, 50, HARPY);
+	App->entity->AddEnemy(400, 20, HARPY);
+	App->entity->AddEnemy(600, 20, HARPY);
 }
 
 // Called before quitting

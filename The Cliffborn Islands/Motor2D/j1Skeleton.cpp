@@ -100,8 +100,6 @@ bool j1Skeleton::CleanUp()
 	if (path_created)
 		path->Clear();
 
-	animation = nullptr;
-
 	return true;
 }
 
@@ -126,7 +124,7 @@ void j1Skeleton::OnCollision(Collider * col_1, Collider * col_2)
 			position.x = col_2->rect.x - colliderSize.x;
 	}
 
-	if (col_2->type == COLLIDER_ATTACK) {
+	if (col_2->type == COLLIDER_ATTACK || col_2->type == COLLIDER_DEATH) {
 		CleanUp();
 	}
 	

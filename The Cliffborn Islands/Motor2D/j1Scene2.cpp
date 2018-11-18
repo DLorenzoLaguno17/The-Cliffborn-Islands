@@ -65,6 +65,8 @@ bool j1Scene2::Start()
 
 		debug_tex = App->tex->Load("maps/path2.png");
 
+		PlaceEnemies();
+
 		// The audio is played
 		App->audio->PlayMusic("audio/music/level1_music.ogg", 1.0f);
 	}
@@ -114,7 +116,6 @@ bool j1Scene2::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
 	{
 		App->entity->DestroyEntities();
-		App->entity->CreatePlayer();
 		App->entity->hook->Start();
 		App->entity->player->Start();
 		App->LoadGame("save_game.xml");
@@ -195,6 +196,10 @@ bool j1Scene2::Save(pugi::xml_node& node) const
 	activated.append_attribute("true") = active;
 
 	return true;
+}
+
+void j1Scene2::PlaceEnemies()
+{
 }
 
 // Called before quitting

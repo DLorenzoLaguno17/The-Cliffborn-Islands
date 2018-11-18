@@ -41,6 +41,8 @@ public:
 	fPoint initialScene1Position;
 	bool player_created = false;
 
+	void PlaceEnemies();
+
 private:
 
 	SDL_Texture* debug_tex;

@@ -203,7 +203,7 @@ bool j1Player::Update(float dt, bool do_logic) {
 		}
 
 		// Attack control
-		if (App->input->GetKey(SDL_SCANCODE_P) == j1KeyState::KEY_DOWN && attacking == false) {
+		if (App->input->GetKey(SDL_SCANCODE_P) == j1KeyState::KEY_DOWN && attacking == false && GodMode == false) {
 			attacking = true;
 						
 			if (facingRight) {
@@ -270,6 +270,16 @@ bool j1Player::Update(float dt, bool do_logic) {
 			facingRight = true;
 			deathByFall = false;
 			playedSound = false;
+			if (App->scene1->active)
+			{
+				App->entity->DestroyEntities();
+				App->scene1->PlaceEnemies();
+			}
+			else if (App->scene2->active)
+			{
+				App->entity->DestroyEntities();
+				App->scene2->PlaceEnemies();
+			}
 
 			// Resetting the animation
 			death.Reset();
