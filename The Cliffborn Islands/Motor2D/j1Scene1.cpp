@@ -240,8 +240,7 @@ void j1Scene1::ChangeScene()
 	App->fade->FadeToBlack(App->scene1, App->scene2);
 	App->entity->Start();
 	App->scene2->Start();
-	App->render->camera = { 0,0 };
 	App->path->Start();
-	App->entity->player->initialPosition = initialScene1Position;
-	App->entity->player->position = initialScene1Position;
+	App->entity->player->initialPosition = App->scene2->initialScene2Position;
+	App->entity->player->position = App->scene2->initialScene2Position;
 }

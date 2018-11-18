@@ -201,7 +201,7 @@ bool j1Player::Update(float dt, bool do_logic) {
 		}
 
 		// Attack control
-		if (App->input->GetKey(SDL_SCANCODE_P) == j1KeyState::KEY_DOWN && attacking == false && GodMode == false) {
+		if (App->input->GetKey(SDL_SCANCODE_P) == j1KeyState::KEY_DOWN && attacking == false && GodMode == false && dead == false) {
 			attacking = true;
 			App->audio->PlayFx(attackSound);
 						
@@ -260,9 +260,9 @@ bool j1Player::Update(float dt, bool do_logic) {
 		// Restarting the level in case the player dies
 		if (App->fade->IsFading() == 0)
 		{
-			fallingSpeed = initialFallingSpeed;
 			position.x = initialPosition.x;
 			position.y = initialPosition.y;
+			fallingSpeed = initialFallingSpeed;
 			App->render->camera.x = App->render->initialCameraX;
 			App->render->camera.y = App->render->initialCameraY;
 			jumping = false;
@@ -383,8 +383,6 @@ bool j1Player::CleanUp() {
 	if (attackCollider != nullptr)
 		attackCollider->to_delete = true;
 	
-	animation = nullptr;
-
 	return true;
 }
 
@@ -493,8 +491,12 @@ void j1Player::OnCollision(Collider* col_1, Collider* col_2)
 				jumping = false;
 				fallingSpeed = initialFallingSpeed;
 			}
+			App->entity->DestroyEntities();
+			if (App->scene1->active == true)
+				App->fade->FadeToBlack(App->scene1, App->scene1, 3.0f);
+			else if (App->scene2->active == true)
+				App->fade->FadeToBlack(App->scene2, App->scene2, 3.0f);
 
-			App->fade->FadeToBlack(App->scene1, App->scene1, 3.0f);
 			dead = true;
 			App->audio->PlayFx(deathSound);
 			currentJumps == maxJumps;

@@ -58,7 +58,7 @@ bool j1Harpy::Update(float dt, bool do_logic)
 			else
 				destination = { App->map->WorldToMap((int)App->entity->player->position.x, (int)App->entity->player->position.y + App->entity->player->playerSize.y / 2) };
 
-			if (!App->entity->player->dead && App->path->IsWalkable(destination) && App->path->IsWalkable(origin))
+			if (App->path->IsWalkable(destination) && App->path->IsWalkable(origin))
 			{
 				path = App->path->CreatePath(origin, destination);
 				Move(*path, dt);
