@@ -202,7 +202,7 @@ bool j1Player::Update(float dt, bool do_logic) {
 		}
 
 		// Attack control
-		if (App->input->GetKey(SDL_SCANCODE_P) == j1KeyState::KEY_DOWN) {
+		if (App->input->GetKey(SDL_SCANCODE_P) == j1KeyState::KEY_DOWN && attacking == false) {
 			attacking = true;
 						
 			if (facingRight) {
