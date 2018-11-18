@@ -209,13 +209,14 @@ void j1Scene2::PlaceEnemies()
 bool j1Scene2::CleanUp()
 {
 	LOG("Freeing scene");
-
 	App->map->CleanUp();
 	App->collisions->CleanUp();
 	App->tex->CleanUp();
 	App->entity->DestroyEntities();
+
 	if (App->entity->player)
 		App->entity->player->CleanUp();
+
 	App->path->CleanUp();
 
 	return true;
@@ -229,5 +230,6 @@ void j1Scene2::ChangeScene()
 	App->entity->Start();
 	App->scene1->Start();
 	App->render->camera = { 0,0 };
+	App->entity->player->initialPosition = initialScene2Position;
 	App->entity->player->position = initialScene2Position;
 }

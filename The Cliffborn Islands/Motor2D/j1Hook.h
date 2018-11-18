@@ -58,6 +58,7 @@ public:
 
 	// Audios
 	uint chain;
+	bool loadedAudios;
 };
 
 #endif // __j1HOOK_H__

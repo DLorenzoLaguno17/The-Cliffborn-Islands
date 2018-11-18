@@ -37,7 +37,10 @@ bool j1Hook::Start() {
 	sprites = App->tex->Load("textures/character/hook.png");
 
 	// Audios are loaded
-	chain = App->audio->LoadFx("audio/fx/chain.wav");
+	if (!loadedAudios) {
+		chain = App->audio->LoadFx("audio/fx/chain.wav");
+		loadedAudios = true;
+	}
 
 	animation = &throwHook;
 	

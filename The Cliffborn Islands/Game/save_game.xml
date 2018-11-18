@@ -7,38 +7,30 @@
 	<map />
 	<pathfinding />
 	<scene1>
-		<activated true="true" />
+		<activated true="false" />
 	</scene1>
 	<scene2>
-		<activated true="false" />
+		<activated true="true" />
 	</scene2>
 	<entityManager>
 		<player>
-			<position x="1790.79907" y="137" />
-			<godmode value="false" />
+			<position x="950.60144" y="80.1200027" />
+			<godmode value="true" />
 		</player>
 		<harpy>
-			<position x="1794.97632" y="118.10994" />
-			<position x="1794.68604" y="119.329948" />
-			<position x="600" y="-22" />
-			<position x="1794.80518" y="117.369949" />
-			<position x="1793.63477" y="118.779953" />
-			<position x="1795.03271" y="119.369957" />
-			<position x="1715.43945" y="26" />
-			<position x="1919" y="73" />
-			<position x="2193" y="33" />
-			<position x="2355" y="32" />
+			<position x="150" y="20" />
+			<position x="459" y="19" />
+			<position x="1118" y="4" />
+			<position x="1308" y="45" />
+			<position x="1975" y="20" />
+			<position x="2216" y="13" />
+			<position x="2344" y="20" />
 		</harpy>
-		<skeleton>
-			<position x="119.600235" y="1297.39307" />
-			<position x="563.999573" y="951.657349" />
-			<position x="1573.25134" y="275.647736" />
-			<position x="2146" y="108.032997" />
-		</skeleton>
+		<skeleton />
 	</entityManager>
 	<fade />
 	<collisions />
 	<renderer>
-		<camera x="-6763" y="0" />
+		<camera x="-3402" y="0" />
 	</renderer>
 </game_state>

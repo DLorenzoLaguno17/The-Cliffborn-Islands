@@ -113,6 +113,8 @@ public:
 private:
 	int cameraLimit;
 	int playerLimit;
+
+	bool loadedAudios = false;
 };
 
 #endif // __jPLAYER_H__

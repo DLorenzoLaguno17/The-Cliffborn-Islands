@@ -61,12 +61,13 @@ bool j1Scene1::Start()
 
 		debug_tex = App->tex->Load("maps/path2.png");
 
-		// The audio is played
+		// The audio is played	
 		App->audio->PlayMusic("audio/music/level1_music.ogg", 1.0f);
 
 		if (!player_created)
 		{
 			App->entity->CreatePlayer();
+			App->entity->player->initialPosition = initialScene1Position;
 			player_created = true;
 		}
 
@@ -218,13 +219,14 @@ void j1Scene1::PlaceEnemies()
 bool j1Scene1::CleanUp()
 {
 	LOG("Freeing scene");
-
 	App->map->CleanUp();
 	App->collisions->CleanUp();
 	App->tex->CleanUp();
 	App->entity->DestroyEntities();
+
 	if (App->entity->player)
 		App->entity->player->CleanUp();
+
 	App->path->CleanUp();
 
 	return true;
@@ -240,5 +242,6 @@ void j1Scene1::ChangeScene()
 	App->scene2->Start();
 	App->render->camera = { 0,0 };
 	App->path->Start();
+	App->entity->player->initialPosition = initialScene1Position;
 	App->entity->player->position = initialScene1Position;
 }

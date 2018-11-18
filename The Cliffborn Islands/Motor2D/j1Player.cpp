@@ -40,10 +40,13 @@ bool j1Player::Start() {
 
 	// Audios are loaded
 	LOG("Loading player audios");
-	deathSound = App->audio->LoadFx("audio/fx/death.wav");
-	playerHurt = App->audio->LoadFx("audio/fx/playerHurt.wav");
-	jumpSound = App->audio->LoadFx("audio/fx/jump.wav");
-	attackSound = App->audio->LoadFx("audio/fx/attack.wav");
+	if (!loadedAudios) {
+		deathSound = App->audio->LoadFx("audio/fx/death.wav");
+		playerHurt = App->audio->LoadFx("audio/fx/playerHurt.wav");
+		jumpSound = App->audio->LoadFx("audio/fx/jump.wav");
+		attackSound = App->audio->LoadFx("audio/fx/attack.wav");
+		loadedAudios = true;
+	}
 
 	LoadPlayerProperties();
 
@@ -51,11 +54,6 @@ bool j1Player::Start() {
 	currentJumps = initialJumps;
 	
 	// Setting player position
-	if (App->scene1->active)
-		initialPosition = App->scene1->initialScene1Position;
-	else if (App->scene2->active)
-		initialPosition = App->scene2->initialScene2Position;
-
 	position.x = initialPosition.x;
 	position.y = initialPosition.y;
 
