@@ -96,6 +96,8 @@ bool j1Harpy::CleanUp()
 	if(path_created)
 		path->Clear();
 
+	animation = nullptr;
+
 	return true;
 }
 

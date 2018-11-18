@@ -39,6 +39,8 @@ public:
 
 	void LoadPlayerProperties();
 
+	void CameraPosition();
+
 public:
 
 	// Animations of the player
@@ -100,6 +102,10 @@ public:
 	bool playedSound = false;
 	bool deathByFall = false;
 	bool attacking = false;
+
+private:
+	int cameraLimit;
+	int playerLimit;
 };
 
 #endif // __jPLAYER_H__

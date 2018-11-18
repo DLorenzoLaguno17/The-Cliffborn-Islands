@@ -100,6 +100,8 @@ bool j1Skeleton::CleanUp()
 	if (path_created)
 		path->Clear();
 
+	animation = nullptr;
+
 	return true;
 }
 

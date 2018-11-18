@@ -41,10 +41,9 @@ public:
 	fPoint initialScene2Position;
 private:
 
-	SDL_Texture* debug_tex;
+	bool player_created = false;
 
-	int cameraLimit;
-	int playerLimit;
+	SDL_Texture* debug_tex;
 };
 
 #endif // __j1SCENE2_H__

@@ -93,18 +93,21 @@ bool j1EntityManager::CleanUp()
 {
 	LOG("Freeing all enemies");
 
-	for (p2List_item<j1Entity*>* iterator = entities.start; iterator != nullptr; iterator = iterator->next)
+	bool ret = true;
+
+	p2List_item<j1Entity*>* item;
+	
+	for (item = entities.end; item != NULL && ret == true; item = item->prev)
 	{
-		iterator->data->CleanUp();
-		int index = entities.find(iterator->data);
-		RELEASE(entities.At(index)->data);
-		entities.del(entities.At(index));
+		ret = item->data->CleanUp();
 	}
+
+	entities.clear();
 
 	player = nullptr;
 	hook = nullptr;
 
-	return true;
+	return ret;
 }
 
 j1Entity* j1EntityManager::CreateEntity(ENTITY_TYPES type, int x, int y)
@@ -166,11 +169,13 @@ void j1EntityManager::DestroyEntities()
 	}	
 	
 	for (p2List_item<j1Entity*>* iterator = entities.start; iterator; iterator = iterator->next) {
-
-		iterator->data->CleanUp();
-		int num = entities.find(iterator->data);
-		RELEASE(entities.At(num)->data);
-		entities.del(entities.At(num));
+		if (iterator->data->type != ENTITY_TYPES::PLAYER && iterator->data->type != ENTITY_TYPES::HOOK)
+		{
+			iterator->data->CleanUp();
+			int num = entities.find(iterator->data);
+			RELEASE(entities.At(num)->data);
+			entities.del(entities.At(num));
+		}
 	}
 }
 

@@ -32,9 +32,6 @@ bool j1Scene1::Awake(pugi::xml_node& config)
 	LOG("Loading Scene 1");
 	bool ret = true;
 
-	cameraLimit = config.child("camera").attribute("cameraLimit").as_int();
-	playerLimit = config.child("camera").attribute("playerLimit").as_int();
-
 	// Copying the position of the player
 	initialScene1Position.x = config.child("initialPlayerPosition").attribute("x").as_int();
 	initialScene1Position.y = config.child("initialPlayerPosition").attribute("y").as_int();
@@ -79,7 +76,6 @@ bool j1Scene1::Start()
 		App->entity->AddEnemy(250, 50, HARPY);
 		App->entity->AddEnemy(400, 20, HARPY);
 		App->entity->AddEnemy(600, 20, HARPY);
-
 	}
 
 	return true;
@@ -146,21 +142,6 @@ bool j1Scene1::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
 		ChangeScene();		
 
-	// Camera control
-	if (App->render->camera.x > cameraLimit)
-	{
-		App->render->camera.x = -App->entity->player->position.x * 4 + 400;
-		if (App->render->camera.x > 0)
-			App->render->camera.x = 0;
-	}		
-	
-	// Limit player X position
-	if (App->entity->player->position.x > playerLimit)
-		App->entity->player->position.x = playerLimit;
-
-	if (App->entity->player->position.x < 0)
-		App->entity->player->position.x = 0;
-
 	App->map->Draw();
 
 	if (App->collisions->debug) {
@@ -201,19 +182,6 @@ bool j1Scene1::PostUpdate()
 	return ret;
 }
 
-// Called before quitting
-bool j1Scene1::CleanUp()
-{
-	LOG("Freeing scene");
-
-	App->map->CleanUp();
-	App->collisions->CleanUp();
-	App->tex->CleanUp();
-	App->entity->CleanUp();
-	App->path->CleanUp();
-
-	return true;
-}
 
 
 bool j1Scene1::Load(pugi::xml_node& node)
@@ -237,15 +205,31 @@ bool j1Scene1::Save(pugi::xml_node& node) const
 	return true;
 }
 
+// Called before quitting
+bool j1Scene1::CleanUp()
+{
+	LOG("Freeing scene");
+
+	App->map->CleanUp();
+	App->collisions->CleanUp();
+	App->tex->CleanUp();
+	App->entity->DestroyEntities();
+	if (App->entity->player)
+		App->entity->player->CleanUp();
+	App->path->CleanUp();
+
+	return true;
+}
+
 void j1Scene1::ChangeScene()
 {
 	App->scene2->active = true;
 	App->scene1->active = false;
 	CleanUp();
 	App->fade->FadeToBlack(App->scene1, App->scene2);
-	App->entity->DestroyEntities();
-	App->entity->CreatePlayer();
 	App->entity->Start();
-	App->render->camera = { 0,0 };
 	App->scene2->Start();
+	App->render->camera = { 0,0 };
+	App->path->Start();
+	App->entity->player->position = App->entity->player->initialPosition;
 }

@@ -44,6 +44,7 @@ bool j1Player::Start() {
 	playerHurt = App->audio->LoadFx("audio/fx/playerHurt.wav");
 	jumpSound = App->audio->LoadFx("audio/fx/jump.wav");
 
+
 	LoadPlayerProperties();
 
 	animation = &idle;
@@ -304,6 +305,8 @@ bool j1Player::Update(float dt, bool do_logic) {
 			Draw(r, false, -15, -2);
 	}
 
+	CameraPosition();
+
 	return true;
 }
 
@@ -376,9 +379,28 @@ bool j1Player::CleanUp() {
 	if (attackCollider != nullptr)
 		attackCollider->to_delete = true;
 	
+	animation = nullptr;
+
 	return true;
 }
 
+void j1Player::CameraPosition()
+{
+	if (App->render->camera.x > cameraLimit)
+	{
+		App->render->camera.x = -position.x * 4 + 400;
+		if (App->render->camera.x > 0)
+			App->render->camera.x = 0;
+	}
+
+	//Limit player X position
+	if (App->entity->player->position.x > playerLimit)
+		App->entity->player->position.x = playerLimit;
+
+	if (App->entity->player->position.x < 0)
+		App->entity->player->position.x = 0;
+
+}
 // Detects collisions
 void j1Player::OnCollision(Collider* col_1, Collider* col_2)
 {
@@ -507,4 +529,7 @@ void j1Player::LoadPlayerProperties() {
 	verticalAcceleration = speed.child("physics").attribute("acceleration").as_float();
 	initialJumps = speed.child("physics").attribute("jumpNumber").as_uint();
 	maxJumps = speed.child("physics").attribute("maxJumps").as_uint();
+
+	cameraLimit = config.child("scene1").child("camera").attribute("cameraLimit").as_int();
+	playerLimit = config.child("scene1").child("camera").attribute("playerLimit").as_int();
 }

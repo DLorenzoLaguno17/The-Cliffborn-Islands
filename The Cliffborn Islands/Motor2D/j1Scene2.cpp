@@ -34,8 +34,6 @@ bool j1Scene2::Awake(pugi::xml_node& config)
 {
 	LOG("Loading Scene 2");
 	bool ret = true;
-	cameraLimit = config.child("camera").attribute("cameraLimit").as_int();
-	playerLimit = config.child("camera").attribute("playerLimit").as_int();
 
 	// Copying the position of the player
 	initialScene2Position.x = config.child("initialPlayerPosition").attribute("x").as_int();
@@ -137,21 +135,6 @@ bool j1Scene2::Update(float dt)
 		App->render->camera.x = 0;
 	}
 
-	// Camera control
-	if (App->render->camera.x > CAMERA_LIMIT)  //need to put the X value in XML
-	{
-		App->render->camera.x = -App->entity->player->position.x * 4 + 400;
-		if (App->render->camera.x > 0)
-			App->render->camera.x = 0;
-	}
-
-	// Limit player X position
-	if (App->entity->player->position.x > PLAYER_LIMIT)
-		App->entity->player->position.x = PLAYER_LIMIT;
-
-	if (App->entity->player->position.x < 0)
-		App->entity->player->position.x = 0;
-
 	App->map->Draw();
 
 	if (App->collisions->debug) {
@@ -191,19 +174,7 @@ bool j1Scene2::PostUpdate()
 	return ret;
 }
 
-// Called before quitting
-bool j1Scene2::CleanUp()
-{
-	LOG("Freeing scene");
 
-	App->map->CleanUp();
-	App->collisions->CleanUp();
-	App->tex->CleanUp();
-	App->entity->CleanUp();
-	App->path->CleanUp();
-
-	return true;
-}
 
 bool j1Scene2::Load(pugi::xml_node& node)
 {
@@ -226,15 +197,29 @@ bool j1Scene2::Save(pugi::xml_node& node) const
 	return true;
 }
 
+// Called before quitting
+bool j1Scene2::CleanUp()
+{
+	LOG("Freeing scene");
+
+	App->map->CleanUp();
+	App->collisions->CleanUp();
+	App->tex->CleanUp();
+	App->entity->DestroyEntities();
+	if (App->entity->player)
+		App->entity->player->CleanUp();
+	App->path->CleanUp();
+
+	return true;
+}
 void j1Scene2::ChangeScene()
 {
 	App->scene1->active = true;
 	App->scene2->active = false;
 	CleanUp();
 	App->fade->FadeToBlack(App->scene2, App->scene1);
-	App->entity->DestroyEntities();
-	App->entity->CreatePlayer();
 	App->entity->Start();
-	App->render->camera = { 0,0 };
 	App->scene1->Start();
+	App->render->camera = { 0,0 };
+	App->entity->player->position = App->entity->player->initialPosition;	
 }

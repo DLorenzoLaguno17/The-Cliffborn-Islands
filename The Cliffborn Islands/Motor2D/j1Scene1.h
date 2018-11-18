@@ -45,8 +45,6 @@ private:
 
 	SDL_Texture* debug_tex;
 
-	int cameraLimit;
-	int playerLimit;
 };
 
 #endif // __j1SCENE1_H__

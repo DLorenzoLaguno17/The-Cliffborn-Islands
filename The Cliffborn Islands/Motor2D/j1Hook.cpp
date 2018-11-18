@@ -178,6 +178,11 @@ bool j1Hook::CleanUp() {
 	// Remove all memory leaks
 	LOG("Unloading the player");
 	App->tex->UnLoad(sprites);
+	if (collider != nullptr)
+		collider->to_delete = true;
+
+	if (animation != nullptr)
+		animation = nullptr;
 
 	return true;
 }
