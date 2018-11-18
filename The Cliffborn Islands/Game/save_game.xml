@@ -7,14 +7,14 @@
 	<map />
 	<pathfinding />
 	<scene1>
-		<activated true="true" />
+		<activated true="false" />
 	</scene1>
 	<scene2>
-		<activated true="false" />
+		<activated true="true" />
 	</scene2>
 	<entityManager>
 		<player>
-			<position x="1470.35876" y="41" />
+			<position x="1561.79993" y="153" />
 			<godmode value="false" />
 		</player>
 		<harpy />
@@ -23,6 +23,6 @@
 	<fade />
 	<collisions />
 	<renderer>
-		<camera x="-5481" y="0" />
+		<camera x="-5847" y="0" />
 	</renderer>
 </game_state>

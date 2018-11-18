@@ -98,7 +98,6 @@ public:
 	bool playedSound = false;
 	bool deathByFall = false;
 	bool attacking = false;
-
 };
 
 #endif // __jPLAYER_H__

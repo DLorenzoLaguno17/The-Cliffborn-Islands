@@ -111,11 +111,14 @@ bool j1Scene2::PreUpdate()
 bool j1Scene2::Update(float dt)
 {
 	BROFILER_CATEGORY("Level2Update", Profiler::Color::LightSeaGreen)
-
+		
 	// Load and Save
 	if (App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
 	{
-		App->entity->DestroyEnemies();
+		App->entity->DestroyEntities();
+		App->entity->CreatePlayer();
+		App->entity->hook->Start();
+		App->entity->player->Start();
 		App->LoadGame("save_game.xml");
 	}
 
@@ -129,9 +132,8 @@ bool j1Scene2::Update(float dt)
 
 	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
 	{
-		App->fade->FadeToBlack(this, App->scene2);
-		App->entity->player->position.x = 0;
-		App->entity->player->position.y = 40;
+		App->fade->FadeToBlack(App->scene2, App->scene2);
+		App->entity->player->position = initialScene2Position;
 		App->render->camera.x = 0;
 	}
 
@@ -230,11 +232,9 @@ void j1Scene2::ChangeScene()
 	App->scene2->active = false;
 	CleanUp();
 	App->fade->FadeToBlack(App->scene2, App->scene1);
+	App->entity->DestroyEntities();
 	App->entity->CreatePlayer();
-	App->entity->DestroyEnemies();
 	App->entity->Start();
 	App->render->camera = { 0,0 };
 	App->scene1->Start();
 }
-	
-

@@ -360,7 +360,7 @@ void j1Player::OnCollision(Collider* col_1, Collider* col_2)
 	if (col_1->type == COLLIDER_PLAYER || col_1->type == COLLIDER_NONE)
 	{		
 		// If the player collides with a wall
-		if (col_2->type == COLLIDER_WALL) {
+		if (col_2->type == COLLIDER_WALL &&) {
 			if (collider->rect.y + collider->rect.h >= col_2->rect.y + colisionMargin
 				&& collider->rect.y <= col_2->rect.y + col_2->rect.h) {
 				//If the collision is with a wall in front
@@ -386,7 +386,7 @@ void j1Player::OnCollision(Collider* col_1, Collider* col_2)
 			}
 
 			if (collider->rect.x + collider->rect.w >= col_2->rect.x + colisionMargin
-				&& collider->rect.x < col_2->rect.x + col_2->rect.w) {
+				&& collider->rect.x + colisionMargin < col_2->rect.x + col_2->rect.w) {
 				//If the collision is with the "ceiling"
 				if (collider->rect.y <= col_2->rect.y + col_2->rect.h
 					&& collider->rect.y + (collider->rect.h / 2) > col_2->rect.y + col_2->rect.h

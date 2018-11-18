@@ -39,12 +39,11 @@ public:
 	bool Save(pugi::xml_node&) const;
 
 	fPoint initialScene1Position;
+	bool player_created = false;
 
 private:
 
 	SDL_Texture* debug_tex;
-
-	bool player_created = false;
 
 	int cameraLimit;
 	int playerLimit;

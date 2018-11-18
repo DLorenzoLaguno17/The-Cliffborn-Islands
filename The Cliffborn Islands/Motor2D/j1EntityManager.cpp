@@ -158,7 +158,7 @@ void j1EntityManager::SpawnEnemy(const EnemyInfo& info)
 	}
 }
 
-void j1EntityManager::DestroyEnemies()
+void j1EntityManager::DestroyEntities()
 {
 	for (int i = 0; i < MAX_ENEMIES; i++) 
 	{ 
@@ -167,14 +167,10 @@ void j1EntityManager::DestroyEnemies()
 	
 	for (p2List_item<j1Entity*>* iterator = entities.start; iterator; iterator = iterator->next) {
 
-		// We destroy each entity which is not he hook or the player
-		if (iterator->data->type != ENTITY_TYPES::PLAYER && iterator->data->type != ENTITY_TYPES::HOOK)
-		{
-			iterator->data->CleanUp();
-			int num = entities.find(iterator->data);
-			RELEASE(entities.At(num)->data);
-			entities.del(entities.At(num));
-		}
+		iterator->data->CleanUp();
+		int num = entities.find(iterator->data);
+		RELEASE(entities.At(num)->data);
+		entities.del(entities.At(num));
 	}
 }
 

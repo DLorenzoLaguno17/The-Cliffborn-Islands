@@ -60,11 +60,11 @@
   
   <scene1>
 	<camera cameraLimit="-8570" playerLimit="2374"/>
-	<initialPlayerPosition x="2" y="24"/>
+	<initialPlayerPosition x="1" y="24"/>
   </scene1>
   
   <scene2>  
-	<initialPlayerPosition x="2" y="27"/>
+	<initialPlayerPosition x="1" y="38"/>
 	<camera cameraLimit="-8570" playerLimit="2374"/>
   </scene2>
 
