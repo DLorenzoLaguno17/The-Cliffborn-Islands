@@ -93,11 +93,17 @@ bool j1Harpy::CleanUp()
 	if (collider != nullptr)
 		collider->to_delete = true;
 
+	if(path_created)
+		path->Clear();
+
 	return true;
 }
 
 void j1Harpy::OnCollision(Collider * col_1, Collider * col_2)
 {
+	if (col_2->type == COLLIDER_ATTACK) {
+		CleanUp();
+	}
 }
 
 bool j1Harpy::Load(pugi::xml_node &)

@@ -204,19 +204,34 @@ bool j1Player::Update(float dt, bool do_logic) {
 		// Attack control
 		if (App->input->GetKey(SDL_SCANCODE_P) == j1KeyState::KEY_DOWN) {
 			attacking = true;
-
-			if (facingRight)
+						
+			if (facingRight) {
+				attackCollider = App->collisions->AddCollider({ (int)position.x + 20, (int)position.y + margin.y, playerSize.x, playerSize.y }, COLLIDER_ATTACK, App->entity);
 				animation = &attackRight;
-			else
+			}
+			else {
+				attackCollider = App->collisions->AddCollider({ (int)position.x - 16, (int)position.y + margin.y, playerSize.x, playerSize.y }, COLLIDER_ATTACK, App->entity);
 				animation = &attackLeft;
+			}
 		}
 
+		// Attack management
 		if ((facingRight && attackRight.Finished())
-			|| (!facingRight && attackLeft.Finished())) {
+			|| (!facingRight && attackLeft.Finished()) || dead == true) {
+
+			if (attackCollider != nullptr)
+				attackCollider->to_delete = true;
 
 			attackLeft.Reset();
 			attackRight.Reset();
+			animation = &idle;
 			attacking = false;
+		}
+		else if(attackCollider != nullptr) {
+			if (facingRight)
+				attackCollider->SetPos((int)position.x + 20, (int)position.y + margin.y);
+			else
+				attackCollider->SetPos((int)position.x - 16, (int)position.y + margin.y);
 		}
 
 		// God mode
@@ -256,8 +271,10 @@ bool j1Player::Update(float dt, bool do_logic) {
 			playedSound = false;
 
 			// Resetting the animation
-			animation = &idle;
 			death.Reset();
+			attackLeft.Reset();
+			attackRight.Reset();
+			animation = &idle;
 
 			dead = false;
 		}
@@ -280,8 +297,12 @@ bool j1Player::Update(float dt, bool do_logic) {
 		else
 			Draw(r, true);
 	}
-	else 
-		Draw(r, false, 0, -2);
+	else if (animation == &attackLeft || animation == &attackRight){
+		if(facingRight)
+			Draw(r, false, 0, -2);
+		else
+			Draw(r, false, -15, -2);
+	}
 
 	return true;
 }
@@ -348,8 +369,12 @@ bool j1Player::CleanUp() {
 	// Remove all memory leaks
 	LOG("Unloading the player");
 	App->tex->UnLoad(sprites);
+
 	if (collider != nullptr) 
 		collider->to_delete = true;
+
+	if (attackCollider != nullptr)
+		attackCollider->to_delete = true;
 	
 	return true;
 }
@@ -442,6 +467,9 @@ void j1Player::OnCollision(Collider* col_1, Collider* col_2)
 				jumping = false;
 				fallingSpeed = initialFallingSpeed;
 			}
+
+			if (attackCollider != nullptr)
+				attackCollider->to_delete = true;
 
 			App->fade->FadeToBlack(App->scene1, App->scene1, 3.0f);
 			dead = true;

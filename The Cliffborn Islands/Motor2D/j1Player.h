@@ -70,6 +70,8 @@ public:
 	uint maxJumps;
 	uint colisionMargin;
 
+	Collider* attackCollider = nullptr;
+
 	float godModeSpeed;
 	float horizontalSpeed;
 	//Jumping speed

@@ -97,6 +97,9 @@ bool j1Skeleton::CleanUp()
 	if (collider != nullptr)
 		collider->to_delete = true;
 
+	if (path_created)
+		path->Clear();
+
 	return true;
 }
 
@@ -120,6 +123,11 @@ void j1Skeleton::OnCollision(Collider * col_1, Collider * col_2)
 		else if (direction == LEFT_COLLISION)
 			position.x = col_2->rect.x - colliderSize.x;
 	}
+
+	if (col_2->type == COLLIDER_ATTACK) {
+		CleanUp();
+	}
+	
 }
 
 bool j1Skeleton::Load(pugi::xml_node& data)
