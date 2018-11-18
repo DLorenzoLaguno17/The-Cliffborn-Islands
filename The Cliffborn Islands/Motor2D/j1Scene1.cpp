@@ -174,8 +174,6 @@ bool j1Scene1::PostUpdate()
 	return ret;
 }
 
-
-
 bool j1Scene1::Load(pugi::xml_node& node)
 {
 	pugi::xml_node activated = node.child("activated");
@@ -199,7 +197,7 @@ bool j1Scene1::Save(pugi::xml_node& node) const
 
 void j1Scene1::PlaceEnemies()
 {
-	/*App->entity->AddEnemy(210, 120, SKELETON);
+	App->entity->AddEnemy(210, 120, SKELETON);
 	App->entity->AddEnemy(613, 73, SKELETON);
 	App->entity->AddEnemy(1676, 9, SKELETON);
 	App->entity->AddEnemy(2146, 104, SKELETON);
@@ -213,7 +211,7 @@ void j1Scene1::PlaceEnemies()
 	App->entity->AddEnemy(1772, 73, HARPY);
 	App->entity->AddEnemy(1919, 73, HARPY);
 	App->entity->AddEnemy(2193, 33, HARPY);
-	App->entity->AddEnemy(2355, 32, HARPY);*/
+	App->entity->AddEnemy(2355, 32, HARPY);
 }
 
 // Called before quitting

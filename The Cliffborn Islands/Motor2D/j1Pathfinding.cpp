@@ -236,35 +236,34 @@ int PathNode::CalculateF(const iPoint& destination)
 // ----------------------------------------------------------------------------------
 p2DynArray<iPoint>* j1PathFinding::CreatePath(iPoint& origin, iPoint& destination)
 {
+	BROFILER_CATEGORY("CreatePath", Profiler::Color::SlateGray)
+
 	last_path.Clear();
-	// TODO 1: if origin or destination are not walkable, return -1
+	// If origin or destination are not walkable, return -1
 	if (IsWalkable(origin) && IsWalkable(destination)) {
 
-		// TODO 2: Create two lists: open, close
-		// Add the origin tile to open
-		// Iterate while we have tile in the open list
-
+		// We create two lists: open, close, and we add the origin tile to open, and iterate while we have tile in the open list
 		PathList open, close;
 		PathNode origin(0, origin.DistanceNoSqrt(destination), origin, nullptr);
 		open.list.add(origin);
 
 		while (open.list.count() > 0)
 		{
-			// TODO 3: Move the lowest score cell from open list to the closed list
+			// We move the lowest score cell from open list to the closed list
 			close.list.add(open.GetNodeLowestScore()->data);
 			open.list.del(open.GetNodeLowestScore());
 
 			if (close.list.end->data.pos != destination)
 			{
-				// TODO 5: Fill a list of all adjancent nodes
+				// We fill a list of all adjancent nodes
 				PathList adjancent;
 
-				// TODO 6: Iterate adjancent nodes:
+				// We iterate adjancent nodes:
 				close.list.end->data.FindWalkableAdjacents(adjancent);
 
 				for (p2List_item<PathNode>* iterator = adjancent.list.start; iterator != nullptr; iterator = iterator->next)
 				{
-					// ignore nodes in the closed list
+					// Ignore nodes in the closed list
 					if (close.Find(iterator->data.pos))
 						continue;
 
@@ -290,7 +289,7 @@ p2DynArray<iPoint>* j1PathFinding::CreatePath(iPoint& origin, iPoint& destinatio
 			}
 			else
 			{
-				// TODO 4: If we just added the destination, we are done!
+				// If we just added the destination, we are done!
 				for (p2List_item<PathNode>* iterator = close.list.end; iterator->data.parent != nullptr; iterator = close.Find(iterator->data.parent->pos))
 				{
 					// Backtrack to create the final path
@@ -299,7 +298,7 @@ p2DynArray<iPoint>* j1PathFinding::CreatePath(iPoint& origin, iPoint& destinatio
 						last_path.PushBack(close.list.start->data.pos);
 				}
 
-				// Use the Pathnode::parent and Flip() the path when you are finish
+				// We use the Pathnode::parent and Flip() the path when you are finish
 				last_path.Flip();
 				return &last_path;
 			}

@@ -142,7 +142,6 @@ void j1EntityManager::AddEnemy(int x, int y, ENTITY_TYPES type)
 
 void j1EntityManager::SpawnEnemy(const EnemyInfo& info)
 {
-
 	for (uint i = 0; i < MAX_ENEMIES; ++i)
 	{
 		if (queue[i].type != ENTITY_TYPES::UNKNOWN)

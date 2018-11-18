@@ -6,6 +6,8 @@
 #include "p2DynArray.h"
 #include "p2List.h"
 
+#include "Brofiler/Brofiler.h"
+
 #define DEFAULT_PATH_LENGTH 50
 #define INVALID_WALK_CODE 255
 

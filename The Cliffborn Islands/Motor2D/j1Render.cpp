@@ -5,6 +5,8 @@
 #include "j1Render.h"
 #include "j1EntityManager.h"
 
+#include "Brofiler/Brofiler.h"
+
 j1Render::j1Render() : j1Module()
 {
 	name.create("renderer");
@@ -49,9 +51,7 @@ bool j1Render::Awake(pugi::xml_node& config)
 		camera.h = App->win->screen_surface->h;
 		camera.x = initialCameraX = config.child("camera").attribute("initialX").as_int();
 		camera.y = initialCameraY = config.child("camera").attribute("initialY").as_int();
-	}
-
-	
+	}	
 
 	return ret;
 }
@@ -70,17 +70,23 @@ bool j1Render::Start()
 // Called each loop iteration
 bool j1Render::PreUpdate()
 {
+	BROFILER_CATEGORY("RendererPreUpdate", Profiler::Color::Orange)
+
 	SDL_RenderClear(renderer);
 	return true;
 }
 
 bool j1Render::Update(float dt)
 {
+	BROFILER_CATEGORY("RendererUpdate", Profiler::Color::LightSeaGreen)
+
 	return true;
 }
 
 bool j1Render::PostUpdate()
 {
+	BROFILER_CATEGORY("RendererPostUpdate", Profiler::Color::Yellow)
+
 	SDL_SetRenderDrawColor(renderer, background.r, background.g, background.g, background.a);
 	SDL_RenderPresent(renderer);
 	return true;
