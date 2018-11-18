@@ -173,8 +173,6 @@ bool j1Scene2::PostUpdate()
 	return ret;
 }
 
-
-
 bool j1Scene2::Load(pugi::xml_node& node)
 {
 	pugi::xml_node activated = node.child("activated");
@@ -198,13 +196,13 @@ bool j1Scene2::Save(pugi::xml_node& node) const
 
 void j1Scene2::PlaceEnemies()
 {
-	App->entity->AddEnemy(150, 20, HARPY);
+	/*App->entity->AddEnemy(150, 20, HARPY);
 	App->entity->AddEnemy(459, 19, HARPY);
 	App->entity->AddEnemy(1118, 4, HARPY);
 	App->entity->AddEnemy(1308, 45, HARPY);
 	App->entity->AddEnemy(1975, 20, HARPY);
 	App->entity->AddEnemy(2216, 13, HARPY);
-	App->entity->AddEnemy(2344, 20, HARPY);
+	App->entity->AddEnemy(2344, 20, HARPY);*/
 }
 
 // Called before quitting
@@ -231,5 +229,5 @@ void j1Scene2::ChangeScene()
 	App->entity->Start();
 	App->scene1->Start();
 	App->render->camera = { 0,0 };
-	App->entity->player->position = App->entity->player->initialPosition;	
+	App->entity->player->position = initialScene2Position;
 }

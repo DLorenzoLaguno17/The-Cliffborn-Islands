@@ -208,11 +208,11 @@ bool j1Player::Update(float dt, bool do_logic) {
 			App->audio->PlayFx(attackSound);
 						
 			if (facingRight) {
-				attackCollider = App->collisions->AddCollider({ (int)position.x + 20, (int)position.y + margin.y, playerSize.x, playerSize.y }, COLLIDER_ATTACK, App->entity);
+				attackCollider = App->collisions->AddCollider({ (int)position.x + rightAttackSpawnPos, (int)position.y + margin.y, playerSize.x, playerSize.y }, COLLIDER_ATTACK, App->entity);
 				animation = &attackRight;
 			}
 			else {
-				attackCollider = App->collisions->AddCollider({ (int)position.x - 16, (int)position.y + margin.y, playerSize.x, playerSize.y }, COLLIDER_ATTACK, App->entity);
+				attackCollider = App->collisions->AddCollider({ (int)position.x + leftAttackSpawnPos, (int)position.y + margin.y, playerSize.x, playerSize.y }, COLLIDER_ATTACK, App->entity);
 				animation = &attackLeft;
 			}
 		}
@@ -231,9 +231,9 @@ bool j1Player::Update(float dt, bool do_logic) {
 		}
 		else if(attackCollider != nullptr) {
 			if (facingRight)
-				attackCollider->SetPos((int)position.x + 20, (int)position.y + margin.y);
+				attackCollider->SetPos((int)position.x + rightAttackSpawnPos, (int)position.y + margin.y);
 			else
-				attackCollider->SetPos((int)position.x - 16, (int)position.y + margin.y);
+				attackCollider->SetPos((int)position.x + leftAttackSpawnPos, (int)position.y + margin.y);
 		}
 
 		// God mode
@@ -271,16 +271,12 @@ bool j1Player::Update(float dt, bool do_logic) {
 			facingRight = true;
 			deathByFall = false;
 			playedSound = false;
+
+			App->entity->DestroyEntities();
 			if (App->scene1->active)
-			{
-				App->entity->DestroyEntities();
 				App->scene1->PlaceEnemies();
-			}
 			else if (App->scene2->active)
-			{
-				App->entity->DestroyEntities();
 				App->scene2->PlaceEnemies();
-			}
 
 			// Resetting the animation
 			death.Reset();
@@ -311,9 +307,9 @@ bool j1Player::Update(float dt, bool do_logic) {
 	}
 	else if (animation == &attackLeft || animation == &attackRight){
 		if(facingRight)
-			Draw(r, false, 0, -2);
+			Draw(r, false, 0, attackBlittingY);
 		else
-			Draw(r, false, -15, -2);
+			Draw(r, false, attackBlittingX, attackBlittingY);
 	}
 
 	CameraPosition();
@@ -338,7 +334,6 @@ bool j1Player::PostUpdate() {
 	return true;
 }
 
-// Load game state
 // Load game state
 bool j1Player::Load(pugi::xml_node& data) {
 
@@ -489,7 +484,7 @@ void j1Player::OnCollision(Collider* col_1, Collider* col_2)
 		//If the player collides with death colliders
 		if (col_2->type == COLLIDER_DEATH || col_2->type == COLLIDER_ENEMY)
 		{
-			if (col_2->rect.h < 8)
+			if (col_2->rect.h < deathByFallColliderHeight)
 				deathByFall = true;
 			else {
 				if (!playedSound) {
@@ -517,13 +512,19 @@ void j1Player::LoadPlayerProperties() {
 	config = config_file.child("config");
 	pugi::xml_node player;
 	player = config.child("player");
-	
+
 	// Copying the size of the player
 	playerSize.x = player.child("size").attribute("width").as_int();
 	playerSize.y = player.child("size").attribute("height").as_int();
 	margin.x = player.child("margin").attribute("x").as_int();
 	margin.y = player.child("margin").attribute("y").as_int();
 	colisionMargin = player.child("margin").attribute("colisionMargin").as_uint();
+
+	// Copying attack values
+	attackBlittingX = player.child("attack").attribute("blittingX").as_int();
+	attackBlittingY = player.child("attack").attribute("blittingY").as_int();
+	rightAttackSpawnPos = player.child("attack").attribute("rightColliderSpawnPos").as_int();
+	leftAttackSpawnPos = player.child("attack").attribute("leftColliderSpawnPos").as_int();
 
 	// Copying values of the speed
 	pugi::xml_node speed = player.child("speed");
@@ -540,4 +541,6 @@ void j1Player::LoadPlayerProperties() {
 
 	cameraLimit = config.child("scene1").child("camera").attribute("cameraLimit").as_int();
 	playerLimit = config.child("scene1").child("camera").attribute("playerLimit").as_int();
+
+	deathByFallColliderHeight = player.child("deathByFallCollider").attribute("h").as_uint();
 }

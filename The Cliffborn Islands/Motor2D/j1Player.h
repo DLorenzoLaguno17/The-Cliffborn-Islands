@@ -38,7 +38,6 @@ public:
 	bool Save(pugi::xml_node&) const;
 
 	void LoadPlayerProperties();
-
 	void CameraPosition();
 
 public:
@@ -72,8 +71,15 @@ public:
 	uint initialJumps;
 	uint maxJumps;
 	uint colisionMargin;
+	uint deathByFallColliderHeight;
 
 	Collider* attackCollider = nullptr;
+
+	// Attack values
+	int attackBlittingX;
+	int attackBlittingY;
+	int rightAttackSpawnPos;
+	int leftAttackSpawnPos;
 
 	float godModeSpeed;
 	float horizontalSpeed;

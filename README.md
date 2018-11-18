@@ -8,6 +8,7 @@ Go to our GitHub: https://github.com/DLorenzoLaguno17/The-Cliffborn-Islands
 * A - Move left
 * D - Move right
 * H - Throw the hook
+* O - Attack with the sword
 * Spacebar - Jump.
 
 ### Special keys
@@ -22,19 +23,19 @@ Go to our GitHub: https://github.com/DLorenzoLaguno17/The-Cliffborn-Islands
 
 ## Innovation
 
-We have implemented a hook which you need to use to overcome the level. If it collides with a wall, it moves the player towards it, and if it collides with an enemy, it attracts the enemy to the player.
+We have implemented a hook which you need to use to overcome the level. If it collides with a wall, it moves the player towards it.
 
+Furthermore, we have added the possibility of attacking and killing the enemies.
 
 ## Special mechanics
 
 You can push yourself into the air once for each time you leave the ground. That means double jump when you leave the gound with a hop or one jump if you are already in a free fall.
 
-The hook will only work if it collides perpendicularly with a wall. Besides, using the hook on the air won't let you move neither backwards nor forwards with A or D keys, and might leave you in the middle of the abyss, so use it wisely. The hook cannot be used in GodMode.
+The hook will only work if it collides perpendicularly with a wall, and it cannot be used in GodMode.
 
 ## Credits
 
 ### Art
-
 	Sprites and tilesets of the character and the maps: "Foggy Cliffs - Fantasy Tileset"
 	Nauris Amatnieks (https://twitter.com/Namatnieks)
 
@@ -44,6 +45,10 @@ The hook will only work if it collides perpendicularly with a wall. Besides, usi
 	Licensed under Creative Commons: By Attribution 3.0
 	http://creativecommons.org/licenses/by/3.0/
 
+### Sound effects
+	Death sound: Minecraft.		
+	Death music: Uncharted 2.
+	Player attack and jump: Link from Super Smash Bros.
 
 This game has been created by Òscar Faura and Daniel Lorenzo.
 Licensed under the [MIT License](LICENSE).
