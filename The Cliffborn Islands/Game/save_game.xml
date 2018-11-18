@@ -7,35 +7,30 @@
 	<map />
 	<pathfinding />
 	<scene1>
-		<activated true="true" />
+		<activated true="false" />
 	</scene1>
 	<scene2>
-		<activated true="false" />
+		<activated true="true" />
 	</scene2>
 	<entityManager>
 		<player>
-			<position x="92.760025" y="138" />
+			<position x="336.120148" y="89" />
 			<godmode value="false" />
 		</player>
 		<harpy>
-			<position x="250" y="50" />
-			<position x="400" y="20" />
-			<position x="600" y="-22" />
-			<position x="917" y="13" />
-			<position x="1079" y="17" />
-			<position x="1345" y="8" />
-			<position x="1772" y="73" />
-			<position x="1919" y="73" />
-			<position x="2193" y="33" />
-			<position x="2355" y="32" />
+			<position x="324.160156" y="82.9299927" />
+			<position x="459" y="19" />
+			<position x="1118" y="4" />
+			<position x="1308" y="45" />
+			<position x="1975" y="20" />
+			<position x="2216" y="13" />
+			<position x="2344" y="20" />
 		</harpy>
-		<skeleton>
-			<position x="127.85022" y="133.333984" />
-		</skeleton>
+		<skeleton />
 	</entityManager>
 	<fade />
 	<collisions />
 	<renderer>
-		<camera x="0" y="0" />
+		<camera x="-944" y="0" />
 	</renderer>
 </game_state>
