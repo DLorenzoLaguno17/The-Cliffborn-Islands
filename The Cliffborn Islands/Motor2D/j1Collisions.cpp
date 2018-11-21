@@ -121,7 +121,6 @@ bool j1Collisions::PreUpdate()
 
 		if (colliders[i]->type == COLLIDER_PLAYER || colliders[i]->type == COLLIDER_NONE || colliders[i]->type == COLLIDER_HOOK || colliders[i]->type == COLLIDER_ENEMY)
 		{
-
 			collider1 = colliders[i];
 
 			for (uint j = 0; j < MAX_COLLIDERS; ++j)

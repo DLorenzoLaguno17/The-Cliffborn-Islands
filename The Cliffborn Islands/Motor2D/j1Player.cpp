@@ -61,8 +61,7 @@ bool j1Player::Start() {
 		collider = App->collisions->AddCollider({ (int)position.x + margin.x, (int)position.y + margin.y, playerSize.x, playerSize.y}, COLLIDER_NONE, App->entity);
 	else
 		collider = App->collisions->AddCollider({ (int)position.x + margin.x, (int)position.y + margin.y, playerSize.x, playerSize.y }, COLLIDER_PLAYER, App->entity);
-
-
+	
 	player_start = true;
 	return true;
 }
@@ -314,7 +313,8 @@ bool j1Player::Update(float dt, bool do_logic) {
 			Draw(r, false, attackBlittingX, attackBlittingY);
 	}
 
-	CameraPosition();
+	// We update the camera to followe the player every frame
+	UpdateCameraPosition();
 
 	return true;
 }
@@ -390,19 +390,20 @@ bool j1Player::CleanUp() {
 	return true;
 }
 
-void j1Player::CameraPosition()
+void j1Player::UpdateCameraPosition()
 {
-	if (App->render->camera.x > cameraLimit)
-	{
-		App->render->camera.x = -position.x * 4 + 400;
-		if (App->render->camera.x > 0)
-			App->render->camera.x = 0;
-	}
+	if(App->render->camera.x > cameraLimit)
+		App->render->camera.x = -position.x * 4 + 400;	
+
+	//Limit X camera position
+	if (App->render->camera.x > 0)
+		App->render->camera.x = 0;
 
 	//Limit player X position
 	if (App->entity->player->position.x > playerLimit)
 		App->entity->player->position.x = playerLimit;
 
+	// To force the player to go forward at the start of the level
 	if (App->entity->player->position.x < 0)
 		App->entity->player->position.x = 0;
 
@@ -411,7 +412,15 @@ void j1Player::CameraPosition()
 void j1Player::OnCollision(Collider* col_1, Collider* col_2)
 {
 	if (col_1->type == COLLIDER_PLAYER || col_1->type == COLLIDER_NONE)
-	{		
+	{
+		//If the player collides with win colliders
+		if (col_2->type == COLLIDER_WIN || col_2->type == COLLIDER_ENEMY)
+		{
+			if (App->scene1->active)
+				App->scene1->ChangeScene();
+			else if (App->scene2->active)
+				App->scene2->ChangeScene();
+		}else
 		// If the player collides with a wall
 		if (col_2->type == COLLIDER_WALL) {
 			if (collider->rect.y + collider->rect.h >= col_2->rect.y + colisionMargin
@@ -472,17 +481,8 @@ void j1Player::OnCollision(Collider* col_1, Collider* col_2)
 			}
 		}
 
-		//If the player collides with win colliders
-		if (col_2->type == COLLIDER_WIN)
-		{
-			if (App->scene1->active)
-				App->scene1->ChangeScene();
-			else if (App->scene2->active)
-				App->scene2->ChangeScene();
-		}
-
 		//If the player collides with death colliders
-		if (col_2->type == COLLIDER_DEATH || col_2->type == COLLIDER_ENEMY)
+		if (col_2->type == COLLIDER_DEATH /*|| col_2->type == COLLIDER_ENEMY*/)
 		{
 			if (col_2->rect.h < deathByFallColliderHeight)
 				deathByFall = true;

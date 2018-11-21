@@ -65,8 +65,10 @@ bool j1Harpy::Update(float dt, bool do_logic)
 				path_created = true;
 			}
 		}
-		else if (path_created)
+		else if (path_created) {
 			path->Clear();
+			path_created = false;
+		}
 	}
 
 	if (App->entity->player->position == App->entity->player->initialPosition)
@@ -93,8 +95,10 @@ bool j1Harpy::CleanUp()
 	if (collider != nullptr)
 		collider->to_delete = true;
 
-	if(path_created)
+	if (path_created) {
 		path->Clear();
+		path_created = false;
+	}
 
 	return true;
 }

@@ -38,7 +38,7 @@ public:
 	bool Save(pugi::xml_node&) const;
 
 	void LoadPlayerProperties();
-	void CameraPosition();
+	void UpdateCameraPosition();
 
 public:
 

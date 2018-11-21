@@ -17,9 +17,6 @@
 
 #include "Brofiler/Brofiler.h"
 
-#define CAMERA_LIMIT -8570
-#define PLAYER_LIMIT 2374
-
 j1Scene2::j1Scene2() : j1Module()
 {
 	name.create("scene2");
@@ -197,12 +194,12 @@ bool j1Scene2::Save(pugi::xml_node& node) const
 void j1Scene2::PlaceEnemies()
 {
 	App->entity->AddEnemy(150, 20, HARPY);
-	App->entity->AddEnemy(459, 19, HARPY);
+	/*App->entity->AddEnemy(459, 19, HARPY);
 	App->entity->AddEnemy(1118, 4, HARPY);
 	App->entity->AddEnemy(1308, 45, HARPY);
 	App->entity->AddEnemy(1975, 20, HARPY);
 	App->entity->AddEnemy(2216, 13, HARPY);
-	App->entity->AddEnemy(2344, 20, HARPY);
+	App->entity->AddEnemy(2344, 20, HARPY);*/
 }
 
 // Called before quitting
@@ -221,6 +218,7 @@ bool j1Scene2::CleanUp()
 
 	return true;
 }
+
 void j1Scene2::ChangeScene()
 {
 	App->scene1->active = true;
