@@ -414,13 +414,14 @@ void j1Player::OnCollision(Collider* col_1, Collider* col_2)
 	if (col_1->type == COLLIDER_PLAYER || col_1->type == COLLIDER_NONE)
 	{
 		//If the player collides with win colliders
-		if (col_2->type == COLLIDER_WIN || col_2->type == COLLIDER_ENEMY)
+		if (col_2->type == COLLIDER_WIN)
 		{
 			if (App->scene1->active)
 				App->scene1->ChangeScene();
 			else if (App->scene2->active)
 				App->scene2->ChangeScene();
-		}else
+		}
+		else
 		// If the player collides with a wall
 		if (col_2->type == COLLIDER_WALL) {
 			if (collider->rect.y + collider->rect.h >= col_2->rect.y + colisionMargin
@@ -482,7 +483,7 @@ void j1Player::OnCollision(Collider* col_1, Collider* col_2)
 		}
 
 		//If the player collides with death colliders
-		if (col_2->type == COLLIDER_DEATH /*|| col_2->type == COLLIDER_ENEMY*/)
+		if (col_2->type == COLLIDER_DEATH || col_2->type == COLLIDER_ENEMY)
 		{
 			if (col_2->rect.h < deathByFallColliderHeight)
 				deathByFall = true;
