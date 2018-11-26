@@ -2,6 +2,8 @@
 #define __j1INPUT_H__
 
 #include "j1Module.h"
+#include "SDL\include\SDL_scancode.h"
+#include "SDL\include\SDL.h"
 
 //#define NUM_KEYS 352
 #define NUM_MOUSE_BUTTONS 5
@@ -23,6 +25,16 @@ enum j1KeyState
 	KEY_DOWN,
 	KEY_REPEAT,
 	KEY_UP
+};
+
+enum j1GamepadButtons {
+	ARROW_UP = 0,
+	ARROW_DOWN,
+	ARROW_RIGHT,
+	ARROW_LEFT,
+	BUTTON_A,
+	BUTTON_B,
+	BUTTON_START
 };
 
 class j1Input : public j1Module
@@ -76,6 +88,20 @@ private:
 	int			mouse_motion_y;
 	int			mouse_x;
 	int			mouse_y;
+
+public:
+	// Controller
+	SDL_GameController* controller = nullptr;
+	bool gamepadCon = false;
+	int gamepadLAxisX = 0;
+	int gamepadLAxisY = 0;
+	bool gamepadAPressed = false;
+	bool gamepadBPressed = false;
+	bool gamepadYPressed = false;
+	bool gamepadStartPressed = false;
+
+	bool use_controller = false;
+	int controller_index = 0;
 };
 
 #endif // __j1INPUT_H__

@@ -11,11 +11,11 @@
 
 j1Input::j1Input() : j1Module()
 {
-	name.create("input");
-
 	keyboard = new j1KeyState[MAX_KEYS];
 	memset(keyboard, KEY_IDLE, sizeof(j1KeyState) * MAX_KEYS);
 	memset(mouse_buttons, KEY_IDLE, sizeof(j1KeyState) * NUM_MOUSE_BUTTONS);
+
+	name.create("input");
 }
 
 // Destructor
@@ -30,11 +30,28 @@ bool j1Input::Awake(pugi::xml_node& config)
 	LOG("Init SDL input event system");
 	bool ret = true;
 	SDL_Init(0);
+	SDL_Init(SDL_INIT_GAMECONTROLLER);
 
 	if(SDL_InitSubSystem(SDL_INIT_EVENTS) < 0)
 	{
 		LOG("SDL_EVENTS could not initialize! SDL_Error: %s\n", SDL_GetError());
 		ret = false;
+	}
+
+	if (SDL_Init(SDL_INIT_JOYSTICK) < 0) {
+		LOG("SDL_INIT_JOYSTICK could not initialize , SDL Error: %s\n", SDL_GetError());
+	}
+
+	for (int i = 0; i < SDL_NumJoysticks(); ++i) {
+		if (SDL_IsGameController(0))
+		{
+			controller = SDL_GameControllerOpen(0);
+		}
+	}
+
+	if (controller == NULL) {
+		LOG(" Unable to open game controller! SDL Error: %s\n", SDL_GetError());
+		use_controller = false;
 	}
 
 	return ret;
@@ -52,9 +69,30 @@ bool j1Input::PreUpdate()
 {
 	BROFILER_CATEGORY("InputPreUpdate", Profiler::Color::Orange)
 
+	SDL_PumpEvents();
+
 	static SDL_Event event;
 	
 	const Uint8* keys = SDL_GetKeyboardState(NULL);
+
+	// Controller input	
+	controller = SDL_GameControllerOpen(0);
+	if (SDL_GameControllerGetAttached(controller))
+	{
+		gamepadLAxisX = SDL_GameControllerGetAxis(controller, SDL_CONTROLLER_AXIS_LEFTX);
+		gamepadLAxisY = SDL_GameControllerGetAxis(controller, SDL_CONTROLLER_AXIS_LEFTY);
+		gamepadAPressed = SDL_GameControllerGetButton(controller, SDL_CONTROLLER_BUTTON_A);
+		gamepadBPressed = SDL_GameControllerGetButton(controller, SDL_CONTROLLER_BUTTON_B);
+		gamepadYPressed = SDL_GameControllerGetButton(controller, SDL_CONTROLLER_BUTTON_Y);
+		gamepadStartPressed = SDL_GameControllerGetButton(controller, SDL_CONTROLLER_BUTTON_START);
+		gamepadCon = true;
+	}
+	else
+	{
+		SDL_GameControllerClose(controller);
+		controller = nullptr;
+		gamepadCon = false;
+	}			
 
 	for(int i = 0; i < MAX_KEYS; ++i)
 	{
@@ -139,6 +177,8 @@ bool j1Input::PreUpdate()
 bool j1Input::CleanUp()
 {
 	LOG("Quitting SDL event subsystem");
+	SDL_GameControllerClose(controller);
+	controller = nullptr;
 	SDL_QuitSubSystem(SDL_INIT_EVENTS);
 	return true;
 }

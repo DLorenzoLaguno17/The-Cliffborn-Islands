@@ -68,7 +68,8 @@ bool j1Hook::Update(float dt, bool do_logic) {
 	}
 
 	// Check if the key is pressed and the hook can be thrown
-	if (App->input->GetKey(SDL_SCANCODE_O) == j1KeyState::KEY_DOWN
+	if ((App->input->GetKey(SDL_SCANCODE_O) == j1KeyState::KEY_DOWN
+		|| (SDL_GameControllerGetButton(App->input->controller, SDL_CONTROLLER_BUTTON_B)) == KEY_DOWN)
 		&& thrown == false && App->entity->player->GodMode == false 
 		&& App->entity->player->dead == false) {
 
