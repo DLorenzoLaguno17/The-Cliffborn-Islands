@@ -71,10 +71,13 @@
       <Filter>Development\Modules\Entities</Filter>
     </ClCompile>
     <ClCompile Include="j1Gui.cpp">
-      <Filter>Development\Modules\Media\GraphicUserInterface</Filter>
+      <Filter>Development\Modules\GraphicUserInterface</Filter>
     </ClCompile>
     <ClCompile Include="j1Fonts.cpp">
-      <Filter>Development\Modules\Media\GraphicUserInterface</Filter>
+      <Filter>Development\Modules\GraphicUserInterface</Filter>
+    </ClCompile>
+    <ClCompile Include="j1UserInterfaceElement.cpp">
+      <Filter>Development\Modules\GraphicUserInterface</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -169,10 +172,19 @@
       <Filter>Development\Modules\Entities</Filter>
     </ClInclude>
     <ClInclude Include="j1Gui.h">
-      <Filter>Development\Modules\Media\GraphicUserInterface</Filter>
+      <Filter>Development\Modules\GraphicUserInterface</Filter>
     </ClInclude>
     <ClInclude Include="j1Fonts.h">
-      <Filter>Development\Modules\Media\GraphicUserInterface</Filter>
+      <Filter>Development\Modules\GraphicUserInterface</Filter>
+    </ClInclude>
+    <ClInclude Include="j1UserInterfaceElement.h">
+      <Filter>Development\Modules\GraphicUserInterface</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Button.h">
+      <Filter>Development\Modules\GraphicUserInterface</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Label.h">
+      <Filter>Development\Modules\GraphicUserInterface</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -209,7 +221,7 @@
     <Filter Include="Development\Core">
       <UniqueIdentifier>{4e40a7e1-5ec2-4dd0-9d4b-62cd6e2ce8e6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Development\Modules\Media\GraphicUserInterface">
+    <Filter Include="Development\Modules\GraphicUserInterface">
       <UniqueIdentifier>{12d42398-2970-43ff-8668-cdab242895b8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>

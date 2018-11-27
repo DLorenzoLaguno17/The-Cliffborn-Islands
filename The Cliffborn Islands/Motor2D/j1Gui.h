@@ -42,7 +42,7 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	// TODO 2: Create the factory methods
+	// TODO 2: Create the factory methods	
 	
 	const SDL_Texture* GetAtlas() const;
 

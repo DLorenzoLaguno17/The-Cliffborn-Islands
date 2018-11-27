@@ -5,16 +5,24 @@ Go to our GitHub: https://github.com/DLorenzoLaguno17/The-Cliffborn-Islands
 ## Controls
 
 ### Gameplay
+
+Keyboard:
 * A - Move left
 * D - Move right
 * H - Throw the hook
 * O - Attack with the sword
 * Spacebar - Jump.
 
+XBox Controller:
+* Left joystick/D-pad - Move
+* B - Throw the hook
+* X - Attack with the sword
+* A - Jump
+
 ### Special keys
 * F1 - To start from the very first level
 * F2 - To start from the beginning of the current level
-* F3 - To start from the beggining of the second level
+* F3 - To start from the beginning of the second level
 * F5 - Save the current state
 * F6 - Load the previous state
 * F9 - To view colliders and logic of the game
@@ -56,7 +64,7 @@ The hook will only work if it collides perpendicularly with a wall, and it canno
 		* Created and implemented the enemies
 		* Created and implemented entity system
 		* Implemented Save & Load
-	- Dani Lorenzo: 
+	- Daniel Lorenzo: 
 		* Capped FPS and normalized movement using dt
 		* Implemented the hook
 		* Created player death and hook animations
