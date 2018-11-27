@@ -80,6 +80,8 @@
     <ClCompile Include="j1Entity.cpp" />
     <ClCompile Include="j1EntityManager.cpp" />
     <ClCompile Include="j1FadeToBlack.cpp" />
+    <ClCompile Include="j1Fonts.cpp" />
+    <ClCompile Include="j1Gui.cpp" />
     <ClCompile Include="j1Harpy.cpp" />
     <ClCompile Include="j1Hook.cpp" />
     <ClCompile Include="j1Main.cpp" />
@@ -105,6 +107,8 @@
     <ClInclude Include="j1Entity.h" />
     <ClInclude Include="j1EntityManager.h" />
     <ClInclude Include="j1FadeToBlack.h" />
+    <ClInclude Include="j1Fonts.h" />
+    <ClInclude Include="j1Gui.h" />
     <ClInclude Include="j1Harpy.h" />
     <ClInclude Include="j1Hook.h" />
     <ClInclude Include="j1Map.h" />

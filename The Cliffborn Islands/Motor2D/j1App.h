@@ -20,6 +20,8 @@ class j1FadeToBlack;
 class j1Collisions;
 class j1PathFinding;
 class j1EntityManager;
+class j1Fonts;
+class j1Gui;
 
 class j1App
 {
@@ -95,6 +97,8 @@ public:
 	j1Collisions*		collisions;
 	j1PathFinding*		path;
 	j1EntityManager*	entity;
+	j1Fonts*			font;
+	j1Gui*				gui;
 
 private:
 
