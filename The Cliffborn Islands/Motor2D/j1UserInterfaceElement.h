@@ -12,7 +12,7 @@ class j1UserInterfaceElement {
 
 public:
 	//Constructor
-	j1UserInterfaceElement(int x, int y, UIELEMENT_TYPES type);
+	j1UserInterfaceElement(UIELEMENT_TYPES type, int x, int y, SDL_Texture* text = nullptr, SDL_Rect* section = NULL);
 
 	//Destructor
 	~j1UserInterfaceElement();
@@ -20,13 +20,12 @@ public:
 	// Blits the element on the screen
 	virtual void Draw(SDL_Rect r, bool flip = false, int x = 0, int y = 0);
 
-	// Executes aa action when the element is clicked
-	virtual void OnClick();
-
 private:
 
 	UIELEMENT_TYPES type;
 	iPoint position;
+	uint width;
+	uint height;
 	SDL_Texture* sprites = nullptr;
 };
 
