@@ -133,6 +133,8 @@ bool j1SceneMenu::PostUpdate()
 
 bool j1SceneMenu::CleanUp()
 {
+	LOG("Freeing all textures");
+	App->tex->UnLoad(gui_tex);
 	return true;
 }
 

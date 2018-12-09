@@ -70,7 +70,11 @@ j1Button* j1Gui::CreateButton(UIELEMENT_TYPES type, int x, int y, SDL_Rect idle,
 // Called before quitting
 bool j1Gui::CleanUp()
 {
-	LOG("Freeing GUI");
+	LOG("Freeing GUI"); 
+	for (p2List_item<j1Button*>* item = App->gui->buttons.start; item != nullptr; item = item->next) {
+		item->data->CleanUp();
+		buttons.del(item);
+	}
 
 	return true;
 }
