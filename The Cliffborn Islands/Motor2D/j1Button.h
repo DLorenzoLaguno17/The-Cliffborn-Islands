@@ -6,6 +6,7 @@
 
 enum UIELEMENT_TYPES;
 struct SDL_Texture;
+enum ButtonFunction;
 
 enum STATE {
 	IDLE = 0,
@@ -18,7 +19,7 @@ class j1Button : public j1UserInterfaceElement {
 public:
 
 	// Constructor
-	j1Button(UIELEMENT_TYPES type, int x, int y, SDL_Texture* text = nullptr);
+	j1Button(UIELEMENT_TYPES type, int x, int y, SDL_Rect section, SDL_Texture* text = nullptr, ButtonFunction function = ButtonFunction::NO_FUNCTION);
 
 	// Destructor
 	virtual ~j1Button();
@@ -31,6 +32,7 @@ public:
 
 public:
 	STATE state = IDLE;
+	ButtonFunction bfunction;
 
 	Animation* animation = nullptr;
 	Animation idle;

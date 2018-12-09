@@ -1,4 +1,4 @@
-# The Cliffborn Islands
+Ò The Cliffborn Islands
 
 Go to our GitHub: https://github.com/DLorenzoLaguno17/The-Cliffborn-Islands 
 
@@ -48,6 +48,11 @@ The hook will only work if it collides perpendicularly with a wall, and it canno
 	Nauris Amatnieks (https://twitter.com/Namatnieks)
 
 ### Music
+	Music of the menu scene: "Getting it Done"
+	Kevin MacLeod (incompetech.com)
+	Licensed under Creative Commons: By Attribution 3.0
+	http://creativecommons.org/licenses/by/3.0/
+
 	Music of the first and second level: "Airship Serenity"
 	Kevin MacLeod (incompetech.com)
 	Licensed under Creative Commons: By Attribution 3.0
@@ -58,8 +63,8 @@ The hook will only work if it collides perpendicularly with a wall, and it canno
 	Death music: Uncharted 2.
 	Player attack and jump: Link from Super Smash Bros.
 
-## Task List
-	- Ã’scar Faura: 
+## Task list
+	- Òscar Faura: 
 		* Implemented pathfinding and enemies' movement
 		* Created and implemented the enemies
 		* Created and implemented entity system
@@ -71,5 +76,5 @@ The hook will only work if it collides perpendicularly with a wall, and it canno
 		* Implemented the attack of the player
 		* Created the UML
 
-This game has been created by Ã’scar Faura and Daniel Lorenzo.
+This game has been created by Òscar Faura and Daniel Lorenzo.
 Licensed under the [MIT License](LICENSE).

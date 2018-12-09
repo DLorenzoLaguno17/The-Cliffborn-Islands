@@ -82,6 +82,9 @@
     <ClCompile Include="j1Button.cpp">
       <Filter>Development\Modules\GraphicUserInterface</Filter>
     </ClCompile>
+    <ClCompile Include="j1SceneMenu.cpp">
+      <Filter>Development\Scenes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Textures.h">
@@ -188,6 +191,9 @@
     </ClInclude>
     <ClInclude Include="j1Label.h">
       <Filter>Development\Modules\GraphicUserInterface</Filter>
+    </ClInclude>
+    <ClInclude Include="j1SceneMenu.h">
+      <Filter>Development\Scenes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -1,19 +1,19 @@
-#ifndef __j1SCENE1_H__
-#define __j1SCENE1_H__
+#ifndef __j1SCENEMENU_H__
+#define __j1SCENEMENU_H__
 
 #include "j1Module.h"
+#include "j1Render.h"
+#include "p2List.h"
 #include "j1Button.h"
 
 struct SDL_Texture;
 
-class j1Scene1 : public j1Module
+class j1SceneMenu : public j1Module
 {
 public:
+	j1SceneMenu();
 
-	j1Scene1();
-
-	// Destructor
-	virtual ~j1Scene1();
+	virtual ~j1SceneMenu();
 
 	// Called before render is available
 	bool Awake(pugi::xml_node&);
@@ -36,18 +36,12 @@ public:
 	// Called to change scene
 	void ChangeScene();
 
-	bool Load(pugi::xml_node&);
-	bool Save(pugi::xml_node&) const;
-
-	fPoint initialScene1Position;
-	bool player_created = false;
-
-	void PlaceEnemies();
-
 private:
 
-	SDL_Texture* debug_tex;
-
+	SDL_Texture* gui_tex = nullptr;
+	bool continueGame = true;
+	p2List<j1Button*> menuButtons;
+	j1UserInterfaceElement* testButton = nullptr;
 };
 
-#endif // __j1SCENE1_H__
+#endif //__j1SCENEMENU_H__

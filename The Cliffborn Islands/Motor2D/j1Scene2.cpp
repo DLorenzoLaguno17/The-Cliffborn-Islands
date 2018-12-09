@@ -10,6 +10,7 @@
 #include "j1Map.h"
 #include "j1Hook.h"
 #include "j1Player.h"
+#include "j1SceneMenu.h"
 #include "j1Scene2.h"
 #include "j1Scene1.h"
 #include "j1FadeToBlack.h"
@@ -31,6 +32,12 @@ bool j1Scene2::Awake(pugi::xml_node& config)
 {
 	LOG("Loading Scene 2");
 	bool ret = true;
+
+	if (App->menu->active || App->scene1->active)
+		active = false;
+
+	if (active == false)
+		LOG("Scene 2 not active");
 
 	// Copying the position of the player
 	initialScene2Position.x = config.child("initialPlayerPosition").attribute("x").as_int();

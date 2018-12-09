@@ -10,6 +10,7 @@
 #include "j1Map.h"
 #include "j1Hook.h"
 #include "j1Player.h"
+#include "j1SceneMenu.h"
 #include "j1Scene1.h"
 #include "j1Scene2.h"
 #include "j1FadeToBlack.h"
@@ -32,6 +33,12 @@ bool j1Scene1::Awake(pugi::xml_node& config)
 {
 	LOG("Loading Scene 1");
 	bool ret = true;
+
+	if (App->menu->active == true)
+		active = false;
+
+	if (active == false)
+		LOG("Scene1 not active.");
 
 	// Copying the position of the player
 	initialScene1Position.x = config.child("initialPlayerPosition").attribute("x").as_int();
@@ -61,19 +68,9 @@ bool j1Scene1::Start()
 		}
 
 		debug_tex = App->tex->Load("maps/path2.png");
-		gui_tex = App->tex->Load("gui/atlas.png");
 
 		// The audio is played	
-		App->audio->PlayMusic("audio/music/level1_music.ogg", 1.0f);
-
-		if (!player_created)
-		{
-			App->entity->CreatePlayer();
-			App->entity->player->initialPosition = initialScene1Position;
-			player_created = true;
-		}
-
-		testButton = App->gui->CreateElement(BUTTON, 10, 20, gui_tex);
+		App->audio->PlayMusic("audio/music/level1_music.ogg", 1.0f);		
 
 		PlaceEnemies();
 	}
@@ -162,13 +159,6 @@ bool j1Scene1::Update(float dt)
 			App->render->Blit(debug_tex, pos.x, pos.y);
 		}
 	}
-
-	/*SDL_Rect r = { 485, 829, 328, 103 };
-	App->render->Blit(gui_tex, testButton->position.x, testButton->position.y, &r);*/
-
-	// UI management
-
-	//for (p2List_item<Button*>* item = buttons.start(); item )
 
 	return true;
 }

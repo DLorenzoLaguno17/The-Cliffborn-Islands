@@ -10,6 +10,7 @@ struct SDL_Texture;
 struct _TTF_Font;
 struct j1UserInterfaceElement;
 struct SDL_Rect;
+struct j1Button;
 
 enum UIELEMENT_TYPES
 {
@@ -18,6 +19,15 @@ enum UIELEMENT_TYPES
 	INPUTTEXT,
 	LABEL,
 	IMAGE
+};
+
+enum ButtonFunction {
+	NO_FUNCTION = 0,
+	PLAY_GAME,
+	CLOSE_GAME,
+	CREDITS,
+	SAVE_GAME,
+	LOAD_GAME,
 };
 
 // ---------------------------------------------------
@@ -46,10 +56,14 @@ public:
 	bool CleanUp();
 
 	// Factory method
-	j1UserInterfaceElement* CreateElement(UIELEMENT_TYPES type, int x, int y, SDL_Texture* text = nullptr);
+	//j1UserInterfaceElement* CreateElement(UIELEMENT_TYPES type, int x, int y, SDL_Texture* text = nullptr);
+	j1Button* CreateButton(UIELEMENT_TYPES type, int x, int y, SDL_Rect section, SDL_Texture* text = nullptr, ButtonFunction function = NO_FUNCTION);
+
+	void UpdateButtonsState();
 	
 	const SDL_Texture* GetAtlas() const;
 	p2List<j1UserInterfaceElement*>	elements;
+	p2List<j1Button*> buttons;
 
 private:
 
