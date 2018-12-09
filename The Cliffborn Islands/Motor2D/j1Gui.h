@@ -57,7 +57,7 @@ public:
 
 	// Factory method
 	//j1UserInterfaceElement* CreateElement(UIELEMENT_TYPES type, int x, int y, SDL_Texture* text = nullptr);
-	j1Button* CreateButton(UIELEMENT_TYPES type, int x, int y, SDL_Rect section, SDL_Texture* text = nullptr, ButtonFunction function = NO_FUNCTION);
+	j1Button* CreateButton(UIELEMENT_TYPES type, int x, int y, SDL_Rect idle, SDL_Rect hovered, SDL_Rect clicked, SDL_Texture* text = nullptr, ButtonFunction function = NO_FUNCTION);
 
 	void UpdateButtonsState();
 	

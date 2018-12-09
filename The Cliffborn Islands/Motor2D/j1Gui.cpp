@@ -58,10 +58,10 @@ bool j1Gui::PostUpdate()
 	return ret;
 }*/
 
-j1Button* j1Gui::CreateButton(UIELEMENT_TYPES type, int x, int y, SDL_Rect section, SDL_Texture* text, ButtonFunction function) {
+j1Button* j1Gui::CreateButton(UIELEMENT_TYPES type, int x, int y, SDL_Rect idle, SDL_Rect hovered, SDL_Rect clicked, SDL_Texture* text, ButtonFunction function) {
 	j1Button* ret = nullptr;
 
-	ret = new j1Button(type, x, y, section, text, function);
+	ret = new j1Button(type, x, y, idle, hovered, clicked, text, function);
 	if (ret != nullptr) buttons.add(ret);
 
 	return ret;
@@ -88,21 +88,17 @@ void j1Gui::UpdateButtonsState() {
 		if (x <= button->data->position.x + button->data->section.w && x >= button->data->position.x
 			&& y <= button->data->position.y + button->data->section.h && y >= button->data->position.y) {
 			button->data->state = STATE::HOVERED;
-			button->data->animation = &button->data->hovered;
 
-			if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN) {
+			if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT) {
 				button->data->state = STATE::CLICKED;
-				button->data->animation = &button->data->clicked;
 			}
 
 			if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_UP){
 				button->data->state = STATE::RELEASED;
-				button->data->animation = &button->data->idle;
 			}
 		}
 		else {
 			button->data->state = STATE::IDLE;
-			button->data->animation = &button->data->idle;
 		}
 	}
 }

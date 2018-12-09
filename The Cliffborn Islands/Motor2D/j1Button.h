@@ -19,7 +19,8 @@ class j1Button : public j1UserInterfaceElement {
 public:
 
 	// Constructor
-	j1Button(UIELEMENT_TYPES type, int x, int y, SDL_Rect section, SDL_Texture* text = nullptr, ButtonFunction function = ButtonFunction::NO_FUNCTION);
+	// To create a button we need several parameters: its type, a texture, the three sections of the atlas the button will use and the function of the button
+	j1Button(UIELEMENT_TYPES type, int x, int y, SDL_Rect idle, SDL_Rect hovered, SDL_Rect clicked, SDL_Texture* text = nullptr, ButtonFunction function = ButtonFunction::NO_FUNCTION);
 
 	// Destructor
 	virtual ~j1Button();
@@ -35,9 +36,9 @@ public:
 	ButtonFunction bfunction;
 
 	Animation* animation = nullptr;
-	Animation idle;
-	Animation hovered;
-	Animation clicked;
+	SDL_Rect idle;
+	SDL_Rect hovered;
+	SDL_Rect clicked;
 };
 
 #endif // __BUTTON_H__

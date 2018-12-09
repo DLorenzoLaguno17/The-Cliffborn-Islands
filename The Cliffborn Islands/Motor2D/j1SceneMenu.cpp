@@ -57,8 +57,12 @@ bool j1SceneMenu::Start()
 
 		gui_tex = App->tex->Load("gui/atlas.png");
 
-		SDL_Rect r = { 485, 829, 328, 103 };
-		App->gui->CreateButton(BUTTON, 10, 20, r, gui_tex, CLOSE_GAME);
+		SDL_Rect idle = {288, 198, 49, 49};
+		SDL_Rect hovered = { 239, 198, 49, 49 };
+		SDL_Rect clicked = { 190, 198, 49, 49 };
+
+		App->gui->CreateButton(BUTTON, 170, 80, idle, hovered, clicked, gui_tex, PLAY_GAME);
+		App->gui->CreateButton(BUTTON, 170, 130, idle, hovered, clicked, gui_tex, CLOSE_GAME);
 	}
 
 	return true;
@@ -81,15 +85,30 @@ bool j1SceneMenu::Update(float dt)
 	
 	// UI management
 	for (p2List_item<j1Button*>* item = App->gui->buttons.start; item != nullptr; item = item->next) {
-		switch(item->data->state)
-			case RELEASED:
-				if (item->data->bfunction == PLAY_GAME) {
-					ChangeScene();
-				}
-				else if (item->data->bfunction == CLOSE_GAME) {
-					continueGame = false;
-				}
-				break;
+		switch (item->data->state) 
+		{
+		case IDLE:
+			item->data->section = item->data->idle;
+			break;
+
+		case HOVERED:
+			item->data->section = item->data->hovered;
+			break;
+
+		case RELEASED:
+			item->data->section = item->data->idle;
+			if (item->data->bfunction == PLAY_GAME) {
+				ChangeScene();
+			}
+			else if (item->data->bfunction == CLOSE_GAME) {
+				continueGame = false;
+			}
+			break;
+
+		case CLICKED:
+			item->data->section = item->data->clicked;
+			break;
+		}
 	}
 
 	App->map->Draw();
