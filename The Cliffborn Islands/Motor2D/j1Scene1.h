@@ -2,6 +2,7 @@
 #define __j1SCENE1_H__
 
 #include "j1Module.h"
+#include "j1Button.h"
 
 struct SDL_Texture;
 
@@ -46,6 +47,8 @@ public:
 private:
 
 	SDL_Texture* debug_tex;
+	SDL_Texture* gui_tex;
+	j1UserInterfaceElement* testButton = nullptr;
 
 };
 

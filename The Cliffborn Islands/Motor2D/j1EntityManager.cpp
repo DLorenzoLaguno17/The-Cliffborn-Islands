@@ -36,7 +36,7 @@ bool j1EntityManager::PreUpdate()
 {
 	BROFILER_CATEGORY("EntityManagerPreUpdate", Profiler::Color::Orange)
 
-	for (uint i = 0; i < MAX_ENEMIES; ++i)
+	for (uint i = 0; i < MAX_ENTITIES; ++i)
 	{
 		if (queue[i].type != ENTITY_TYPES::UNKNOWN)
 		{
@@ -128,7 +128,7 @@ j1Entity* j1EntityManager::CreateEntity(ENTITY_TYPES type, int x, int y)
 
 void j1EntityManager::AddEnemy(int x, int y, ENTITY_TYPES type)
 {
-	for (uint i = 0; i < MAX_ENEMIES; ++i)
+	for (uint i = 0; i < MAX_ENTITIES; ++i)
 	{
 		if (queue[i].type == ENTITY_TYPES::UNKNOWN)
 		{
@@ -140,9 +140,9 @@ void j1EntityManager::AddEnemy(int x, int y, ENTITY_TYPES type)
 	}
 }
 
-void j1EntityManager::SpawnEnemy(const EnemyInfo& info)
+void j1EntityManager::SpawnEnemy(const EntityInfo& info)
 {
-	for (uint i = 0; i < MAX_ENEMIES; ++i)
+	for (uint i = 0; i < MAX_ENTITIES; ++i)
 	{
 		if (queue[i].type != ENTITY_TYPES::UNKNOWN)
 		{
@@ -162,7 +162,7 @@ void j1EntityManager::SpawnEnemy(const EnemyInfo& info)
 
 void j1EntityManager::DestroyEntities()
 {
-	for (int i = 0; i < MAX_ENEMIES; i++) 
+	for (int i = 0; i < MAX_ENTITIES; i++) 
 	{ 
 		queue[i].type = ENTITY_TYPES::UNKNOWN; 
 	}	
@@ -226,7 +226,7 @@ bool j1EntityManager::Save(pugi::xml_node& data) const
 			iterator->data->Save(skeleton);
 	}
 
-	for (int i = 0; i < MAX_ENEMIES; ++i)
+	for (int i = 0; i < MAX_ENTITIES; ++i)
 	{
 		if (queue[i].type != ENTITY_TYPES::UNKNOWN) {
 			if (queue[i].type == HARPY) {

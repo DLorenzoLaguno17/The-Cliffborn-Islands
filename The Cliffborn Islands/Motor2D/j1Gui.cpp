@@ -5,6 +5,7 @@
 #include "j1Textures.h"
 #include "j1Input.h"
 #include "j1Gui.h"
+#include "j1Button.h"
 
 j1Gui::j1Gui() : j1Module()
 {
@@ -44,6 +45,17 @@ bool j1Gui::PreUpdate()
 bool j1Gui::PostUpdate()
 {
 	return true;
+}
+
+j1UserInterfaceElement* j1Gui::CreateElement(UIELEMENT_TYPES type, int x, int y, SDL_Texture* text){
+	j1UserInterfaceElement* ret = nullptr;
+	switch (type)
+	{
+	case BUTTON:
+		ret = new j1Button(type, x, y, text);
+		if (ret != nullptr) elements.add(ret); break;
+	}
+	return ret;
 }
 
 // Called before quitting

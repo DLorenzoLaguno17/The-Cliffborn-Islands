@@ -79,6 +79,9 @@
     <ClCompile Include="j1UserInterfaceElement.cpp">
       <Filter>Development\Modules\GraphicUserInterface</Filter>
     </ClCompile>
+    <ClCompile Include="j1Button.cpp">
+      <Filter>Development\Modules\GraphicUserInterface</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Textures.h">

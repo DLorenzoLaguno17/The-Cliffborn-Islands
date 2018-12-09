@@ -4,6 +4,9 @@
 #include "j1UserInterfaceElement.h"
 #include "p2Animation.h"
 
+enum UIELEMENT_TYPES;
+struct SDL_Texture;
+
 enum STATE {
 	IDLE = 0,
 	HOVERED,
@@ -15,17 +18,16 @@ class j1Button : public j1UserInterfaceElement {
 public:
 
 	// Constructor
-	j1Button(UIELEMENT_TYPES type, int x, int y, SDL_Texture* text = nullptr, SDL_Rect* section = NULL);
+	j1Button(UIELEMENT_TYPES type, int x, int y, SDL_Texture* text = nullptr);
 
 	// Destructor
 	virtual ~j1Button();
 
-	void Draw();
-	void updateState();
+	// Called every frame
+	bool Update(float dt, bool do_logic);
 
-	void OnClick();
-	void OnHover();
-	void OnRelease();
+	// Called before quitting
+	bool CleanUp();
 
 public:
 	STATE state = IDLE;

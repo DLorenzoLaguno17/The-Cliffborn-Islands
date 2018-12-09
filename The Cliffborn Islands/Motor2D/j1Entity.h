@@ -18,6 +18,8 @@ class j1Entity
 public:
 	j1Entity(int x, int y, ENTITY_TYPES type);
 
+	~j1Entity() {}
+
 	virtual bool Start() {
 		return true;
 	};

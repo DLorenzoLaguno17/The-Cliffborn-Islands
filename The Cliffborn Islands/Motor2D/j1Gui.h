@@ -2,11 +2,14 @@
 #define __j1GUI_H__
 
 #include "j1Module.h"
+#include "p2List.h"
 
 #define CURSOR_WIDTH 2
 
 struct SDL_Texture;
 struct _TTF_Font;
+struct j1UserInterfaceElement;
+struct SDL_Rect;
 
 enum UIELEMENT_TYPES
 {
@@ -42,16 +45,17 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	// TODO 2: Create the factory methods	
+	// Factory method
+	j1UserInterfaceElement* CreateElement(UIELEMENT_TYPES type, int x, int y, SDL_Texture* text = nullptr);
 	
 	const SDL_Texture* GetAtlas() const;
+	p2List<j1UserInterfaceElement*>	elements;
 
 private:
 
 	SDL_Texture * atlas;
 	p2SString atlas_file_name;
 
-public:
 };
 
 #endif // __j1GUI_H__

@@ -1,13 +1,15 @@
-#ifndef __J1ENEMIES_H__
-#define __J1ENEMIES_H__
+#ifndef __J1ENTITYMANAGER_H__
+#define __J1ENTITYMANAGER_H__
 
 #include "j1Module.h"
 #include "p2Defs.h"
 #include "p2List.h"
 #include "p2Point.h"
 #include "j1Entity.h"
+#include "j1UserInterfaceElement.h"
+#include "j1Button.h"
 
-#define MAX_ENEMIES 50
+#define MAX_ENTITIES 50
 
 class j1Entity;
 class j1Player;
@@ -24,7 +26,7 @@ enum ENTITY_TYPES
 	UNKNOWN
 };
 
-struct EnemyInfo
+struct EntityInfo
 {
 	ENTITY_TYPES type = ENTITY_TYPES::UNKNOWN;
 	iPoint position;
@@ -60,7 +62,7 @@ public:
 
 private:
 
-	void SpawnEnemy(const EnemyInfo& info);
+	void SpawnEnemy(const EntityInfo& info);
 
 public:
 
@@ -74,11 +76,11 @@ public:
 
 private:
 
-	EnemyInfo			queue[MAX_ENEMIES];
+	EntityInfo			queue[MAX_ENTITIES];
 	bool				do_logic = false;
 	float				accumulatedTime = 0.0f;
 	float				updateMsCycle = 0.0f;
 
 };
 
-#endif // __J1ENEMIES_H__
+#endif // __J1ENTITYMANAGER_H__
