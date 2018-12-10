@@ -67,9 +67,9 @@ bool j1SceneMenu::Start()
 		SDL_Rect hovered = { 0, 45, 190, 49 };
 		SDL_Rect clicked = { 0, 94, 190, 49 };
 
-		App->gui->CreateButton(BUTTON, 80, 110, idle, hovered, clicked, gui_tex, PLAY_GAME);
-		App->gui->CreateButton(BUTTON, 80, 135, idle, hovered, clicked, gui_tex, CLOSE_GAME);
-		App->gui->CreateButton(BUTTON, 80, 160, idle, hovered, clicked, gui_tex, CREDITS);
+		App->gui->CreateButton(BUTTON, 85, 110, idle, hovered, clicked, gui_tex, PLAY_GAME);
+		App->gui->CreateButton(BUTTON, 85, 135, idle, hovered, clicked, gui_tex, CLOSE_GAME);
+		App->gui->CreateButton(BUTTON, 85, 160, idle, hovered, clicked, gui_tex, CREDITS);
 	}
 
 	return true;
