@@ -89,8 +89,8 @@ void j1Gui::UpdateButtonsState() {
 	int x, y; App->input->GetMousePosition(x, y);
 
 	for (p2List_item<j1Button*>* button = buttons.start; button != nullptr; button = button->next) {
-		if (x <= button->data->position.x + button->data->section.w * 0.5f && x >= button->data->position.x
-			&& y <= button->data->position.y + button->data->section.h * 0.5f && y >= button->data->position.y) {
+		if (x <= button->data->position.x + button->data->situation.w * 0.5f && x >= button->data->position.x
+			&& y <= button->data->position.y + button->data->situation.h * 0.5f && y >= button->data->position.y) {
 			button->data->state = STATE::HOVERED;
 
 			if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT) {

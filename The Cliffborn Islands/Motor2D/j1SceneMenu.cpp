@@ -9,6 +9,7 @@
 #include "j1Audio.h"
 #include "j1Map.h"
 #include "j1Gui.h"
+#include "j1Fonts.h"
 #include "j1Input.h"
 #include "j1Window.h"
 
@@ -62,6 +63,9 @@ bool j1SceneMenu::Start()
 		gui_tex = App->tex->Load("gui/atlas.png");
 		player_tex = App->tex->Load("textures/character/character.png");
 		harpy_tex = App->tex->Load("textures/enemies/harpy/harpy.png");
+		
+		// Loading fonts
+		text = App->font->Load("fonts/PixelCowboy/PixelCowboy.otf", 8);
 
 		SDL_Rect idle = {0, 143, 190, 49};
 		SDL_Rect hovered = { 0, 45, 190, 49 };
@@ -101,15 +105,15 @@ bool j1SceneMenu::Update(float dt)
 		switch (item->data->state) 
 		{
 		case IDLE:
-			item->data->section = item->data->idle;
+			item->data->situation = item->data->idle;
 			break;
 
 		case HOVERED:
-			item->data->section = item->data->hovered;
+			item->data->situation = item->data->hovered;
 			break;
 
 		case RELEASED:
-			item->data->section = item->data->idle;
+			item->data->situation = item->data->idle;
 			if (item->data->bfunction == PLAY_GAME) {
 				ChangeScene();
 			}
@@ -122,7 +126,7 @@ bool j1SceneMenu::Update(float dt)
 			break;
 
 		case CLICKED:
-			item->data->section = item->data->clicked;
+			item->data->situation = item->data->clicked;
 			break;
 		}
 	}
@@ -139,6 +143,11 @@ bool j1SceneMenu::Update(float dt)
 		item->data->Draw(0.5f);
 	}
 
+	// Blitting the text
+	App->render->Blit(App->font->Print("Start", { 245, 245, 220, 255 }, text), 111, 115);
+	App->render->Blit(App->font->Print("Exit", { 245, 245, 220, 255 }, text), 116, 140);
+	App->render->Blit(App->font->Print("Credits", { 245, 245, 220, 255 }, text), 103, 165);
+
 	return true;
 }
 
@@ -154,8 +163,6 @@ bool j1SceneMenu::PostUpdate()
 
 bool j1SceneMenu::CleanUp()
 {
-	LOG("Unloading all sound fx");
-
 	LOG("Freeing all textures");
 	App->tex->UnLoad(harpy_tex);
 	App->tex->UnLoad(player_tex);

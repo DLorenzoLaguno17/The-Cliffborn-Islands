@@ -8,6 +8,7 @@
 #include "p2Animation.h"
 
 struct SDL_Texture;
+struct _TTF_Font;
 
 class j1SceneMenu : public j1Module
 {
@@ -42,6 +43,8 @@ private:
 	SDL_Texture* gui_tex = nullptr;
 	SDL_Texture* player_tex = nullptr;
 	SDL_Texture* harpy_tex = nullptr;
+
+	_TTF_Font* text = nullptr;
 
 	bool continueGame = true;
 	p2List<j1Button*> menuButtons;

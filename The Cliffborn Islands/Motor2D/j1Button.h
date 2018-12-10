@@ -28,9 +28,16 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	// Blits the element on the screen
+	void Draw(float scale, bool flip = false, int x = 0, int y = 0) override;
+
 public:
 	STATE state = IDLE;
 	ButtonFunction bfunction;
+	SDL_Texture* sprites = nullptr;
+
+	// Visual situation of the button
+	SDL_Rect situation;
 
 	SDL_Rect idle;
 	SDL_Rect hovered;
