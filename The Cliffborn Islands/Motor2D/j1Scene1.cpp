@@ -16,6 +16,7 @@
 #include "j1FadeToBlack.h"
 #include "j1Pathfinding.h"
 #include "j1Gui.h"
+#include "j1SceneMenu.h"
 
 #include "Brofiler/Brofiler.h"
 
@@ -268,4 +269,17 @@ void j1Scene1::ChangeScene()
 	App->path->Start();
 	App->entity->player->initialPosition = App->scene2->initialScene2Position;
 	App->entity->player->position = App->scene2->initialScene2Position;
+}
+
+void j1Scene1::ChangeSceneMenu()
+{
+	App->scene1->active = false;
+	App->menu->active = true;
+
+	CleanUp();
+	App->entity->CleanUp();
+	App->entity->active = false;
+	App->menu->Start();
+	App->fade->FadeToBlack(App->scene1, App->menu);
+	App->render->camera = { 0,0 };
 }

@@ -80,6 +80,8 @@ bool j1SceneMenu::Start()
 		App->gui->CreateLabel(LABEL, 111, 115, text, "Start", { 245, 245, 220, 255 });
 		App->gui->CreateLabel(LABEL, 116, 140, text, "Exit", { 245, 245, 220, 255 });
 		App->gui->CreateLabel(LABEL, 103, 165, text, "Credits", { 245, 245, 220, 255 });
+
+		player_created = false;
 	}
 
 	return true;
@@ -119,6 +121,7 @@ bool j1SceneMenu::Update(float dt)
 			item->data->situation = item->data->idle;
 			if (item->data->bfunction == PLAY_GAME) {
 				ChangeScene();
+				player_created = true;
 			}
 			else if (item->data->bfunction == CLOSE_GAME) {
 				continueGame = false;				
@@ -180,14 +183,16 @@ bool j1SceneMenu::CleanUp()
 
 void j1SceneMenu::ChangeScene()
 {
-	this->active = false;
-	App->scene1->active = true;
-	CleanUp();
-	App->scene1->Start();
-	App->entity->active = true;
-	App->entity->CreatePlayer();
-	App->entity->Start();
-	App->collisions->Start();
-	App->path->Start();
-	App->scene1->Update(0);
+	if (!player_created)
+	{
+		this->active = false;
+		App->scene1->active = true;
+		CleanUp();
+		App->scene1->Start();
+		App->entity->active = true;
+		App->entity->CreatePlayer();
+		App->entity->Start();
+		App->path->Start();
+		App->scene1->Update(0);
+	}
 }

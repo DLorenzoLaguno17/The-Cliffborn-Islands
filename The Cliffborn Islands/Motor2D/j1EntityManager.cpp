@@ -93,21 +93,18 @@ bool j1EntityManager::CleanUp()
 {
 	LOG("Freeing all enemies");
 
-	bool ret = true;
-
-	p2List_item<j1Entity*>* item;
 	
-	for (item = entities.end; item != NULL && ret == true; item = item->prev)
+	for (p2List_item<j1Entity*>* iterator = entities.start; iterator != nullptr; iterator = iterator->next) 
 	{
-		ret = item->data->CleanUp();
+		iterator->data->CleanUp();
 	}
 
 	entities.clear();
 
-	player = nullptr;
-	hook = nullptr;
+	//player = nullptr;
+	//hook = nullptr;
 
-	return ret;
+	return true;
 }
 
 j1Entity* j1EntityManager::CreateEntity(ENTITY_TYPES type, int x, int y)

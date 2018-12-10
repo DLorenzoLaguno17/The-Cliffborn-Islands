@@ -44,7 +44,9 @@ private:
 	SDL_Texture* harpy_tex = nullptr;
 
 	_TTF_Font* text = nullptr;
+
 	bool continueGame = true;
+	bool player_created = false;
 
 	Animation player;
 	Animation harpy;

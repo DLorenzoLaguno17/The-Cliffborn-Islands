@@ -53,6 +53,8 @@ bool j1Player::Start() {
 	animation = &idle;
 	currentJumps = initialJumps;
 	
+	lives = 2;
+
 	// Setting player position
 	position.x = initialPosition.x;
 	position.y = initialPosition.y;
@@ -270,6 +272,8 @@ bool j1Player::Update(float dt, bool do_logic) {
 				collider->type = COLLIDER_PLAYER;
 			}
 		}
+		if (dead && App->fade->IsFading() == false)
+			lives--;
 	}
 
 	if (dead) {
@@ -502,26 +506,35 @@ void j1Player::OnCollision(Collider* col_1, Collider* col_2)
 		//If the player collides with death colliders
 		if (col_2->type == COLLIDER_DEATH || col_2->type == COLLIDER_ENEMY)
 		{
-			if (col_2->rect.h < deathByFallColliderHeight)
-				deathByFall = true;
-			else {
-				if (!playedSound) {
-					App->audio->PlayFx(playerHurt);
-					playedSound = true;
+			if (lives > 0)
+			{
+				if (col_2->rect.h < deathByFallColliderHeight)
+					deathByFall = true;
+				else {
+					if (!playedSound) {
+						App->audio->PlayFx(playerHurt);
+						playedSound = true;
+					}
+
+					jumping = false;
+					fallingSpeed = initialFallingSpeed;
 				}
+				App->entity->DestroyEntities();
+				if (App->scene1->active == true)
+					App->fade->FadeToBlack(App->scene1, App->scene1, 3.0f);
+				else if (App->scene2->active == true)
+					App->fade->FadeToBlack(App->scene2, App->scene2, 3.0f);
 
-				jumping = false;
-				fallingSpeed = initialFallingSpeed;
+				dead = true;
+				App->audio->PlayFx(deathSound);
+				currentJumps == maxJumps;
 			}
-			App->entity->DestroyEntities();
-			if (App->scene1->active == true)
-				App->fade->FadeToBlack(App->scene1, App->scene1, 3.0f);
-			else if (App->scene2->active == true)
-				App->fade->FadeToBlack(App->scene2, App->scene2, 3.0f);
+			else if (App->scene1->active)
+				App->scene1->ChangeSceneMenu();
+			else if (App->scene2->active)
+				App->scene2->ChangeSceneMenu();
 
-			dead = true;
-			App->audio->PlayFx(deathSound);
-			currentJumps == maxJumps;
+			
 		}
 	}
 };

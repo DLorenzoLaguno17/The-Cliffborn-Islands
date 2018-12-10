@@ -238,3 +238,17 @@ void j1Scene2::ChangeScene()
 	App->entity->player->initialPosition = App->scene1->initialScene1Position;
 	App->entity->player->position = App->scene1->initialScene1Position;
 }
+
+
+void j1Scene2::ChangeSceneMenu()
+{
+	App->scene2->active = false;
+	App->menu->active = true;
+
+	CleanUp();
+	App->entity->CleanUp();
+	App->entity->active = false;
+	App->menu->Start();
+	App->fade->FadeToBlack(App->scene2, App->menu);
+	App->render->camera = { 0,0 };
+}
