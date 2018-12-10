@@ -88,6 +88,12 @@ bool j1SceneMenu::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN)
 		ChangeScene();
 
+	if (App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN)
+		App->audio->MusicVolume(App->audio->GetMusicVolume() + 10.0f);
+
+	if (App->input->GetKey(SDL_SCANCODE_N) == KEY_DOWN)
+		App->audio->MusicVolume(App->audio->GetMusicVolume() - 10.0f);
+
 	App->gui->UpdateButtonsState();
 	
 	// UI management
