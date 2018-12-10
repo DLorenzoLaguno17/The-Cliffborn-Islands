@@ -199,6 +199,29 @@ bool j1Scene1::Save(pugi::xml_node& node) const
 
 void j1Scene1::PlaceEnemies()
 {
+	App->entity->AddEnemy(123, 68, COIN);
+	App->entity->AddEnemy(282, 121, COIN);
+	App->entity->AddEnemy(507, 89, COIN);
+	App->entity->AddEnemy(588, 73, COIN);
+	App->entity->AddEnemy(667, 73, COIN);
+	App->entity->AddEnemy(778, 105, COIN);
+	App->entity->AddEnemy(914, 39, COIN);
+	App->entity->AddEnemy(999, 60, COIN);
+	App->entity->AddEnemy(1215, 40, COIN);
+	App->entity->AddEnemy(1305, 21, COIN);
+	App->entity->AddEnemy(1474, 41, COIN);
+	App->entity->AddEnemy(1529, 56, COIN);
+	App->entity->AddEnemy(1576, 73, COIN);
+	App->entity->AddEnemy(1627, 89, COIN);
+	App->entity->AddEnemy(1584, 9, COIN);
+	App->entity->AddEnemy(1613, 9, COIN);
+	App->entity->AddEnemy(1642, 9, COIN);
+	App->entity->AddEnemy(1671, 9, COIN);
+	App->entity->AddEnemy(1928, 100, COIN);
+	App->entity->AddEnemy(2245, 73, COIN);
+	App->entity->AddEnemy(2334, 73, COIN);
+	App->entity->AddEnemy(2288, 53, COIN);
+
 	App->entity->AddEnemy(210, 120, SKELETON);
 	/*App->entity->AddEnemy(613, 73, SKELETON);
 	App->entity->AddEnemy(1676, 9, SKELETON);

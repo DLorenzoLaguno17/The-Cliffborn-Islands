@@ -72,6 +72,7 @@ public:
 	uint maxJumps;
 	uint colisionMargin;
 	uint deathByFallColliderHeight;
+	uint points = 0;
 
 	Collider* attackCollider = nullptr;
 

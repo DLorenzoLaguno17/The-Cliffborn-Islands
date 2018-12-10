@@ -149,7 +149,7 @@
 	  </skeleton>
 
     <coin>
-      <idle loop ="true" speed="1.0f">
+      <idle loop ="true" speed="10.0f">
         <animation x="4" y="4" w="16" h="16"/>
         <animation x="36" y="4" w="16" h="16"/>
         <animation x="68" y="4" w="16" h="16"/>

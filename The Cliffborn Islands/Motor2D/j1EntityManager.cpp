@@ -12,7 +12,7 @@
 #include "j1Player.h"
 #include "j1Hook.h"
 #include "j1Skeleton.h"
-
+#include "j1Coin.h"
 #include "Brofiler/Brofiler.h"
 
 j1EntityManager::j1EntityManager()
@@ -152,6 +152,9 @@ void j1EntityManager::SpawnEnemy(const EntityInfo& info)
 
 			else if (queue[i].type == SKELETON)
 				entity = new j1Skeleton(info.position.x, info.position.y, info.type);
+
+			else if (queue[i].type == COIN)
+				entity = new j1Coin(info.position.x, info.position.y, info.type);
 
 			entities.add(entity);
 			entity->Start();
