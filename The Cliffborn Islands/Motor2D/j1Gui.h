@@ -3,14 +3,15 @@
 
 #include "j1Module.h"
 #include "p2List.h"
+#include "SDL/include/SDL_rect.h"
 
 #define CURSOR_WIDTH 2
 
 struct SDL_Texture;
 struct _TTF_Font;
-struct j1UserInterfaceElement;
 struct SDL_Rect;
 struct j1Button;
+struct j1Label;
 
 enum UIELEMENT_TYPES
 {
@@ -55,15 +56,17 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	// Factory method
-	//j1UserInterfaceElement* CreateElement(UIELEMENT_TYPES type, int x, int y, SDL_Texture* text = nullptr);
+	// Factory methods
 	j1Button* CreateButton(UIELEMENT_TYPES type, int x, int y, SDL_Rect idle, SDL_Rect hovered, SDL_Rect clicked, SDL_Texture* text = nullptr, ButtonFunction function = NO_FUNCTION);
+	j1Label* CreateLabel(UIELEMENT_TYPES type, int x, int y, _TTF_Font* font, const char* text, SDL_Color color = { 255, 255, 255, 255});
 
 	void UpdateButtonsState();
 	
 	const SDL_Texture* GetAtlas() const;
-	p2List<j1UserInterfaceElement*>	elements;
+
+public:
 	p2List<j1Button*> buttons;
+	p2List<j1Label*> labels;
 
 private:
 

@@ -86,6 +86,7 @@
     <ClCompile Include="j1Gui.cpp" />
     <ClCompile Include="j1Harpy.cpp" />
     <ClCompile Include="j1Hook.cpp" />
+    <ClCompile Include="j1Label.cpp" />
     <ClCompile Include="j1Main.cpp" />
     <ClCompile Include="j1App.cpp" />
     <ClCompile Include="j1Audio.cpp" />
@@ -99,7 +100,6 @@
     <ClCompile Include="j1SceneMenu.cpp" />
     <ClCompile Include="j1Skeleton.cpp" />
     <ClCompile Include="j1Timer.cpp" />
-    <ClCompile Include="j1UserInterfaceElement.cpp" />
     <ClCompile Include="p2Log.cpp" />
     <ClCompile Include="j1Render.cpp" />
     <ClCompile Include="j1Textures.cpp" />

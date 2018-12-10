@@ -7,12 +7,12 @@
 
 #include "Brofiler/Brofiler.h"
 
-j1Label::j1Label(UIELEMENT_TYPES type, int x, int y, _TTF_Font* font) :
-	j1UserInterfaceElement(UIELEMENT_TYPES::LABEL, x, y), font(font) {}
+j1Label::j1Label(UIELEMENT_TYPES type, int x, int y, _TTF_Font* font, const char* text, SDL_Color color) :
+	j1UserInterfaceElement(UIELEMENT_TYPES::LABEL, x, y), font(font), text(text), color(color) {}
 
 j1Label::~j1Label() {}
 
-void j1Label::Draw(float scale, const char* text, SDL_Color color, bool flip, int x, int y)
+void j1Label::Draw(float scale, bool flip, int x, int y)
 {
 	SDL_Texture* tex = App->font->Print(text, color, font);
 

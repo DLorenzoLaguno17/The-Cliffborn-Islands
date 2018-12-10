@@ -6,6 +6,7 @@
 #include "j1Input.h"
 #include "j1Gui.h"
 #include "j1Button.h"
+#include "j1Label.h"
 
 j1Gui::j1Gui() : j1Module()
 {
@@ -47,22 +48,20 @@ bool j1Gui::PostUpdate()
 	return true;
 }
 
-/*j1UserInterfaceElement* j1Gui::CreateElement(UIELEMENT_TYPES type, int x, int y, SDL_Texture* text){
-	j1UserInterfaceElement* ret = nullptr;
-	switch (type)
-	{
-	case BUTTON:
-		ret = new j1Button(type, x, y, text);
-		if (ret != nullptr) buttons.add(ret); break;
-	}
-	return ret;
-}*/
-
 j1Button* j1Gui::CreateButton(UIELEMENT_TYPES type, int x, int y, SDL_Rect idle, SDL_Rect hovered, SDL_Rect clicked, SDL_Texture* text, ButtonFunction function) {
 	j1Button* ret = nullptr;
 
 	ret = new j1Button(type, x, y, idle, hovered, clicked, text, function);
 	if (ret != nullptr) buttons.add(ret);
+
+	return ret;
+}
+
+j1Label* j1Gui::CreateLabel(UIELEMENT_TYPES type, int x, int y, _TTF_Font* font, const char* text, SDL_Color color) {
+	j1Label* ret = nullptr;
+
+	ret = new j1Label(type, x, y, font, text, color);
+	if (ret != nullptr) labels.add(ret);
 
 	return ret;
 }
@@ -74,6 +73,10 @@ bool j1Gui::CleanUp()
 	for (p2List_item<j1Button*>* item = App->gui->buttons.start; item != nullptr; item = item->next) {
 		item->data->CleanUp();
 		buttons.del(item);
+	}
+
+	for (p2List_item<j1Label*>* item = App->gui->labels.start; item != nullptr; item = item->next) {
+		labels.del(item);
 	}
 
 	return true;

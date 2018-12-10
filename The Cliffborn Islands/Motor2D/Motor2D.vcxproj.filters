@@ -76,9 +76,6 @@
     <ClCompile Include="j1Fonts.cpp">
       <Filter>Development\Modules\GraphicUserInterface</Filter>
     </ClCompile>
-    <ClCompile Include="j1UserInterfaceElement.cpp">
-      <Filter>Development\Modules\GraphicUserInterface</Filter>
-    </ClCompile>
     <ClCompile Include="j1Button.cpp">
       <Filter>Development\Modules\GraphicUserInterface</Filter>
     </ClCompile>
@@ -87,6 +84,9 @@
     </ClCompile>
     <ClCompile Include="j1Coin.cpp">
       <Filter>Development\Modules\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="j1Label.cpp">
+      <Filter>Development\Modules\GraphicUserInterface</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
