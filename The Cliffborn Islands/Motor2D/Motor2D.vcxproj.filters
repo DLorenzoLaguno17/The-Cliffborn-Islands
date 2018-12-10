@@ -85,6 +85,9 @@
     <ClCompile Include="j1SceneMenu.cpp">
       <Filter>Development\Scenes</Filter>
     </ClCompile>
+    <ClCompile Include="j1Coin.cpp">
+      <Filter>Development\Modules\Entities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Textures.h">
@@ -194,6 +197,9 @@
     </ClInclude>
     <ClInclude Include="j1SceneMenu.h">
       <Filter>Development\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Coin.h">
+      <Filter>Development\Modules\Entities</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
