@@ -10,19 +10,9 @@ j1Button::j1Button(UIELEMENT_TYPES type, int x, int y, SDL_Rect idle, SDL_Rect h
 
 j1Button::~j1Button() {}
 
-bool j1Button::Update(float dt, bool do_logic)
-{
-	BROFILER_CATEGORY("Button", Profiler::Color::LightSeaGreen)	
-
-	// Drawing the button
-	Draw();
-
-	return true;
-}
-
 bool j1Button::CleanUp()
 {
-	LOG("Unloading harpy");
+	LOG("Unloading button textures");
 	App->tex->UnLoad(sprites);
 
 	return true;

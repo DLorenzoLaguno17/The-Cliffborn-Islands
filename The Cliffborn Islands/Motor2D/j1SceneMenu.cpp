@@ -63,13 +63,13 @@ bool j1SceneMenu::Start()
 		player_tex = App->tex->Load("textures/character/character.png");
 		harpy_tex = App->tex->Load("textures/enemies/harpy/harpy.png");
 
-		SDL_Rect idle = {288, 198, 49, 49};
-		SDL_Rect hovered = { 239, 198, 49, 49 };
-		SDL_Rect clicked = { 190, 198, 49, 49 };
+		SDL_Rect idle = {0, 143, 190, 49};
+		SDL_Rect hovered = { 0, 45, 190, 49 };
+		SDL_Rect clicked = { 0, 94, 190, 49 };
 
-		App->gui->CreateButton(BUTTON, 107, 90, idle, hovered, clicked, gui_tex, PLAY_GAME);
-		App->gui->CreateButton(BUTTON, 107, 140, idle, hovered, clicked, gui_tex, CLOSE_GAME);
-		App->gui->CreateButton(BUTTON, 200, 140, idle, hovered, clicked, gui_tex, CREDITS);
+		App->gui->CreateButton(BUTTON, 80, 110, idle, hovered, clicked, gui_tex, PLAY_GAME);
+		App->gui->CreateButton(BUTTON, 80, 135, idle, hovered, clicked, gui_tex, CLOSE_GAME);
+		App->gui->CreateButton(BUTTON, 80, 160, idle, hovered, clicked, gui_tex, CREDITS);
 	}
 
 	return true;
@@ -130,7 +130,7 @@ bool j1SceneMenu::Update(float dt)
 
 	// Blitting the buttons
 	for (p2List_item<j1Button*>* item = App->gui->buttons.start; item != nullptr; item = item->next) {
-		item->data->Draw();
+		item->data->Draw(0.5f);
 	}
 
 	return true;

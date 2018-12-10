@@ -25,9 +25,6 @@ public:
 	// Destructor
 	virtual ~j1Button();
 
-	// Called every frame
-	bool Update(float dt, bool do_logic);
-
 	// Called before quitting
 	bool CleanUp();
 
@@ -35,7 +32,6 @@ public:
 	STATE state = IDLE;
 	ButtonFunction bfunction;
 
-	Animation* animation = nullptr;
 	SDL_Rect idle;
 	SDL_Rect hovered;
 	SDL_Rect clicked;
