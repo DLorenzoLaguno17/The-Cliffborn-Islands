@@ -9,6 +9,8 @@
 #include "j1Audio.h"
 #include "j1Map.h"
 #include "j1Gui.h"
+#include "j1Button.h"
+#include "j1Label.h"
 #include "j1Fonts.h"
 #include "j1Input.h"
 #include "j1Window.h"
@@ -74,6 +76,10 @@ bool j1SceneMenu::Start()
 		App->gui->CreateButton(BUTTON, 85, 110, idle, hovered, clicked, gui_tex, PLAY_GAME);
 		App->gui->CreateButton(BUTTON, 85, 135, idle, hovered, clicked, gui_tex, CLOSE_GAME);
 		App->gui->CreateButton(BUTTON, 85, 160, idle, hovered, clicked, gui_tex, CREDITS);
+
+		App->gui->CreateLabel(LABEL, 111, 115, text, "Start", { 245, 245, 220, 255 });
+		App->gui->CreateLabel(LABEL, 116, 140, text, "Exit", { 245, 245, 220, 255 });
+		App->gui->CreateLabel(LABEL, 103, 165, text, "Credits", { 245, 245, 220, 255 });
 	}
 
 	return true;
@@ -88,9 +94,6 @@ bool j1SceneMenu::PreUpdate()
 bool j1SceneMenu::Update(float dt)
 {
 	BROFILER_CATEGORY("MenuUpdate", Profiler::Color::LightSeaGreen)
-
-	if (App->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN)
-		ChangeScene();
 
 	if (App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN)
 		App->audio->MusicVolume(App->audio->GetMusicVolume() + 10.0f);
@@ -131,6 +134,10 @@ bool j1SceneMenu::Update(float dt)
 		}
 	}
 
+	// ---------------------------------------------------------------------------------------------------------------------
+	// DRAWING EVERYTHING ON THE SCREEN
+	// ---------------------------------------------------------------------------------------------------------------------	
+
 	App->map->Draw();
 
 	SDL_Rect p = player.GetCurrentFrame(dt);
@@ -143,10 +150,10 @@ bool j1SceneMenu::Update(float dt)
 		item->data->Draw(0.5f);
 	}
 
-	// Blitting the text
-	App->render->Blit(App->font->Print("Start", { 245, 245, 220, 255 }, text), 111, 115);
-	App->render->Blit(App->font->Print("Exit", { 245, 245, 220, 255 }, text), 116, 140);
-	App->render->Blit(App->font->Print("Credits", { 245, 245, 220, 255 }, text), 103, 165);
+	// Blitting the labels
+	for (p2List_item<j1Label*>* item = App->gui->labels.start; item != nullptr; item = item->next) {
+		item->data->Draw();
+	}
 
 	return true;
 }

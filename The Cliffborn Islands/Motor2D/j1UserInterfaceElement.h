@@ -15,7 +15,7 @@ public:
 	~j1UserInterfaceElement() {}
 
 	// Blits the element on the screen
-	virtual void Draw(float scale, bool flip = false, int x = 0, int y = 0) {}
+	virtual void Draw(float scale, int x = 0, int y = 0) {}
 
 public:
 

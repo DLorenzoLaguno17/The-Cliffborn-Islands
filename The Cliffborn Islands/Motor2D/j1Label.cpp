@@ -12,10 +12,9 @@ j1Label::j1Label(UIELEMENT_TYPES type, int x, int y, _TTF_Font* font, const char
 
 j1Label::~j1Label() {}
 
-void j1Label::Draw(float scale, bool flip, int x, int y)
+void j1Label::Draw(float scale, int x, int y)
 {
 	SDL_Texture* tex = App->font->Print(text, color, font);
 
-	if (flip == false)
-		App->render->Blit(tex, (int)position.x + x, (int)position.y + y);
+	App->render->Blit(tex, (int)position.x + x, (int)position.y + y);
 }

@@ -213,8 +213,8 @@ void j1Collisions::DrawColliders()
 		case COLLIDER_DEATH:	//Red
 			App->render->DrawQuad(colliders[i]->rect, 255, 0, 0, alpha);
 			break;
-		case COLLIDER_PLAYER:	//Yellow
-			App->render->DrawQuad(colliders[i]->rect, 255, 255, 0, alpha);
+		case COLLIDER_PLAYER:	//Dark green
+			App->render->DrawQuad(colliders[i]->rect, 0, 71, 49, alpha);
 			break;
 		case COLLIDER_HOOK:		//Black
 			App->render->DrawQuad(colliders[i]->rect, 0, 0, 0, alpha);
@@ -225,8 +225,8 @@ void j1Collisions::DrawColliders()
 		case COLLIDER_ATTACK:	//Cyan
 			App->render->DrawQuad(colliders[i]->rect, 0, 255, 255, alpha);
 			break;
-		case COLLIDER_COIN:		//Cyan
-			App->render->DrawQuad(colliders[i]->rect, 128, 128, 128, alpha);
+		case COLLIDER_COIN:		//Yellow
+			App->render->DrawQuad(colliders[i]->rect, 255, 255, 0, alpha);
 			break;
 		}
 	}

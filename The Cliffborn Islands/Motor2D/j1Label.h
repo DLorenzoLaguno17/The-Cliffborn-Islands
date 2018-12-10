@@ -14,7 +14,7 @@ public:
 	virtual ~j1Label();
 
 	// Blits the element on the screen
-	void Draw(float scale, bool flip = false, int x = 0, int y = 0) override;
+	void Draw(float scale = 1.0f, int x = 0, int y = 0) override;
 
 public:
 	_TTF_Font* font;

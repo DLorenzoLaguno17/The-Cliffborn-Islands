@@ -4,7 +4,6 @@
 #include "j1Module.h"
 #include "j1Render.h"
 #include "p2List.h"
-#include "j1Button.h"
 #include "p2Animation.h"
 
 struct SDL_Texture;
@@ -45,10 +44,7 @@ private:
 	SDL_Texture* harpy_tex = nullptr;
 
 	_TTF_Font* text = nullptr;
-
 	bool continueGame = true;
-	p2List<j1Button*> menuButtons;
-	j1UserInterfaceElement* testButton = nullptr;
 
 	Animation player;
 	Animation harpy;
