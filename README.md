@@ -1,4 +1,4 @@
-Ò The Cliffborn Islands
+The Cliffborn Islands
 
 Go to our GitHub: https://github.com/DLorenzoLaguno17/The-Cliffborn-Islands 
 

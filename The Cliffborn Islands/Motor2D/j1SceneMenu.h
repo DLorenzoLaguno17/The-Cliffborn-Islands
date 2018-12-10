@@ -5,6 +5,7 @@
 #include "j1Render.h"
 #include "p2List.h"
 #include "j1Button.h"
+#include "p2Animation.h"
 
 struct SDL_Texture;
 
@@ -39,9 +40,15 @@ public:
 private:
 
 	SDL_Texture* gui_tex = nullptr;
+	SDL_Texture* player_tex = nullptr;
+	SDL_Texture* harpy_tex = nullptr;
+
 	bool continueGame = true;
 	p2List<j1Button*> menuButtons;
 	j1UserInterfaceElement* testButton = nullptr;
+
+	Animation player;
+	Animation harpy;
 };
 
 #endif //__j1SCENEMENU_H__

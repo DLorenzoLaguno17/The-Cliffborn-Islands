@@ -17,6 +17,9 @@
 j1SceneMenu::j1SceneMenu()
 {
 	name.create("menu");
+
+	player.LoadAnimations("idle");
+	harpy.LoadEnemyAnimations("idle", "harpy");
 }
 
 j1SceneMenu::~j1SceneMenu() {}
@@ -55,14 +58,18 @@ bool j1SceneMenu::Start()
 		// The audio is played
 		App->audio->PlayMusic("audio/music/menu_music.ogg", 1.0f);
 
+		// Loading textures
 		gui_tex = App->tex->Load("gui/atlas.png");
+		player_tex = App->tex->Load("textures/character/character.png");
+		harpy_tex = App->tex->Load("textures/enemies/harpy/harpy.png");
 
 		SDL_Rect idle = {288, 198, 49, 49};
 		SDL_Rect hovered = { 239, 198, 49, 49 };
 		SDL_Rect clicked = { 190, 198, 49, 49 };
 
-		App->gui->CreateButton(BUTTON, 170, 80, idle, hovered, clicked, gui_tex, PLAY_GAME);
-		App->gui->CreateButton(BUTTON, 170, 130, idle, hovered, clicked, gui_tex, CLOSE_GAME);
+		App->gui->CreateButton(BUTTON, 107, 90, idle, hovered, clicked, gui_tex, PLAY_GAME);
+		App->gui->CreateButton(BUTTON, 107, 140, idle, hovered, clicked, gui_tex, CLOSE_GAME);
+		App->gui->CreateButton(BUTTON, 200, 140, idle, hovered, clicked, gui_tex, CREDITS);
 	}
 
 	return true;
@@ -101,7 +108,10 @@ bool j1SceneMenu::Update(float dt)
 				ChangeScene();
 			}
 			else if (item->data->bfunction == CLOSE_GAME) {
-				continueGame = false;
+				continueGame = false;				
+			}
+			else if (item->data->bfunction == CREDITS){
+				ShellExecuteA(NULL, "open", "https://github.com/DLorenzoLaguno17/The-Cliffborn-Islands", NULL, NULL, SW_SHOWNORMAL);
 			}
 			break;
 
@@ -112,6 +122,11 @@ bool j1SceneMenu::Update(float dt)
 	}
 
 	App->map->Draw();
+
+	SDL_Rect p = player.GetCurrentFrame(dt);
+	App->render->Blit(player_tex, 40, 105, &p, SDL_FLIP_NONE);
+	SDL_Rect h = harpy.GetCurrentFrame(dt);
+	App->render->Blit(harpy_tex, 200, 25, &h, SDL_FLIP_HORIZONTAL);
 
 	// Blitting the buttons
 	for (p2List_item<j1Button*>* item = App->gui->buttons.start; item != nullptr; item = item->next) {
@@ -133,8 +148,13 @@ bool j1SceneMenu::PostUpdate()
 
 bool j1SceneMenu::CleanUp()
 {
+	LOG("Unloading all sound fx");
+
 	LOG("Freeing all textures");
+	App->tex->UnLoad(harpy_tex);
+	App->tex->UnLoad(player_tex);
 	App->tex->UnLoad(gui_tex);
+
 	return true;
 }
 
