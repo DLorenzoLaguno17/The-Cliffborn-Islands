@@ -63,6 +63,7 @@ bool j1SceneMenu::Start()
 
 		// Loading textures
 		gui_tex = App->tex->Load("gui/atlas.png");
+		logo_tex = App->tex->Load("gui/logo.png");
 		player_tex = App->tex->Load("textures/character/character.png");
 		harpy_tex = App->tex->Load("textures/enemies/harpy/harpy.png");
 		
@@ -158,6 +159,9 @@ bool j1SceneMenu::Update(float dt)
 		item->data->Draw();
 	}
 
+	SDL_Rect logo = { 166, 139, 711, 533};
+	App->render->Blit(logo_tex, 59, 5, &logo, SDL_FLIP_NONE, 1.0f, 0.20f);
+
 	return true;
 }
 
@@ -174,6 +178,7 @@ bool j1SceneMenu::PostUpdate()
 bool j1SceneMenu::CleanUp()
 {
 	LOG("Freeing all textures");
+	App->tex->UnLoad(logo_tex);
 	App->tex->UnLoad(harpy_tex);
 	App->tex->UnLoad(player_tex);
 	App->tex->UnLoad(gui_tex);

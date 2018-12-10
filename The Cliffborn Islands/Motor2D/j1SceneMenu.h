@@ -40,6 +40,7 @@ public:
 private:
 
 	SDL_Texture* gui_tex = nullptr;
+	SDL_Texture* logo_tex = nullptr;
 	SDL_Texture* player_tex = nullptr;
 	SDL_Texture* harpy_tex = nullptr;
 
