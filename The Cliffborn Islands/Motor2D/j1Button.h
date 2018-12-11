@@ -34,7 +34,6 @@ public:
 public:
 	STATE state = IDLE;
 	ButtonFunction bfunction;
-	SDL_Texture* sprites = nullptr;
 
 	// Visual situation of the button
 	SDL_Rect situation;

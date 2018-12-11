@@ -46,6 +46,8 @@ bool j1Coin::Update(float dt, bool do_logic)
 bool j1Coin::CleanUp()
 {
 	App->tex->UnLoad(sprites);
+	if(collider != nullptr)
+		collider->to_delete = true;
 
 	return true;
 }

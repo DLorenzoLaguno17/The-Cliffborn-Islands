@@ -46,17 +46,7 @@ bool j1SceneMenu::Start()
 	if (active)
 	{
 		// The map is loaded
-		if (App->map->Load("menu.tmx"))
-		{
-			int w, h;
-			uchar* data = NULL;
-			if (App->map->CreateWalkabilityMap(w, h, &data))
-			{
-				App->path->SetMap(w, h, data);
-			}
-
-			RELEASE_ARRAY(data);
-		}
+		App->map->Load("menu.tmx");
 
 		// The audio is played
 		App->audio->PlayMusic("audio/music/menu_music.ogg", 1.0f);
