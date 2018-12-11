@@ -57,6 +57,7 @@ public:
 	p2DynArray<iPoint>* path;
 
 	bool path_created = false;
+	bool dead = false;
 
 };
 #endif // __j1SKELETON_H__

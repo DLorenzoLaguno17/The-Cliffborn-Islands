@@ -6,6 +6,7 @@
 	<audio />
 	<map />
 	<pathfinding />
+	<menu />
 	<scene1>
 		<activated true="true" />
 	</scene1>
@@ -14,17 +15,17 @@
 	</scene2>
 	<entityManager>
 		<player>
-			<position x="175.480042" y="121" />
+			<position x="175" y="121" />
 			<godmode value="false" />
 		</player>
 		<harpy />
-		<skeleton>
-			<position x="135.95018" y="293.555878" />
-		</skeleton>
+		<skeleton />
 	</entityManager>
 	<fade />
 	<collisions />
+	<fonts />
+	<gui />
 	<renderer>
-		<camera x="-301" y="0" />
+		<camera x="-300" y="0" />
 	</renderer>
 </game_state>

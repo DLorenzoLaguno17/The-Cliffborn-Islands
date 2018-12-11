@@ -48,46 +48,48 @@ bool j1Skeleton::Update(float dt, bool do_logic)
 {
 	BROFILER_CATEGORY("SkeletonUpdate", Profiler::Color::LightSeaGreen)
 
+	if (dead == false) {
 		collider->SetPos(position.x, position.y);
 
-	position.y += GRAVITY + GRAVITY * dt;
+		position.y += GRAVITY + GRAVITY * dt;
 
-	if (do_logic || path_created) {
-		if ((App->entity->player->position.x - position.x) <= DETECTION_RANGE && (App->entity->player->position.x - position.x) >= -DETECTION_RANGE && App->entity->player->collider->type == COLLIDER_PLAYER)
-		{
-			iPoint origin = { App->map->WorldToMap((int)position.x + colliderSize.x / 2, (int)position.y + colliderSize.y / 2) };
-			iPoint destination;
-			if (position.x < App->entity->player->position.x)
-				destination = { App->map->WorldToMap((int)App->entity->player->position.x + App->entity->player->playerSize.x + 1, (int)App->entity->player->position.y + App->entity->player->playerSize.y / 2) };
-			else
-				destination = { App->map->WorldToMap((int)App->entity->player->position.x, (int)App->entity->player->position.y + App->entity->player->playerSize.y / 2) };
-
-			if (App->path->IsWalkable(destination) && App->path->IsWalkable(origin))
+		if (do_logic || path_created) {
+			if ((App->entity->player->position.x - position.x) <= DETECTION_RANGE && (App->entity->player->position.x - position.x) >= -DETECTION_RANGE && App->entity->player->collider->type == COLLIDER_PLAYER)
 			{
-				path = App->path->CreatePath(origin, destination);
-				Move(*path, dt);
-				path_created = true;
+				iPoint origin = { App->map->WorldToMap((int)position.x + colliderSize.x / 2, (int)position.y + colliderSize.y / 2) };
+				iPoint destination;
+				if (position.x < App->entity->player->position.x)
+					destination = { App->map->WorldToMap((int)App->entity->player->position.x + App->entity->player->playerSize.x + 1, (int)App->entity->player->position.y + App->entity->player->playerSize.y / 2) };
+				else
+					destination = { App->map->WorldToMap((int)App->entity->player->position.x, (int)App->entity->player->position.y + App->entity->player->playerSize.y / 2) };
+
+				if (App->path->IsWalkable(destination) && App->path->IsWalkable(origin))
+				{
+					path = App->path->CreatePath(origin, destination);
+					Move(*path, dt);
+					path_created = true;
+				}
+			}
+			else if (path_created) {
+				path->Clear();
+				path_created = false;
 			}
 		}
-		else if (path_created) {
-			path->Clear();
-			path_created = false;
+
+		if (App->entity->player->position == App->entity->player->initialPosition)
+		{
+			animation = &idle;
+			position = initialPosition;
 		}
+
+		// Blitting the skeleton
+		SDL_Rect r = animation->GetCurrentFrame(dt);
+
+		if (position.x - App->entity->player->position.x >= 0)
+			Draw(r, false, 0, 0);
+		else
+			Draw(r, true, 0, 0);
 	}
-
-	if (App->entity->player->position == App->entity->player->initialPosition)
-	{
-		animation = &idle;
-		position = initialPosition;
-	}
-
-	// Blitting the skeleton
-	SDL_Rect r = animation->GetCurrentFrame(dt);
-
-	if (position.x - App->entity->player->position.x >= 0)
-		Draw(r, false, 0, 0);
-	else
-		Draw(r, true, 0, 0);
 
 	return true;
 }
@@ -129,6 +131,7 @@ void j1Skeleton::OnCollision(Collider * col_1, Collider * col_2)
 	}
 
 	if (col_2->type == COLLIDER_ATTACK || col_2->type == COLLIDER_DEATH) {
+		dead = true;
 		CleanUp();
 	}
 	
