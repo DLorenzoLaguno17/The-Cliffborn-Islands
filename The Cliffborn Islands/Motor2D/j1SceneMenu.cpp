@@ -72,7 +72,12 @@ bool j1SceneMenu::Start()
 		SDL_Rect idle2 = { 28, 201, 49, 49 };
 		SDL_Rect hovered2 = { 77, 201, 49, 49 };
 		SDL_Rect clicked2 = { 126, 201, 49, 49 };
-		App->gui->CreateButton(BUTTON, 3, 3, idle2, hovered2, clicked2, gui_tex, CLOSE_GAME);
+		App->gui->CreateButton(BUTTON, 229, 3, idle2, hovered2, clicked2, gui_tex, CLOSE_GAME);
+
+		SDL_Rect idle3 = { 463, 109, 49, 49 };
+		SDL_Rect hovered3 = { 463, 158, 49, 49 };
+		SDL_Rect clicked3 = { 463, 207, 49, 49 };
+		App->gui->CreateButton(BUTTON, 3, 3, idle3, hovered3, clicked3, gui_tex, SETTINGS);
 
 		App->gui->CreateLabel(LABEL, 111, 115, text, "Start", { 245, 245, 220, 255 });
 		App->gui->CreateLabel(LABEL, 95, 140, text, "Continue", { 245, 245, 220, 255 });
@@ -127,6 +132,9 @@ bool j1SceneMenu::Update(float dt)
 			else if (item->data->bfunction == CLOSE_GAME) {
 				continueGame = false;				
 			}
+			else if (item->data->bfunction == SETTINGS) {
+
+			}
 			else if (item->data->bfunction == CREDITS){
 				ShellExecuteA(NULL, "open", "https://github.com/DLorenzoLaguno17/The-Cliffborn-Islands", NULL, NULL, SW_SHOWNORMAL);
 			}
@@ -147,7 +155,7 @@ bool j1SceneMenu::Update(float dt)
 	SDL_Rect p = player.GetCurrentFrame(dt);
 	App->render->Blit(player_tex, 40, 105, &p, SDL_FLIP_NONE);
 	SDL_Rect h = harpy.GetCurrentFrame(dt);
-	App->render->Blit(harpy_tex, 200, 25, &h, SDL_FLIP_HORIZONTAL);
+	App->render->Blit(harpy_tex, 205, 35, &h, SDL_FLIP_HORIZONTAL);
 
 	// Blitting the buttons
 	for (p2List_item<j1Button*>* item = App->gui->buttons.start; item != nullptr; item = item->next) {

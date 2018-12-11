@@ -15,10 +15,11 @@
 	</scene2>
 	<entityManager>
 		<player>
-			<position x="435.64035" y="57" />
-			<godmode value="false" />
+			<position x="517.680176" y="80.447258" />
+			<godmode value="true" />
 		</player>
 		<harpy>
+			<position x="150" y="20" />
 			<position x="150" y="20" />
 		</harpy>
 		<skeleton />
@@ -28,6 +29,6 @@
 	<fonts />
 	<gui />
 	<renderer>
-		<camera x="-1342" y="0" />
+		<camera x="-1670" y="0" />
 	</renderer>
 </game_state>

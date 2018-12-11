@@ -29,6 +29,7 @@ enum ButtonFunction {
 	CREDITS,
 	SAVE_GAME,
 	CONTINUE,
+	SETTINGS
 };
 
 // ---------------------------------------------------
