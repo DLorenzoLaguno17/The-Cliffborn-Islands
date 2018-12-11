@@ -8,17 +8,19 @@
 	<pathfinding />
 	<menu />
 	<scene1>
-		<activated true="true" />
+		<activated true="false" />
 	</scene1>
 	<scene2>
-		<activated true="false" />
+		<activated true="true" />
 	</scene2>
 	<entityManager>
 		<player>
-			<position x="175" y="121" />
+			<position x="435.64035" y="57" />
 			<godmode value="false" />
 		</player>
-		<harpy />
+		<harpy>
+			<position x="150" y="20" />
+		</harpy>
 		<skeleton />
 	</entityManager>
 	<fade />
@@ -26,6 +28,6 @@
 	<fonts />
 	<gui />
 	<renderer>
-		<camera x="-300" y="0" />
+		<camera x="-1342" y="0" />
 	</renderer>
 </game_state>

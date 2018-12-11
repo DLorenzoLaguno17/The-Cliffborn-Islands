@@ -28,7 +28,7 @@ enum ButtonFunction {
 	CLOSE_GAME,
 	CREDITS,
 	SAVE_GAME,
-	LOAD_GAME,
+	CONTINUE,
 };
 
 // ---------------------------------------------------
@@ -70,7 +70,7 @@ public:
 
 private:
 
-	SDL_Texture * atlas;
+	SDL_Texture* atlas = nullptr;
 	p2SString atlas_file_name;
 
 };

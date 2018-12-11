@@ -16,3 +16,11 @@ void j1Label::Draw(float scale, int x, int y)
 {
 	App->render->Blit(sprites, (int)position.x + x, (int)position.y + y, NULL, SDL_FLIP_NONE, 1.0f, scale);
 }
+
+bool j1Label::CleanUp()
+{
+	LOG("Unloading label textures");
+	App->tex->UnLoad(sprites);
+
+	return true;
+}

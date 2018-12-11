@@ -3,6 +3,7 @@
 #include "p2Log.h"
 #include "j1Textures.h"
 #include "j1Scene1.h"
+#include "j1Scene2.h"
 #include "j1EntityManager.h"
 #include "j1Collisions.h"
 #include "j1Pathfinding.h"
@@ -65,11 +66,16 @@ bool j1SceneMenu::Start()
 		SDL_Rect clicked = { 0, 94, 190, 49 };
 
 		App->gui->CreateButton(BUTTON, 85, 110, idle, hovered, clicked, gui_tex, PLAY_GAME);
-		App->gui->CreateButton(BUTTON, 85, 135, idle, hovered, clicked, gui_tex, CLOSE_GAME);
+		App->gui->CreateButton(BUTTON, 85, 135, idle, hovered, clicked, gui_tex, CONTINUE);
 		App->gui->CreateButton(BUTTON, 85, 160, idle, hovered, clicked, gui_tex, CREDITS);
 
+		SDL_Rect idle2 = { 28, 201, 49, 49 };
+		SDL_Rect hovered2 = { 77, 201, 49, 49 };
+		SDL_Rect clicked2 = { 126, 201, 49, 49 };
+		App->gui->CreateButton(BUTTON, 3, 3, idle2, hovered2, clicked2, gui_tex, CLOSE_GAME);
+
 		App->gui->CreateLabel(LABEL, 111, 115, text, "Start", { 245, 245, 220, 255 });
-		App->gui->CreateLabel(LABEL, 116, 140, text, "Exit", { 245, 245, 220, 255 });
+		App->gui->CreateLabel(LABEL, 95, 140, text, "Continue", { 245, 245, 220, 255 });
 		App->gui->CreateLabel(LABEL, 103, 165, text, "Credits", { 245, 245, 220, 255 });
 
 		player_created = false;
@@ -87,7 +93,8 @@ bool j1SceneMenu::PreUpdate()
 bool j1SceneMenu::Update(float dt)
 {
 	BROFILER_CATEGORY("MenuUpdate", Profiler::Color::LightSeaGreen)
-
+		
+	// Volume control
 	if (App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN)
 		App->audio->MusicVolume(App->audio->GetMusicVolume() + 10.0f);
 
@@ -111,8 +118,11 @@ bool j1SceneMenu::Update(float dt)
 		case RELEASED:
 			item->data->situation = item->data->idle;
 			if (item->data->bfunction == PLAY_GAME) {
-				ChangeScene();
+				ChangeScene(true);
 				player_created = true;
+			}
+			else if (item->data->bfunction == CONTINUE) {
+				App->LoadGame("save_game.xml");
 			}
 			else if (item->data->bfunction == CLOSE_GAME) {
 				continueGame = false;				
@@ -173,21 +183,43 @@ bool j1SceneMenu::CleanUp()
 	App->tex->UnLoad(player_tex);
 	App->tex->UnLoad(gui_tex);
 
+	App->map->CleanUp();
+	App->tex->CleanUp();
+
 	return true;
 }
 
-void j1SceneMenu::ChangeScene()
+bool j1SceneMenu::Load(pugi::xml_node& node)
+{
+	pugi::xml_node activated = node.child("activated");
+
+	bool scene_activated = activated.attribute("true").as_bool();
+
+	if ((scene_activated == false) && active)
+		ChangeScene(scene_activated);
+
+	return true;
+}
+
+void j1SceneMenu::ChangeScene(bool scene1)
 {
 	if (!player_created)
 	{
 		this->active = false;
-		App->scene1->active = true;
 		CleanUp();
-		App->scene1->Start();
+
+		if (scene1) {
+			App->scene1->active = true;
+			App->scene1->Start();
+		}
+		else if (!scene1) {
+			App->scene2->active = true;
+			App->scene2->Start();
+		}
+
 		App->entity->active = true;
 		App->entity->CreatePlayer();
 		App->entity->Start();
 		App->path->Start();
-		App->scene1->Update(0);
 	}
 }

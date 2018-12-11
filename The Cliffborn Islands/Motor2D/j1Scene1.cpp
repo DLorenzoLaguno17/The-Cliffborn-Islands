@@ -262,6 +262,7 @@ void j1Scene1::ChangeScene()
 	App->scene2->active = true;
 	App->scene1->active = false;
 	CleanUp();
+	App->gui->CleanUp();
 	App->fade->FadeToBlack(App->scene1, App->scene2);
 	App->entity->Start();
 	App->scene2->Start();
@@ -277,9 +278,11 @@ void j1Scene1::ChangeSceneMenu()
 	App->menu->active = true;
 
 	CleanUp();
+	App->gui->CleanUp();
+	App->scene2->CleanUp();
+	App->fade->FadeToBlack(App->scene1, App->menu);
 	App->entity->CleanUp();
 	App->entity->active = false;
 	App->menu->Start();
-	App->fade->FadeToBlack(App->scene1, App->menu);
 	App->render->camera = { 0,0 };
 }

@@ -37,7 +37,7 @@ public:
 	void ChangeScene();
 	void ChangeSceneMenu();
 
-
+	// Load and Save
 	bool Load(pugi::xml_node&);
 	bool Save(pugi::xml_node&) const;
 
@@ -48,7 +48,7 @@ public:
 
 private:
 
-	SDL_Texture* debug_tex;
+	SDL_Texture* debug_tex = nullptr;
 
 };
 

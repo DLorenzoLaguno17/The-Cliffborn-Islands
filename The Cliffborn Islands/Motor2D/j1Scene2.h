@@ -46,7 +46,7 @@ private:
 
 	bool player_created = false;
 
-	SDL_Texture* debug_tex;
+	SDL_Texture* debug_tex = nullptr;
 };
 
 #endif // __j1SCENE2_H__

@@ -13,13 +13,16 @@ public:
 	// Destructor
 	virtual ~j1Label();
 
+	// Called before quitting
+	bool CleanUp();
+
 	// Blits the element on the screen
 	void Draw(float scale = 1.0f, int x = 0, int y = 0) override;
 
 public:
-	_TTF_Font* font;
+	_TTF_Font* font = nullptr;
 	SDL_Color color;
-	const char* text;
+	const char* text = nullptr;
 };
 
 #endif // __LABEL_H__

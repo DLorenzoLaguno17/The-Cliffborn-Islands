@@ -35,7 +35,11 @@ public:
 	bool CleanUp();
 
 	// Called to change scene
-	void ChangeScene();
+	void ChangeScene(bool scene1);
+
+	// Load and Save
+	bool Load(pugi::xml_node&);
+	//bool Save(pugi::xml_node&) const;
 
 private:
 
