@@ -59,9 +59,12 @@ private:
 	j1Timer	startup_time;
 	int time_scene1;
 	p2SString time_text;
+	p2SString min_text;
+	p2SString min_text_left = "0";
 	j1Label* seconds;
 	j1Label* minutes;
 	_TTF_Font* text = nullptr;
+	int min = 00;
 
 };
 

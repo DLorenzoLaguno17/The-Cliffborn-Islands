@@ -84,7 +84,7 @@ bool j1Scene1::Start()
 		time_text = { "%i", time_scene1 };
 
 		seconds = App->gui->CreateLabel(LABEL, 500, 0, text, time_text.GetString());
-		minutes = App->gui->CreateLabel(LABEL, 450, 0, text, "00");
+		minutes = App->gui->CreateLabel(LABEL, 410, 0, text, "00:");
 	}
 
 	return true;
@@ -200,11 +200,35 @@ bool j1Scene1::PostUpdate()
 		ret = false;
 
 	time_text = { "%i", time_scene1 };
+	if (time_scene1 == 60)
+	{
+		min += 1;
+		App->tex->UnLoad(minutes->sprites);
+		startup_time.Start();
+		time_text = { "%i", time_scene1 };
+		if (min <= 10)
+		{
+			min_text_left.Clear();
+			min_text = { "%i", min };
+			min_text_left.operator+=("0");
+			min_text_left.operator+=(min_text);
+			min_text_left.operator+=(":");
+			minutes->sprites = App->font->Print(min_text_left.GetString(), minutes->color, minutes->font);
+		}
+		else
+		{
+			min_text = { "%i", min };
+			min_text.operator+=(":");
+			minutes->sprites = App->font->Print(min_text.GetString(), minutes->color, minutes->font);
+		}
+	}
 	App->tex->UnLoad(seconds->sprites);
 	seconds->sprites = App->font->Print(time_text.GetString(), seconds->color, seconds->font);
 
 	if (seconds->sprites != nullptr)
 		seconds->Draw(1.0f, 0, 0, false);
+	if (minutes->sprites != nullptr)
+		minutes->Draw(1.0f, 0, 0, false);
 
 	return ret;
 }
