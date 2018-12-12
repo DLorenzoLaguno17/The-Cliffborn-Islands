@@ -7,6 +7,7 @@
 #include "j1EntityManager.h"
 #include "j1Collisions.h"
 #include "j1Pathfinding.h"
+#include "j1FadeToBlack.h"
 #include "j1Audio.h"
 #include "j1Map.h"
 #include "j1Gui.h"
@@ -123,6 +124,8 @@ bool j1SceneMenu::Update(float dt)
 		case RELEASED:
 			item->data->situation = item->data->idle;
 			if (item->data->bfunction == PLAY_GAME) {
+				//startGame = true;
+				//App->fade->FadeToBlack();
 				ChangeScene(true);
 				player_created = true;
 			}
@@ -145,6 +148,11 @@ bool j1SceneMenu::Update(float dt)
 			break;
 		}
 	}
+
+	/*if (startGame) {
+		if (App->fade->IsFading() == 0)
+			ChangeScene(true);
+	}*/
 
 	// ---------------------------------------------------------------------------------------------------------------------
 	// DRAWING EVERYTHING ON THE SCREEN
@@ -229,5 +237,6 @@ void j1SceneMenu::ChangeScene(bool scene1)
 		App->entity->CreatePlayer();
 		App->entity->Start();
 		App->path->Start();
+		startGame = false;
 	}
 }

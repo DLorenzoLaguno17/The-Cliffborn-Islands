@@ -51,6 +51,7 @@ private:
 	_TTF_Font* text = nullptr;
 
 	bool continueGame = true;
+	bool startGame = false;
 	bool player_created = false;
 
 	Animation player;

@@ -521,9 +521,9 @@ void j1Player::OnCollision(Collider* col_1, Collider* col_2)
 				}
 				App->entity->DestroyEntities();
 				if (App->scene1->active == true)
-					App->fade->FadeToBlack(App->scene1, App->scene1, 3.0f);
+					App->fade->FadeToBlack(3.0f);
 				else if (App->scene2->active == true)
-					App->fade->FadeToBlack(App->scene2, App->scene2, 3.0f);
+					App->fade->FadeToBlack(3.0f);
 
 				dead = true;
 				App->audio->PlayFx(deathSound);

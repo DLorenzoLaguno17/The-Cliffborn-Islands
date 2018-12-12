@@ -126,16 +126,26 @@ bool j1Scene2::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
 		App->SaveGame("save_game.xml");
 
-	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
-	{
-		ChangeScene();
+	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN || changingScene) {
+		changingScene = true;
+
+		App->fade->FadeToBlack();
+
+		if (App->fade->IsFading() == 0)
+			ChangeScene();
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN || resettingLevel)
 	{
-		App->fade->FadeToBlack(App->scene2, App->scene2);
-		App->entity->player->position = initialScene2Position;
-		App->render->camera.x = 0;
+		resettingLevel = true;
+		App->fade->FadeToBlack();
+
+		if (App->fade->IsFading() == 0) {
+			App->entity->player->position = initialScene2Position;
+			App->render->camera.x = 0;
+			App->entity->player->facingRight = true;
+			resettingLevel = false;
+		}
 	}
 
 	App->map->Draw();
@@ -217,6 +227,7 @@ bool j1Scene2::CleanUp()
 	App->collisions->CleanUp();
 	App->tex->CleanUp();
 	App->entity->DestroyEntities();
+	App->gui->CleanUp();
 
 	if (App->entity->player)
 		App->entity->player->CleanUp();
@@ -230,13 +241,14 @@ void j1Scene2::ChangeScene()
 {
 	App->scene1->active = true;
 	App->scene2->active = false;
-	CleanUp();
-	App->fade->FadeToBlack(App->scene2, App->scene1);
+	CleanUp();	
 	App->entity->Start();
 	App->scene1->Start();
 	App->render->camera = { 0,0 };
+	App->path->Start();
 	App->entity->player->initialPosition = App->scene1->initialScene1Position;
 	App->entity->player->position = App->scene1->initialScene1Position;
+	changingScene = false;
 }
 
 
@@ -249,6 +261,6 @@ void j1Scene2::ChangeSceneMenu()
 	App->entity->CleanUp();
 	App->entity->active = false;
 	App->menu->Start();
-	App->fade->FadeToBlack(App->scene2, App->menu);
+	App->fade->FadeToBlack();
 	App->render->camera = { 0,0 };
 }

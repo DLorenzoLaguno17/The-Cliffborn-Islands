@@ -49,6 +49,8 @@ public:
 private:
 
 	SDL_Texture* debug_tex = nullptr;
+	bool changingScene = false;
+	bool resettingLevel = false;
 
 };
 

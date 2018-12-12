@@ -127,15 +127,27 @@ bool j1Scene1::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
 		App->SaveGame("save_game.xml");
 
-	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN) 
+	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN || resettingLevel) 
 	{
-		App->fade->FadeToBlack(App->scene1, App->scene1);
-		App->entity->player->position = initialScene1Position;
-		App->render->camera.x = 0;
+		resettingLevel = true;
+		App->fade->FadeToBlack();
+
+		if (App->fade->IsFading() == 0) {
+			App->entity->player->position = initialScene1Position;
+			App->render->camera.x = 0;
+			App->entity->player->facingRight = true;
+			resettingLevel = false;
+		}
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
-		ChangeScene();		
+	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN || changingScene) {
+		changingScene = true;
+
+		App->fade->FadeToBlack();
+
+		if (App->fade->IsFading() == 0)
+			ChangeScene();
+	}
 
 	App->map->Draw();
 
@@ -248,6 +260,7 @@ bool j1Scene1::CleanUp()
 	App->collisions->CleanUp();
 	App->tex->CleanUp();
 	App->entity->DestroyEntities();
+	App->gui->CleanUp();
 
 	if (App->entity->player)
 		App->entity->player->CleanUp();
@@ -262,14 +275,13 @@ void j1Scene1::ChangeScene()
 	App->scene2->active = true;
 	App->scene1->active = false;
 	CleanUp();
-	App->gui->CleanUp();
-	App->fade->FadeToBlack(App->scene1, App->scene2);
 	App->entity->Start();
 	App->scene2->Start();
 	App->render->camera = { 0,0 };
 	App->path->Start();
 	App->entity->player->initialPosition = App->scene2->initialScene2Position;
 	App->entity->player->position = App->scene2->initialScene2Position;
+	changingScene = false;
 }
 
 void j1Scene1::ChangeSceneMenu()
@@ -280,7 +292,7 @@ void j1Scene1::ChangeSceneMenu()
 	CleanUp();
 	App->gui->CleanUp();
 	App->scene2->CleanUp();
-	App->fade->FadeToBlack(App->scene1, App->menu);
+	App->fade->FadeToBlack();
 	App->entity->CleanUp();
 	App->entity->active = false;
 	App->menu->Start();

@@ -21,7 +21,7 @@ public:
 	// Called each loop iteration
 	bool Update(float dt);
 
-	bool FadeToBlack(j1Module* module_off, j1Module* module_on, float time = 2.0f);
+	bool FadeToBlack(float time = 2.0f);
 	bool IsFading() const;
 
 	j1Module* ModuleOn = nullptr;
