@@ -232,7 +232,6 @@ void j1SceneMenu::ChangeScene(bool scene1)
 			App->scene2->active = true;
 			App->scene2->Start();
 		}
-
 		App->entity->active = true;
 		App->entity->CreatePlayer();
 		App->entity->Start();

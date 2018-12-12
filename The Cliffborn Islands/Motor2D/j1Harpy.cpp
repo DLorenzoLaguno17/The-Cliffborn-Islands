@@ -46,7 +46,7 @@ bool j1Harpy::Update(float dt, bool do_logic)
 {
 	BROFILER_CATEGORY("HarpyUpdate", Profiler::Color::LightSeaGreen)
 
-	if (dead = false) {
+	if (dead == false) {
 		collider->SetPos(position.x, position.y);
 
 		if (do_logic || path_created) {

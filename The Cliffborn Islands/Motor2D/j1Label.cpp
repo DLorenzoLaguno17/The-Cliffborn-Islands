@@ -12,9 +12,12 @@ j1Label::j1Label(UIELEMENT_TYPES type, int x, int y, _TTF_Font* font, const char
 
 j1Label::~j1Label() {}
 
-void j1Label::Draw(float scale, int x, int y)
+void j1Label::Draw(float scale, int x, int y, bool use_camera)
 {
-	App->render->Blit(sprites, (int)position.x + x, (int)position.y + y, NULL, SDL_FLIP_NONE, 1.0f, scale);
+	if (!use_camera)
+		App->render->Blit(sprites, (int)position.x + x, (int)position.y + y, NULL, SDL_FLIP_NONE, 1.0f, scale, 0, INT_MAX, INT_MAX, false);
+	else
+		App->render->Blit(sprites, (int)position.x + x, (int)position.y + y, NULL, SDL_FLIP_NONE, 1.0f, scale);
 }
 
 bool j1Label::CleanUp()

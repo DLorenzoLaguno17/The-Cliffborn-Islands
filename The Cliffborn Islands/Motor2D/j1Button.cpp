@@ -9,9 +9,13 @@ j1Button::j1Button(UIELEMENT_TYPES type, int x, int y, SDL_Rect idle, SDL_Rect h
 
 j1Button::~j1Button() {}
 
-void j1Button::Draw(float scale, int x, int y)
+void j1Button::Draw(float scale, int x, int y, bool use_camera)
 {
-	App->render->Blit(sprites, (int)position.x + x, (int)position.y + y, &situation, SDL_FLIP_NONE, 1.0f, scale);
+	if (!use_camera)
+		App->render->Blit(sprites, (int)position.x + x, (int)position.y + y, NULL, SDL_FLIP_NONE, 1.0f, scale, INT_MAX, INT_MAX, false);
+	else
+		App->render->Blit(sprites, (int)position.x + x, (int)position.y + y, &situation, SDL_FLIP_NONE, 1.0f, scale);
+	
 }
 
 bool j1Button::CleanUp()
