@@ -49,8 +49,10 @@ bool j1Render::Awake(pugi::xml_node& config)
 	{
 		camera.w = App->win->screen_surface->w;
 		camera.h = App->win->screen_surface->h;
-		camera.x = initialCameraX = config.child("camera").attribute("initialX").as_int();
-		camera.y = initialCameraY = config.child("camera").attribute("initialY").as_int();
+		camera.x = initialCameraX = 0;
+		camera.y = initialCameraY =0;
+		/*camera.x = initialCameraX = config.child("camera").attribute("initialX").as_int();
+		camera.y = initialCameraY = config.child("camera").attribute("initialY").as_int();*/
 	}	
 
 	return ret;
@@ -60,8 +62,6 @@ bool j1Render::Awake(pugi::xml_node& config)
 bool j1Render::Start()
 {
 	LOG("render start");
-	// back background
-	SDL_RenderSetLogicalSize(renderer,App->win->width, App->win->height);
 
 	SDL_RenderGetViewport(renderer, &viewport);
 	return true;
@@ -147,14 +147,23 @@ iPoint j1Render::ScreenToWorld(int x, int y) const
 }
 
 // Blit to screen
-bool j1Render::Blit(SDL_Texture* texture, int x, int y, const SDL_Rect* section, SDL_RendererFlip flip, float speed, float blitScale, double angle, int pivot_x, int pivot_y) const
+bool j1Render::Blit(SDL_Texture* texture, int x, int y, const SDL_Rect* section, SDL_RendererFlip flip, float speed, float blitScale, double angle, int pivot_x, int pivot_y, bool use_camera) const
 {
 	bool ret = true;
 	uint scale = App->win->GetScale();
-
 	SDL_Rect rect;
-	rect.x = (int)(camera.x * speed) + x * scale;
-	rect.y = (int)(camera.y * speed) + y * scale;
+
+	if (use_camera)
+	{
+		rect.x = (int)(camera.x * speed) + x * scale;
+		rect.y = (int)(camera.y * speed) + y * scale;
+	}
+	else
+	{
+		rect.x = x * SCREEN_SIZE;
+		rect.y = y * SCREEN_SIZE;
+	}
+
 
 	if(section != NULL)
 	{

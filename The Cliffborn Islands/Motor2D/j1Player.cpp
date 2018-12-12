@@ -37,6 +37,7 @@ bool j1Player::Start() {
 	// Textures are loaded
 	LOG("Loading player textures");
 	sprites = App->tex->Load("textures/character/character.png");
+	lives_tex = App->tex->Load("textures/life.png");
 
 	// Audios are loaded
 	LOG("Loading player audios");
@@ -119,6 +120,7 @@ bool j1Player::Update(float dt, bool do_logic) {
 				position.y += godModeSpeed * dt;
 			}
 		}
+
 		else {
 			// Idle
 			if (App->input->GetKey(SDL_SCANCODE_D) == j1KeyState::KEY_IDLE
@@ -309,7 +311,16 @@ bool j1Player::Update(float dt, bool do_logic) {
 			dead = false;
 		}
 	}
+	
+	uint space = 0;
 
+	for (int i = App->entity->player->lives; i >= 0; --i)
+	{
+		SDL_Rect r = { 0,0,8,11 };
+		App->render->Blit(lives_tex, 3 + space, 3, &r, SDL_FLIP_NONE, 1.0f, 1, 0, INT_MAX, INT_MAX, false);
+
+		space += 40;
+	}
 	// Update collider position to player position
 	if (collider != nullptr)
 		collider->SetPos(position.x + margin.x, position.y + margin.y);
@@ -401,6 +412,7 @@ bool j1Player::CleanUp() {
 	// Remove all memory leaks
 	LOG("Unloading the player");
 	App->tex->UnLoad(sprites);
+	App->tex->UnLoad(lives_tex);
 
 	if (collider != nullptr) 
 		collider->to_delete = true;

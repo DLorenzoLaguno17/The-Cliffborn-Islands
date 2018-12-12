@@ -117,6 +117,8 @@ private:
 	int playerLimit;
 
 	bool loadedAudios = false;
+
+	SDL_Texture* lives_tex;
 };
 
 #endif // __jPLAYER_H__
