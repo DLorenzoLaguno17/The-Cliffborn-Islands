@@ -8,6 +8,7 @@
 
 struct SDL_Texture;
 struct _TTF_Font;
+struct j1Settings;
 
 class j1SceneMenu : public j1Module
 {
@@ -41,6 +42,9 @@ public:
 	bool Load(pugi::xml_node&);
 	//bool Save(pugi::xml_node&) const;
 
+public:
+	j1Settings* settings_window = nullptr;
+
 private:
 
 	SDL_Texture* gui_tex = nullptr;
@@ -48,7 +52,7 @@ private:
 	SDL_Texture* player_tex = nullptr;
 	SDL_Texture* harpy_tex = nullptr;
 
-	_TTF_Font* text = nullptr;
+	_TTF_Font* font = nullptr;
 
 	bool continueGame = true;
 	bool startGame = false;

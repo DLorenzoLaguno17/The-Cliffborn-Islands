@@ -12,6 +12,7 @@ struct _TTF_Font;
 struct SDL_Rect;
 struct j1Button;
 struct j1Label;
+struct j1Settings;
 
 enum UIELEMENT_TYPES
 {
@@ -19,7 +20,8 @@ enum UIELEMENT_TYPES
 	CHECKBOX,
 	INPUTTEXT,
 	LABEL,
-	IMAGE
+	IMAGE,
+	SETTINGS_WINDOW
 };
 
 enum ButtonFunction {
@@ -60,8 +62,11 @@ public:
 	// Factory methods
 	j1Button* CreateButton(UIELEMENT_TYPES type, int x, int y, SDL_Rect idle, SDL_Rect hovered, SDL_Rect clicked, SDL_Texture* text = nullptr, ButtonFunction function = NO_FUNCTION);
 	j1Label* CreateLabel(UIELEMENT_TYPES type, int x, int y, _TTF_Font* font, const char* text, SDL_Color color = { 255, 255, 255, 255});
+	j1Settings* CreateSettingsWindow(UIELEMENT_TYPES type, int x, int y, SDL_Rect section, SDL_Texture* text);
 
+	// UI uppdaters
 	void UpdateButtonsState();
+	void UpdateSettingsWindowState();
 	
 	const SDL_Texture* GetAtlas() const;
 

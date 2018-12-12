@@ -7,6 +7,10 @@
 #include "j1Gui.h"
 #include "j1Button.h"
 #include "j1Label.h"
+#include "j1Settings.h"
+#include "j1SceneMenu.h"
+#include "j1Scene1.h"
+#include "j1Scene2.h"
 
 j1Gui::j1Gui() : j1Module()
 {
@@ -48,6 +52,7 @@ bool j1Gui::PostUpdate()
 	return true;
 }
 
+// Factiry methods
 j1Button* j1Gui::CreateButton(UIELEMENT_TYPES type, int x, int y, SDL_Rect idle, SDL_Rect hovered, SDL_Rect clicked, SDL_Texture* text, ButtonFunction function) {
 	j1Button* ret = nullptr;
 
@@ -62,6 +67,14 @@ j1Label* j1Gui::CreateLabel(UIELEMENT_TYPES type, int x, int y, _TTF_Font* font,
 
 	ret = new j1Label(type, x, y, font, text, color);
 	if (ret != nullptr) labels.add(ret);
+
+	return ret;
+}
+
+j1Settings* j1Gui::CreateSettingsWindow(UIELEMENT_TYPES type, int x, int y, SDL_Rect section, SDL_Texture* text) {
+	j1Settings* ret = nullptr;
+
+	ret = new j1Settings(type, x, y, section, text);
 
 	return ret;
 }
@@ -107,6 +120,29 @@ void j1Gui::UpdateButtonsState() {
 		else {
 			button->data->state = STATE::IDLE;
 		}
+	}
+}
+
+void j1Gui::UpdateSettingsWindowState() {
+	int x, y; App->input->GetMousePosition(x, y);
+
+	j1Settings* aux = nullptr;
+
+	// Checking which window is enabled
+	if (App->menu->settings_window->visible)
+		aux = App->menu->settings_window;
+	else if (App->scene1->settings_window->visible)
+		aux = App->scene1->settings_window;
+	else if(App->scene2->settings_window->visible)
+		aux = App->scene2->settings_window;
+
+	// Checking if it is being dragged
+	if (aux != nullptr && x <= aux->position.x + aux->section.w * 0.5f && x >= aux->position.x
+		&& y <= aux->position.y + aux->section.h * 0.5f && y >= aux->position.y){
+		if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT)
+			aux->clicked = true;
+		else if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_UP)
+			aux->clicked = false;
 	}
 }
 

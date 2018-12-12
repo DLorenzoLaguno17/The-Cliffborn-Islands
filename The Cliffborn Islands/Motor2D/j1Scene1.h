@@ -6,6 +6,7 @@
 #include "j1Timer.h"
 
 struct SDL_Texture;
+struct j1Settings;
 
 class j1Scene1 : public j1Module
 {
@@ -46,6 +47,9 @@ public:
 	bool player_created = false;
 
 	void PlaceEnemies();
+
+public:
+	j1Settings * settings_window = nullptr;
 
 private:
 

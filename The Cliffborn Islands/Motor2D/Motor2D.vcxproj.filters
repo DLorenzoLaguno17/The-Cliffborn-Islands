@@ -88,6 +88,9 @@
     <ClCompile Include="j1Label.cpp">
       <Filter>Development\Modules\GraphicUserInterface</Filter>
     </ClCompile>
+    <ClCompile Include="j1Settings.cpp">
+      <Filter>Development\Modules\GraphicUserInterface</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Textures.h">
@@ -200,6 +203,9 @@
     </ClInclude>
     <ClInclude Include="j1Coin.h">
       <Filter>Development\Modules\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Settings.h">
+      <Filter>Development\Modules\GraphicUserInterface</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

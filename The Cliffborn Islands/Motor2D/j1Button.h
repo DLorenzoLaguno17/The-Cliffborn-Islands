@@ -2,7 +2,6 @@
 #define __BUTTON_H__
 
 #include "j1UserInterfaceElement.h"
-#include "p2Animation.h"
 
 enum UIELEMENT_TYPES;
 struct SDL_Texture;
