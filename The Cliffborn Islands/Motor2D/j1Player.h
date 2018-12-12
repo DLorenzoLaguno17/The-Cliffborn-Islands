@@ -119,6 +119,12 @@ private:
 	bool loadedAudios = false;
 
 	SDL_Texture* lives_tex;
+
+	p2SString score;
+
+	j1Label* score_label;
+
+	_TTF_Font* text = nullptr;
 };
 
 #endif // __jPLAYER_H__

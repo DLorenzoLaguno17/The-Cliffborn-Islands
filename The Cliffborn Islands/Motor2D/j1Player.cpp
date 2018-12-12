@@ -12,6 +12,8 @@
 #include "j1Scene1.h"
 #include "j1Scene2.h"
 #include "j1Harpy.h"
+#include "j1Fonts.h"
+#include "j1Label.h"
 
 #include "Brofiler/Brofiler.h"
 
@@ -38,6 +40,7 @@ bool j1Player::Start() {
 	LOG("Loading player textures");
 	sprites = App->tex->Load("textures/character/character.png");
 	lives_tex = App->tex->Load("textures/life.png");
+	text = App->font->Load("fonts/PixelCowboy/PixelCowboy.otf", 8);
 
 	// Audios are loaded
 	LOG("Loading player audios");
@@ -55,6 +58,10 @@ bool j1Player::Start() {
 	currentJumps = initialJumps;
 	
 	lives = 2;
+
+	score = { "%i", App->entity->player->points };
+
+	score_label = App->gui->CreateLabel(LABEL, 80, 700, text, score.GetString(), { 255, 255, 255, 255 });
 
 	// Setting player position
 	position.x = initialPosition.x;
@@ -317,10 +324,18 @@ bool j1Player::Update(float dt, bool do_logic) {
 	for (int i = App->entity->player->lives; i >= 0; --i)
 	{
 		SDL_Rect r = { 0,0,8,11 };
-		App->render->Blit(lives_tex, 3 + space, 3, &r, SDL_FLIP_NONE, 1.0f, 1, 0, INT_MAX, INT_MAX, false);
+		App->render->Blit(lives_tex, 10 + space, 3, &r, SDL_FLIP_NONE, 1.0f, 1, 0, INT_MAX, INT_MAX, false);
 
-		space += 40;
+		space += 50;
 	}
+
+	// Blitting the labels
+	score = { "%i", App->entity->player->points };
+	App->tex->UnLoad(score_label->sprites);
+	score_label->sprites = App->font->Print(score.GetString(), score_label->color, score_label->font);
+	if (score_label->sprites != nullptr)
+		score_label->Draw(1.0f, 0, 0, false);
+
 	// Update collider position to player position
 	if (collider != nullptr)
 		collider->SetPos(position.x + margin.x, position.y + margin.y);

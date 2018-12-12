@@ -26,12 +26,6 @@ public:
 
 	uint coin_fx;
 
-	_TTF_Font* text = nullptr;
-
-	p2SString score;
-
-	j1Label* score_label;
-
 	Animation idle;
 };
 

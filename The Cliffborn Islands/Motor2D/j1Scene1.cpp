@@ -17,6 +17,8 @@
 #include "j1Pathfinding.h"
 #include "j1Gui.h"
 #include "j1SceneMenu.h"
+#include "j1Fonts.h"
+#include "j1Label.h"
 
 #include "Brofiler/Brofiler.h"
 
@@ -55,6 +57,8 @@ bool j1Scene1::Start()
 
 	if (active)
 	{
+		text = App->font->Load("fonts/PixelCowboy/PixelCowboy.otf", 8);
+
 		// The map is loaded
 		if (App->map->Load("lvl1.tmx"))
 		{
@@ -74,6 +78,13 @@ bool j1Scene1::Start()
 		App->audio->PlayMusic("audio/music/level1_music.ogg", 1.0f);		
 
 		PlaceEnemies();
+
+		time_scene1 = startup_time.ReadSec();
+
+		time_text = { "%i", time_scene1 };
+
+		seconds = App->gui->CreateLabel(LABEL, 500, 0, text, time_text.GetString());
+		minutes = App->gui->CreateLabel(LABEL, 450, 0, text, "00");
 	}
 
 	return true;
@@ -116,6 +127,8 @@ bool j1Scene1::PreUpdate()
 bool j1Scene1::Update(float dt)
 {
 	BROFILER_CATEGORY("Level1Update", Profiler::Color::LightSeaGreen)
+
+	time_scene1 = startup_time.ReadSec();
 
 	// Load and Save
 	if (App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
@@ -185,6 +198,13 @@ bool j1Scene1::PostUpdate()
 
 	if(App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		ret = false;
+
+	time_text = { "%i", time_scene1 };
+	App->tex->UnLoad(seconds->sprites);
+	seconds->sprites = App->font->Print(time_text.GetString(), seconds->color, seconds->font);
+
+	if (seconds->sprites != nullptr)
+		seconds->Draw(1.0f, 0, 0, false);
 
 	return ret;
 }
@@ -279,6 +299,7 @@ void j1Scene1::ChangeScene()
 	App->scene2->Start();
 	App->render->camera = { 0,0 };
 	App->path->Start();
+
 	App->entity->player->initialPosition = App->scene2->initialScene2Position;
 	App->entity->player->position = App->scene2->initialScene2Position;
 	changingScene = false;

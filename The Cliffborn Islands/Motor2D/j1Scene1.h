@@ -3,6 +3,7 @@
 
 #include "j1Module.h"
 #include "j1Button.h"
+#include "j1Timer.h"
 
 struct SDL_Texture;
 
@@ -51,6 +52,12 @@ private:
 	SDL_Texture* debug_tex = nullptr;
 	bool changingScene = false;
 	bool resettingLevel = false;
+	j1Timer	startup_time;
+	int time_scene1;
+	p2SString time_text;
+	j1Label* seconds;
+	j1Label* minutes;
+	_TTF_Font* text = nullptr;
 
 };
 

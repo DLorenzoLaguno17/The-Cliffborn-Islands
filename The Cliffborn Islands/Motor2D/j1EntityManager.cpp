@@ -29,6 +29,7 @@ bool j1EntityManager::Start()
 		iterator->data->Start();
 	}
 
+	
 	return true;
 }
 

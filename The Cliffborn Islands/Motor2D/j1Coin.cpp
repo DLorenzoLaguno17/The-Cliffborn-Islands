@@ -34,11 +34,6 @@ bool j1Coin::Start()
 	}
 	coin_fx = App->audio->LoadFx("audio/fx/coin.wav");
 	animation = &idle;
-	text = App->font->Load("fonts/PixelCowboy/PixelCowboy.otf", 8);
-
-	score = { "%i", App->entity->player->points };
-
-	score_label = App->gui->CreateLabel(LABEL, 65, 700, text, score.GetString(), { 255, 255, 255, 255 });
 
 	return true;
 }
@@ -50,11 +45,6 @@ bool j1Coin::Update(float dt, bool do_logic)
 	Draw(r, false, 0, 0);
 
 	App->render->Blit(sprites, 3, 700, &r, SDL_FLIP_NONE, 1.0f, 1, 0, INT_MAX, INT_MAX, false);
-	
-	// Blitting the labels
-	score = { "%i", App->entity->player->points };
-	score_label->sprites = App->font->Print(score.GetString(), score_label->color, score_label->font);
-	score_label->Draw(1.0f, 0, 0, false);
 
 	return true;
 }
