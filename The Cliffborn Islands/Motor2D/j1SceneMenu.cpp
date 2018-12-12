@@ -39,6 +39,8 @@ bool j1SceneMenu::Awake(pugi::xml_node &)
 		ret = false;
 	}
 
+	settingsPosition = { 52, 10 };
+
 	return ret;
 }
 
@@ -84,7 +86,7 @@ bool j1SceneMenu::Start()
 		App->gui->CreateLabel(LABEL, 98, 165, font, "Credits", { 245, 245, 220, 255 });
 		
 		SDL_Rect section = { 512, 0, 663, 712 };
-		settings_window = App->gui->CreateSettingsWindow(SETTINGS_WINDOW, 50, 10, section, gui_tex);
+		settings_window = App->gui->CreateSettingsWindow(SETTINGS_WINDOW, settingsPosition.x, settingsPosition.y, section, gui_tex);
 
 		player_created = false;
 	}
@@ -109,9 +111,14 @@ bool j1SceneMenu::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_N) == KEY_DOWN)
 		App->audio->MusicVolume(App->audio->GetMusicVolume() - 10.0f);
 
-	App->gui->UpdateButtonsState();
+	// ---------------------------------------------------------------------------------------------------------------------
+	// USER INTERFACE MANAGEMENT
+	// ---------------------------------------------------------------------------------------------------------------------	
+
+	App->gui->UpdateButtonsState(); 
+	App->gui->UpdateSettingsWindowState();
 	
-	// UI management
+	// Button actions
 	for (p2List_item<j1Button*>* item = App->gui->buttons.start; item != nullptr; item = item->next) {
 		switch (item->data->state) 
 		{
@@ -139,6 +146,7 @@ bool j1SceneMenu::Update(float dt)
 			}
 			else if (item->data->bfunction == SETTINGS) {
 				settings_window->visible = !settings_window->visible;
+				settings_window->position = settingsPosition;
 			}
 			else if (item->data->bfunction == CREDITS){
 				ShellExecuteA(NULL, "open", "https://github.com/DLorenzoLaguno17/The-Cliffborn-Islands", NULL, NULL, SW_SHOWNORMAL);
@@ -149,6 +157,22 @@ bool j1SceneMenu::Update(float dt)
 			item->data->situation = item->data->clicked;
 			break;
 		}
+	}
+
+	// To move settings window
+	if (settings_window != nullptr) {
+		if (settings_window->clicked) {
+			int x, y; App->input->GetMousePosition(x, y);
+
+			if (settings_window->distanceCalculated == false) {
+				settings_window->mouseDistance = { x - settings_window->position.x, y - settings_window->position.y };
+				settings_window->distanceCalculated = true;
+			}
+
+			settings_window->position = { x - settings_window->mouseDistance.x, y - settings_window->mouseDistance.y };
+		}
+		else
+			settings_window->distanceCalculated = false;
 	}
 
 	// ---------------------------------------------------------------------------------------------------------------------

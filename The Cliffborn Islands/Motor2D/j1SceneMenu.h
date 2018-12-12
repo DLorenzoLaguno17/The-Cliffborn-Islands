@@ -4,6 +4,7 @@
 #include "j1Module.h"
 #include "j1Render.h"
 #include "p2List.h"
+#include "p2Point.h"
 #include "p2Animation.h"
 
 struct SDL_Texture;
@@ -60,6 +61,9 @@ private:
 
 	Animation player;
 	Animation harpy;
+
+	// Positions
+	iPoint settingsPosition;
 };
 
 #endif //__j1SCENEMENU_H__

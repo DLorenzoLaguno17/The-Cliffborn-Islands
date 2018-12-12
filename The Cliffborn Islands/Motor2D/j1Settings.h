@@ -2,6 +2,7 @@
 #define __SETTINGS_H__
 
 #include "j1UserInterfaceElement.h"
+#include "p2Point.h"
 
 enum UIELEMENT_TYPES;
 struct SDL_Texture;
@@ -26,6 +27,9 @@ public:
 	SDL_Rect section;
 	bool visible = false;
 	bool clicked = false;
+
+	bool distanceCalculated = false;
+	iPoint mouseDistance;
 };
 
 #endif // __SETTINGS_H__

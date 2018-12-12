@@ -107,19 +107,19 @@ void j1Gui::UpdateButtonsState() {
 	for (p2List_item<j1Button*>* button = buttons.start; button != nullptr; button = button->next) {
 		if (x <= button->data->position.x + button->data->situation.w * 0.5f && x >= button->data->position.x
 			&& y <= button->data->position.y + button->data->situation.h * 0.5f && y >= button->data->position.y) {
+
+			if (App->menu->settings_window->visible && button->data->bfunction != CLOSE_GAME && button->data->bfunction != SETTINGS) continue;
+
 			button->data->state = STATE::HOVERED;
 
-			if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT) {
+			if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT)
 				button->data->state = STATE::CLICKED;
-			}
 
-			if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_UP){
+			if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_UP)
 				button->data->state = STATE::RELEASED;
-			}
 		}
-		else {
+		else
 			button->data->state = STATE::IDLE;
-		}
 	}
 }
 
@@ -131,10 +131,10 @@ void j1Gui::UpdateSettingsWindowState() {
 	// Checking which window is enabled
 	if (App->menu->settings_window->visible)
 		aux = App->menu->settings_window;
-	else if (App->scene1->settings_window->visible)
+	/*else if (App->scene1->settings_window->visible)
 		aux = App->scene1->settings_window;
 	else if(App->scene2->settings_window->visible)
-		aux = App->scene2->settings_window;
+		aux = App->scene2->settings_window;*/
 
 	// Checking if it is being dragged
 	if (aux != nullptr && x <= aux->position.x + aux->section.w * 0.5f && x >= aux->position.x
