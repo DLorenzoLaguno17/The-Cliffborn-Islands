@@ -10,6 +10,8 @@
 struct SDL_Texture;
 struct _TTF_Font;
 class j1Box;
+class j1Button;
+class j1Label;
 
 enum SCENE {
 	MENU = 0,
@@ -53,6 +55,9 @@ public:
 public:
 	j1Box* settings_window = nullptr;
 
+	p2List<j1Button*> menuButtons; 
+	p2List<j1Label*> menuLabels;
+
 private:
 
 	SDL_Texture* gui_tex = nullptr;
@@ -65,6 +70,7 @@ private:
 	bool continueGame = true;
 	bool startGame = false;
 	bool loadGame = false;
+	bool openCredits = false;
 	bool player_created = false;
 
 	Animation player;

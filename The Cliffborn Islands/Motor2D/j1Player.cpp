@@ -61,7 +61,10 @@ bool j1Player::Start() {
 
 	score = { "%i", App->entity->player->points };
 
-	score_label = App->gui->CreateLabel(LABEL, 80, 700, text, score.GetString(), { 255, 255, 255, 255 });
+	if(App->scene1->active)
+		score_label = App->gui->CreateLabel(&App->scene1->scene1Labels, LABEL, 80, 700, text, score.GetString(), { 255, 255, 255, 255 });
+	else if (App->scene1->active)
+		score_label = App->gui->CreateLabel(&App->scene2->scene2Labels, LABEL, 80, 700, text, score.GetString(), { 255, 255, 255, 255 });
 
 	// Setting player position
 	position.x = initialPosition.x;

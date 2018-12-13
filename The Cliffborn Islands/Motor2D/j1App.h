@@ -14,6 +14,7 @@ class j1Render;
 class j1Textures;
 class j1Audio;
 class j1SceneMenu;
+class j1SceneCredits;
 class j1Scene1;
 class j1Scene2;
 class j1Map;
@@ -92,6 +93,7 @@ public:
 	j1Textures*			tex = nullptr;
 	j1Audio*			audio = nullptr;
 	j1SceneMenu*		menu = nullptr;
+	j1SceneCredits*		credits = nullptr;
 	j1Scene1*			scene1 = nullptr;
 	j1Scene2*			scene2 = nullptr;
 	j1Map*				map = nullptr;

@@ -53,20 +53,20 @@ bool j1Gui::PostUpdate()
 }
 
 // Factiry methods
-j1Button* j1Gui::CreateButton(UIELEMENT_TYPES type, int x, int y, SDL_Rect idle, SDL_Rect hovered, SDL_Rect clicked, SDL_Texture* text, ButtonFunction function) {
+j1Button* j1Gui::CreateButton(p2List<j1Button*>* buttons, UIELEMENT_TYPES type, int x, int y, SDL_Rect idle, SDL_Rect hovered, SDL_Rect clicked, SDL_Texture* text, ButtonFunction function) {
 	j1Button* ret = nullptr;
 
 	ret = new j1Button(type, x, y, idle, hovered, clicked, text, function);
-	if (ret != nullptr) buttons.add(ret);
+	if (ret != nullptr) buttons->add(ret);
 
 	return ret;
 }
 
-j1Label* j1Gui::CreateLabel(UIELEMENT_TYPES type, int x, int y, _TTF_Font* font, const char* text, SDL_Color color) {
+j1Label* j1Gui::CreateLabel(p2List<j1Label*>* labels, UIELEMENT_TYPES type, int x, int y, _TTF_Font* font, const char* text, SDL_Color color) {
 	j1Label* ret = nullptr;
 
 	ret = new j1Label(type, x, y, font, text, color);
-	if (ret != nullptr) labels.add(ret);
+	if (ret != nullptr) labels->add(ret);
 
 	return ret;
 }
@@ -83,14 +83,6 @@ j1Box* j1Gui::CreateBox(UIELEMENT_TYPES type, int x, int y, SDL_Rect section, SD
 bool j1Gui::CleanUp()
 {
 	LOG("Freeing GUI"); 
-	for (p2List_item<j1Button*>* item = App->gui->buttons.start; item != nullptr; item = item->next) {
-		item->data->CleanUp();
-		buttons.del(item);
-	}
-
-	for (p2List_item<j1Label*>* item = App->gui->labels.start; item != nullptr; item = item->next) {
-		labels.del(item);
-	}
 
 	return true;
 }
@@ -101,14 +93,14 @@ const SDL_Texture* j1Gui::GetAtlas() const
 	return atlas;
 }
 
-void j1Gui::UpdateButtonsState() {
+void j1Gui::UpdateButtonsState(p2List<j1Button*>* buttons) {
 	int x, y; App->input->GetMousePosition(x, y);
 
-	for (p2List_item<j1Button*>* button = buttons.start; button != nullptr; button = button->next) {
+	for (p2List_item<j1Button*>* button = buttons->start; button != nullptr; button = button->next) {
 		if (x <= button->data->position.x + button->data->situation.w * 0.5f && x >= button->data->position.x
 			&& y <= button->data->position.y + button->data->situation.h * 0.5f && y >= button->data->position.y) {
 
-			if (App->menu->settings_window->visible && button->data->bfunction != CLOSE_GAME && button->data->bfunction != SETTINGS) continue;
+			if (App->menu->settings_window->visible && App->menu->settings_window != nullptr && button->data->bfunction != CLOSE_GAME && button->data->bfunction != SETTINGS) continue;
 
 			button->data->state = STATE::HOVERED;
 

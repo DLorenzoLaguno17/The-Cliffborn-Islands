@@ -81,8 +81,8 @@ bool j1Scene2::Start()
 
 		time_text = { "%i", time_scene2 };
 
-		seconds = App->gui->CreateLabel(LABEL, 500, 0, text, time_text.GetString());
-		minutes = App->gui->CreateLabel(LABEL, 410, 0, text, "00:");
+		seconds = App->gui->CreateLabel(&scene2Labels, LABEL, 500, 0, text, time_text.GetString());
+		minutes = App->gui->CreateLabel(&scene2Labels, LABEL, 410, 0, text, "00:");
 
 		// The audio is played
 		App->audio->PlayMusic("audio/music/level1_music.ogg", 1.0f);
@@ -283,6 +283,15 @@ bool j1Scene2::CleanUp()
 		App->entity->player->CleanUp();
 	if (App->entity->hook)
 		App->entity->hook->CleanUp();
+
+	for (p2List_item<j1Button*>* item = scene2Buttons.start; item != nullptr; item = item->next) {
+		item->data->CleanUp();
+		scene2Buttons.del(item);
+	}
+
+	for (p2List_item<j1Label*>* item = scene2Labels.start; item != nullptr; item = item->next) {
+		scene2Labels.del(item);
+	}
 
 	App->path->CleanUp();
 

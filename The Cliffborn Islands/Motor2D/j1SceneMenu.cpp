@@ -1,9 +1,10 @@
 #include "j1SceneMenu.h"
+#include "j1SceneCredits.h"
+#include "j1Scene1.h"
+#include "j1Scene2.h"
 #include "j1App.h"
 #include "p2Log.h"
 #include "j1Textures.h"
-#include "j1Scene1.h"
-#include "j1Scene2.h"
 #include "j1EntityManager.h"
 #include "j1FadeToBlack.h"
 #include "j1Audio.h"
@@ -67,23 +68,23 @@ bool j1SceneMenu::Start()
 		SDL_Rect hovered = { 0, 45, 190, 49 };
 		SDL_Rect clicked = { 0, 94, 190, 49 };
 
-		App->gui->CreateButton(BUTTON, 80, 110, idle, hovered, clicked, gui_tex, PLAY_GAME);
-		App->gui->CreateButton(BUTTON, 80, 135, idle, hovered, clicked, gui_tex, CONTINUE);
-		App->gui->CreateButton(BUTTON, 80, 160, idle, hovered, clicked, gui_tex, OPEN_CREDITS);
+		App->gui->CreateButton(&menuButtons, BUTTON, 80, 110, idle, hovered, clicked, gui_tex, PLAY_GAME);
+		App->gui->CreateButton(&menuButtons, BUTTON, 80, 135, idle, hovered, clicked, gui_tex, CONTINUE);
+		App->gui->CreateButton(&menuButtons, BUTTON, 80, 160, idle, hovered, clicked, gui_tex, OPEN_CREDITS);
 
 		SDL_Rect idle2 = { 28, 201, 49, 49 };
 		SDL_Rect hovered2 = { 77, 201, 49, 49 };
 		SDL_Rect clicked2 = { 126, 201, 49, 49 };
-		App->gui->CreateButton(BUTTON, 229, 3, idle2, hovered2, clicked2, gui_tex, CLOSE_GAME);
+		App->gui->CreateButton(&menuButtons, BUTTON, 229, 3, idle2, hovered2, clicked2, gui_tex, CLOSE_GAME);
 
 		SDL_Rect idle3 = { 463, 109, 49, 49 };
 		SDL_Rect hovered3 = { 463, 158, 49, 49 };
 		SDL_Rect clicked3 = { 463, 207, 49, 49 };
-		App->gui->CreateButton(BUTTON, 3, 3, idle3, hovered3, clicked3, gui_tex, SETTINGS);
+		App->gui->CreateButton(&menuButtons, BUTTON, 3, 3, idle3, hovered3, clicked3, gui_tex, SETTINGS);
 
-		App->gui->CreateLabel(LABEL, 106, 115, font, "Start", { 245, 245, 220, 255 });
-		App->gui->CreateLabel(LABEL, 90, 140, font, "Continue", { 245, 245, 220, 255 });
-		App->gui->CreateLabel(LABEL, 98, 165, font, "Credits", { 245, 245, 220, 255 });
+		App->gui->CreateLabel(&menuLabels, LABEL, 106, 115, font, "Start", { 245, 245, 220, 255 });
+		App->gui->CreateLabel(&menuLabels, LABEL, 90, 140, font, "Continue", { 245, 245, 220, 255 });
+		App->gui->CreateLabel(&menuLabels, LABEL, 98, 165, font, "Credits", { 245, 245, 220, 255 });
 		
 		SDL_Rect section = { 512, 0, 663, 712 };
 		settings_window = App->gui->CreateBox(BOX, settingsPosition.x, settingsPosition.y, section, gui_tex);
@@ -115,11 +116,11 @@ bool j1SceneMenu::Update(float dt)
 	// USER INTERFACE MANAGEMENT
 	// ---------------------------------------------------------------------------------------------------------------------	
 
-	App->gui->UpdateButtonsState(); 
+	App->gui->UpdateButtonsState(&menuButtons); 
 	App->gui->UpdateBoxesState();
 	
 	// Button actions
-	for (p2List_item<j1Button*>* item = App->gui->buttons.start; item != nullptr; item = item->next) {
+	for (p2List_item<j1Button*>* item = menuButtons.start; item != nullptr; item = item->next) {
 		switch (item->data->state) 
 		{
 		case IDLE:
@@ -147,9 +148,13 @@ bool j1SceneMenu::Update(float dt)
 				settings_window->visible = !settings_window->visible;
 				settings_window->position = settingsPosition;
 			}
-			else if (item->data->bfunction == OPEN_CREDITS){
-				ShellExecuteA(NULL, "open", "https://goo.gl/SUk3ra", NULL, NULL, SW_SHOWNORMAL);
+			else if (item->data->bfunction == OPEN_CREDITS) {
+				openCredits = true;
+				App->fade->FadeToBlack();
 			}
+			/*else if (item->data->bfunction == OPEN_CREDITS){
+				ShellExecuteA(NULL, "open", "https://goo.gl/SUk3ra", NULL, NULL, SW_SHOWNORMAL);
+			}*/
 			break;
 
 		case CLICKED:
@@ -158,14 +163,19 @@ bool j1SceneMenu::Update(float dt)
 		}
 	}
 
-	if (startGame && App->fade->IsFading() == 0) {
-		ChangeScene(SCENE1);
-		player_created = true;
+	// Managing scene transitions
+	if (App->fade->IsFading() == 0) {
+		if (startGame) {
+			ChangeScene(SCENE1);
+			player_created = true;
+		}
+		else if (openCredits)
+			ChangeScene(CREDITS);
+		else if (loadGame)
+			App->LoadGame("save_game.xml");
 	}
-	else if (loadGame && App->fade->IsFading() == 0)
-		App->LoadGame("save_game.xml");
 
-	// To move settings window
+	// To move settings window in case it is visible
 	if (settings_window != nullptr) {
 		if (settings_window->clicked) {
 			int x, y; App->input->GetMousePosition(x, y);
@@ -193,12 +203,12 @@ bool j1SceneMenu::Update(float dt)
 	App->render->Blit(harpy_tex, 205, 35, &h, SDL_FLIP_HORIZONTAL);
 
 	// Blitting the buttons
-	for (p2List_item<j1Button*>* item = App->gui->buttons.start; item != nullptr; item = item->next) {
+	for (p2List_item<j1Button*>* item = menuButtons.start; item != nullptr; item = item->next) {
 		item->data->Draw(0.5f);
 	}
 
 	// Blitting the labels
-	for (p2List_item<j1Label*>* item = App->gui->labels.start; item != nullptr; item = item->next) {
+	for (p2List_item<j1Label*>* item = menuLabels.start; item != nullptr; item = item->next) {
 		item->data->Draw();
 	}
 
@@ -229,9 +239,18 @@ bool j1SceneMenu::CleanUp()
 	App->tex->UnLoad(harpy_tex);
 	App->tex->UnLoad(player_tex);
 	App->tex->UnLoad(gui_tex);
-
+	
 	App->map->CleanUp();
 	App->tex->CleanUp();
+
+	for (p2List_item<j1Button*>* item = menuButtons.start; item != nullptr; item = item->next) {
+		item->data->CleanUp();
+		menuButtons.del(item);
+	}
+
+	for (p2List_item<j1Label*>* item = menuLabels.start; item != nullptr; item = item->next) {
+		menuLabels.del(item);
+	}
 
 	delete settings_window;
 	if(settings_window != nullptr) settings_window = nullptr;
@@ -259,10 +278,14 @@ void j1SceneMenu::ChangeScene(SCENE objectiveScene)
 	{
 		this->active = false;
 		startGame = false;
+		loadGame = false;
+		openCredits = false;
+
 		CleanUp();
 
 		if (objectiveScene == SCENE::CREDITS) {
-
+			App->credits->active = true;
+			App->credits->Start();
 		}
 		else {
 			if (objectiveScene == SCENE::SCENE1) {

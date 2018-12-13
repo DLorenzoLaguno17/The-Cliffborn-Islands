@@ -91,6 +91,9 @@
     <ClCompile Include="j1Box.cpp">
       <Filter>Development\Modules\GraphicUserInterface</Filter>
     </ClCompile>
+    <ClCompile Include="j1SceneCredits.cpp">
+      <Filter>Development\Scenes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Textures.h">
@@ -206,6 +209,9 @@
     </ClInclude>
     <ClInclude Include="j1Box.h">
       <Filter>Development\Modules\GraphicUserInterface</Filter>
+    </ClInclude>
+    <ClInclude Include="j1SceneCredits.h">
+      <Filter>Development\Scenes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

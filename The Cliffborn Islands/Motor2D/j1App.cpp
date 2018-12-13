@@ -10,6 +10,7 @@
 #include "j1Textures.h"
 #include "j1Audio.h"
 #include "j1SceneMenu.h"
+#include "j1SceneCredits.h"
 #include "j1Scene1.h"
 #include "j1Scene2.h"
 #include "j1Map.h"
@@ -35,6 +36,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	tex = new j1Textures();
 	audio = new j1Audio();
 	menu = new j1SceneMenu();
+	credits = new j1SceneCredits();
 	scene1 = new j1Scene1();
 	scene2 = new j1Scene2();
 	map = new j1Map();
@@ -54,6 +56,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(map);
 	AddModule(path);
 	AddModule(menu);
+	AddModule(credits);
 	AddModule(scene1);
 	AddModule(scene2);
 	AddModule(entity);

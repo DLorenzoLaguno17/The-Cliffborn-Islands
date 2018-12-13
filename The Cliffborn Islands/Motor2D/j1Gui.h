@@ -10,9 +10,9 @@
 struct SDL_Texture;
 struct _TTF_Font;
 struct SDL_Rect;
-struct j1Button;
-struct j1Label;
-struct j1Box;
+class j1Button;
+class j1Label;
+class j1Box;
 
 enum UIELEMENT_TYPES
 {
@@ -60,19 +60,15 @@ public:
 	bool CleanUp();
 
 	// Factory methods
-	j1Button* CreateButton(UIELEMENT_TYPES type, int x, int y, SDL_Rect idle, SDL_Rect hovered, SDL_Rect clicked, SDL_Texture* text = nullptr, ButtonFunction function = NO_FUNCTION);
-	j1Label* CreateLabel(UIELEMENT_TYPES type, int x, int y, _TTF_Font* font, const char* text, SDL_Color color = { 255, 255, 255, 255});
+	j1Button* CreateButton(p2List<j1Button*>* buttons, UIELEMENT_TYPES type, int x, int y, SDL_Rect idle, SDL_Rect hovered, SDL_Rect clicked, SDL_Texture* text = nullptr, ButtonFunction function = NO_FUNCTION);
+	j1Label* CreateLabel(p2List<j1Label*>* labels, UIELEMENT_TYPES type, int x, int y, _TTF_Font* font, const char* text, SDL_Color color = { 255, 255, 255, 255});
 	j1Box* CreateBox(UIELEMENT_TYPES type, int x, int y, SDL_Rect section, SDL_Texture* text);
 
 	// UI uppdaters
-	void UpdateButtonsState();
+	void UpdateButtonsState(p2List<j1Button*>* buttons);
 	void UpdateBoxesState();
 	
 	const SDL_Texture* GetAtlas() const;
-
-public:
-	p2List<j1Button*> buttons;
-	p2List<j1Label*> labels;
 
 private:
 

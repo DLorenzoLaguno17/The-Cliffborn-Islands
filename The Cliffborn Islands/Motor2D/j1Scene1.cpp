@@ -83,8 +83,8 @@ bool j1Scene1::Start()
 
 		time_text = { "%i", time_scene1 };
 
-		seconds = App->gui->CreateLabel(LABEL, 500, 0, text, time_text.GetString());
-		minutes = App->gui->CreateLabel(LABEL, 410, 0, text, "00:");
+		seconds = App->gui->CreateLabel(&scene1Labels, LABEL, 500, 0, text, time_text.GetString());
+		minutes = App->gui->CreateLabel(&scene1Labels, LABEL, 410, 0, text, "00:");
 	}
 
 	return true;
@@ -310,6 +310,15 @@ bool j1Scene1::CleanUp()
 		App->entity->player->CleanUp();
 	if (App->entity->hook)
 		App->entity->hook->CleanUp();
+
+	for (p2List_item<j1Button*>* item = scene1Buttons.start; item != nullptr; item = item->next) {
+		item->data->CleanUp();
+		scene1Buttons.del(item);
+	}
+
+	for (p2List_item<j1Label*>* item = scene1Labels.start; item != nullptr; item = item->next) {
+		scene1Labels.del(item);
+	}
 
 	App->path->CleanUp();
 
