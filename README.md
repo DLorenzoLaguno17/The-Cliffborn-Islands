@@ -49,11 +49,11 @@ Sprites and tilesets of character and maps: "Foggy Cliffs - Fantasy Tileset"
 
 ### Music
 Music of the menu scene: "Getting it Done"
-[Kevin MacLeod](incompetech.com)
+[Kevin MacLeod](https://incompetech.com/)
 Licensed under [Creative Commons](http://creativecommons.org/licenses/by/3.0/): By Attribution 3.0
 
 Music of the first and second level: "Airship Serenity"
-[Kevin MacLeod](incompetech.com)
+[Kevin MacLeod](https://incompetech.com/)
 Licensed under [Creative Commons](http://creativecommons.org/licenses/by/3.0/): By Attribution 3.0
 
 ### Sound effects
