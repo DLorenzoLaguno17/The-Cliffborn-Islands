@@ -238,7 +238,6 @@ Collider* j1Collisions::AddCollider(SDL_Rect rect, COLLIDER_TYPE type, j1Module*
 
 	for (uint i = 0; i < MAX_COLLIDERS; ++i)
 	{
-
 		if (colliders[i] == nullptr)
 		{
 			ret = colliders[i] = new Collider(rect, type, callback);
@@ -258,9 +257,6 @@ bool Collider::CheckCollision(const SDL_Rect& r) const
 
 COLLISION_DIRECTION Collider::CheckDirection(const SDL_Rect& r) const 
 {
-	//r wall
-	//rect enemic
-
 	if (r.x + r.w < rect.x)
 	{
 		return LEFT_COLLISION;
