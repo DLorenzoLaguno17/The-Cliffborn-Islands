@@ -11,7 +11,7 @@
 #include "j1Gui.h"
 #include "j1Button.h"
 #include "j1Label.h"
-#include "j1Settings.h"
+#include "j1Box.h"
 #include "j1Fonts.h"
 #include "j1Input.h"
 #include "j1Window.h"
@@ -69,7 +69,7 @@ bool j1SceneMenu::Start()
 
 		App->gui->CreateButton(BUTTON, 80, 110, idle, hovered, clicked, gui_tex, PLAY_GAME);
 		App->gui->CreateButton(BUTTON, 80, 135, idle, hovered, clicked, gui_tex, CONTINUE);
-		App->gui->CreateButton(BUTTON, 80, 160, idle, hovered, clicked, gui_tex, CREDITS);
+		App->gui->CreateButton(BUTTON, 80, 160, idle, hovered, clicked, gui_tex, OPEN_CREDITS);
 
 		SDL_Rect idle2 = { 28, 201, 49, 49 };
 		SDL_Rect hovered2 = { 77, 201, 49, 49 };
@@ -86,7 +86,7 @@ bool j1SceneMenu::Start()
 		App->gui->CreateLabel(LABEL, 98, 165, font, "Credits", { 245, 245, 220, 255 });
 		
 		SDL_Rect section = { 512, 0, 663, 712 };
-		settings_window = App->gui->CreateSettingsWindow(SETTINGS_WINDOW, settingsPosition.x, settingsPosition.y, section, gui_tex);
+		settings_window = App->gui->CreateBox(BOX, settingsPosition.x, settingsPosition.y, section, gui_tex);
 
 		player_created = false;
 	}
@@ -116,7 +116,7 @@ bool j1SceneMenu::Update(float dt)
 	// ---------------------------------------------------------------------------------------------------------------------	
 
 	App->gui->UpdateButtonsState(); 
-	App->gui->UpdateSettingsWindowState();
+	App->gui->UpdateBoxesState();
 	
 	// Button actions
 	for (p2List_item<j1Button*>* item = App->gui->buttons.start; item != nullptr; item = item->next) {
@@ -133,13 +133,12 @@ bool j1SceneMenu::Update(float dt)
 		case RELEASED:
 			item->data->situation = item->data->idle;
 			if (item->data->bfunction == PLAY_GAME) {
-				//startGame = true;
-				//App->fade->FadeToBlack();
-				ChangeScene(true);
-				player_created = true;
+				startGame = true;
+				App->fade->FadeToBlack();
 			}
 			else if (item->data->bfunction == CONTINUE) {
-				App->LoadGame("save_game.xml");
+				loadGame = true;
+				App->fade->FadeToBlack();
 			}
 			else if (item->data->bfunction == CLOSE_GAME) {
 				continueGame = false;
@@ -148,7 +147,7 @@ bool j1SceneMenu::Update(float dt)
 				settings_window->visible = !settings_window->visible;
 				settings_window->position = settingsPosition;
 			}
-			else if (item->data->bfunction == CREDITS){
+			else if (item->data->bfunction == OPEN_CREDITS){
 				ShellExecuteA(NULL, "open", "https://goo.gl/SUk3ra", NULL, NULL, SW_SHOWNORMAL);
 			}
 			break;
@@ -158,6 +157,13 @@ bool j1SceneMenu::Update(float dt)
 			break;
 		}
 	}
+
+	if (startGame && App->fade->IsFading() == 0) {
+		ChangeScene(SCENE1);
+		player_created = true;
+	}
+	else if (loadGame && App->fade->IsFading() == 0)
+		App->LoadGame("save_game.xml");
 
 	// To move settings window
 	if (settings_window != nullptr) {
@@ -240,29 +246,37 @@ bool j1SceneMenu::Load(pugi::xml_node& node)
 	bool scene_activated = activated.attribute("true").as_bool();
 
 	if ((scene_activated == false) && active)
-		ChangeScene(scene_activated);
+		ChangeScene(SCENE1);
+	else
+		ChangeScene(SCENE2);
 
 	return true;
 }
 
-void j1SceneMenu::ChangeScene(bool scene1)
+void j1SceneMenu::ChangeScene(SCENE objectiveScene)
 {
 	if (!player_created)
 	{
 		this->active = false;
+		startGame = false;
 		CleanUp();
 
-		if (scene1) {
-			App->scene1->active = true;
-			App->scene1->Start();
+		if (objectiveScene == SCENE::CREDITS) {
+
 		}
-		else if (!scene1) {
-			App->scene2->active = true;
-			App->scene2->Start();
+		else {
+			if (objectiveScene == SCENE::SCENE1) {
+				App->scene1->active = true;
+				App->scene1->Start();
+			}
+			else if (objectiveScene == SCENE::SCENE2) {
+				App->scene2->active = true;
+				App->scene2->Start();
+			}
+
+			App->entity->active = true;
+			App->entity->CreatePlayer();
+			App->entity->Start();
 		}
-		App->entity->active = true;
-		App->entity->CreatePlayer();
-		App->entity->Start();
-		startGame = false;
 	}
 }

@@ -5,7 +5,7 @@
 #include "j1Timer.h"
 
 struct SDL_Texture;
-struct j1Settings;
+struct j1Box;
 
 class j1Scene2 : public j1Module
 {
@@ -44,7 +44,7 @@ public:
 	void PlaceEnemies();
 
 public:
-	j1Settings* settings_window = nullptr;
+	j1Box* settings_window = nullptr;
 	fPoint initialScene2Position;
 
 private:

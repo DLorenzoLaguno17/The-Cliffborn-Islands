@@ -8,7 +8,7 @@
 #include "p2Log.h"
 
 struct Collider;
-struct Animation;
+class Animation;
 struct SDL_Texture;
 
 enum ENTITY_TYPES;

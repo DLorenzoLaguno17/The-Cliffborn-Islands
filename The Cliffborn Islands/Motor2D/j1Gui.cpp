@@ -7,7 +7,7 @@
 #include "j1Gui.h"
 #include "j1Button.h"
 #include "j1Label.h"
-#include "j1Settings.h"
+#include "j1Box.h"
 #include "j1SceneMenu.h"
 #include "j1Scene1.h"
 #include "j1Scene2.h"
@@ -71,10 +71,10 @@ j1Label* j1Gui::CreateLabel(UIELEMENT_TYPES type, int x, int y, _TTF_Font* font,
 	return ret;
 }
 
-j1Settings* j1Gui::CreateSettingsWindow(UIELEMENT_TYPES type, int x, int y, SDL_Rect section, SDL_Texture* text) {
-	j1Settings* ret = nullptr;
+j1Box* j1Gui::CreateBox(UIELEMENT_TYPES type, int x, int y, SDL_Rect section, SDL_Texture* text) {
+	j1Box* ret = nullptr;
 
-	ret = new j1Settings(type, x, y, section, text);
+	ret = new j1Box(type, x, y, section, text);
 
 	return ret;
 }
@@ -123,10 +123,10 @@ void j1Gui::UpdateButtonsState() {
 	}
 }
 
-void j1Gui::UpdateSettingsWindowState() {
+void j1Gui::UpdateBoxesState() {
 	int x, y; App->input->GetMousePosition(x, y);
 
-	j1Settings* aux = nullptr;
+	j1Box* aux = nullptr;
 
 	// Checking which window is enabled
 	if (App->menu->settings_window->visible)

@@ -1,5 +1,5 @@
-#ifndef __SETTINGS_H__
-#define __SETTINGS_H__
+#ifndef __j1BOX_H__
+#define __j1BOX_H__
 
 #include "j1UserInterfaceElement.h"
 #include "p2Point.h"
@@ -7,15 +7,15 @@
 enum UIELEMENT_TYPES;
 struct SDL_Texture;
 
-class j1Settings : public j1UserInterfaceElement {
+class j1Box : public j1UserInterfaceElement {
 public:
 
 	// Constructor
 	// To create a button we need several parameters: its type, a texture, the three sections of the atlas the button will use and the function of the button
-	j1Settings(UIELEMENT_TYPES type, int x, int y, SDL_Rect section, SDL_Texture* text = nullptr);
+	j1Box(UIELEMENT_TYPES type, int x, int y, SDL_Rect section, SDL_Texture* text = nullptr);
 
 	// Destructor
-	virtual ~j1Settings();
+	virtual ~j1Box();
 
 	// Called before quitting
 	bool CleanUp();
@@ -32,4 +32,4 @@ public:
 	iPoint mouseDistance;
 };
 
-#endif // __SETTINGS_H__
+#endif // __j1BOX_H__

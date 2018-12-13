@@ -9,7 +9,14 @@
 
 struct SDL_Texture;
 struct _TTF_Font;
-struct j1Settings;
+class j1Box;
+
+enum SCENE {
+	MENU = 0,
+	SCENE1,
+	SCENE2,
+	CREDITS
+};
 
 class j1SceneMenu : public j1Module
 {
@@ -37,14 +44,14 @@ public:
 	bool CleanUp();
 
 	// Called to change scene
-	void ChangeScene(bool scene1);
+	void ChangeScene(SCENE objectiveScene);
 
 	// Load and Save
 	bool Load(pugi::xml_node&);
 	//bool Save(pugi::xml_node&) const;
 
 public:
-	j1Settings* settings_window = nullptr;
+	j1Box* settings_window = nullptr;
 
 private:
 
@@ -57,10 +64,13 @@ private:
 
 	bool continueGame = true;
 	bool startGame = false;
+	bool loadGame = false;
 	bool player_created = false;
 
 	Animation player;
 	Animation harpy;
+
+	SCENE currentScene = SCENE::MENU;
 
 	// Positions
 	iPoint settingsPosition;
