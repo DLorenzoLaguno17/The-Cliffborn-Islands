@@ -13,7 +13,6 @@ class j1Player : public j1Entity
 {
 
 public:
-
 	j1Player(int x, int y, ENTITY_TYPES type);
 
 	// Destructor
@@ -118,12 +117,9 @@ private:
 
 	bool loadedAudios = false;
 
-	SDL_Texture* lives_tex;
-
+	SDL_Texture* lives_tex = nullptr;
 	p2SString score;
-
-	j1Label* score_label;
-
+	j1Label* score_label = nullptr;
 	_TTF_Font* text = nullptr;
 };
 

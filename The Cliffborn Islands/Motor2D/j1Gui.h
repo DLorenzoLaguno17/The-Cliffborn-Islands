@@ -27,11 +27,13 @@ enum UIELEMENT_TYPES
 enum ButtonFunction {
 	NO_FUNCTION = 0,
 	PLAY_GAME,
+	GO_TO_MENU,
 	CLOSE_GAME,
 	OPEN_CREDITS,
 	SAVE_GAME,
 	CONTINUE,
-	SETTINGS
+	SETTINGS,
+	LINK
 };
 
 // ---------------------------------------------------
@@ -69,6 +71,9 @@ public:
 	void UpdateBoxesState();
 	
 	const SDL_Texture* GetAtlas() const;
+
+public:
+	float UIscale;
 
 private:
 

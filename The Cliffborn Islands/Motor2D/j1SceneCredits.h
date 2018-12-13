@@ -50,6 +50,7 @@ private:
 	_TTF_Font* font = nullptr;
 
 	bool continueGame = true;
+	bool backToMenu = false;
 };
 
 #endif // __j1SCENECREDITS_H__

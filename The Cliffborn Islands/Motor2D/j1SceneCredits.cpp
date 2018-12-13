@@ -59,23 +59,22 @@ bool j1SceneCredits::Start()
 		SDL_Rect hovered = { 0, 45, 190, 49 };
 		SDL_Rect clicked = { 0, 94, 190, 49 };
 
-		App->gui->CreateButton(&creditsButtons, BUTTON, 80, 110, idle, hovered, clicked, gui_tex, PLAY_GAME);
-		App->gui->CreateButton(&creditsButtons, BUTTON, 80, 135, idle, hovered, clicked, gui_tex, CONTINUE);
-		App->gui->CreateButton(&creditsButtons, BUTTON, 80, 160, idle, hovered, clicked, gui_tex, OPEN_CREDITS);
+		App->gui->CreateButton(&creditsButtons, BUTTON, 80, 160, idle, hovered, clicked, gui_tex, LINK);
 
 		SDL_Rect idle2 = { 28, 201, 49, 49 };
 		SDL_Rect hovered2 = { 77, 201, 49, 49 };
 		SDL_Rect clicked2 = { 126, 201, 49, 49 };
+
 		App->gui->CreateButton(&creditsButtons, BUTTON, 229, 3, idle2, hovered2, clicked2, gui_tex, CLOSE_GAME);
 
-		SDL_Rect idle3 = { 463, 109, 49, 49 };
-		SDL_Rect hovered3 = { 463, 158, 49, 49 };
-		SDL_Rect clicked3 = { 463, 207, 49, 49 };
-		App->gui->CreateButton(&creditsButtons, BUTTON, 3, 3, idle3, hovered3, clicked3, gui_tex, SETTINGS);
+		SDL_Rect idle3 = { 312, 292, 49, 49 };
+		SDL_Rect hovered3 = { 361, 292, 49, 49 };
+		SDL_Rect clicked3 = { 310, 400, 49, 49 };
+		App->gui->CreateButton(&creditsButtons, BUTTON, 3, 3, idle3, hovered3, clicked3, gui_tex, GO_TO_MENU);
 
-		App->gui->CreateLabel(&creditsLabels, LABEL, 106, 115, font, "Start", { 245, 245, 220, 255 });
-		App->gui->CreateLabel(&creditsLabels, LABEL, 90, 140, font, "Continue", { 245, 245, 220, 255 });
-		App->gui->CreateLabel(&creditsLabels, LABEL, 98, 165, font, "Credits", { 245, 245, 220, 255 });
+		App->gui->CreateLabel(&creditsLabels, LABEL, 90, 165, font, "Webpage", { 245, 245, 220, 255 });
+		App->gui->CreateLabel(&creditsLabels, LABEL, 106, 115, font, "Back", { 245, 245, 220, 255 });
+		//App->gui->CreateLabel(&creditsLabels, LABEL, 98, 165, font, "Credits", { 245, 245, 220, 255 });
 	}						 
 
 	return true;
@@ -98,7 +97,7 @@ bool j1SceneCredits::Update(float dt)
 	App->gui->UpdateButtonsState(&creditsButtons);
 
 	// Button actions
-	/*for (p2List_item<j1Button*>* item = App->gui->buttons.start; item != nullptr; item = item->next) {
+	for (p2List_item<j1Button*>* item = creditsButtons.start; item != nullptr; item = item->next) {
 		switch (item->data->state)
 		{
 		case IDLE:
@@ -111,22 +110,14 @@ bool j1SceneCredits::Update(float dt)
 
 		case RELEASED:
 			item->data->situation = item->data->idle;
-			if (item->data->bfunction == PLAY_GAME) {
-				startGame = true;
-				App->fade->FadeToBlack();
-			}
-			else if (item->data->bfunction == CONTINUE) {
-				loadGame = true;
+			if (item->data->bfunction == GO_TO_MENU) {
+				backToMenu = true;
 				App->fade->FadeToBlack();
 			}
 			else if (item->data->bfunction == CLOSE_GAME) {
 				continueGame = false;
 			}
-			else if (item->data->bfunction == SETTINGS) {
-				settings_window->visible = !settings_window->visible;
-				settings_window->position = settingsPosition;
-			}
-			else if (item->data->bfunction == OPEN_CREDITS) {
+			else if (item->data->bfunction == LINK) {
 				ShellExecuteA(NULL, "open", "https://goo.gl/SUk3ra", NULL, NULL, SW_SHOWNORMAL);
 			}
 			break;
@@ -134,14 +125,13 @@ bool j1SceneCredits::Update(float dt)
 		case CLICKED:
 			item->data->situation = item->data->clicked;
 			break;
-		}
 	}
+}
 
-	if (startGame && App->fade->IsFading() == 0) {
-		ChangeScene(SCENE1);
-		player_created = true;
+
+	if (backToMenu && App->fade->IsFading() == 0) {
+		ChangeScene();
 	}
-	*/
 
 	// ---------------------------------------------------------------------------------------------------------------------
 	// DRAWING EVERYTHING ON THE SCREEN
@@ -149,7 +139,7 @@ bool j1SceneCredits::Update(float dt)
 
 	// Blitting the buttons
 	for (p2List_item<j1Button*>* item = creditsButtons.start; item != nullptr; item = item->next) {
-		item->data->Draw(0.5f);
+		item->data->Draw(App->gui->UIscale);
 	}
 
 	// Blitting the labels
@@ -196,6 +186,7 @@ bool j1SceneCredits::CleanUp()
 void j1SceneCredits::ChangeScene()
 {
 	this->active = false;
+	backToMenu = false;
 	CleanUp();
 	App->menu->active = true;
 	App->menu->Start();	

@@ -9,6 +9,7 @@
 #include "j1Label.h"
 #include "j1Box.h"
 #include "j1SceneMenu.h"
+#include "j1SceneCredits.h"
 #include "j1Scene1.h"
 #include "j1Scene2.h"
 
@@ -22,12 +23,13 @@ j1Gui::~j1Gui()
 {}
 
 // Called before render is available
-bool j1Gui::Awake(pugi::xml_node& conf)
+bool j1Gui::Awake(pugi::xml_node& config)
 {
 	LOG("Loading GUI atlas");
 	bool ret = true;
 
-	atlas_file_name = conf.child("atlas").attribute("file").as_string("");
+	atlas_file_name = config.child("atlas").attribute("file").as_string("");
+	UIscale = config.attribute("scale").as_float();
 
 	return ret;
 }
@@ -97,10 +99,11 @@ void j1Gui::UpdateButtonsState(p2List<j1Button*>* buttons) {
 	int x, y; App->input->GetMousePosition(x, y);
 
 	for (p2List_item<j1Button*>* button = buttons->start; button != nullptr; button = button->next) {
-		if (x <= button->data->position.x + button->data->situation.w * 0.5f && x >= button->data->position.x
-			&& y <= button->data->position.y + button->data->situation.h * 0.5f && y >= button->data->position.y) {
+		if (x <= button->data->position.x + button->data->situation.w * App->gui->UIscale && x >= button->data->position.x
+			&& y <= button->data->position.y + button->data->situation.h * App->gui->UIscale && y >= button->data->position.y) {
 
-			if (App->menu->settings_window->visible && App->menu->settings_window != nullptr && button->data->bfunction != CLOSE_GAME && button->data->bfunction != SETTINGS) continue;
+			if(App->credits->active == false && App->menu->settings_window->visible
+				&& button->data->bfunction != CLOSE_GAME && button->data->bfunction != SETTINGS) continue;
 
 			button->data->state = STATE::HOVERED;
 
@@ -129,8 +132,8 @@ void j1Gui::UpdateBoxesState() {
 		aux = App->scene2->settings_window;*/
 
 	// Checking if it is being dragged
-	if (aux != nullptr && x <= aux->position.x + aux->section.w * 0.5f && x >= aux->position.x
-		&& y <= aux->position.y + aux->section.h * 0.5f && y >= aux->position.y){
+	if (aux != nullptr && x <= aux->position.x + aux->section.w * App->gui->UIscale && x >= aux->position.x
+		&& y <= aux->position.y + aux->section.h * App->gui->UIscale && y >= aux->position.y){
 		if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT)
 			aux->clicked = true;
 		else if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_UP)

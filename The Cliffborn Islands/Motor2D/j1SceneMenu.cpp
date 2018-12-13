@@ -86,7 +86,7 @@ bool j1SceneMenu::Start()
 		App->gui->CreateLabel(&menuLabels, LABEL, 90, 140, font, "Continue", { 245, 245, 220, 255 });
 		App->gui->CreateLabel(&menuLabels, LABEL, 98, 165, font, "Credits", { 245, 245, 220, 255 });
 		
-		SDL_Rect section = { 512, 0, 663, 712 };
+		SDL_Rect section = { 537, 0, 663, 712 };
 		settings_window = App->gui->CreateBox(BOX, settingsPosition.x, settingsPosition.y, section, gui_tex);
 
 		player_created = false;
@@ -204,7 +204,7 @@ bool j1SceneMenu::Update(float dt)
 
 	// Blitting the buttons
 	for (p2List_item<j1Button*>* item = menuButtons.start; item != nullptr; item = item->next) {
-		item->data->Draw(0.5f);
+		item->data->Draw(App->gui->UIscale);
 	}
 
 	// Blitting the labels

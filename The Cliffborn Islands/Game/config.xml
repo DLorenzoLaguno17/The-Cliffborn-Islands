@@ -7,7 +7,7 @@
   </app>
 	
   <renderer>
-    <vsync value="false"/>
+    <vsync value="true"/>
 	<camera initialX="0" initialY="0"/>
   </renderer>
 
@@ -59,6 +59,14 @@
 	<blitSpeed backgrounds="0.7f" fog="0.85f" map="1.0f"/>
     <folder>maps/</folder>
   </map>  
+  
+  <gui scale="0.5f"/>
+  
+  <menu>
+  </menu>
+  
+  <credits>
+  </credits>
   
   <scene1>
 	<camera cameraLimit="-8570" playerLimit="2374"/>
