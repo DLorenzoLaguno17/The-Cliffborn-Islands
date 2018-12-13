@@ -152,9 +152,6 @@ bool j1SceneMenu::Update(float dt)
 				openCredits = true;
 				App->fade->FadeToBlack();
 			}
-			/*else if (item->data->bfunction == OPEN_CREDITS){
-				ShellExecuteA(NULL, "open", "https://goo.gl/SUk3ra", NULL, NULL, SW_SHOWNORMAL);
-			}*/
 			break;
 
 		case CLICKED:

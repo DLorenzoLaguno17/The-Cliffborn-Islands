@@ -5,6 +5,7 @@
 #include "j1Textures.h"
 #include "j1FadeToBlack.h"
 #include "j1Audio.h"
+#include "j1Map.h"
 #include "j1Gui.h"
 #include "j1Button.h"
 #include "j1Label.h"
@@ -45,21 +46,23 @@ bool j1SceneCredits::Start()
 {
 	if (active)
 	{
+		// The map is loaded
+		App->map->Load("menu.tmx");
+
 		// The audio is played
 		App->audio->PlayMusic("audio/music/menu_music.ogg", 1.0f);
 
 		// Loading textures
 		gui_tex = App->tex->Load("gui/atlas.png");
-		logo_tex = App->tex->Load("gui/logo.png");
 
 		// Loading fonts
 		font = App->font->Load("fonts/PixelCowboy/PixelCowboy.otf", 8);
 
-		SDL_Rect idle = { 0, 143, 190, 49 };
-		SDL_Rect hovered = { 0, 45, 190, 49 };
-		SDL_Rect clicked = { 0, 94, 190, 49 };
+		SDL_Rect idle = { 260, 470, 190, 49 };
+		SDL_Rect hovered = { 260, 519, 190, 49 };
+		SDL_Rect clicked = { 260, 568, 190, 49 };
 
-		App->gui->CreateButton(&creditsButtons, BUTTON, 80, 160, idle, hovered, clicked, gui_tex, LINK);
+		App->gui->CreateButton(&creditsButtons, BUTTON, 79, 160, idle, hovered, clicked, gui_tex, LINK);
 
 		SDL_Rect idle2 = { 28, 201, 49, 49 };
 		SDL_Rect hovered2 = { 77, 201, 49, 49 };
@@ -73,7 +76,6 @@ bool j1SceneCredits::Start()
 		App->gui->CreateButton(&creditsButtons, BUTTON, 3, 3, idle3, hovered3, clicked3, gui_tex, GO_TO_MENU);
 
 		App->gui->CreateLabel(&creditsLabels, LABEL, 90, 165, font, "Webpage", { 245, 245, 220, 255 });
-		App->gui->CreateLabel(&creditsLabels, LABEL, 106, 115, font, "Back", { 245, 245, 220, 255 });
 		//App->gui->CreateLabel(&creditsLabels, LABEL, 98, 165, font, "Credits", { 245, 245, 220, 255 });
 	}						 
 
@@ -127,8 +129,7 @@ bool j1SceneCredits::Update(float dt)
 			break;
 	}
 }
-
-
+	
 	if (backToMenu && App->fade->IsFading() == 0) {
 		ChangeScene();
 	}
@@ -136,6 +137,8 @@ bool j1SceneCredits::Update(float dt)
 	// ---------------------------------------------------------------------------------------------------------------------
 	// DRAWING EVERYTHING ON THE SCREEN
 	// ---------------------------------------------------------------------------------------------------------------------	
+
+	App->map->Draw();
 
 	// Blitting the buttons
 	for (p2List_item<j1Button*>* item = creditsButtons.start; item != nullptr; item = item->next) {
@@ -146,9 +149,6 @@ bool j1SceneCredits::Update(float dt)
 	for (p2List_item<j1Label*>* item = creditsLabels.start; item != nullptr; item = item->next) {
 		item->data->Draw();
 	}
-
-	SDL_Rect logo = { 166, 139, 711, 533 };
-	App->render->Blit(logo_tex, 54, 0, &logo, SDL_FLIP_NONE, 1.0f, 0.20f);
 
 	return true;
 }
@@ -166,9 +166,9 @@ bool j1SceneCredits::PostUpdate()
 bool j1SceneCredits::CleanUp()
 {
 	LOG("Freeing all textures");
-	App->tex->UnLoad(logo_tex);
 	App->tex->UnLoad(gui_tex);
 
+	App->map->CleanUp();
 	App->tex->CleanUp();
 	
 	for (p2List_item<j1Button*>* item = creditsButtons.start; item != nullptr; item = item->next) {

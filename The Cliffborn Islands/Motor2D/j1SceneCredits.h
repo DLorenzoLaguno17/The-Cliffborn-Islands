@@ -44,8 +44,7 @@ public:
 
 private:
 
-	SDL_Texture * gui_tex = nullptr;
-	SDL_Texture* logo_tex = nullptr;
+	SDL_Texture* gui_tex = nullptr;
 
 	_TTF_Font* font = nullptr;
 
