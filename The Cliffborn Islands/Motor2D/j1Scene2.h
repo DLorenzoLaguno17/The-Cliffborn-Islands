@@ -2,6 +2,7 @@
 #define __j1SCENE2_H__
 
 #include "j1Module.h"
+#include "j1Timer.h"
 
 struct SDL_Texture;
 struct j1Settings;
@@ -50,9 +51,22 @@ private:
 
 	bool player_created = false;
 
+	Animation coin_hud;
+	Animation* animation = nullptr;
+	SDL_Texture* coin_tex = nullptr;
 	SDL_Texture* debug_tex = nullptr;
 	bool changingScene = false;
 	bool resettingLevel = false;
+
+	j1Timer	startup_time;
+	int time_scene2;
+	p2SString time_text;
+	p2SString min_text;
+	p2SString min_text_left = "0";
+	j1Label* seconds;
+	j1Label* minutes;
+	_TTF_Font* text = nullptr;
+	int min = 00;
 };
 
 #endif // __j1SCENE2_H__

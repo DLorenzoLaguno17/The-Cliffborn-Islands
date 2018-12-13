@@ -15,6 +15,9 @@
 #include "j1Scene1.h"
 #include "j1FadeToBlack.h"
 #include "j1Pathfinding.h"
+#include "j1Coin.h"
+#include "j1Fonts.h"
+#include "j1Label.h"
 
 #include "Brofiler/Brofiler.h"
 
@@ -66,10 +69,20 @@ bool j1Scene2::Start()
 
 			RELEASE_ARRAY(data);
 		}
-
+		text = App->font->Load("fonts/PixelCowboy/PixelCowboy.otf", 8);
 		debug_tex = App->tex->Load("maps/path2.png");
+		coin_hud.LoadEnemyAnimations("idle", "coin");
+		coin_tex = App->tex->Load("textures/coin.png");
+		animation = &coin_hud;
 
 		PlaceEnemies();
+
+		startup_time.Start();
+
+		time_text = { "%i", time_scene2 };
+
+		seconds = App->gui->CreateLabel(LABEL, 500, 0, text, time_text.GetString());
+		minutes = App->gui->CreateLabel(LABEL, 410, 0, text, "00:");
 
 		// The audio is played
 		App->audio->PlayMusic("audio/music/level1_music.ogg", 1.0f);
@@ -115,7 +128,10 @@ bool j1Scene2::PreUpdate()
 bool j1Scene2::Update(float dt)
 {
 	BROFILER_CATEGORY("Level2Update", Profiler::Color::LightSeaGreen)
-		
+	
+	time_scene2 = startup_time.ReadSec();
+
+
 	// Load and Save
 	if (App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
 	{
@@ -150,6 +166,9 @@ bool j1Scene2::Update(float dt)
 
 	App->map->Draw();
 
+	SDL_Rect r = animation->GetCurrentFrame(dt);
+	App->render->Blit(coin_tex, 3, 700, &r, SDL_FLIP_NONE, 1.0f, 1, 0, INT_MAX, INT_MAX, false);
+
 	if (App->collisions->debug) {
 		int x, y;
 		App->input->GetMousePosition(x, y);
@@ -181,9 +200,40 @@ bool j1Scene2::PostUpdate()
 	BROFILER_CATEGORY("Level2PostUpdate", Profiler::Color::Yellow)
 	bool ret = true;
 
+
 	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		ret = false;
 
+	time_text = { "%i", time_scene2 };
+	if (time_scene2 == 60)
+	{
+		min += 1;
+		App->tex->UnLoad(minutes->sprites);
+		startup_time.Start();
+		time_text = { "%i", time_scene2 };
+		if (min < 10)
+		{
+			min_text_left.Clear();
+			min_text = { "%i", min };
+			min_text_left.operator+=("0");
+			min_text_left.operator+=(min_text);
+			min_text_left.operator+=(":");
+			minutes->sprites = App->font->Print(min_text_left.GetString(), minutes->color, minutes->font);
+		}
+		else
+		{
+			min_text = { "%i", min };
+			min_text.operator+=(":");
+			minutes->sprites = App->font->Print(min_text.GetString(), minutes->color, minutes->font);
+		}
+	}
+	App->tex->UnLoad(seconds->sprites);
+	seconds->sprites = App->font->Print(time_text.GetString(), seconds->color, seconds->font);
+
+	if (seconds->sprites != nullptr)
+		seconds->Draw(1.0f, 0, 0, false);
+	if (minutes->sprites != nullptr)
+		minutes->Draw(1.0f, 0, 0, false);
 	return ret;
 }
 
@@ -231,6 +281,8 @@ bool j1Scene2::CleanUp()
 
 	if (App->entity->player)
 		App->entity->player->CleanUp();
+	if (App->entity->hook)
+		App->entity->hook->CleanUp();
 
 	App->path->CleanUp();
 

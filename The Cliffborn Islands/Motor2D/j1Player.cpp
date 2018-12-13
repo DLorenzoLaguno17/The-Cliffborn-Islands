@@ -464,105 +464,110 @@ void j1Player::OnCollision(Collider* col_1, Collider* col_2)
 		//If the player collides with win colliders
 		if (col_2->type == COLLIDER_WIN)
 		{
+			feetOnGround = true;
 			if (App->scene1->active)
 				App->scene1->ChangeScene();
 			else if (App->scene2->active)
 				App->scene2->ChangeScene();
 		}
 		else
-		// If the player collides with a wall
-		if (col_2->type == COLLIDER_WALL) {
-			if (collider->rect.y + collider->rect.h >= col_2->rect.y + colisionMargin
-				&& collider->rect.y <= col_2->rect.y + col_2->rect.h) {
-				//If the collision is with a wall in front
-				if (collider->rect.x + collider->rect.w >= col_2->rect.x
-					&& collider->rect.x <= col_2->rect.x) {
-
-					wallInFront = true;
-					App->entity->hook->arrived = true;
-
-					if(position.x + (collider->rect.w * 3 / 4) < col_2->rect.x)
-						position.x = col_2->rect.x - collider->rect.w;
-				}
-				else
-				//If the collision is with a wall behind
-				if (collider->rect.x <= col_2->rect.x + col_2->rect.w
-					&& collider->rect.x + collider->rect.w >= col_2->rect.x + col_2->rect.w) {
-
-					wallBehind = true;
-					App->entity->hook->arrived = true;
-					if(position.x + (collider->rect.w / 4) > col_2->rect.x + col_2->rect.w)
-						position.x = col_2->rect.x + col_2->rect.w - colisionMargin;
-				}
-			}
-
-			if (collider->rect.x + collider->rect.w >= col_2->rect.x + colisionMargin
-				&& collider->rect.x + colisionMargin < col_2->rect.x + col_2->rect.w) {
-				//If the collision is with the "ceiling"
-				if (collider->rect.y <= col_2->rect.y + col_2->rect.h
-					&& collider->rect.y + (collider->rect.h / 2) > col_2->rect.y + col_2->rect.h
-					&& verticalSpeed < 0) {
-
-					position.y = col_2->rect.y + col_2->rect.h;
-
-					wallAbove = true;
-					jumping = false;
-					fallingSpeed = initialFallingSpeed;
-					currentJumps++;
-				}
-				else
-				//If the collision is with the ground
-				if (loading == false) {
-
-					if (collider->rect.y + collider->rect.h >= col_2->rect.y
-						&& collider->rect.y < col_2->rect.y) {
-
-						position.y = col_2->rect.y - collider->rect.h;
-
-						feetOnGround = true;
-						jumping = false;
-						freefall = false;
-						verticalSpeed = initialVerticalSpeed;
-						fallingSpeed = initialFallingSpeed;
-						currentJumps = initialJumps;
-					}
-				}
-			}
-		}
-
-		//If the player collides with death colliders
-		if (col_2->type == COLLIDER_DEATH || col_2->type == COLLIDER_ENEMY)
 		{
-			if (lives > 0)
-			{
-				if (col_2->rect.h < deathByFallColliderHeight)
-					deathByFall = true;
-				else {
-					if (!playedSound) {
-						App->audio->PlayFx(playerHurt);
-						playedSound = true;
+			// If the player collides with a wall
+			if (col_2->type == COLLIDER_WALL) {
+				if (collider->rect.y + collider->rect.h >= col_2->rect.y + colisionMargin
+					&& collider->rect.y <= col_2->rect.y + col_2->rect.h) {
+					//If the collision is with a wall in front
+					if (collider->rect.x + collider->rect.w >= col_2->rect.x
+						&& collider->rect.x <= col_2->rect.x) {
+
+						wallInFront = true;
+						App->entity->hook->arrived = true;
+
+						if (position.x + (collider->rect.w * 3 / 4) < col_2->rect.x)
+							position.x = col_2->rect.x - collider->rect.w;
 					}
+					else
+						//If the collision is with a wall behind
+						if (collider->rect.x <= col_2->rect.x + col_2->rect.w
+							&& collider->rect.x + collider->rect.w >= col_2->rect.x + col_2->rect.w) {
 
-					jumping = false;
-					fallingSpeed = initialFallingSpeed;
+							wallBehind = true;
+							App->entity->hook->arrived = true;
+							if (position.x + (collider->rect.w / 4) > col_2->rect.x + col_2->rect.w)
+								position.x = col_2->rect.x + col_2->rect.w - colisionMargin;
+						}
 				}
-				App->entity->DestroyEntities();
-				if (App->scene1->active == true)
-					App->fade->FadeToBlack(3.0f);
-				else if (App->scene2->active == true)
-					App->fade->FadeToBlack(3.0f);
 
-				dead = true;
-				App->audio->PlayFx(deathSound);
-				currentJumps == maxJumps;
+				if (collider->rect.x + collider->rect.w >= col_2->rect.x + colisionMargin
+					&& collider->rect.x + colisionMargin < col_2->rect.x + col_2->rect.w) {
+					//If the collision is with the "ceiling"
+					if (collider->rect.y <= col_2->rect.y + col_2->rect.h
+						&& collider->rect.y + (collider->rect.h / 2) > col_2->rect.y + col_2->rect.h
+						&& verticalSpeed < 0) {
+
+						position.y = col_2->rect.y + col_2->rect.h;
+
+						wallAbove = true;
+						jumping = false;
+						fallingSpeed = initialFallingSpeed;
+						currentJumps++;
+					}
+					else
+						//If the collision is with the ground
+						if (loading == false) {
+
+							if (collider->rect.y + collider->rect.h >= col_2->rect.y
+								&& collider->rect.y < col_2->rect.y) {
+
+								position.y = col_2->rect.y - collider->rect.h;
+
+								feetOnGround = true;
+								jumping = false;
+								freefall = false;
+								verticalSpeed = initialVerticalSpeed;
+								fallingSpeed = initialFallingSpeed;
+								currentJumps = initialJumps;
+							}
+						}
+				}
 			}
-			else if (App->scene1->active)
-				App->scene1->ChangeSceneMenu();
-			else if (App->scene2->active)
-				App->scene2->ChangeSceneMenu();
 
-			
+			//If the player collides with death colliders
+			if (col_2->type == COLLIDER_DEATH || col_2->type == COLLIDER_ENEMY)
+			{
+				if (lives > 0)
+				{
+					if (col_2->rect.h < deathByFallColliderHeight)
+						deathByFall = true;
+					else {
+						if (!playedSound) {
+							App->audio->PlayFx(playerHurt);
+							playedSound = true;
+						}
+
+						jumping = false;
+						fallingSpeed = initialFallingSpeed;
+					}
+					App->entity->DestroyEntities();
+					if (App->scene1->active == true)
+						App->fade->FadeToBlack(3.0f);
+					else if (App->scene2->active == true)
+						App->fade->FadeToBlack(3.0f);
+
+					dead = true;
+					App->audio->PlayFx(deathSound);
+					currentJumps == maxJumps;
+					points = 0;
+				}
+				else if (App->scene1->active)
+					App->scene1->ChangeSceneMenu();
+				else if (App->scene2->active)
+					App->scene2->ChangeSceneMenu();
+
+
+			}
 		}
+		
 	}
 };
 

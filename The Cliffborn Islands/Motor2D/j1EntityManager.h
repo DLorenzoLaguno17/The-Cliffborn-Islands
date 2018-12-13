@@ -14,6 +14,7 @@
 class j1Entity;
 class j1Player;
 class j1Hook;
+class j1Coin;
 
 struct SDL_Texture;
 

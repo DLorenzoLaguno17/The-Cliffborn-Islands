@@ -206,7 +206,7 @@ bool j1Scene1::PostUpdate()
 		App->tex->UnLoad(minutes->sprites);
 		startup_time.Start();
 		time_text = { "%i", time_scene1 };
-		if (min <= 10)
+		if (min < 10)
 		{
 			min_text_left.Clear();
 			min_text = { "%i", min };
@@ -308,6 +308,8 @@ bool j1Scene1::CleanUp()
 
 	if (App->entity->player)
 		App->entity->player->CleanUp();
+	if (App->entity->hook)
+		App->entity->hook->CleanUp();
 
 	App->path->CleanUp();
 
@@ -323,7 +325,6 @@ void j1Scene1::ChangeScene()
 	App->scene2->Start();
 	App->render->camera = { 0,0 };
 	App->path->Start();
-
 	App->entity->player->initialPosition = App->scene2->initialScene2Position;
 	App->entity->player->position = App->scene2->initialScene2Position;
 	changingScene = false;
@@ -335,8 +336,6 @@ void j1Scene1::ChangeSceneMenu()
 	App->menu->active = true;
 
 	CleanUp();
-	App->gui->CleanUp();
-	App->scene2->CleanUp();
 	App->fade->FadeToBlack();
 	App->entity->CleanUp();
 	App->entity->active = false;
