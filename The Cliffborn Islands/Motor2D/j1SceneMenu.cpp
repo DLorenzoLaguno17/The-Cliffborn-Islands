@@ -149,7 +149,7 @@ bool j1SceneMenu::Update(float dt)
 				settings_window->position = settingsPosition;
 			}
 			else if (item->data->bfunction == CREDITS){
-				ShellExecuteA(NULL, "open", "https://github.com/DLorenzoLaguno17/The-Cliffborn-Islands", NULL, NULL, SW_SHOWNORMAL);
+				ShellExecuteA(NULL, "open", "https://goo.gl/SUk3ra", NULL, NULL, SW_SHOWNORMAL);
 			}
 			break;
 

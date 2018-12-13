@@ -1,4 +1,4 @@
-# The-Cliffborn-Islands
+# The Cliffborn Islands
 
 Go to our GitHub [here](https://github.com/DLorenzoLaguno17/The-Cliffborn-Islands).
 
@@ -44,24 +44,24 @@ The hook will only work if it collides perpendicularly with a wall, and it canno
 ## Credits
 
 ### Art
-	Sprites and tilesets of the character and the maps: "Foggy Cliffs - Fantasy Tileset"
-	Nauris Amatnieks (https://twitter.com/Namatnieks)
+Sprites and tilesets of the character and the maps: "Foggy Cliffs - Fantasy Tileset"
+Nauris Amatnieks (https://twitter.com/Namatnieks)
 
 ### Music
-	Music of the menu scene: "Getting it Done"
-	Kevin MacLeod (incompetech.com)
-	Licensed under Creative Commons: By Attribution 3.0
-	http://creativecommons.org/licenses/by/3.0/
+Music of the menu scene: "Getting it Done"
+Kevin MacLeod (incompetech.com)
+Licensed under Creative Commons: By Attribution 3.0
+http://creativecommons.org/licenses/by/3.0/
 
-	Music of the first and second level: "Airship Serenity"
-	Kevin MacLeod (incompetech.com)
-	Licensed under Creative Commons: By Attribution 3.0
-	http://creativecommons.org/licenses/by/3.0/
+Music of the first and second level: "Airship Serenity"
+Kevin MacLeod (incompetech.com)
+Licensed under Creative Commons: By Attribution 3.0
+http://creativecommons.org/licenses/by/3.0/
 
 ### Sound effects
-	Death sound: Minecraft.		
-	Death music: Uncharted 2.
-	Player attack and jump: Link from Super Smash Bros.
+Death sound: Minecraft.		
+Death music: Uncharted 2.
+Player attack and jump: Link from Super Smash Bros.
 
 ## Task list
 	- Òscar Faura: 
