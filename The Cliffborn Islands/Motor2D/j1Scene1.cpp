@@ -79,7 +79,7 @@ bool j1Scene1::Start()
 
 		PlaceEnemies();
 
-		time_scene1 = startup_time.ReadSec();
+		startup_time.Start();
 
 		time_text = { "%i", time_scene1 };
 
