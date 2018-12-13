@@ -75,10 +75,16 @@ public:
 public:
 	float UIscale;
 
+	// Sounds
+	uint hoverSound;
+	uint clickSound;
+
 private:
 
 	SDL_Texture* atlas = nullptr;
 	p2SString atlas_file_name;
+
+	bool loadedAudios = false;
 
 };
 

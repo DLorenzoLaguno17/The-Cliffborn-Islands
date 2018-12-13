@@ -52,6 +52,10 @@ Music of the menu scene: "Getting it Done"
 [Kevin MacLeod](https://incompetech.com/)
 Licensed under [Creative Commons](http://creativecommons.org/licenses/by/3.0/): By Attribution 3.0
 
+Music of the menu scene: "River Fire"
+[Kevin MacLeod](https://incompetech.com/)
+Licensed under [Creative Commons](http://creativecommons.org/licenses/by/3.0/): By Attribution 3.0
+
 Music of the first and second level: "Airship Serenity"
 [Kevin MacLeod](https://incompetech.com/)
 Licensed under [Creative Commons](http://creativecommons.org/licenses/by/3.0/): By Attribution 3.0
@@ -62,7 +66,7 @@ Licensed under [Creative Commons](http://creativecommons.org/licenses/by/3.0/): 
 *Player attack and jump: Link from Super Smash Bros.
 
 ## Task list
-	- Ã’scar Faura: 
+	- Òscar Faura: 
 		* Implemented pathfinding and enemies' movement
 		* Created and implemented the enemies
 		* Created and implemented entity system
@@ -74,6 +78,6 @@ Licensed under [Creative Commons](http://creativecommons.org/licenses/by/3.0/): 
 		* Implemented the attack of the player
 		* Created the UML
 
-This game has been created by Ã’scar Faura and Daniel Lorenzo.
+This game has been created by Òscar Faura and Daniel Lorenzo.
 Licensed under the [MIT License](LICENSE).
 

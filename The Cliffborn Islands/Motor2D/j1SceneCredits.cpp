@@ -50,7 +50,7 @@ bool j1SceneCredits::Start()
 		App->map->Load("menu.tmx");
 
 		// The audio is played
-		App->audio->PlayMusic("audio/music/menu_music.ogg", 1.0f);
+		App->audio->PlayMusic("audio/music/credits_music.ogg", 1.0f);
 
 		// Loading textures
 		gui_tex = App->tex->Load("gui/atlas.png");

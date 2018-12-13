@@ -40,6 +40,9 @@ public:
 	SDL_Rect idle;
 	SDL_Rect hovered;
 	SDL_Rect clicked;
+
+	bool hoverPlayed = false;
+	bool clickPlayed = false;
 };
 
 #endif // __BUTTON_H__

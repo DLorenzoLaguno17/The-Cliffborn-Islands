@@ -8,6 +8,7 @@
 #include "j1Button.h"
 #include "j1Label.h"
 #include "j1Box.h"
+#include "j1Audio.h"
 #include "j1SceneMenu.h"
 #include "j1SceneCredits.h"
 #include "j1Scene1.h"
@@ -32,12 +33,20 @@ bool j1Gui::Awake(pugi::xml_node& config)
 	UIscale = config.attribute("scale").as_float();
 
 	return ret;
-}
+}	
 
 // Called before the first frame
 bool j1Gui::Start()
 {
 	atlas = App->tex->Load(atlas_file_name.GetString());
+
+	// Audios are loaded
+	LOG("Loading player audios");
+	if (!loadedAudios) {
+		clickSound = App->audio->LoadFx("audio/fx/click.wav");
+		hoverSound = App->audio->LoadFx("audio/fx/hover.wav");
+		loadedAudios = true;
+	}
 
 	return true;
 }
@@ -106,15 +115,27 @@ void j1Gui::UpdateButtonsState(p2List<j1Button*>* buttons) {
 				&& button->data->bfunction != CLOSE_GAME && button->data->bfunction != SETTINGS) continue;
 
 			button->data->state = STATE::HOVERED;
+			if (!button->data->hoverPlayed) {
+				App->audio->PlayFx(hoverSound);
+				button->data->hoverPlayed = true;
+			}
 
-			if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT)
+			if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT) {
 				button->data->state = STATE::CLICKED;
-
-			if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_UP)
+				if (!button->data->clickPlayed) {
+					App->audio->PlayFx(clickSound);
+					button->data->clickPlayed = true;
+				}
+			}
+			if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_UP) {
 				button->data->state = STATE::RELEASED;
+				button->data->clickPlayed = false;
+			}
 		}
-		else
+		else {
 			button->data->state = STATE::IDLE;
+			button->data->hoverPlayed = false;
+		}
 	}
 }
 
