@@ -39,29 +39,27 @@ Furthermore, we have added the possibility of attacking and killing the enemies.
 
 You can push yourself into the air once for each time you leave the ground. That means double jump when you leave the gound with a hop or one jump if you are already in a free fall.
 
-The hook will only work if it collides perpendicularly with a wall, and it cannot be used in GodMode.
+The hook will only work if it collides perpendicularly with a wall, and it may not be used in GodMode.
 
 ## Credits
 
 ### Art
-Sprites and tilesets of the character and the maps: "Foggy Cliffs - Fantasy Tileset"
-Nauris Amatnieks (https://twitter.com/Namatnieks)
+Sprites and tilesets of character and maps: "Foggy Cliffs - Fantasy Tileset"
+[Nauris Amatnieks](https://twitter.com/Namatnieks).
 
 ### Music
 Music of the menu scene: "Getting it Done"
-Kevin MacLeod (incompetech.com)
-Licensed under Creative Commons: By Attribution 3.0
-http://creativecommons.org/licenses/by/3.0/
+[Kevin MacLeod](incompetech.com)
+Licensed under [Creative Commons](http://creativecommons.org/licenses/by/3.0/): By Attribution 3.0
 
 Music of the first and second level: "Airship Serenity"
-Kevin MacLeod (incompetech.com)
-Licensed under Creative Commons: By Attribution 3.0
-http://creativecommons.org/licenses/by/3.0/
+[Kevin MacLeod](incompetech.com)
+Licensed under [Creative Commons](http://creativecommons.org/licenses/by/3.0/): By Attribution 3.0
 
 ### Sound effects
-Death sound: Minecraft.		
-Death music: Uncharted 2.
-Player attack and jump: Link from Super Smash Bros.
+*Death sound: Minecraft.		
+*Death music: Uncharted 2.
+*Player attack and jump: Link from Super Smash Bros.
 
 ## Task list
 	- Òscar Faura: 
