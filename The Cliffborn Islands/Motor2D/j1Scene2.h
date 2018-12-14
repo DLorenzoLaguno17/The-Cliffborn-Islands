@@ -41,7 +41,7 @@ public:
 	bool Load(pugi::xml_node&);
 	bool Save(pugi::xml_node&) const;
 
-	void PlaceEnemies();
+	void PlaceEntities();
 
 public:
 	j1Box* settings_window = nullptr;

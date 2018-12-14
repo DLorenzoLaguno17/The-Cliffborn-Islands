@@ -129,6 +129,13 @@ bool j1Collisions::PreUpdate()
 		}
 	}
 
+	return true;
+}
+
+bool j1Collisions::Update(float dt) 
+{
+	BROFILER_CATEGORY("CollisionUpdate", Profiler::Color::LightSeaGreen)
+
 	Collider* collider1;
 	Collider* collider2;
 
@@ -156,13 +163,6 @@ bool j1Collisions::PreUpdate()
 			}
 		}
 	}
-
-	return true;
-}
-
-bool j1Collisions::Update(float dt) 
-{
-	BROFILER_CATEGORY("CollisionUpdate", Profiler::Color::LightSeaGreen)
 
 	DrawColliders();
 

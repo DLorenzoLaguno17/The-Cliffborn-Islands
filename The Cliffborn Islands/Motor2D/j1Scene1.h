@@ -4,6 +4,7 @@
 #include "j1Module.h"
 #include "j1Button.h"
 #include "j1Timer.h"
+#include "PugiXml/src/pugixml.hpp"
 
 struct SDL_Texture;
 class j1Box;
@@ -46,7 +47,8 @@ public:
 	fPoint initialScene1Position;
 	bool player_created = false;
 
-	void PlaceEnemies();
+	void PlaceEntities();
+
 
 public:
 	j1Box * settings_window = nullptr;
@@ -68,6 +70,7 @@ private:
 	j1Label* minutes;
 	_TTF_Font* text = nullptr;
 	int min = 00;
+
 
 };
 

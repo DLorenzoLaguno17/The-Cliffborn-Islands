@@ -77,7 +77,7 @@ bool j1Scene1::Start()
 		// The audio is played	
 		App->audio->PlayMusic("audio/music/level1_music.ogg", 1.0f);		
 
-		PlaceEnemies();
+		PlaceEntities();
 
 		startup_time.Start();
 
@@ -254,46 +254,35 @@ bool j1Scene1::Save(pugi::xml_node& node) const
 	return true;
 }
 
-void j1Scene1::PlaceEnemies()
+
+void j1Scene1::PlaceEntities()
 {
-	App->entity->AddEnemy(123, 68, COIN);
-	App->entity->AddEnemy(282, 121, COIN);
-	App->entity->AddEnemy(507, 89, COIN);
-	App->entity->AddEnemy(588, 73, COIN);
-	App->entity->AddEnemy(667, 73, COIN);
-	App->entity->AddEnemy(778, 105, COIN);
-	App->entity->AddEnemy(914, 39, COIN);
-	App->entity->AddEnemy(999, 60, COIN);
-	App->entity->AddEnemy(1215, 40, COIN);
-	App->entity->AddEnemy(1305, 21, COIN);
-	App->entity->AddEnemy(1474, 41, COIN);
-	App->entity->AddEnemy(1529, 56, COIN);
-	App->entity->AddEnemy(1576, 73, COIN);
-	App->entity->AddEnemy(1627, 89, COIN);
-	App->entity->AddEnemy(1584, 9, COIN);
-	App->entity->AddEnemy(1613, 9, COIN);
-	App->entity->AddEnemy(1642, 9, COIN);
-	App->entity->AddEnemy(1671, 9, COIN);
-	App->entity->AddEnemy(1928, 100, COIN);
-	App->entity->AddEnemy(2245, 73, COIN);
-	App->entity->AddEnemy(2334, 73, COIN);
-	App->entity->AddEnemy(2288, 53, COIN);
+	p2SString folder;
+	pugi::xml_document	map_file;
 
-	App->entity->AddEnemy(210, 120, SKELETON);
-	/*App->entity->AddEnemy(613, 73, SKELETON);
-	App->entity->AddEnemy(1676, 9, SKELETON);
-	App->entity->AddEnemy(2146, 104, SKELETON);
+	p2SString tmp("%s%s", folder.GetString(), "maps/lvl1.tmx");
 
-	App->entity->AddEnemy(250, 50, HARPY);
-	App->entity->AddEnemy(400, 20, HARPY);
-	App->entity->AddEnemy(600, 20, HARPY);
-	App->entity->AddEnemy(917, 13, HARPY);
-	App->entity->AddEnemy(1079, 17, HARPY);
-	App->entity->AddEnemy(1345, 8, HARPY);
-	App->entity->AddEnemy(1772, 73, HARPY);
-	App->entity->AddEnemy(1919, 73, HARPY);
-	App->entity->AddEnemy(2193, 33, HARPY);
-	App->entity->AddEnemy(2355, 32, HARPY);*/
+	pugi::xml_parse_result result = map_file.load_file(tmp.GetString());
+	
+	pugi::xml_node obj;
+	pugi::xml_node group;
+	
+	const char* object_name;
+
+	for (group = map_file.child("map").child("objectgroup"); group; group = group.next_sibling("objectgroup"))
+	{
+		object_name = group.attribute("name").as_string();
+
+		for (obj = group.child("object"); obj; obj = obj.next_sibling("object"))
+		{
+			if (strcmp(object_name, "coins") == 0)
+				App->entity->AddEnemy(obj.attribute("x").as_int(), obj.attribute("y").as_int(), COIN);
+			else if (strcmp(object_name, "skeleton") == 0)
+				App->entity->AddEnemy(obj.attribute("x").as_int(), obj.attribute("y").as_int(), SKELETON);
+			else if (strcmp(object_name, "harpy") == 0)
+				App->entity->AddEnemy(obj.attribute("x").as_int(), obj.attribute("y").as_int(), HARPY);
+		}
+	}
 }
 
 // Called before quitting

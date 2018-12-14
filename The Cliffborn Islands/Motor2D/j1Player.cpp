@@ -308,9 +308,9 @@ bool j1Player::Update(float dt, bool do_logic) {
 
 			App->entity->DestroyEntities();
 			if (App->scene1->active)
-				App->scene1->PlaceEnemies();
+				App->scene1->PlaceEntities();
 			else if (App->scene2->active)
-				App->scene2->PlaceEnemies();
+				App->scene2->PlaceEntities();
 
 			// Resetting the animation
 			death.Reset();

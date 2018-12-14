@@ -75,7 +75,7 @@ bool j1Scene2::Start()
 		coin_tex = App->tex->Load("textures/coin.png");
 		animation = &coin_hud;
 
-		PlaceEnemies();
+		PlaceEntities();
 
 		startup_time.Start();
 
@@ -258,16 +258,6 @@ bool j1Scene2::Save(pugi::xml_node& node) const
 	return true;
 }
 
-void j1Scene2::PlaceEnemies()
-{
-	App->entity->AddEnemy(150, 20, HARPY);
-	/*App->entity->AddEnemy(459, 19, HARPY);
-	App->entity->AddEnemy(1118, 4, HARPY);
-	App->entity->AddEnemy(1308, 45, HARPY);
-	App->entity->AddEnemy(1975, 20, HARPY);
-	App->entity->AddEnemy(2216, 13, HARPY);
-	App->entity->AddEnemy(2344, 20, HARPY);*/
-}
 
 // Called before quitting
 bool j1Scene2::CleanUp()
@@ -296,6 +286,36 @@ bool j1Scene2::CleanUp()
 	App->path->CleanUp();
 
 	return true;
+}
+
+void j1Scene2::PlaceEntities()
+{
+	p2SString folder;
+	pugi::xml_document	map_file;
+
+	p2SString tmp("%s%s", folder.GetString(), "maps/lvl2.tmx");
+
+	pugi::xml_parse_result result = map_file.load_file(tmp.GetString());
+
+	pugi::xml_node obj;
+	pugi::xml_node group;
+
+	const char* object_name;
+
+	for (group = map_file.child("map").child("objectgroup"); group; group = group.next_sibling("objectgroup"))
+	{
+		object_name = group.attribute("name").as_string();
+
+		for (obj = group.child("object"); obj; obj = obj.next_sibling("object"))
+		{
+			if (strcmp(object_name, "coins") == 0)
+				App->entity->AddEnemy(obj.attribute("x").as_int(), obj.attribute("y").as_int(), COIN);
+			else if (strcmp(object_name, "skeleton") == 0)
+				App->entity->AddEnemy(obj.attribute("x").as_int(), obj.attribute("y").as_int(), SKELETON);
+			else if (strcmp(object_name, "harpy") == 0)
+				App->entity->AddEnemy(obj.attribute("x").as_int(), obj.attribute("y").as_int(), HARPY);
+		}
+	}
 }
 
 void j1Scene2::ChangeScene()
