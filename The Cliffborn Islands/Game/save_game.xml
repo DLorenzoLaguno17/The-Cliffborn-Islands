@@ -16,12 +16,12 @@
 	</scene2>
 	<entityManager>
 		<player>
-			<position x="536.800293" y="65.2753677" />
+			<position x="205.480026" y="121" />
 			<godmode value="false" />
-			<lives value="1" />
+			<lives value="0" />
 			<hud>
-				<coins_score value="2" />
-				<score value="50" />
+				<coins_score value="0" />
+				<score value="150" />
 			</hud>
 		</player>
 		<harpy>
@@ -32,17 +32,38 @@
 			<position x="2352" y="48" />
 		</harpy>
 		<skeleton>
-			<position x="169.250092" y="123" />
-			<position x="617.299927" y="75" />
+			<position x="624" y="75" />
 			<position x="1648" y="11" />
 			<position x="2128" y="107" />
 		</skeleton>
+		<coin>
+			<position x="352" y="112" />
+			<position x="512" y="80" />
+			<position x="704" y="64" />
+			<position x="816" y="96" />
+			<position x="928" y="48" />
+			<position x="1008" y="64" />
+			<position x="1168" y="64" />
+			<position x="1312" y="16" />
+			<position x="1600" y="16" />
+			<position x="1632" y="16" />
+			<position x="1664" y="16" />
+			<position x="1696" y="16" />
+			<position x="1840" y="16" />
+			<position x="1856" y="16" />
+			<position x="1936" y="16" />
+			<position x="2032" y="64" />
+			<position x="2288" y="48" />
+			<position x="2304" y="48" />
+			<position x="1936" y="96" />
+			<position x="1728" y="128" />
+		</coin>
 	</entityManager>
 	<fade />
 	<collisions />
 	<fonts />
 	<gui />
 	<renderer>
-		<camera x="-1747" y="0" />
+		<camera x="-421" y="0" />
 	</renderer>
 </game_state>

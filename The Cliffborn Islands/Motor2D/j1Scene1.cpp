@@ -207,7 +207,6 @@ bool j1Scene1::Update(float dt)
 	// Load and Save
 	if (App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
 	{
-		App->entity->DestroyEntities();
 		App->LoadGame("save_game.xml");
 	}
 

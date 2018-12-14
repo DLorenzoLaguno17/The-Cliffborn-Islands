@@ -10,7 +10,7 @@
 #include "j1Fonts.h"
 #include "j1Label.h"
 
-j1Coin::j1Coin(int x, int y, ENTITY_TYPES type)  : j1Entity(x, y, ENTITY_TYPES::HARPY)
+j1Coin::j1Coin(int x, int y, ENTITY_TYPES type)  : j1Entity(x, y, ENTITY_TYPES::COIN)
 {
 	animation = NULL;
 
@@ -71,12 +71,17 @@ void j1Coin::OnCollision(Collider * c1, Collider * c2)
 	}
 }
 
-bool j1Coin::Load(pugi::xml_node &)
+bool j1Coin::Load(pugi::xml_node & data)
 {
 	return true;
 }
 
-bool j1Coin::Save(pugi::xml_node &) const
+bool j1Coin::Save(pugi::xml_node & data) const
 {
+	pugi::xml_node pos = data.append_child("position");
+
+	pos.append_attribute("x") = position.x;
+	pos.append_attribute("y") = position.y;
+
 	return true;
 }

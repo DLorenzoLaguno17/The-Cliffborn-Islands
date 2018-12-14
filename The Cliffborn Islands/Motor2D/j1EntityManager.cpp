@@ -29,7 +29,6 @@ bool j1EntityManager::Start()
 		iterator->data->Start();
 	}
 
-	
 	return true;
 }
 
@@ -199,14 +198,29 @@ void j1EntityManager::OnCollision(Collider* c1, Collider* c2)
 
 bool j1EntityManager::Load(pugi::xml_node& data)
 {
+	DestroyEntities();
+
 	if (player != nullptr)
 	{
 		player->Load(data);
 	}
 
-	for (pugi::xml_node harpy = data.child("harpy").child("position"); harpy; harpy = harpy.next_sibling()) {
-		iPoint harpypos = { harpy.attribute("x").as_int(), harpy.attribute("y").as_int() };
-		AddEnemy(harpypos.x, harpypos.y, HARPY);
+	for (pugi::xml_node harpy = data.child("harpy").child("position"); harpy; harpy = harpy.next_sibling()) 
+	{
+		iPoint pos = { harpy.attribute("x").as_int(), harpy.attribute("y").as_int() };
+		AddEnemy(pos.x, pos.y, HARPY);
+	}
+
+	for (pugi::xml_node skeleton = data.child("skeleton").child("position"); skeleton; skeleton = skeleton.next_sibling())
+	{
+		iPoint pos = { skeleton.attribute("x").as_int(), skeleton.attribute("y").as_int() };
+		AddEnemy(pos.x, pos.y, SKELETON);
+	}
+
+	for (pugi::xml_node coin = data.child("coin").child("position"); coin; coin = coin.next_sibling())
+	{
+		iPoint pos = { coin.attribute("x").as_int(), coin.attribute("y").as_int() };
+		AddEnemy(pos.x, pos.y, COIN);
 	}
 
 	return true;
@@ -218,30 +232,47 @@ bool j1EntityManager::Save(pugi::xml_node& data) const
 
 	pugi::xml_node harpy = data.append_child("harpy");
 	pugi::xml_node skeleton = data.append_child("skeleton");
+	pugi::xml_node coin = data.append_child("coin");
 
-	for (p2List_item<j1Entity*>* iterator = entities.start; iterator; iterator = iterator->next)
+	p2List_item<j1Entity*>* iterator;
+	for (iterator = entities.start; iterator; iterator = iterator->next)
 	{
-		if (iterator->data->type == HARPY)
+		if (iterator->data->type == HARPY) 
 			iterator->data->Save(harpy);
-		if (iterator->data->type == SKELETON)
+		
+		else if (iterator->data->type == SKELETON) 
 			iterator->data->Save(skeleton);
+		
+		else if (iterator->data->type == COIN) 
+			iterator->data->Save(coin);
 	}
 
 	for (int i = 0; i < MAX_ENTITIES; ++i)
 	{
-		if (queue[i].type != ENTITY_TYPES::UNKNOWN) {
-			if (queue[i].type == HARPY) {
-				pugi::xml_node position = harpy.append_child("position");
-				position.append_attribute("x") = queue[i].position.x;
-				position.append_attribute("y") = queue[i].position.y;
+		if (queue[i].type != ENTITY_TYPES::UNKNOWN) 
+		{
+			if (queue[i].type == HARPY)
+			{
+				pugi::xml_node harpy_pos = harpy.append_child("position");
+				harpy_pos.append_attribute("x") = queue[i].position.x;
+				harpy_pos.append_attribute("y") = queue[i].position.y;
 			}
-			if (queue[i].type == SKELETON) {
-				pugi::xml_node position = skeleton.append_child("position");
-				position.append_attribute("x") = queue[i].position.x;
-				position.append_attribute("y") = queue[i].position.y;
+			else if (queue[i].type == SKELETON) 
+			{
+				pugi::xml_node skeleton_pos = skeleton.append_child("position");
+				skeleton_pos.append_attribute("x") = queue[i].position.x;
+				skeleton_pos.append_attribute("y") = queue[i].position.y;
+			}
+			else if (queue[i].type == COIN) 
+			{
+				pugi::xml_node coin_pos = coin.append_child("position");
+				coin_pos.append_attribute("x") = queue[i].position.x;
+				coin_pos.append_attribute("y") = queue[i].position.y;
 			}
 		}
 	}
+
+
 
 	return true;
 }

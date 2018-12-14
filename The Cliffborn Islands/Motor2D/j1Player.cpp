@@ -375,7 +375,7 @@ bool j1Player::Load(pugi::xml_node& data) {
 
 	GodMode = data.child("player").child("godmode").attribute("value").as_bool();
 
-	lives = data.child("lives").attribute("value").as_uint();
+	lives = data.child("player").child("lives").attribute("value").as_uint();
 
 	loading = true;
 

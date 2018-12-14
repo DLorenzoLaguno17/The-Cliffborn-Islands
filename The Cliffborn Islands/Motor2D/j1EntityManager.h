@@ -2,19 +2,14 @@
 #define __J1ENTITYMANAGER_H__
 
 #include "j1Module.h"
-#include "p2Defs.h"
-#include "p2List.h"
-#include "p2Point.h"
-#include "j1Entity.h"
 #include "j1UserInterfaceElement.h"
-#include "j1Button.h"
 
-#define MAX_ENTITIES 50
+
+#define MAX_ENTITIES 1000
 
 class j1Entity;
 class j1Player;
 class j1Hook;
-class j1Coin;
 
 struct SDL_Texture;
 

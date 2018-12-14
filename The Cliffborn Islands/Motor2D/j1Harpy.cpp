@@ -129,11 +129,14 @@ void j1Harpy::OnCollision(Collider * col_1, Collider * col_2)
 	if (col_2->type == COLLIDER_ATTACK) {
 		App->entity->player->score_points += 100;
 		dead = true;
-		CleanUp();
+		collider->to_delete = true;
+		int num = App->entity->entities.find(this);
+		RELEASE(App->entity->entities.At(num)->data);
+		App->entity->entities.del(App->entity->entities.At(num));
 	}
 }
 
-bool j1Harpy::Load(pugi::xml_node &)
+bool j1Harpy::Load(pugi::xml_node & data)
 {
 	return true;
 }
