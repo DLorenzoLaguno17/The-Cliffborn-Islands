@@ -8,6 +8,7 @@
 
 struct SDL_Texture;
 struct Collider;
+class j1Hud;
 
 class j1Player : public j1Entity
 {
@@ -76,6 +77,8 @@ public:
 
 	Collider* attackCollider = nullptr;
 
+	j1Hud* hud = nullptr;
+
 	// Attack values
 	int attackBlittingX;
 	int attackBlittingY;
@@ -116,11 +119,6 @@ private:
 	int playerLimit;
 
 	bool loadedAudios = false;
-
-	SDL_Texture* lives_tex = nullptr;
-	p2SString score;
-	j1Label* score_label = nullptr;
-	_TTF_Font* text = nullptr;
 };
 
 #endif // __jPLAYER_H__

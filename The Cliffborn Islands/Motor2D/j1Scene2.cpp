@@ -72,8 +72,6 @@ bool j1Scene2::Start()
 			RELEASE_ARRAY(data);
 		}		
 
-		text = App->font->Load("fonts/PixelCowboy/PixelCowboy.otf", 8);
-
 		// Textures are loaded
 		debug_tex = App->tex->Load("maps/path2.png");
 		coin_tex = App->tex->Load("textures/coin.png");
@@ -86,14 +84,9 @@ bool j1Scene2::Start()
 		SDL_Rect section = { 537, 0, 663, 712 };
 		settings_window = App->gui->CreateBox(BOX, App->gui->settingsPosition.x, App->gui->settingsPosition.y, section, gui_tex);
 
-		//PlaceEntities();
+		PlaceEntities();
 
 		startup_time.Start();
-
-		time_text = { "%i", time_scene2 };
-
-		seconds = App->gui->CreateLabel(&scene2Labels, LABEL, 500, 0, text, time_text.GetString());
-		minutes = App->gui->CreateLabel(&scene2Labels, LABEL, 410, 0, text, "00:");
 	}
 	
 	return true;
@@ -252,37 +245,6 @@ bool j1Scene2::PostUpdate()
 
 	if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN)
 		continueGame = false;
-
-	time_text = { "%i", time_scene2 };
-	if (time_scene2 == 60)
-	{
-		min += 1;
-		App->tex->UnLoad(minutes->sprites);
-		startup_time.Start();
-		time_text = { "%i", time_scene2 };
-		if (min < 10)
-		{
-			min_text_left.Clear();
-			min_text = { "%i", min };
-			min_text_left.operator+=("0");
-			min_text_left.operator+=(min_text);
-			min_text_left.operator+=(":");
-			minutes->sprites = App->font->Print(min_text_left.GetString(), minutes->color, minutes->font);
-		}
-		else
-		{
-			min_text = { "%i", min };
-			min_text.operator+=(":");
-			minutes->sprites = App->font->Print(min_text.GetString(), minutes->color, minutes->font);
-		}
-	}
-	App->tex->UnLoad(seconds->sprites);
-	seconds->sprites = App->font->Print(time_text.GetString(), seconds->color, seconds->font);
-
-	if (seconds->sprites != nullptr)
-		seconds->Draw(1.0f, 0, 0, false);
-	if (minutes->sprites != nullptr)
-		minutes->Draw(1.0f, 0, 0, false);
 
 	return continueGame;
 }

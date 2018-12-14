@@ -15,6 +15,7 @@
 #include "j1Fonts.h"
 #include "j1Label.h"
 #include "j1Box.h"
+#include "j1Hud.h"
 
 #include "Brofiler/Brofiler.h"
 
@@ -40,8 +41,6 @@ bool j1Player::Start() {
 	// Textures are loaded
 	LOG("Loading player textures");
 	sprites = App->tex->Load("textures/character/character.png");
-	lives_tex = App->tex->Load("textures/life.png");
-	text = App->font->Load("fonts/PixelCowboy/PixelCowboy.otf", 8);
 
 	// Audios are loaded
 	LOG("Loading player audios");
@@ -60,13 +59,6 @@ bool j1Player::Start() {
 	
 	lives = 2;
 
-	score = { "%i", App->entity->player->points };
-
-	if(App->scene1->active)
-		score_label = App->gui->CreateLabel(&App->scene1->scene1Labels, LABEL, 80, 700, text, score.GetString(), { 255, 255, 255, 255 });
-	else if (App->scene1->active)
-		score_label = App->gui->CreateLabel(&App->scene2->scene2Labels, LABEL, 80, 700, text, score.GetString(), { 255, 255, 255, 255 });
-
 	// Setting player position
 	position.x = initialPosition.x;
 	position.y = initialPosition.y;
@@ -76,6 +68,9 @@ bool j1Player::Start() {
 	else
 		collider = App->collisions->AddCollider({ (int)position.x + margin.x, (int)position.y + margin.y, playerSize.x, playerSize.y }, COLLIDER_PLAYER, App->entity);
 	
+	hud = new j1Hud();
+	hud->Start();
+
 	player_start = true;
 	return true;
 }
@@ -322,23 +317,6 @@ bool j1Player::Update(float dt, bool do_logic) {
 			dead = false;
 		}
 	}
-	
-	uint space = 0;
-
-	for (int i = App->entity->player->lives; i >= 0; --i)
-	{
-		SDL_Rect r = { 0,0,8,11 };
-		App->render->Blit(lives_tex, 10 + space, 3, &r, SDL_FLIP_NONE, 1.0f, 1, 0, INT_MAX, INT_MAX, false);
-
-		space += 50;
-	}
-
-	// Blitting the labels
-	score = { "%i", App->entity->player->points };
-	App->tex->UnLoad(score_label->sprites);
-	score_label->sprites = App->font->Print(score.GetString(), score_label->color, score_label->font);
-	if (score_label->sprites != nullptr)
-		score_label->Draw(1.0f, 0, 0, false);
 
 	// Update collider position to player position
 	if (collider != nullptr)
@@ -363,6 +341,8 @@ bool j1Player::Update(float dt, bool do_logic) {
 		else
 			Draw(r, false, attackBlittingX, attackBlittingY);
 	}
+
+	hud->Update(dt);
 
 	// We update the camera to followe the player every frame
 	UpdateCameraPosition();
@@ -431,7 +411,6 @@ bool j1Player::CleanUp() {
 	// Remove all memory leaks
 	LOG("Unloading the player");
 	App->tex->UnLoad(sprites);
-	App->tex->UnLoad(lives_tex);
 
 	if (collider != nullptr) 
 		collider->to_delete = true;
@@ -439,6 +418,11 @@ bool j1Player::CleanUp() {
 	if (attackCollider != nullptr)
 		attackCollider->to_delete = true;
 	
+	if (hud)
+		hud->CleanUp();
+
+	RELEASE(hud);
+
 	return true;
 }
 

@@ -94,6 +94,9 @@
     <ClCompile Include="j1SceneCredits.cpp">
       <Filter>Development\Scenes</Filter>
     </ClCompile>
+    <ClCompile Include="j1Hud.cpp">
+      <Filter>Development\Modules\GraphicUserInterface</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Textures.h">
@@ -212,6 +215,9 @@
     </ClInclude>
     <ClInclude Include="j1SceneCredits.h">
       <Filter>Development\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Hud.h">
+      <Filter>Development\Modules\GraphicUserInterface</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

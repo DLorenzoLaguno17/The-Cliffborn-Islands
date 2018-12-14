@@ -55,6 +55,9 @@ public:
 	p2List<j1Button*> scene1Buttons;
 	p2List<j1Label*> scene1Labels;
 
+	j1Timer	startup_time;
+	int time_scene1;
+
 private:
 
 	SDL_Texture * debug_tex = nullptr;
@@ -64,17 +67,7 @@ private:
 	bool changingScene = false;
 	bool resettingLevel = false;
 
-	j1Timer	startup_time;
-	int time_scene1;
-
-	p2SString time_text;
-	p2SString min_text;
-	p2SString min_text_left = "0";
-	int min = 00;
-
-	j1Label* seconds = nullptr;
-	j1Label* minutes = nullptr;
-	_TTF_Font* text = nullptr;	
+	
 };
 
 #endif // __j1SCENE1_H__
