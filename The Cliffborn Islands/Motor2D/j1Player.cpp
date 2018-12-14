@@ -375,6 +375,8 @@ bool j1Player::Load(pugi::xml_node& data) {
 
 	GodMode = data.child("player").child("godmode").attribute("value").as_bool();
 
+	lives = data.child("lives").attribute("value").as_uint();
+
 	loading = true;
 
 	if (GodMode == true)
@@ -386,6 +388,9 @@ bool j1Player::Load(pugi::xml_node& data) {
 	{
 		collider->type = COLLIDER_PLAYER;
 	}
+
+	if (hud)
+		hud->Load(data);
 
 	return true;
 }
@@ -400,7 +405,13 @@ bool j1Player::Save(pugi::xml_node& data) const {
 
 	pugi::xml_node godmode = data.append_child("godmode");
 
+	pugi::xml_node life = data.append_child("lives");
+	life.append_attribute("value") = lives;
+
 	godmode.append_attribute("value") = GodMode;
+
+	if (hud)
+		hud->Save(data.append_child("hud"));
 
 	return true;
 }

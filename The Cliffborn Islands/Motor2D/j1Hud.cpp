@@ -160,3 +160,23 @@ bool j1Hud::CleanUp()
 
 	return true;
 }
+
+bool j1Hud::Load(pugi::xml_node & data)
+{
+	pugi::xml_node hud = data.child("player").child("hud");
+
+	App->entity->player->score_points = hud.child("score").attribute("value").as_uint();
+	App->entity->player->points = hud.child("coins_score").attribute("value").as_uint();
+
+	return true;
+}
+
+bool j1Hud::Save(pugi::xml_node & data) const
+{
+	pugi::xml_node hud = data;
+
+	hud.append_child("coins_score").append_attribute("value") = App->entity->player->points;
+	hud.append_child("score").append_attribute("value") = App->entity->player->score_points;
+
+	return true;
+}

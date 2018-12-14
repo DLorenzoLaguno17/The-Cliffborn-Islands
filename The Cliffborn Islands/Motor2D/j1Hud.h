@@ -20,6 +20,9 @@ public:
 	bool Update(float dt);
 	bool CleanUp();
 
+	bool Load(pugi::xml_node&);
+	bool Save(pugi::xml_node&) const;
+
 public:
 	SDL_Texture* sprites = nullptr;
 	SDL_Texture* lives_tex = nullptr;
