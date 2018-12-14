@@ -62,7 +62,10 @@ bool j1SceneMenu::Start()
 		// Loading fonts
 		font = App->font->Load("fonts/PixelCowboy/PixelCowboy.otf", 8);
 
-		// Creating UI
+		// Creating UI		
+		SDL_Rect section = { 537, 0, 663, 712 };
+		settings_window = App->gui->CreateBox(BOX, App->gui->settingsPosition.x, App->gui->settingsPosition.y, section, gui_tex);
+
 		SDL_Rect idle = {0, 143, 190, 49};
 		SDL_Rect hovered = { 0, 45, 190, 49 };
 		SDL_Rect clicked = { 0, 94, 190, 49 };
@@ -74,7 +77,8 @@ bool j1SceneMenu::Start()
 		SDL_Rect idle2 = { 28, 201, 49, 49 };
 		SDL_Rect hovered2 = { 77, 201, 49, 49 };
 		SDL_Rect clicked2 = { 126, 201, 49, 49 };
-		App->gui->CreateButton(&menuButtons, BUTTON, 229, 3, idle2, hovered2, clicked2, gui_tex, CLOSE_GAME);
+		App->gui->CreateButton(&menuButtons, BUTTON, 228, 3, idle2, hovered2, clicked2, gui_tex, CLOSE_GAME);
+		App->gui->CreateButton(&menuButtons, BUTTON, 20, 20, idle2, hovered2, clicked2, gui_tex, CLOSE_GAME, (j1UserInterfaceElement*)settings_window);
 
 		SDL_Rect idle3 = { 463, 109, 49, 49 };
 		SDL_Rect hovered3 = { 463, 158, 49, 49 };
@@ -84,9 +88,7 @@ bool j1SceneMenu::Start()
 		App->gui->CreateLabel(&menuLabels, LABEL, 106, 115, font, "Start", { 245, 245, 220, 255 });
 		App->gui->CreateLabel(&menuLabels, LABEL, 90, 140, font, "Continue", { 245, 245, 220, 255 });
 		App->gui->CreateLabel(&menuLabels, LABEL, 98, 165, font, "Credits", { 245, 245, 220, 255 });
-		
-		SDL_Rect section = { 537, 0, 663, 712 };
-		settings_window = App->gui->CreateBox(BOX, App->gui->settingsPosition.x, App->gui->settingsPosition.y, section, gui_tex);
+		App->gui->CreateLabel(&menuLabels, LABEL, 44, 9, font, "Settings", { 73, 31, 10, 255 }, (j1UserInterfaceElement*)settings_window);
 
 		player_created = false;
 	}
@@ -182,6 +184,20 @@ bool j1SceneMenu::Update(float dt)
 			}
 
 			settings_window->position = { x - settings_window->mouseDistance.x, y - settings_window->mouseDistance.y };
+
+			for (p2List_item<j1Button*>* item = menuButtons.start; item != nullptr; item = item->next) {
+				if (item->data->parent == settings_window) {
+					item->data->position.x = settings_window->position.x + item->data->initialPosition.x;
+					item->data->position.y = settings_window->position.y + item->data->initialPosition.y;
+				}
+			}
+
+			for (p2List_item<j1Label*>* item = menuLabels.start; item != nullptr; item = item->next) {
+				if (item->data->parent == settings_window) {
+					item->data->position.x = settings_window->position.x + item->data->initialPosition.x;
+					item->data->position.y = settings_window->position.y + item->data->initialPosition.y;
+				}
+			}
 		}
 		else
 			settings_window->distanceCalculated = false;
@@ -191,6 +207,7 @@ bool j1SceneMenu::Update(float dt)
 	// DRAWING EVERYTHING ON THE SCREEN
 	// ---------------------------------------------------------------------------------------------------------------------	
 
+	// Blitting background and animations
 	App->map->Draw();
 
 	SDL_Rect p = player.GetCurrentFrame(dt);
@@ -198,22 +215,33 @@ bool j1SceneMenu::Update(float dt)
 	SDL_Rect h = harpy.GetCurrentFrame(dt);
 	App->render->Blit(harpy_tex, 205, 35, &h, SDL_FLIP_HORIZONTAL);
 
-	// Blitting the buttons
+	// Blitting the buttons and labels of the menu
 	for (p2List_item<j1Button*>* item = menuButtons.start; item != nullptr; item = item->next) {
+		if (item->data->parent != nullptr) continue;
 		item->data->Draw(App->gui->buttonsScale);
 	}
-
-	// Blitting the labels
 	for (p2List_item<j1Label*>* item = menuLabels.start; item != nullptr; item = item->next) {
+		if (item->data->parent != nullptr) continue;
 		item->data->Draw();
 	}
 
-	SDL_Rect logo = { 166, 139, 711, 533};
-	App->render->Blit(logo_tex, 54, 0, &logo, SDL_FLIP_NONE, 1.0f, 0.20f);
+	// Bliting the logo
+	SDL_Rect logo = { 166, 139, 711, 533 };
+	App->render->Blit(logo_tex, 54, 0, &logo, SDL_FLIP_NONE, 1.0f, App->gui->logoScale);
 
 	// Blitting settings window
 	if (settings_window != nullptr && settings_window->visible == true)
 		settings_window->Draw(App->gui->boxScale);
+
+	// Blitting the buttons and labels of the window
+	for (p2List_item<j1Button*>* item = menuButtons.start; item != nullptr; item = item->next) {
+		if (item->data->parent == nullptr) continue;
+		item->data->Draw(App->gui->buttonsScale);
+	}
+	for (p2List_item<j1Label*>* item = menuLabels.start; item != nullptr; item = item->next) {
+		if (item->data->parent == nullptr) continue;
+		item->data->Draw();
+	}
 
 	return true;
 }

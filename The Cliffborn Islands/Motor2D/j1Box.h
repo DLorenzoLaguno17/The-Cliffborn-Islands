@@ -12,7 +12,7 @@ public:
 
 	// Constructor
 	// To create a button we need several parameters: its type, a texture, the three sections of the atlas the button will use and the function of the button
-	j1Box(UIELEMENT_TYPES type, int x, int y, SDL_Rect section, SDL_Texture* text = nullptr);
+	j1Box(UIELEMENT_TYPES type, int x, int y, SDL_Rect section, SDL_Texture* text = nullptr, j1UserInterfaceElement* parent = nullptr);
 
 	// Destructor
 	virtual ~j1Box();

@@ -4,8 +4,8 @@
 #include "p2Log.h"
 #include "j1Render.h"
 
-j1Box::j1Box(UIELEMENT_TYPES type, int x, int y, SDL_Rect section, SDL_Texture* text) :
-	j1UserInterfaceElement(UIELEMENT_TYPES::BUTTON, x, y, text), section(section) {}
+j1Box::j1Box(UIELEMENT_TYPES type, int x, int y, SDL_Rect section, SDL_Texture* text, j1UserInterfaceElement* parent) :
+	j1UserInterfaceElement(UIELEMENT_TYPES::BUTTON, x, y, text, parent), section(section) {}
 
 j1Box::~j1Box() {}
 

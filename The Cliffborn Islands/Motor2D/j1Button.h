@@ -19,7 +19,7 @@ public:
 
 	// Constructor
 	// To create a button we need several parameters: its type, a texture, the three sections of the atlas the button will use and the function of the button
-	j1Button(UIELEMENT_TYPES type, int x, int y, SDL_Rect idle, SDL_Rect hovered, SDL_Rect clicked, SDL_Texture* text = nullptr, ButtonFunction function = ButtonFunction::NO_FUNCTION);
+	j1Button(UIELEMENT_TYPES type, int x, int y, SDL_Rect idle, SDL_Rect hovered, SDL_Rect clicked, SDL_Texture* text = nullptr, ButtonFunction function = ButtonFunction::NO_FUNCTION, j1UserInterfaceElement* parent = nullptr);
 
 	// Destructor
 	virtual ~j1Button();

@@ -61,7 +61,8 @@
   </map>  
   
   <gui>
-	<scale buttonsScale="0.5f" boxScale="0.23f"/>
+	<scale buttonsScale="0.5f" boxScale="0.23f" logoScale="0.2f"/>
+	<positions settingsPositionX="54" settingsPositionY="10"/>
   </gui>
   
   <menu>

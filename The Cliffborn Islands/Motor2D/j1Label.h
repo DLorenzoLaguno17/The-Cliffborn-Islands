@@ -8,7 +8,7 @@ struct _TTF_Font;
 class j1Label : public j1UserInterfaceElement {
 public:
 	// Constructor
-	j1Label(UIELEMENT_TYPES type, int x, int y, _TTF_Font* font, const char* text, SDL_Color color = { 255, 255, 255, 255 });
+	j1Label(UIELEMENT_TYPES type, int x, int y, _TTF_Font* font, const char* text, SDL_Color color = { 255, 255, 255, 255 }, j1UserInterfaceElement* parent = nullptr);
 
 	// Destructor
 	virtual ~j1Label();

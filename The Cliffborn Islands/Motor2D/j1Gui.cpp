@@ -34,9 +34,11 @@ bool j1Gui::Awake(pugi::xml_node& config)
 	atlas_file_name = config.child("atlas").attribute("file").as_string("");
 	buttonsScale = config.child("scale").attribute("buttonsScale").as_float();
 	boxScale = config.child("scale").attribute("boxScale").as_float();
+	logoScale = config.child("scale").attribute("logoScale").as_float();
 
 	// Copying box spawn position
-	settingsPosition = { 54, 10 };
+	settingsPosition.x = config.child("positions").attribute("settingsPositionX").as_int();
+	settingsPosition.y = config.child("positions").attribute("settingsPositionY").as_int();
 
 	return ret;
 }	
@@ -80,28 +82,28 @@ bool j1Gui::PostUpdate()
 }
 
 // Factiry methods
-j1Button* j1Gui::CreateButton(p2List<j1Button*>* buttons, UIELEMENT_TYPES type, int x, int y, SDL_Rect idle, SDL_Rect hovered, SDL_Rect clicked, SDL_Texture* text, ButtonFunction function) {
+j1Button* j1Gui::CreateButton(p2List<j1Button*>* buttons, UIELEMENT_TYPES type, int x, int y, SDL_Rect idle, SDL_Rect hovered, SDL_Rect clicked, SDL_Texture* text, ButtonFunction function, j1UserInterfaceElement* parent) {
 	j1Button* ret = nullptr;
 
-	ret = new j1Button(type, x, y, idle, hovered, clicked, text, function);
+	ret = new j1Button(type, x, y, idle, hovered, clicked, text, function, parent);
 	if (ret != nullptr) buttons->add(ret);
 
 	return ret;
 }
 
-j1Label* j1Gui::CreateLabel(p2List<j1Label*>* labels, UIELEMENT_TYPES type, int x, int y, _TTF_Font* font, const char* text, SDL_Color color) {
+j1Label* j1Gui::CreateLabel(p2List<j1Label*>* labels, UIELEMENT_TYPES type, int x, int y, _TTF_Font* font, const char* text, SDL_Color color, j1UserInterfaceElement* parent) {
 	j1Label* ret = nullptr;
 
-	ret = new j1Label(type, x, y, font, text, color);
+	ret = new j1Label(type, x, y, font, text, color, parent);
 	if (ret != nullptr) labels->add(ret);
 
 	return ret;
 }
 
-j1Box* j1Gui::CreateBox(UIELEMENT_TYPES type, int x, int y, SDL_Rect section, SDL_Texture* text) {
+j1Box* j1Gui::CreateBox(UIELEMENT_TYPES type, int x, int y, SDL_Rect section, SDL_Texture* text, j1UserInterfaceElement* parent) {
 	j1Box* ret = nullptr;
 
-	ret = new j1Box(type, x, y, section, text);
+	ret = new j1Box(type, x, y, section, text, parent);
 
 	return ret;
 }

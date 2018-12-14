@@ -10,7 +10,8 @@ class j1UserInterfaceElement {
 
 public:
 	//Constructor
-	j1UserInterfaceElement(UIELEMENT_TYPES type, int x, int y, SDL_Texture* sprites) : type(type), position(x, y), sprites(sprites) {}
+	j1UserInterfaceElement(UIELEMENT_TYPES type, int x, int y, SDL_Texture* sprites = nullptr, j1UserInterfaceElement* parent = nullptr) : 
+		type(type), position(x, y), initialPosition(x, y), sprites(sprites), parent(parent) {}
 
 	~j1UserInterfaceElement() {}
 
@@ -20,8 +21,10 @@ public:
 public:
 
 	UIELEMENT_TYPES type;
+	iPoint initialPosition;
 	iPoint position;
 	SDL_Texture* sprites = nullptr;
+	j1UserInterfaceElement* parent = nullptr;
 };
 
 #endif // __USERINTERFACEELEMENT_H__
