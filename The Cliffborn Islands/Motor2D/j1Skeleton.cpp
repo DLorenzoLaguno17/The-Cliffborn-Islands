@@ -131,6 +131,7 @@ void j1Skeleton::OnCollision(Collider * col_1, Collider * col_2)
 	}
 
 	if (col_2->type == COLLIDER_ATTACK || col_2->type == COLLIDER_DEATH) {
+		App->entity->player->score_points += 50;
 		dead = true;
 		CleanUp();
 	}

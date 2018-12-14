@@ -127,6 +127,7 @@ void j1Harpy::OnCollision(Collider * col_1, Collider * col_2)
 	}
 
 	if (col_2->type == COLLIDER_ATTACK) {
+		App->entity->player->score_points += 100;
 		dead = true;
 		CleanUp();
 	}

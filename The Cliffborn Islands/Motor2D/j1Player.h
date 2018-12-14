@@ -73,6 +73,7 @@ public:
 	uint colisionMargin;
 	uint deathByFallColliderHeight;
 	uint points = 0;
+	uint score_points = 0;
 	uint lives;
 
 	Collider* attackCollider = nullptr;

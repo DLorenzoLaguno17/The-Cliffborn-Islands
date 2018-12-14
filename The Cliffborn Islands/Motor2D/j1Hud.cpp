@@ -31,11 +31,15 @@ bool j1Hud::Start()
 	minutes = App->gui->CreateLabel(&labels_list, LABEL, 410, 0, text, "00:");
 
 	score = { "%i", App->entity->player->points };
+	score_points = { "%i", App->entity->player->score_points };
+
 
 	if (App->scene1->active)
-		score_label = App->gui->CreateLabel(&labels_list, LABEL, 80, 700, text, score.GetString(), { 255, 255, 255, 255 });
+		coins_label = App->gui->CreateLabel(&labels_list, LABEL, 80, 700, text, score.GetString(), { 255, 255, 255, 255 });
 	else if (App->scene2->active)
-		score_label = App->gui->CreateLabel(&labels_list, LABEL, 80, 700, text, score.GetString(), { 255, 255, 255, 255 });
+		coins_label = App->gui->CreateLabel(&labels_list, LABEL, 80, 700, text, score.GetString(), { 255, 255, 255, 255 });
+
+	score_label = App->gui->CreateLabel(&labels_list, LABEL, 900, 0, text, score_points.GetString(), { 236, 151, 0, 255 });
 
 	animation = &idle;
 
@@ -124,14 +128,22 @@ bool j1Hud::Update(float dt)
 
 	//LABELS
 	score = { "%i", App->entity->player->points };
+	if (coins_label != nullptr)
+	{
+		App->tex->UnLoad(coins_label->sprites);
+		coins_label->sprites = App->font->Print(score.GetString(), coins_label->color, coins_label->font);
+		if (coins_label->sprites != nullptr)
+			coins_label->Draw(1.0f, 0, 0, false);
+	}
+
+	score_points = { "%i", App->entity->player->score_points };
 	if (score_label != nullptr)
 	{
 		App->tex->UnLoad(score_label->sprites);
-		score_label->sprites = App->font->Print(score.GetString(), score_label->color, score_label->font);
+		score_label->sprites = App->font->Print(score_points.GetString(), score_label->color, score_label->font);
 		if (score_label->sprites != nullptr)
 			score_label->Draw(1.0f, 0, 0, false);
 	}
-	
 
 	return true;
 }

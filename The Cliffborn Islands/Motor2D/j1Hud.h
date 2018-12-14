@@ -29,9 +29,11 @@ public:
 	p2SString min_text;
 	p2SString min_text_left = "0";
 	p2SString score;
+	p2SString score_points;
 
 	j1Label* seconds;
 	j1Label* minutes;
+	j1Label* coins_label = nullptr;
 	j1Label* score_label = nullptr;
 
 	_TTF_Font* text = nullptr;
