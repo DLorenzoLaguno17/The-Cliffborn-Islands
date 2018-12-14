@@ -66,11 +66,11 @@ bool j1SceneMenu::Start()
 		settings_window = App->gui->CreateBox(&menuBoxes, BOX, App->gui->settingsPosition.x, App->gui->settingsPosition.y, { 537, 0, 663, 712 }, gui_tex);
 		settings_window->visible = false;
 
-		App->gui->CreateBox(&menuBoxes, BOX, 83, 45, { 416, 72, 28, 42 }, gui_tex, (j1UserInterfaceElement*)settings_window);
-		App->gui->CreateBox(&menuBoxes, BOX, 83, 85, { 416, 72, 28, 42 }, gui_tex, (j1UserInterfaceElement*)settings_window);
-
-		uint minumum = 58;
+		uint minimum = 58;
 		uint maximum = 108;
+
+		App->gui->CreateBox(&menuBoxes, BOX, 83, 45, { 416, 72, 28, 42 }, gui_tex, (j1UserInterfaceElement*)settings_window, minimum, maximum);
+		App->gui->CreateBox(&menuBoxes, BOX, 83, 85, { 416, 72, 28, 42 }, gui_tex, (j1UserInterfaceElement*)settings_window, minimum, maximum);
 
 		SDL_Rect idle = {0, 143, 190, 49};
 		SDL_Rect hovered = { 0, 45, 190, 49 };
@@ -255,17 +255,26 @@ bool j1SceneMenu::Update(float dt)
 			settings_window->distanceCalculated = false;
 	}
 
-	// To move sliders
+	// Moveing sliders
 	for (p2List_item<j1Box*>* item = menuBoxes.start; item != nullptr; item = item->next) {
-		if (item->data->clicked) App->gui->UpdateSliderState(item->data); 
-		int x, y; App->input->GetMousePosition(x, y);
+		if (item->data->clicked) {
+			int x, y; App->input->GetMousePosition(x, y);
 
-		if (item->data->distanceCalculated == false) {
-			item->data->mouseDistance = { x - item->data->position.x, y - settings_window->position.y };
-			item->data->distanceCalculated = true;
+			if (item->data->distanceCalculated == false) {
+				item->data->mouseDistance.x = x - item->data->position.x;
+				item->data->distanceCalculated = true;
+			}
+
+			item->data->position.x = x - item->data->mouseDistance.x;
+
+			// The default value for the margins is 0, meaning they have no minimum or maximum
+			if (item->data->minimum != 0 && item->data->position.x <= item->data->parent->position.x + item->data->minimum)
+				item->data->position.x = item->data->parent->position.x + item->data->minimum;
+			if (item->data->maximum != 0 && item->data->position.x >= item->data->parent->position.x + item->data->maximum)
+				item->data->position.x = item->data->parent->position.x + item->data->maximum;
+
+			App->audio->MusicVolume(item->data->position.x - item->data->minimum);
 		}
-
-		settings_window->position = { x - settings_window->mouseDistance.x, y - settings_window->mouseDistance.y };
 	}
 
 	// ---------------------------------------------------------------------------------------------------------------------

@@ -1,4 +1,3 @@
-#include "p2Defs.h"
 #include "p2Log.h"
 #include "j1App.h"
 #include "j1Render.h"
@@ -100,10 +99,10 @@ j1Label* j1Gui::CreateLabel(p2List<j1Label*>* labels, UIELEMENT_TYPES type, int 
 	return ret;
 }
 
-j1Box* j1Gui::CreateBox(p2List<j1Box*>* boxes, UIELEMENT_TYPES type, int x, int y, SDL_Rect section, SDL_Texture* text, j1UserInterfaceElement* parent) {
+j1Box* j1Gui::CreateBox(p2List<j1Box*>* boxes, UIELEMENT_TYPES type, int x, int y, SDL_Rect section, SDL_Texture* text, j1UserInterfaceElement* parent, uint minimum, uint maximum) {
 	j1Box* ret = nullptr;
 
-	ret = new j1Box(type, x, y, section, text, parent);
+	ret = new j1Box(type, x, y, section, text, parent, minimum, maximum);
 	if (ret != nullptr) boxes->add(ret);
 
 	return ret;
@@ -188,17 +187,21 @@ void j1Gui::UpdateSliderState(j1Box* slider) {
 	int x, y; App->input->GetMousePosition(x, y);
 
 	// Checking if it is being dragged
-	if (slider != nullptr && slider->visible == true){
+	if (slider != nullptr && slider->parent != nullptr && slider->visible == true) {
 		if (x <= slider->position.x + slider->section.w * App->gui->buttonsScale && x >= slider->position.x
-		&& y <= slider->position.y + slider->section.h * App->gui->buttonsScale && y >= slider->position.y) {
-		if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT)
-			slider->clicked = true;
-		else if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_UP)
+			&& y <= slider->position.y + slider->section.h * App->gui->buttonsScale && y >= slider->position.y) {
+			if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT)
+				slider->clicked = true;
+			else if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_UP){
+				slider->clicked = false;
+				slider->initialPosition.x = slider->position.x - slider->parent->position.x;
+			}
+		}
+		else if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_UP) {
 			slider->clicked = false;
+			slider->initialPosition.x = slider->position.x - slider->parent->position.x;
 		}
 	}
-	else
-		slider->clicked = false;
 }
 
 // class Gui ---------------------------------------------------
