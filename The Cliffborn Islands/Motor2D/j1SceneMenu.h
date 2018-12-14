@@ -57,6 +57,7 @@ public:
 
 	p2List<j1Button*> menuButtons; 
 	p2List<j1Label*> menuLabels;
+	p2List<j1Box*> menuBoxes;
 
 private:
 

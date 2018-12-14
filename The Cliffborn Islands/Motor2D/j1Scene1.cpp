@@ -81,7 +81,8 @@ bool j1Scene1::Start()
 
 		// Creating UI
 		SDL_Rect section = { 537, 0, 663, 712 };
-		settings_window = App->gui->CreateBox(BOX, App->gui->settingsPosition.x, App->gui->settingsPosition.y, section, gui_tex);
+		settings_window = App->gui->CreateBox(&scene1Boxes, BOX, App->gui->settingsPosition.x, App->gui->settingsPosition.y, section, gui_tex);
+		settings_window->visible = false;
 
 		PlaceEntities();
 
@@ -248,7 +249,7 @@ bool j1Scene1::Update(float dt)
 
 	// Blitting settings window
 	if (settings_window != nullptr && settings_window->visible == true)
-		settings_window->Draw(App->gui->boxScale);
+		settings_window->Draw(App->gui->settingsWindowScale);
 
 	// Blitting patfhinding if debug is activated
 	if (App->collisions->debug) {
@@ -361,8 +362,17 @@ bool j1Scene1::CleanUp()
 	}
 
 	for (p2List_item<j1Label*>* item = scene1Labels.start; item != nullptr; item = item->next) {
+		item->data->CleanUp();
 		scene1Labels.del(item);
 	}
+
+	for (p2List_item<j1Box*>* item = scene1Boxes.start; item != nullptr; item = item->next) {
+		item->data->CleanUp();
+		scene1Boxes.del(item);
+	}
+
+	delete settings_window;
+	if (settings_window != nullptr) settings_window = nullptr;
 
 	App->path->CleanUp();
 

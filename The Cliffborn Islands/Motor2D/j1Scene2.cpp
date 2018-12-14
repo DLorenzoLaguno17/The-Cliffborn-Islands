@@ -82,7 +82,8 @@ bool j1Scene2::Start()
 
 		// Creating UI
 		SDL_Rect section = { 537, 0, 663, 712 };
-		settings_window = App->gui->CreateBox(BOX, App->gui->settingsPosition.x, App->gui->settingsPosition.y, section, gui_tex);
+		settings_window = App->gui->CreateBox(&scene2Boxes, BOX, App->gui->settingsPosition.x, App->gui->settingsPosition.y, section, gui_tex);
+		settings_window->visible = false;
 
 		PlaceEntities();
 
@@ -208,7 +209,7 @@ bool j1Scene2::Update(float dt)
 
 	// Blitting settings window
 	if (settings_window != nullptr && settings_window->visible == true)
-		settings_window->Draw(App->gui->boxScale);
+		settings_window->Draw(App->gui->settingsWindowScale);
 
 	SDL_Rect r = coin_hud.GetCurrentFrame(dt);
 	App->render->Blit(coin_tex, 3, 700, &r, SDL_FLIP_NONE, 1.0f, 1, 0, INT_MAX, INT_MAX, false);
@@ -274,6 +275,9 @@ bool j1Scene2::Save(pugi::xml_node& node) const
 bool j1Scene2::CleanUp()
 {
 	LOG("Freeing scene");
+	App->tex->UnLoad(gui_tex);
+	App->tex->UnLoad(debug_tex);
+
 	App->map->CleanUp();
 	App->collisions->CleanUp();
 	App->tex->CleanUp();
@@ -291,8 +295,17 @@ bool j1Scene2::CleanUp()
 	}
 
 	for (p2List_item<j1Label*>* item = scene2Labels.start; item != nullptr; item = item->next) {
+		item->data->CleanUp();
 		scene2Labels.del(item);
 	}
+
+	for (p2List_item<j1Box*>* item = scene2Boxes.start; item != nullptr; item = item->next) {
+		item->data->CleanUp();
+		scene2Boxes.del(item);
+	}
+
+	delete settings_window;
+	if (settings_window != nullptr) settings_window = nullptr;
 
 	App->path->CleanUp();
 

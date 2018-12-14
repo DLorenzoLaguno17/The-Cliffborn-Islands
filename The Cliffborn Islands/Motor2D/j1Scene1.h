@@ -54,6 +54,7 @@ public:
 
 	p2List<j1Button*> scene1Buttons;
 	p2List<j1Label*> scene1Labels;
+	p2List<j1Box*> scene1Boxes;
 
 	j1Timer	startup_time;
 	int time_scene1;

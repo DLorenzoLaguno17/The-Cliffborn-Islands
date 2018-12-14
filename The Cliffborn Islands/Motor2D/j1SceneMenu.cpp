@@ -63,8 +63,14 @@ bool j1SceneMenu::Start()
 		font = App->font->Load("fonts/PixelCowboy/PixelCowboy.otf", 8);
 
 		// Creating UI		
-		SDL_Rect section = { 537, 0, 663, 712 };
-		settings_window = App->gui->CreateBox(BOX, App->gui->settingsPosition.x, App->gui->settingsPosition.y, section, gui_tex);
+		settings_window = App->gui->CreateBox(&menuBoxes, BOX, App->gui->settingsPosition.x, App->gui->settingsPosition.y, { 537, 0, 663, 712 }, gui_tex);
+		settings_window->visible = false;
+
+		App->gui->CreateBox(&menuBoxes, BOX, 83, 45, { 416, 72, 28, 42 }, gui_tex, (j1UserInterfaceElement*)settings_window);
+		App->gui->CreateBox(&menuBoxes, BOX, 83, 85, { 416, 72, 28, 42 }, gui_tex, (j1UserInterfaceElement*)settings_window);
+
+		uint minumum = 58;
+		uint maximum = 108;
 
 		SDL_Rect idle = {0, 143, 190, 49};
 		SDL_Rect hovered = { 0, 45, 190, 49 };
@@ -78,7 +84,7 @@ bool j1SceneMenu::Start()
 		SDL_Rect hovered2 = { 77, 201, 49, 49 };
 		SDL_Rect clicked2 = { 126, 201, 49, 49 };
 		App->gui->CreateButton(&menuButtons, BUTTON, 228, 3, idle2, hovered2, clicked2, gui_tex, CLOSE_GAME);
-		App->gui->CreateButton(&menuButtons, BUTTON, 20, 20, idle2, hovered2, clicked2, gui_tex, CLOSE_GAME, (j1UserInterfaceElement*)settings_window);
+		App->gui->CreateButton(&menuButtons, BUTTON, 64, 135, idle2, hovered2, clicked2, gui_tex, CLOSE_SETTINGS, (j1UserInterfaceElement*)settings_window);
 
 		SDL_Rect idle3 = { 463, 109, 49, 49 };
 		SDL_Rect hovered3 = { 463, 158, 49, 49 };
@@ -89,6 +95,8 @@ bool j1SceneMenu::Start()
 		App->gui->CreateLabel(&menuLabels, LABEL, 90, 140, font, "Continue", { 245, 245, 220, 255 });
 		App->gui->CreateLabel(&menuLabels, LABEL, 98, 165, font, "Credits", { 245, 245, 220, 255 });
 		App->gui->CreateLabel(&menuLabels, LABEL, 44, 9, font, "Settings", { 73, 31, 10, 255 }, (j1UserInterfaceElement*)settings_window);
+		App->gui->CreateLabel(&menuLabels, LABEL, 30, 52, font, "Sound", { 73, 31, 10, 255 }, (j1UserInterfaceElement*)settings_window);
+		App->gui->CreateLabel(&menuLabels, LABEL, 30, 92, font, "Music", { 73, 31, 10, 255 }, (j1UserInterfaceElement*)settings_window);
 
 		player_created = false;
 	}
@@ -117,47 +125,77 @@ bool j1SceneMenu::Update(float dt)
 	// USER INTERFACE MANAGEMENT
 	// ---------------------------------------------------------------------------------------------------------------------	
 
+	// Updating the state of the UI
 	App->gui->UpdateButtonsState(&menuButtons); 
 	App->gui->UpdateBoxesState();
+	for (p2List_item<j1Box*>* item = menuBoxes.start; item != nullptr; item = item->next) {
+		if (item->data->visible) App->gui->UpdateSliderState(item->data);
+	}
 	
 	// Button actions
 	for (p2List_item<j1Button*>* item = menuButtons.start; item != nullptr; item = item->next) {
-		switch (item->data->state) 
-		{
-		case IDLE:
-			item->data->situation = item->data->idle;
-			break;
+		if (item->data->visible) {
+			switch (item->data->state)
+			{
+			case IDLE:
+				item->data->situation = item->data->idle;
+				break;
 
-		case HOVERED:
-			item->data->situation = item->data->hovered;
-			break;
+			case HOVERED:
+				item->data->situation = item->data->hovered;
+				break;
 
-		case RELEASED:
-			item->data->situation = item->data->idle;
-			if (item->data->bfunction == PLAY_GAME) {
-				startGame = true;
-				App->fade->FadeToBlack();
-			}
-			else if (item->data->bfunction == CONTINUE) {
-				loadGame = true;
-				App->fade->FadeToBlack();
-			}
-			else if (item->data->bfunction == CLOSE_GAME) {
-				continueGame = false;
-			}
-			else if (item->data->bfunction == SETTINGS) {
-				settings_window->visible = !settings_window->visible;
-				settings_window->position = App->gui->settingsPosition;
-			}
-			else if (item->data->bfunction == OPEN_CREDITS) {
-				openCredits = true;
-				App->fade->FadeToBlack();
-			}
-			break;
+			case RELEASED:
+				item->data->situation = item->data->idle;
+				if (item->data->bfunction == PLAY_GAME) {
+					startGame = true;
+					App->fade->FadeToBlack();
+				}
+				else if (item->data->bfunction == CONTINUE) {
+					loadGame = true;
+					App->fade->FadeToBlack();
+				}
+				else if (item->data->bfunction == CLOSE_GAME) {
+					continueGame = false;
+				}
+				else 
+				if ((item->data->bfunction == SETTINGS && !settings_window->visible) 
+					|| (item->data->bfunction == CLOSE_SETTINGS && settings_window->visible)) {
+					settings_window->visible = !settings_window->visible;
+					settings_window->position = App->gui->settingsPosition;
 
-		case CLICKED:
-			item->data->situation = item->data->clicked;
-			break;
+					for (p2List_item<j1Button*>* item = menuButtons.start; item != nullptr; item = item->next) {
+						if (item->data->parent == settings_window) {
+							item->data->visible = !item->data->visible;
+							item->data->position.x = settings_window->position.x + item->data->initialPosition.x;
+							item->data->position.y = settings_window->position.y + item->data->initialPosition.y;
+						}
+					}
+					for (p2List_item<j1Label*>* item = menuLabels.start; item != nullptr; item = item->next) {
+						if (item->data->parent == settings_window) {
+							item->data->visible = !item->data->visible;
+							item->data->position.x = settings_window->position.x + item->data->initialPosition.x;
+							item->data->position.y = settings_window->position.y + item->data->initialPosition.y;
+						}
+					}
+					for (p2List_item<j1Box*>* item = menuBoxes.start; item != nullptr; item = item->next) {
+						if (item->data->parent == settings_window) {
+							item->data->visible = !item->data->visible;
+							item->data->position.x = settings_window->position.x + item->data->initialPosition.x;
+							item->data->position.y = settings_window->position.y + item->data->initialPosition.y;
+						}
+					}
+				}
+				else if (item->data->bfunction == OPEN_CREDITS) {
+					openCredits = true;
+					App->fade->FadeToBlack();
+				}
+				break;
+
+			case CLICKED:
+				item->data->situation = item->data->clicked;
+				break;
+			}
 		}
 	}
 
@@ -175,6 +213,12 @@ bool j1SceneMenu::Update(float dt)
 
 	// To move settings window in case it is visible
 	if (settings_window != nullptr) {
+
+		for (p2List_item<j1Button*>* item = menuButtons.start; item != nullptr; item = item->next)
+			//if (item->data->state == CLICKED && item->data->parent == settings_window) settings_window->clicked = false;
+		for (p2List_item<j1Box*>* item = menuBoxes.start; item != nullptr; item = item->next)
+			if (item->data->clicked && item->data->parent == settings_window) settings_window->clicked = false;
+
 		if (settings_window->clicked) {
 			int x, y; App->input->GetMousePosition(x, y);
 
@@ -183,6 +227,7 @@ bool j1SceneMenu::Update(float dt)
 				settings_window->distanceCalculated = true;
 			}
 
+			// Updating the positions of the window and its elements
 			settings_window->position = { x - settings_window->mouseDistance.x, y - settings_window->mouseDistance.y };
 
 			for (p2List_item<j1Button*>* item = menuButtons.start; item != nullptr; item = item->next) {
@@ -198,9 +243,29 @@ bool j1SceneMenu::Update(float dt)
 					item->data->position.y = settings_window->position.y + item->data->initialPosition.y;
 				}
 			}
+
+			for (p2List_item<j1Box*>* item = menuBoxes.start; item != nullptr; item = item->next) {
+				if (item->data->parent == settings_window) {
+					item->data->position.x = settings_window->position.x + item->data->initialPosition.x;
+					item->data->position.y = settings_window->position.y + item->data->initialPosition.y;
+				}
+			}
 		}
 		else
 			settings_window->distanceCalculated = false;
+	}
+
+	// To move sliders
+	for (p2List_item<j1Box*>* item = menuBoxes.start; item != nullptr; item = item->next) {
+		if (item->data->clicked) App->gui->UpdateSliderState(item->data); 
+		int x, y; App->input->GetMousePosition(x, y);
+
+		if (item->data->distanceCalculated == false) {
+			item->data->mouseDistance = { x - item->data->position.x, y - settings_window->position.y };
+			item->data->distanceCalculated = true;
+		}
+
+		settings_window->position = { x - settings_window->mouseDistance.x, y - settings_window->mouseDistance.y };
 	}
 
 	// ---------------------------------------------------------------------------------------------------------------------
@@ -231,16 +296,36 @@ bool j1SceneMenu::Update(float dt)
 
 	// Blitting settings window
 	if (settings_window != nullptr && settings_window->visible == true)
-		settings_window->Draw(App->gui->boxScale);
+		settings_window->Draw(App->gui->settingsWindowScale);
 
-	// Blitting the buttons and labels of the window
+	// Blitting the buttons, labels and boxes (sliders) of the window
 	for (p2List_item<j1Button*>* item = menuButtons.start; item != nullptr; item = item->next) {
 		if (item->data->parent == nullptr) continue;
-		item->data->Draw(App->gui->buttonsScale);
+
+		if (item->data->parent->visible == false)
+			item->data->visible = false;
+		else
+			item->data->Draw(App->gui->buttonsScale);
 	}
 	for (p2List_item<j1Label*>* item = menuLabels.start; item != nullptr; item = item->next) {
 		if (item->data->parent == nullptr) continue;
-		item->data->Draw();
+
+		if (item->data->parent->visible == false)
+			item->data->visible = false;
+		else {
+			if(item->data->text == "Settings")
+				item->data->Draw();
+			else
+				item->data->Draw(App->gui->buttonsScale);
+		}
+	}
+	for (p2List_item<j1Box*>* item = menuBoxes.start; item != nullptr; item = item->next) {
+		if (item->data->parent == nullptr) continue;
+
+		if (item->data->parent->visible == false)
+			item->data->visible = false;
+		else
+			item->data->Draw(App->gui->buttonsScale);
 	}
 
 	return true;
@@ -273,7 +358,13 @@ bool j1SceneMenu::CleanUp()
 	}
 
 	for (p2List_item<j1Label*>* item = menuLabels.start; item != nullptr; item = item->next) {
+		item->data->CleanUp();
 		menuLabels.del(item);
+	}
+
+	for (p2List_item<j1Box*>* item = menuBoxes.start; item != nullptr; item = item->next) {
+		item->data->CleanUp();
+		menuBoxes.del(item);
 	}
 
 	delete settings_window;

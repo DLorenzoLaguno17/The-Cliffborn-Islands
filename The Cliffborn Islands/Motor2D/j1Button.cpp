@@ -14,8 +14,7 @@ void j1Button::Draw(float scale, int x, int y, bool use_camera)
 	if (!use_camera)
 		App->render->Blit(sprites, (int)position.x + x, (int)position.y + y, &situation, SDL_FLIP_NONE, 1.0f, scale, INT_MAX, INT_MAX, false);
 	else
-		App->render->Blit(sprites, (int)position.x + x, (int)position.y + y, &situation, SDL_FLIP_NONE, 1.0f, scale);
-	
+		App->render->Blit(sprites, (int)position.x + x, (int)position.y + y, &situation, SDL_FLIP_NONE, 1.0f, scale);	
 }
 
 bool j1Button::CleanUp()

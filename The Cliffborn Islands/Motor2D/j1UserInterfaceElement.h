@@ -19,10 +19,12 @@ public:
 	virtual void Draw(float scale, int x = 0, int y = 0, bool use_camera = true) {}
 
 public:
-
 	UIELEMENT_TYPES type;
+	bool visible = true;
+
 	iPoint initialPosition;
 	iPoint position;
+
 	SDL_Texture* sprites = nullptr;
 	j1UserInterfaceElement* parent = nullptr;
 };

@@ -1,5 +1,5 @@
-#ifndef __LABEL_H__
-#define __LABEL_H__
+#ifndef __j1LABEL_H__
+#define __j1LABEL_H__
 
 #include "j1UserInterfaceElement.h"
 
@@ -25,5 +25,4 @@ public:
 	const char* text = nullptr;
 };
 
-#endif // __LABEL_H__
-
+#endif // __j1LABEL_H__

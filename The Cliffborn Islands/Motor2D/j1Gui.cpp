@@ -33,7 +33,7 @@ bool j1Gui::Awake(pugi::xml_node& config)
 
 	atlas_file_name = config.child("atlas").attribute("file").as_string("");
 	buttonsScale = config.child("scale").attribute("buttonsScale").as_float();
-	boxScale = config.child("scale").attribute("boxScale").as_float();
+	settingsWindowScale = config.child("scale").attribute("boxScale").as_float();
 	logoScale = config.child("scale").attribute("logoScale").as_float();
 
 	// Copying box spawn position
@@ -73,10 +73,10 @@ bool j1Gui::PostUpdate()
 
 	// Blitting settings window
 	if (App->scene1->settings_window != nullptr && App->scene1->settings_window->visible == true)
-		App->scene1->settings_window->Draw(App->gui->boxScale);
+		App->scene1->settings_window->Draw(App->gui->settingsWindowScale);
 
 	if (App->scene2->settings_window != nullptr && App->scene2->settings_window->visible == true)
-		App->scene2->settings_window->Draw(App->gui->boxScale);
+		App->scene2->settings_window->Draw(App->gui->settingsWindowScale);
 
 	return true;
 }
@@ -100,10 +100,11 @@ j1Label* j1Gui::CreateLabel(p2List<j1Label*>* labels, UIELEMENT_TYPES type, int 
 	return ret;
 }
 
-j1Box* j1Gui::CreateBox(UIELEMENT_TYPES type, int x, int y, SDL_Rect section, SDL_Texture* text, j1UserInterfaceElement* parent) {
+j1Box* j1Gui::CreateBox(p2List<j1Box*>* boxes, UIELEMENT_TYPES type, int x, int y, SDL_Rect section, SDL_Texture* text, j1UserInterfaceElement* parent) {
 	j1Box* ret = nullptr;
 
 	ret = new j1Box(type, x, y, section, text, parent);
+	if (ret != nullptr) boxes->add(ret);
 
 	return ret;
 }
@@ -126,11 +127,14 @@ void j1Gui::UpdateButtonsState(p2List<j1Button*>* buttons) {
 	int x, y; App->input->GetMousePosition(x, y);
 
 	for (p2List_item<j1Button*>* button = buttons->start; button != nullptr; button = button->next) {
+
+		if (button->data->visible == false) continue;
+
 		if (x <= button->data->position.x + button->data->situation.w * App->gui->buttonsScale && x >= button->data->position.x
 			&& y <= button->data->position.y + button->data->situation.h * App->gui->buttonsScale && y >= button->data->position.y) {
 
 			if(App->credits->active == false && App->menu->settings_window->visible
-				&& button->data->bfunction != CLOSE_GAME && button->data->bfunction != SETTINGS) continue;
+				&& button->data->bfunction != CLOSE_SETTINGS) continue;
 
 			button->data->state = STATE::HOVERED;
 			if (!button->data->hoverPlayed) {
@@ -171,13 +175,30 @@ void j1Gui::UpdateBoxesState() {
 		aux = App->scene2->settings_window;
 
 	// Checking if it is being dragged
-	if (aux != nullptr && x <= aux->position.x + aux->section.w * App->gui->boxScale && x >= aux->position.x
-		&& y <= aux->position.y + aux->section.h * App->gui->boxScale && y >= aux->position.y){
+	if (aux != nullptr && x <= aux->position.x + aux->section.w * App->gui->settingsWindowScale && x >= aux->position.x
+		&& y <= aux->position.y + aux->section.h * App->gui->settingsWindowScale && y >= aux->position.y){
 		if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT)
 			aux->clicked = true;
 		else if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_UP)
 			aux->clicked = false;
 	}
+}
+
+void j1Gui::UpdateSliderState(j1Box* slider) {
+	int x, y; App->input->GetMousePosition(x, y);
+
+	// Checking if it is being dragged
+	if (slider != nullptr && slider->visible == true){
+		if (x <= slider->position.x + slider->section.w * App->gui->buttonsScale && x >= slider->position.x
+		&& y <= slider->position.y + slider->section.h * App->gui->buttonsScale && y >= slider->position.y) {
+		if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT)
+			slider->clicked = true;
+		else if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_UP)
+			slider->clicked = false;
+		}
+	}
+	else
+		slider->clicked = false;
 }
 
 // class Gui ---------------------------------------------------

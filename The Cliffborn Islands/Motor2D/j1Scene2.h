@@ -49,6 +49,7 @@ public:
 
 	p2List<j1Button*> scene2Buttons;
 	p2List<j1Label*> scene2Labels;
+	p2List<j1Box*> scene2Boxes;
 
 	bool backToMenu = false;
 

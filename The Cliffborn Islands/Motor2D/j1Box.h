@@ -11,7 +11,6 @@ class j1Box : public j1UserInterfaceElement {
 public:
 
 	// Constructor
-	// To create a button we need several parameters: its type, a texture, the three sections of the atlas the button will use and the function of the button
 	j1Box(UIELEMENT_TYPES type, int x, int y, SDL_Rect section, SDL_Texture* text = nullptr, j1UserInterfaceElement* parent = nullptr);
 
 	// Destructor
@@ -25,11 +24,14 @@ public:
 
 public:
 	SDL_Rect section;
-	bool visible = false;
 	bool clicked = false;
 
 	bool distanceCalculated = false;
 	iPoint mouseDistance;
+
+	// They are used in case you want to limit the movement of the box
+	iPoint minimum;
+	iPoint maximum;
 };
 
 #endif // __j1BOX_H__

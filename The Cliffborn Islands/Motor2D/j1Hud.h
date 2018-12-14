@@ -1,3 +1,6 @@
+#ifndef __j1HUD_H__
+#define __j1HUD_H__
+
 #include "j1Timer.h"
 #include "p2SString.h"
 #include "p2List.h"
@@ -50,3 +53,4 @@ public:
 	p2List<j1Label*> labels_list;
 };
 
+#endif // __j1LHUD_H__

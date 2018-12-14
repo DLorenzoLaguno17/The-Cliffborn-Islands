@@ -35,6 +35,7 @@ enum ButtonFunction {
 	SAVE_GAME,
 	CONTINUE,
 	SETTINGS,
+	CLOSE_SETTINGS,
 	LINK
 };
 
@@ -66,17 +67,18 @@ public:
 	// Factory methods
 	j1Button* CreateButton(p2List<j1Button*>* buttons, UIELEMENT_TYPES type, int x, int y, SDL_Rect idle, SDL_Rect hovered, SDL_Rect clicked, SDL_Texture* text = nullptr, ButtonFunction function = NO_FUNCTION, j1UserInterfaceElement* parent = nullptr);
 	j1Label* CreateLabel(p2List<j1Label*>* labels, UIELEMENT_TYPES type, int x, int y, _TTF_Font* font, const char* text, SDL_Color color = { 255, 255, 255, 255}, j1UserInterfaceElement* parent = nullptr);
-	j1Box* CreateBox(UIELEMENT_TYPES type, int x, int y, SDL_Rect section, SDL_Texture* text = nullptr, j1UserInterfaceElement* parent = nullptr);
+	j1Box* CreateBox(p2List<j1Box*>* boxes, UIELEMENT_TYPES type, int x, int y, SDL_Rect section, SDL_Texture* text = nullptr, j1UserInterfaceElement* parent = nullptr);
 
 	// UI uppdaters
 	void UpdateButtonsState(p2List<j1Button*>* buttons);
 	void UpdateBoxesState();
+	void UpdateSliderState(j1Box* slider);
 	
 	const SDL_Texture* GetAtlas() const;
 
 public:
 	float buttonsScale;
-	float boxScale;
+	float settingsWindowScale;
 	float logoScale;
 	
 	// Positions
