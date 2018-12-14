@@ -8,6 +8,7 @@
 #include "j1Fonts.h"
 #include "j1Render.h"
 #include "j1Player.h"
+#include "j1Input.h"
 
 j1Hud::j1Hud() 
 {
@@ -48,6 +49,10 @@ bool j1Hud::Start()
 
 bool j1Hud::Update(float dt)
 {
+
+	if (App->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN)
+		debug = !debug;
+
 	//TIMER
 	if (App->scene1->active)
 	{
@@ -110,18 +115,24 @@ bool j1Hud::Update(float dt)
 		seconds->Draw(1.0f, 0, 0, false);
 	if (minutes->sprites != nullptr)
 		minutes->Draw(1.0f, 0, 0, false);
+	if (debug)
+		App->render->DrawQuad({ 410, 0, 160, 64 }, 255, 0, 0, 255, false, false);
 
 	//COIN
 	SDL_Rect r = animation->GetCurrentFrame(dt);
 	App->render->Blit(sprites, 3, 700, &r, SDL_FLIP_NONE, 1.0f, 1, 0, INT_MAX, INT_MAX, false);
+	if (debug)
+		App->render->DrawQuad({ 3, 700, r.w*4, r.h*4 }, 255, 0, 0, 255, false, false);
 
 	//PLAYER LIVES
-	uint space = 0;
+	int space = 0;
 
 	for (int i = App->entity->player->lives; i >= 0; --i)
 	{
 		SDL_Rect r = { 0,0,8,11 };
 		App->render->Blit(lives_tex, 10 + space, 3, &r, SDL_FLIP_NONE, 1.0f, 1, 0, INT_MAX, INT_MAX, false);
+		if (debug)
+			App->render->DrawQuad({ 10 + space, 3, r.w * 4, r.h * 4}, 255, 0, 0, 255, false, false);
 
 		space += 50;
 	}
@@ -134,6 +145,9 @@ bool j1Hud::Update(float dt)
 		coins_label->sprites = App->font->Print(score.GetString(), coins_label->color, coins_label->font);
 		if (coins_label->sprites != nullptr)
 			coins_label->Draw(1.0f, 0, 0, false);
+
+		if (debug)
+			App->render->DrawQuad({ 80, 700, 64, 64 }, 255, 0, 0, 255, false, false);
 	}
 
 	score_points = { "%i", App->entity->player->score_points };
@@ -143,6 +157,8 @@ bool j1Hud::Update(float dt)
 		score_label->sprites = App->font->Print(score_points.GetString(), score_label->color, score_label->font);
 		if (score_label->sprites != nullptr)
 			score_label->Draw(1.0f, 0, 0, false);
+		if (debug)
+			App->render->DrawQuad({ 900, 0, 124, 64 }, 255, 0, 0, 255, false, false);
 	}
 
 	return true;

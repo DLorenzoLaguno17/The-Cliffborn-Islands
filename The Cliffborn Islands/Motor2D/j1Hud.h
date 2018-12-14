@@ -51,6 +51,8 @@ public:
 	Animation idle;
 
 	p2List<j1Label*> labels_list;
+
+	bool debug = false;
 };
 
 #endif // __j1LHUD_H__
