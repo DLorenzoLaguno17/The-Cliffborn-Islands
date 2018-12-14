@@ -142,7 +142,7 @@ bool j1SceneCredits::Update(float dt)
 
 	// Blitting the buttons
 	for (p2List_item<j1Button*>* item = creditsButtons.start; item != nullptr; item = item->next) {
-		item->data->Draw(App->gui->UIscale);
+		item->data->Draw(App->gui->buttonsScale);
 	}
 
 	// Blitting the labels
@@ -157,8 +157,8 @@ bool j1SceneCredits::PostUpdate()
 {
 	BROFILER_CATEGORY("CreditsPostUpdate", Profiler::Color::Yellow)
 
-		if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
-			continueGame = false;
+	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
+		continueGame = false;
 
 	return continueGame;
 }

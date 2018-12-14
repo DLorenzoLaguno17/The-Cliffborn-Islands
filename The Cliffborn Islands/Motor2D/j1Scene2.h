@@ -50,14 +50,18 @@ public:
 	p2List<j1Button*> scene2Buttons;
 	p2List<j1Label*> scene2Labels;
 
+	bool backToMenu = false;
+
 private:
 
 	bool player_created = false;
+	bool continueGame = true;
 
 	Animation coin_hud;
-	Animation* animation = nullptr;
 	SDL_Texture* coin_tex = nullptr;
 	SDL_Texture* debug_tex = nullptr;
+	SDL_Texture* gui_tex = nullptr;
+
 	bool changingScene = false;
 	bool resettingLevel = false;
 

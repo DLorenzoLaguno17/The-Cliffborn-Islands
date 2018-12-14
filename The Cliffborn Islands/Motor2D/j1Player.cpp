@@ -14,6 +14,7 @@
 #include "j1Harpy.h"
 #include "j1Fonts.h"
 #include "j1Label.h"
+#include "j1Box.h"
 
 #include "Brofiler/Brofiler.h"
 
@@ -538,6 +539,11 @@ void j1Player::OnCollision(Collider* col_1, Collider* col_2)
 			//If the player collides with death colliders
 			if (col_2->type == COLLIDER_DEATH || col_2->type == COLLIDER_ENEMY)
 			{
+				if(App->scene1->active)
+					App->scene1->settings_window->position = App->gui->settingsPosition;
+				if (App->scene2->active)
+					App->scene2->settings_window->position = App->gui->settingsPosition;
+
 				if (lives > 0)
 				{
 					if (col_2->rect.h < deathByFallColliderHeight)
@@ -563,11 +569,9 @@ void j1Player::OnCollision(Collider* col_1, Collider* col_2)
 					points = 0;
 				}
 				else if (App->scene1->active)
-					App->scene1->ChangeSceneMenu();
+					App->scene1->backToMenu = true;
 				else if (App->scene2->active)
-					App->scene2->ChangeSceneMenu();
-
-
+					App->scene2->backToMenu = true;
 			}
 		}
 		

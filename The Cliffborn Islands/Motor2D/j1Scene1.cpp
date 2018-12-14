@@ -19,6 +19,8 @@
 #include "j1SceneMenu.h"
 #include "j1Fonts.h"
 #include "j1Label.h"
+#include "j1Button.h"
+#include "j1Box.h"
 
 #include "Brofiler/Brofiler.h"
 
@@ -57,8 +59,6 @@ bool j1Scene1::Start()
 
 	if (active)
 	{
-		text = App->font->Load("fonts/PixelCowboy/PixelCowboy.otf", 8);
-
 		// The map is loaded
 		if (App->map->Load("lvl1.tmx"))
 		{
@@ -72,10 +72,18 @@ bool j1Scene1::Start()
 			RELEASE_ARRAY(data);
 		}
 
+		text = App->font->Load("fonts/PixelCowboy/PixelCowboy.otf", 8);
+
+		// Textures are loaded
 		debug_tex = App->tex->Load("maps/path2.png");
+		gui_tex = App->tex->Load("gui/atlas.png");
 
 		// The audio is played	
-		App->audio->PlayMusic("audio/music/level1_music.ogg", 1.0f);		
+		App->audio->PlayMusic("audio/music/level1_music.ogg", 1.0f);
+
+		// Creating UI
+		SDL_Rect section = { 537, 0, 663, 712 };
+		settings_window = App->gui->CreateBox(BOX, App->gui->settingsPosition.x, App->gui->settingsPosition.y, section, gui_tex);
 
 		PlaceEntities();
 
@@ -130,6 +138,78 @@ bool j1Scene1::Update(float dt)
 
 	time_scene1 = startup_time.ReadSec();
 
+	// ---------------------------------------------------------------------------------------------------------------------
+	// USER INTERFACE MANAGEMENT
+	// ---------------------------------------------------------------------------------------------------------------------	
+
+	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN) {
+		settings_window->visible = !settings_window->visible;
+		App->gamePaused = !App->gamePaused;		
+
+		if(App->render->camera.x != 0)
+			settings_window->position = { (int)App->entity->player->position.x - App->gui->settingsPosition.x, App->gui->settingsPosition.y };
+	}
+
+	App->gui->UpdateButtonsState(&scene1Buttons);
+	App->gui->UpdateBoxesState();
+
+	// Button actions
+	for (p2List_item<j1Button*>* item = scene1Buttons.start; item != nullptr; item = item->next) {
+		switch (item->data->state)
+		{
+		case IDLE:
+			item->data->situation = item->data->idle;
+			break;
+
+		case HOVERED:
+			item->data->situation = item->data->hovered;
+			break;
+
+		case RELEASED:
+			item->data->situation = item->data->idle;
+			if (item->data->bfunction == GO_TO_MENU) {
+				backToMenu = true;
+				App->fade->FadeToBlack();
+			}
+			/*else if (item->data->bfunction == CONTINUE) {
+			loadGame = true;
+			App->fade->FadeToBlack();
+			}
+			else if (item->data->bfunction == CLOSE_GAME) {
+			continueGame = false;
+			}
+			else if (item->data->bfunction == SETTINGS) {
+			settings_window->visible = !settings_window->visible;
+			settings_window->position = settingsPosition;
+			}
+			else if (item->data->bfunction == OPEN_CREDITS) {
+			openCredits = true;
+			App->fade->FadeToBlack();
+			}*/
+			break;
+
+		case CLICKED:
+			item->data->situation = item->data->clicked;
+			break;
+		}
+	}
+
+	// To move settings window in case it is visible
+	if (settings_window != nullptr) {
+		if (settings_window->clicked) {
+			int x, y; App->input->GetMousePosition(x, y);
+
+			if (settings_window->distanceCalculated == false) {
+				settings_window->mouseDistance = { x - settings_window->position.x, y - settings_window->position.y };
+				settings_window->distanceCalculated = true;
+			}
+
+			settings_window->position = { x - settings_window->mouseDistance.x, y - settings_window->mouseDistance.y };
+		}
+		else
+			settings_window->distanceCalculated = false;
+	}
+
 	// Load and Save
 	if (App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
 	{
@@ -140,7 +220,8 @@ bool j1Scene1::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
 		App->SaveGame("save_game.xml");
 
-	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN || resettingLevel) 
+	// Managing scene transitions
+	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN || resettingLevel)
 	{
 		resettingLevel = true;
 		App->fade->FadeToBlack();
@@ -162,14 +243,26 @@ bool j1Scene1::Update(float dt)
 			ChangeScene();
 	}
 
+	if (backToMenu && App->fade->IsFading() == 0) {
+		ChangeSceneMenu();
+	}
+
+	// ---------------------------------------------------------------------------------------------------------------------
+	// DRAWING EVERYTHING ON THE SCREEN
+	// ---------------------------------------------------------------------------------------------------------------------	
+
 	App->map->Draw();
 
+	// Blitting settings window
+	if (settings_window != nullptr && settings_window->visible == true)
+		settings_window->Draw(App->gui->boxScale);
+
+	// Blitting patfhinding if debug is activated
 	if (App->collisions->debug) {
 		int x, y;
 		App->input->GetMousePosition(x, y);
 		iPoint map_coordinates = App->map->WorldToMap(x - App->render->camera.x, y - App->render->camera.y);
 
-		// Debug pathfinding ------------------------------
 		App->input->GetMousePosition(x, y);
 		iPoint p = App->render->ScreenToWorld(x, y);
 		p = App->map->WorldToMap(p.x, p.y);
@@ -194,10 +287,8 @@ bool j1Scene1::PostUpdate()
 {
 	BROFILER_CATEGORY("Level1PostUpdate", Profiler::Color::Yellow)
 
-	bool ret = true;
-
-	if(App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
-		ret = false;
+	if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN)
+		continueGame = false;
 
 	time_text = { "%i", time_scene1 };
 	if (time_scene1 == 60)
@@ -230,7 +321,7 @@ bool j1Scene1::PostUpdate()
 	if (minutes->sprites != nullptr)
 		minutes->Draw(1.0f, 0, 0, false);
 
-	return ret;
+	return continueGame;
 }
 
 bool j1Scene1::Load(pugi::xml_node& node)
@@ -253,7 +344,6 @@ bool j1Scene1::Save(pugi::xml_node& node) const
 
 	return true;
 }
-
 
 void j1Scene1::PlaceEntities()
 {
@@ -289,6 +379,9 @@ void j1Scene1::PlaceEntities()
 bool j1Scene1::CleanUp()
 {
 	LOG("Freeing scene");
+	App->tex->UnLoad(gui_tex);
+	App->tex->UnLoad(debug_tex);
+
 	App->map->CleanUp();
 	App->collisions->CleanUp();
 	App->tex->CleanUp();
@@ -339,4 +432,5 @@ void j1Scene1::ChangeSceneMenu()
 	App->entity->active = false;
 	App->menu->Start();
 	App->render->camera = { 0,0 };
+	backToMenu = false;
 }

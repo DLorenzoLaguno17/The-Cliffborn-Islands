@@ -104,6 +104,8 @@ public:
 	j1Fonts*			font = nullptr;
 	j1Gui*				gui = nullptr;
 
+	bool				gamePaused = false;
+
 private:
 
 	p2List<j1Module*>	modules;

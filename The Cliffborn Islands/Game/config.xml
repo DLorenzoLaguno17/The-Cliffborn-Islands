@@ -60,7 +60,9 @@
     <folder>maps/</folder>
   </map>  
   
-  <gui scale="0.5f"/>
+  <gui>
+	<scale buttonsScale="0.5f" boxScale="0.23f"/>
+  </gui>
   
   <menu>
   </menu>

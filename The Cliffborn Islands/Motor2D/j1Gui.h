@@ -3,6 +3,7 @@
 
 #include "j1Module.h"
 #include "p2List.h"
+#include "p2Point.h"
 #include "SDL/include/SDL_rect.h"
 
 #define CURSOR_WIDTH 2
@@ -73,7 +74,11 @@ public:
 	const SDL_Texture* GetAtlas() const;
 
 public:
-	float UIscale;
+	float buttonsScale;
+	float boxScale;
+	
+	// Positions
+	iPoint settingsPosition;
 
 	// Sounds
 	uint hoverSound;

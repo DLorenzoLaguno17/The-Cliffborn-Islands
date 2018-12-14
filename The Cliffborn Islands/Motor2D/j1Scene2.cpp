@@ -18,12 +18,14 @@
 #include "j1Coin.h"
 #include "j1Fonts.h"
 #include "j1Label.h"
+#include "j1Box.h"
 
 #include "Brofiler/Brofiler.h"
 
 j1Scene2::j1Scene2() : j1Module()
 {
 	name.create("scene2");
+	coin_hud.LoadEnemyAnimations("idle", "coin");
 }
 
 // Destructor
@@ -68,14 +70,23 @@ bool j1Scene2::Start()
 			}
 
 			RELEASE_ARRAY(data);
-		}
-		text = App->font->Load("fonts/PixelCowboy/PixelCowboy.otf", 8);
-		debug_tex = App->tex->Load("maps/path2.png");
-		coin_hud.LoadEnemyAnimations("idle", "coin");
-		coin_tex = App->tex->Load("textures/coin.png");
-		animation = &coin_hud;
+		}		
 
-		PlaceEntities();
+		text = App->font->Load("fonts/PixelCowboy/PixelCowboy.otf", 8);
+
+		// Textures are loaded
+		debug_tex = App->tex->Load("maps/path2.png");
+		coin_tex = App->tex->Load("textures/coin.png");
+		gui_tex = App->tex->Load("gui/atlas.png");
+
+		// The audio is played
+		App->audio->PlayMusic("audio/music/level1_music.ogg", 1.0f);
+
+		// Creating UI
+		SDL_Rect section = { 537, 0, 663, 712 };
+		settings_window = App->gui->CreateBox(BOX, App->gui->settingsPosition.x, App->gui->settingsPosition.y, section, gui_tex);
+
+		//PlaceEntities();
 
 		startup_time.Start();
 
@@ -83,9 +94,6 @@ bool j1Scene2::Start()
 
 		seconds = App->gui->CreateLabel(&scene2Labels, LABEL, 500, 0, text, time_text.GetString());
 		minutes = App->gui->CreateLabel(&scene2Labels, LABEL, 410, 0, text, "00:");
-
-		// The audio is played
-		App->audio->PlayMusic("audio/music/level1_music.ogg", 1.0f);
 	}
 	
 	return true;
@@ -131,6 +139,36 @@ bool j1Scene2::Update(float dt)
 	
 	time_scene2 = startup_time.ReadSec();
 
+	// ---------------------------------------------------------------------------------------------------------------------
+	// USER INTERFACE MANAGEMENT
+	// ---------------------------------------------------------------------------------------------------------------------	
+
+	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN) {
+		settings_window->visible = !settings_window->visible;
+		App->gamePaused = !App->gamePaused;
+
+		if (App->render->camera.x != 0)
+			settings_window->position = { (int)App->entity->player->position.x - App->gui->settingsPosition.x, App->gui->settingsPosition.y };
+	}
+
+	App->gui->UpdateButtonsState(&scene2Buttons);
+	App->gui->UpdateBoxesState();
+
+	// To move settings window in case it is visible
+	if (settings_window != nullptr) {
+		if (settings_window->clicked) {
+			int x, y; App->input->GetMousePosition(x, y);
+
+			if (settings_window->distanceCalculated == false) {
+				settings_window->mouseDistance = { x - settings_window->position.x, y - settings_window->position.y };
+				settings_window->distanceCalculated = true;
+			}
+
+			settings_window->position = { x - settings_window->mouseDistance.x, y - settings_window->mouseDistance.y };
+		}
+		else
+			settings_window->distanceCalculated = false;
+	}
 
 	// Load and Save
 	if (App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
@@ -142,6 +180,7 @@ bool j1Scene2::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
 		App->SaveGame("save_game.xml");
 
+	// Managing scene transitions
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN || changingScene) {
 		changingScene = true;
 
@@ -164,9 +203,21 @@ bool j1Scene2::Update(float dt)
 		}
 	}
 
+	if (backToMenu && App->fade->IsFading() == 0) {
+		ChangeSceneMenu();
+	}
+
+	// ---------------------------------------------------------------------------------------------------------------------
+	// DRAWING EVERYTHING ON THE SCREEN
+	// ---------------------------------------------------------------------------------------------------------------------	
+	
 	App->map->Draw();
 
-	SDL_Rect r = animation->GetCurrentFrame(dt);
+	// Blitting settings window
+	if (settings_window != nullptr && settings_window->visible == true)
+		settings_window->Draw(App->gui->boxScale);
+
+	SDL_Rect r = coin_hud.GetCurrentFrame(dt);
 	App->render->Blit(coin_tex, 3, 700, &r, SDL_FLIP_NONE, 1.0f, 1, 0, INT_MAX, INT_MAX, false);
 
 	if (App->collisions->debug) {
@@ -198,11 +249,9 @@ bool j1Scene2::Update(float dt)
 bool j1Scene2::PostUpdate()
 {
 	BROFILER_CATEGORY("Level2PostUpdate", Profiler::Color::Yellow)
-	bool ret = true;
 
-
-	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
-		ret = false;
+	if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN)
+		continueGame = false;
 
 	time_text = { "%i", time_scene2 };
 	if (time_scene2 == 60)
@@ -234,7 +283,8 @@ bool j1Scene2::PostUpdate()
 		seconds->Draw(1.0f, 0, 0, false);
 	if (minutes->sprites != nullptr)
 		minutes->Draw(1.0f, 0, 0, false);
-	return ret;
+
+	return continueGame;
 }
 
 bool j1Scene2::Load(pugi::xml_node& node)
@@ -257,7 +307,6 @@ bool j1Scene2::Save(pugi::xml_node& node) const
 
 	return true;
 }
-
 
 // Called before quitting
 bool j1Scene2::CleanUp()
@@ -344,4 +393,5 @@ void j1Scene2::ChangeSceneMenu()
 	App->menu->Start();
 	App->fade->FadeToBlack();
 	App->render->camera = { 0,0 };
+	backToMenu = false;
 }

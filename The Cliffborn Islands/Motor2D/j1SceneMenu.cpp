@@ -40,8 +40,6 @@ bool j1SceneMenu::Awake(pugi::xml_node &)
 		ret = false;
 	}
 
-	settingsPosition = { 52, 10 };
-
 	return ret;
 }
 
@@ -64,6 +62,7 @@ bool j1SceneMenu::Start()
 		// Loading fonts
 		font = App->font->Load("fonts/PixelCowboy/PixelCowboy.otf", 8);
 
+		// Creating UI
 		SDL_Rect idle = {0, 143, 190, 49};
 		SDL_Rect hovered = { 0, 45, 190, 49 };
 		SDL_Rect clicked = { 0, 94, 190, 49 };
@@ -87,7 +86,7 @@ bool j1SceneMenu::Start()
 		App->gui->CreateLabel(&menuLabels, LABEL, 98, 165, font, "Credits", { 245, 245, 220, 255 });
 		
 		SDL_Rect section = { 537, 0, 663, 712 };
-		settings_window = App->gui->CreateBox(BOX, settingsPosition.x, settingsPosition.y, section, gui_tex);
+		settings_window = App->gui->CreateBox(BOX, App->gui->settingsPosition.x, App->gui->settingsPosition.y, section, gui_tex);
 
 		player_created = false;
 	}
@@ -146,7 +145,7 @@ bool j1SceneMenu::Update(float dt)
 			}
 			else if (item->data->bfunction == SETTINGS) {
 				settings_window->visible = !settings_window->visible;
-				settings_window->position = settingsPosition;
+				settings_window->position = App->gui->settingsPosition;
 			}
 			else if (item->data->bfunction == OPEN_CREDITS) {
 				openCredits = true;
@@ -201,7 +200,7 @@ bool j1SceneMenu::Update(float dt)
 
 	// Blitting the buttons
 	for (p2List_item<j1Button*>* item = menuButtons.start; item != nullptr; item = item->next) {
-		item->data->Draw(App->gui->UIscale);
+		item->data->Draw(App->gui->buttonsScale);
 	}
 
 	// Blitting the labels
@@ -214,7 +213,7 @@ bool j1SceneMenu::Update(float dt)
 
 	// Blitting settings window
 	if (settings_window != nullptr && settings_window->visible == true)
-		settings_window->Draw(0.23f);
+		settings_window->Draw(App->gui->boxScale);
 
 	return true;
 }

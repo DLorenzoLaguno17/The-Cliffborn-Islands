@@ -44,34 +44,37 @@ public:
 	bool Load(pugi::xml_node&);
 	bool Save(pugi::xml_node&) const;
 
-	fPoint initialScene1Position;
-	bool player_created = false;
-
 	void PlaceEntities();
 
-
 public:
-	j1Box * settings_window = nullptr;
+	j1Box* settings_window = nullptr;
+	fPoint initialScene1Position;
+	bool player_created = false;
+	bool backToMenu = false;
 
 	p2List<j1Button*> scene1Buttons;
 	p2List<j1Label*> scene1Labels;
 
 private:
 
-	SDL_Texture* debug_tex = nullptr;
+	SDL_Texture * debug_tex = nullptr;
+	SDL_Texture* gui_tex = nullptr;
+
+	bool continueGame = true;
 	bool changingScene = false;
 	bool resettingLevel = false;
+
 	j1Timer	startup_time;
 	int time_scene1;
+
 	p2SString time_text;
 	p2SString min_text;
 	p2SString min_text_left = "0";
-	j1Label* seconds;
-	j1Label* minutes;
-	_TTF_Font* text = nullptr;
 	int min = 00;
 
-
+	j1Label* seconds = nullptr;
+	j1Label* minutes = nullptr;
+	_TTF_Font* text = nullptr;	
 };
 
 #endif // __j1SCENE1_H__

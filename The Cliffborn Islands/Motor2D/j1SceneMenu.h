@@ -77,9 +77,6 @@ private:
 	Animation harpy;
 
 	SCENE currentScene = SCENE::MENU;
-
-	// Positions
-	iPoint settingsPosition;
 };
 
 #endif //__j1SCENEMENU_H__

@@ -14,6 +14,8 @@
 #include "j1Scene1.h"
 #include "j1Scene2.h"
 
+#include "Brofiler/Brofiler.h"
+
 j1Gui::j1Gui() : j1Module()
 {
 	name.create("gui");
@@ -30,7 +32,11 @@ bool j1Gui::Awake(pugi::xml_node& config)
 	bool ret = true;
 
 	atlas_file_name = config.child("atlas").attribute("file").as_string("");
-	UIscale = config.attribute("scale").as_float();
+	buttonsScale = config.child("scale").attribute("buttonsScale").as_float();
+	boxScale = config.child("scale").attribute("boxScale").as_float();
+
+	// Copying box spawn position
+	settingsPosition = { 54, 10 };
 
 	return ret;
 }	
@@ -54,12 +60,22 @@ bool j1Gui::Start()
 // Update all guis
 bool j1Gui::PreUpdate()
 {
+	BROFILER_CATEGORY("GuiPreUpdate", Profiler::Color::Orange)
 	return true;
 }
 
 // Called after all Updates
 bool j1Gui::PostUpdate()
 {
+	BROFILER_CATEGORY("GuiPostUpdate", Profiler::Color::Yellow)
+
+	// Blitting settings window
+	if (App->scene1->settings_window != nullptr && App->scene1->settings_window->visible == true)
+		App->scene1->settings_window->Draw(App->gui->boxScale);
+
+	if (App->scene2->settings_window != nullptr && App->scene2->settings_window->visible == true)
+		App->scene2->settings_window->Draw(App->gui->boxScale);
+
 	return true;
 }
 
@@ -108,8 +124,8 @@ void j1Gui::UpdateButtonsState(p2List<j1Button*>* buttons) {
 	int x, y; App->input->GetMousePosition(x, y);
 
 	for (p2List_item<j1Button*>* button = buttons->start; button != nullptr; button = button->next) {
-		if (x <= button->data->position.x + button->data->situation.w * App->gui->UIscale && x >= button->data->position.x
-			&& y <= button->data->position.y + button->data->situation.h * App->gui->UIscale && y >= button->data->position.y) {
+		if (x <= button->data->position.x + button->data->situation.w * App->gui->buttonsScale && x >= button->data->position.x
+			&& y <= button->data->position.y + button->data->situation.h * App->gui->buttonsScale && y >= button->data->position.y) {
 
 			if(App->credits->active == false && App->menu->settings_window->visible
 				&& button->data->bfunction != CLOSE_GAME && button->data->bfunction != SETTINGS) continue;
@@ -145,16 +161,16 @@ void j1Gui::UpdateBoxesState() {
 	j1Box* aux = nullptr;
 
 	// Checking which window is enabled
-	if (App->menu->settings_window->visible)
+	if (App->menu->active && App->menu->settings_window->visible)
 		aux = App->menu->settings_window;
-	/*else if (App->scene1->settings_window->visible)
+	else if (App->scene1->active && App->scene1->settings_window->visible)
 		aux = App->scene1->settings_window;
-	else if(App->scene2->settings_window->visible)
-		aux = App->scene2->settings_window;*/
+	else if(App->scene2->active && App->scene2->settings_window->visible)
+		aux = App->scene2->settings_window;
 
 	// Checking if it is being dragged
-	if (aux != nullptr && x <= aux->position.x + aux->section.w * App->gui->UIscale && x >= aux->position.x
-		&& y <= aux->position.y + aux->section.h * App->gui->UIscale && y >= aux->position.y){
+	if (aux != nullptr && x <= aux->position.x + aux->section.w * App->gui->boxScale && x >= aux->position.x
+		&& y <= aux->position.y + aux->section.h * App->gui->boxScale && y >= aux->position.y){
 		if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT)
 			aux->clicked = true;
 		else if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_UP)
