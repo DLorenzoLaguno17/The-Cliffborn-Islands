@@ -326,6 +326,14 @@ bool j1Player::Update(float dt, bool do_logic) {
 	// DRAWING EVERYTHING ON THE SCREEN
 	// ---------------------------------------------------------------------------------------------------------------------	
 
+	if (points % 10 == 0 && !extra_life && points != 0)
+	{
+		lives++;
+		extra_life = true;
+	}
+	else if (points % 10 != 0)
+		extra_life = false;
+
 	// Blitting the player
 	SDL_Rect r = animation->GetCurrentFrame(dt);
 

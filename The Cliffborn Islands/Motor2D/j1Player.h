@@ -114,6 +114,7 @@ public:
 	bool playedSound = false;
 	bool deathByFall = false;
 	bool attacking = false;
+	bool extra_life = false;
 
 private:
 	int cameraLimit;
