@@ -18,7 +18,6 @@ j1Hud::j1Hud()
 	idle.LoadEnemyAnimations("idle", "coin");
 }
 
-
 j1Hud::~j1Hud() {}
 
 bool j1Hud::Start()

@@ -13,9 +13,9 @@
 
   <window>
     <resolution width="1024" height="768" scale="4"/>
-    <fullscreen value="true"/>
+    <fullscreen value="false"/>
     <borderless value="false"/>
-    <resizable value="true"/>
+    <resizable value="false"/>
     <fullscreen_window value="false"/>
   </window>  
   
