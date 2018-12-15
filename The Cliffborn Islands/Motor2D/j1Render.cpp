@@ -63,6 +63,7 @@ bool j1Render::Start()
 {
 	LOG("render start");
 
+	SDL_RenderSetLogicalSize(renderer, App->win->width, App->win->height);
 	SDL_RenderGetViewport(renderer, &viewport);
 	return true;
 }
@@ -72,7 +73,7 @@ bool j1Render::PreUpdate()
 {
 	BROFILER_CATEGORY("RendererPreUpdate", Profiler::Color::Orange)
 
-	SDL_RenderClear(renderer);
+	SDL_RenderClear(renderer); 
 	return true;
 }
 

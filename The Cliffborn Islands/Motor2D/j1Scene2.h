@@ -66,6 +66,8 @@ private:
 	SDL_Texture* debug_tex = nullptr;
 	SDL_Texture* gui_tex = nullptr;
 
+	_TTF_Font* font = nullptr;
+
 	bool changingScene = false;
 	bool resettingLevel = false;
 

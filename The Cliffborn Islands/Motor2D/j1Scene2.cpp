@@ -48,8 +48,8 @@ bool j1Scene2::Awake(pugi::xml_node& config)
 	initialScene2Position.x = config.child("initialPlayerPosition").attribute("x").as_int();
 	initialScene2Position.y = config.child("initialPlayerPosition").attribute("y").as_int();
 
-	if (App->scene1->active == true) 
-		active = false; 
+	if (App->scene1->active == true)
+		active = false;
 
 	return ret;
 }
@@ -70,26 +70,39 @@ bool j1Scene2::Start()
 			}
 
 			RELEASE_ARRAY(data);
-		}		
+		}
 
 		// Textures are loaded
 		debug_tex = App->tex->Load("maps/path2.png");
-		coin_tex = App->tex->Load("textures/coin.png");
 		gui_tex = App->tex->Load("gui/atlas.png");
+		coin_tex = App->tex->Load("textures/coin.png");
 
 		// The audio is played
 		App->audio->PlayMusic("audio/music/level1_music.ogg", 1.0f);
+
+		// Loading fonts
+		font = App->font->Load("fonts/PixelCowboy/PixelCowboy.otf", 8);
 
 		// Creating UI
 		SDL_Rect section = { 537, 0, 663, 712 };
 		settings_window = App->gui->CreateBox(&scene2Boxes, BOX, App->gui->settingsPosition.x, App->gui->settingsPosition.y, section, gui_tex);
 		settings_window->visible = false;
 
+		uint minimum = 58;
+		uint maximum = 108;
+
+		App->gui->CreateBox(&scene2Boxes, BOX, 83, 42, { 416, 72, 28, 42 }, gui_tex, (j1UserInterfaceElement*)settings_window, minimum, maximum);
+		App->gui->CreateBox(&scene2Boxes, BOX, 83, 82, { 416, 72, 28, 42 }, gui_tex, (j1UserInterfaceElement*)settings_window, minimum, maximum);
+
+		App->gui->CreateLabel(&scene2Labels, LABEL, 44, 9, font, "Settings", { 73, 31, 10, 255 }, (j1UserInterfaceElement*)settings_window);
+		App->gui->CreateLabel(&scene2Labels, LABEL, 30, 50, font, "Sound", { 73, 31, 10, 255 }, (j1UserInterfaceElement*)settings_window);
+		App->gui->CreateLabel(&scene2Labels, LABEL, 30, 89, font, "Music", { 73, 31, 10, 255 }, (j1UserInterfaceElement*)settings_window);
+
 		PlaceEntities();
 
 		startup_time.Start();
 	}
-	
+
 	return true;
 }
 
@@ -105,12 +118,16 @@ bool j1Scene2::PreUpdate()
 bool j1Scene2::Update(float dt)
 {
 	BROFILER_CATEGORY("Level2Update", Profiler::Color::LightSeaGreen)
-	
-	time_scene2 = startup_time.ReadSec();
+
+		time_scene2 = startup_time.ReadSec();
 
 	// ---------------------------------------------------------------------------------------------------------------------
 	// USER INTERFACE MANAGEMENT
 	// ---------------------------------------------------------------------------------------------------------------------	
+
+	App->gui->UpdateButtonsState(&scene2Buttons);
+	App->gui->UpdateWindow(settings_window, &scene2Buttons, &scene2Labels, &scene2Boxes);
+	App->gui->UpdateSliders(&scene2Boxes);
 
 	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN) {
 		settings_window->visible = !settings_window->visible;
@@ -118,10 +135,30 @@ bool j1Scene2::Update(float dt)
 
 		if (App->render->camera.x != 0)
 			settings_window->position = { (int)App->entity->player->position.x - App->gui->settingsPosition.x, App->gui->settingsPosition.y };
-	}
 
-	App->gui->UpdateButtonsState(&scene2Buttons);
-	App->gui->UpdateWindow(settings_window);
+		for (p2List_item<j1Button*>* item = scene2Buttons.start; item != nullptr; item = item->next) {
+			if (item->data->parent == settings_window) {
+				item->data->visible = !item->data->visible;
+				item->data->position.x = settings_window->position.x + item->data->initialPosition.x;
+				item->data->position.y = settings_window->position.y + item->data->initialPosition.y;
+			}
+		}
+		for (p2List_item<j1Label*>* item = scene2Labels.start; item != nullptr; item = item->next) {
+			if (item->data->parent == settings_window) {
+				item->data->visible = !item->data->visible;
+				item->data->position.x = settings_window->position.x + item->data->initialPosition.x;
+				item->data->position.y = settings_window->position.y + item->data->initialPosition.y;
+			}
+		}
+		for (p2List_item<j1Box*>* item = scene2Boxes.start; item != nullptr; item = item->next) {
+			if (item->data->parent == settings_window) {
+				item->data->visible = !item->data->visible;
+				item->data->position.x = settings_window->position.x + item->data->initialPosition.x;
+				item->data->position.y = settings_window->position.y + item->data->initialPosition.y;
+			}
+		}
+
+	}
 
 	// Load and Save
 	if (App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
@@ -162,7 +199,7 @@ bool j1Scene2::Update(float dt)
 	// ---------------------------------------------------------------------------------------------------------------------
 	// DRAWING EVERYTHING ON THE SCREEN
 	// ---------------------------------------------------------------------------------------------------------------------	
-	
+
 	App->map->Draw();
 
 	// Blitting settings window
@@ -173,11 +210,7 @@ bool j1Scene2::Update(float dt)
 	App->render->Blit(coin_tex, 3, 700, &r, SDL_FLIP_NONE, 1.0f, 1, 0, INT_MAX, INT_MAX, false);
 
 	if (App->collisions->debug) {
-		int x, y;
-		App->input->GetMousePosition(x, y);
-		iPoint map_coordinates = App->map->WorldToMap(x - App->render->camera.x, y - App->render->camera.y);
 
-		// Debug pathfinding ------------------------------
 		const p2DynArray<iPoint>* path = App->path->GetLastPath();
 
 		for (uint i = 0; i < path->Count(); ++i)
@@ -195,8 +228,8 @@ bool j1Scene2::PostUpdate()
 {
 	BROFILER_CATEGORY("Level2PostUpdate", Profiler::Color::Yellow)
 
-	if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN)
-		continueGame = false;
+		if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN)
+			continueGame = false;
 
 	return continueGame;
 }
@@ -208,7 +241,7 @@ bool j1Scene2::Load(pugi::xml_node& node)
 	bool scene_activated = activated.attribute("true").as_bool();
 
 	if ((scene_activated == false) && active)
-		ChangeScene(); 
+		ChangeScene();
 
 	return true;
 }
@@ -297,7 +330,7 @@ void j1Scene2::ChangeScene()
 {
 	App->scene1->active = true;
 	App->scene2->active = false;
-	CleanUp();	
+	CleanUp();
 	App->entity->Start();
 	App->scene1->Start();
 	App->render->camera = { 0,0 };

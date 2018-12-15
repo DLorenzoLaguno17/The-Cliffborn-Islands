@@ -67,7 +67,7 @@ bool j1Scene1::Start()
 			if (App->map->CreateWalkabilityMap(w, h, &data))
 			{
 				App->path->SetMap(w, h, data);
-			}				
+			}
 
 			RELEASE_ARRAY(data);
 		}
@@ -93,9 +93,19 @@ bool j1Scene1::Start()
 		App->gui->CreateBox(&scene1Boxes, BOX, 83, 42, { 416, 72, 28, 42 }, gui_tex, (j1UserInterfaceElement*)settings_window, minimum, maximum);
 		App->gui->CreateBox(&scene1Boxes, BOX, 83, 82, { 416, 72, 28, 42 }, gui_tex, (j1UserInterfaceElement*)settings_window, minimum, maximum);
 
-		App->gui->CreateLabel(&scene1Labels, LABEL, 44, 9, font, "Settings", { 73, 31, 10, 255 }, (j1UserInterfaceElement*)settings_window);
-		App->gui->CreateLabel(&scene1Labels, LABEL, 30, 50, font, "Sound", { 73, 31, 10, 255 }, (j1UserInterfaceElement*)settings_window);
-		App->gui->CreateLabel(&scene1Labels, LABEL, 30, 89, font, "Music", { 73, 31, 10, 255 }, (j1UserInterfaceElement*)settings_window);
+		SDL_Rect idle3 = { 312, 292, 49, 49 };
+		SDL_Rect hovered3 = { 361, 292, 49, 49 };
+		SDL_Rect clicked3 = { 310, 400, 49, 49 };
+		App->gui->CreateButton(&scene1Buttons, BUTTON, 38, 135, idle3, hovered3, clicked3, gui_tex, GO_TO_MENU, (j1UserInterfaceElement*)settings_window);
+
+		SDL_Rect idle2 = { 28, 201, 49, 49 };
+		SDL_Rect hovered2 = { 77, 201, 49, 49 };
+		SDL_Rect clicked2 = { 126, 201, 49, 49 };
+		App->gui->CreateButton(&scene1Buttons, BUTTON, 64, 135, idle2, hovered2, clicked2, gui_tex, CLOSE_GAME, (j1UserInterfaceElement*)settings_window);
+
+		App->gui->CreateLabel(&scene1Labels, LABEL, 44, 9, font, "Settings", App->gui->brown, (j1UserInterfaceElement*)settings_window);
+		App->gui->CreateLabel(&scene1Labels, LABEL, 30, 50, font, "Sound", App->gui->brown, (j1UserInterfaceElement*)settings_window);
+		App->gui->CreateLabel(&scene1Labels, LABEL, 30, 89, font, "Music", App->gui->brown, (j1UserInterfaceElement*)settings_window);
 
 		PlaceEntities();
 
@@ -118,22 +128,45 @@ bool j1Scene1::Update(float dt)
 {
 	BROFILER_CATEGORY("Level1Update", Profiler::Color::LightSeaGreen)
 
-	time_scene1 = startup_time.ReadSec();
+		time_scene1 = startup_time.ReadSec();
 
 	// ---------------------------------------------------------------------------------------------------------------------
 	// USER INTERFACE MANAGEMENT
 	// ---------------------------------------------------------------------------------------------------------------------	
 
-	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN) {
-		settings_window->visible = !settings_window->visible;
-		App->gamePaused = !App->gamePaused;		
-
-		if(App->render->camera.x != 0)
-			settings_window->position = { (int)App->entity->player->position.x - App->gui->settingsPosition.x, App->gui->settingsPosition.y };
-	}
-
 	App->gui->UpdateButtonsState(&scene1Buttons);
 	App->gui->UpdateWindow(settings_window, &scene1Buttons, &scene1Labels, &scene1Boxes);
+	App->gui->UpdateSliders(&scene1Boxes);
+
+	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN) {
+		settings_window->visible = !settings_window->visible;
+		App->gamePaused = !App->gamePaused;
+
+		if (App->render->camera.x != 0)
+			settings_window->position = { (int)App->entity->player->position.x - App->gui->settingsPosition.x, App->gui->settingsPosition.y };
+
+		for (p2List_item<j1Button*>* item = scene1Buttons.start; item != nullptr; item = item->next) {
+			if (item->data->parent == settings_window) {
+				item->data->visible = !item->data->visible;
+				item->data->position.x = settings_window->position.x + item->data->initialPosition.x;
+				item->data->position.y = settings_window->position.y + item->data->initialPosition.y;
+			}
+		}
+		for (p2List_item<j1Label*>* item = scene1Labels.start; item != nullptr; item = item->next) {
+			if (item->data->parent == settings_window) {
+				item->data->visible = !item->data->visible;
+				item->data->position.x = settings_window->position.x + item->data->initialPosition.x;
+				item->data->position.y = settings_window->position.y + item->data->initialPosition.y;
+			}
+		}
+		for (p2List_item<j1Box*>* item = scene1Boxes.start; item != nullptr; item = item->next) {
+			if (item->data->parent == settings_window) {
+				item->data->visible = !item->data->visible;
+				item->data->position.x = settings_window->position.x + item->data->initialPosition.x;
+				item->data->position.y = settings_window->position.y + item->data->initialPosition.y;
+			}
+		}
+	}
 
 	// Button actions
 	for (p2List_item<j1Button*>* item = scene1Buttons.start; item != nullptr; item = item->next) {
@@ -151,22 +184,20 @@ bool j1Scene1::Update(float dt)
 			item->data->situation = item->data->idle;
 			if (item->data->bfunction == GO_TO_MENU) {
 				backToMenu = true;
+				App->gamePaused = false;
+				settings_window->visible = false;
 				App->fade->FadeToBlack();
+			}
+			else if (item->data->bfunction == CLOSE_GAME) {
+				continueGame = false;
 			}
 			/*else if (item->data->bfunction == CONTINUE) {
 			loadGame = true;
 			App->fade->FadeToBlack();
 			}
-			else if (item->data->bfunction == CLOSE_GAME) {
-			continueGame = false;
-			}
 			else if (item->data->bfunction == SETTINGS) {
 			settings_window->visible = !settings_window->visible;
 			settings_window->position = settingsPosition;
-			}
-			else if (item->data->bfunction == OPEN_CREDITS) {
-			openCredits = true;
-			App->fade->FadeToBlack();
 			}*/
 			break;
 
@@ -208,9 +239,8 @@ bool j1Scene1::Update(float dt)
 			ChangeScene();
 	}
 
-	if (backToMenu && App->fade->IsFading() == 0) {
+	if (backToMenu && App->fade->IsFading() == 0)
 		ChangeSceneMenu();
-	}
 
 	// ---------------------------------------------------------------------------------------------------------------------
 	// DRAWING EVERYTHING ON THE SCREEN
@@ -220,6 +250,7 @@ bool j1Scene1::Update(float dt)
 
 	// Blitting patfhinding if debug is activated
 	if (App->collisions->debug) {
+		
 		const p2DynArray<iPoint>* path = App->path->GetLastPath();
 
 		for (uint i = 0; i < path->Count(); ++i)
@@ -237,8 +268,8 @@ bool j1Scene1::PostUpdate()
 {
 	BROFILER_CATEGORY("Level1PostUpdate", Profiler::Color::Yellow)
 
-	if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN)
-		continueGame = false;
+		if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN)
+			continueGame = false;
 
 	return continueGame;
 }
@@ -250,7 +281,7 @@ bool j1Scene1::Load(pugi::xml_node& node)
 	bool scene_activated = activated.attribute("true").as_bool();
 
 	if ((scene_activated == false) && active)
-		ChangeScene(); 	
+		ChangeScene();
 
 	return true;
 }
@@ -272,10 +303,10 @@ void j1Scene1::PlaceEntities()
 	p2SString tmp("%s%s", folder.GetString(), "maps/lvl1.tmx");
 
 	pugi::xml_parse_result result = map_file.load_file(tmp.GetString());
-	
+
 	pugi::xml_node obj;
 	pugi::xml_node group;
-	
+
 	const char* object_name;
 
 	for (group = map_file.child("map").child("objectgroup"); group; group = group.next_sibling("objectgroup"))

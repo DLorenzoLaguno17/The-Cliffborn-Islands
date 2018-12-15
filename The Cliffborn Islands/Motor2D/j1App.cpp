@@ -60,10 +60,10 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(scene1);
 	AddModule(scene2);
 	AddModule(entity);
-	AddModule(fade);
 	AddModule(collisions);
 	AddModule(font);
 	AddModule(gui);
+	AddModule(fade);
 	
 	// render last to swap buffer
 	AddModule(render);

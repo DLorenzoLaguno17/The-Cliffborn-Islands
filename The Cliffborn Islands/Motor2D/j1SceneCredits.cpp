@@ -75,8 +75,7 @@ bool j1SceneCredits::Start()
 		SDL_Rect clicked3 = { 310, 400, 49, 49 };
 		App->gui->CreateButton(&creditsButtons, BUTTON, 3, 3, idle3, hovered3, clicked3, gui_tex, GO_TO_MENU);
 
-		App->gui->CreateLabel(&creditsLabels, LABEL, 90, 165, font, "Webpage", { 245, 245, 220, 255 });
-		//App->gui->CreateLabel(&creditsLabels, LABEL, 98, 165, font, "Credits", { 245, 245, 220, 255 });
+		App->gui->CreateLabel(&creditsLabels, LABEL, 90, 165, font, "Webpage", App->gui->beige);
 	}						 
 
 	return true;

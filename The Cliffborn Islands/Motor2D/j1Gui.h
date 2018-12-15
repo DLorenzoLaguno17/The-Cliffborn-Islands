@@ -12,6 +12,7 @@
 struct SDL_Texture;
 struct _TTF_Font;
 struct SDL_Rect;
+struct SDL_Color;
 class j1UserInterfaceElement;
 class j1Button;
 class j1Label;
@@ -84,6 +85,10 @@ public:
 	
 	// Positions
 	iPoint settingsPosition;
+
+	// Colors
+	SDL_Color beige;
+	SDL_Color brown;
 
 	// Sounds
 	uint hoverSound;

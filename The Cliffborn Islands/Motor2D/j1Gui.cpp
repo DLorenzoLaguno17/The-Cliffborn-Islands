@@ -39,6 +39,10 @@ bool j1Gui::Awake(pugi::xml_node& config)
 	settingsPosition.x = config.child("positions").attribute("settingsPositionX").as_int();
 	settingsPosition.y = config.child("positions").attribute("settingsPositionY").as_int();
 
+	// Copying color values
+	beige = { 245, 245, 220, 255 };
+	brown = { 73, 31, 10, 255 };
+
 	return ret;
 }	
 
@@ -70,11 +74,16 @@ bool j1Gui::PostUpdate()
 {
 	BROFILER_CATEGORY("GuiPostUpdate", Profiler::Color::Yellow)
 
-	// Blitting settings window
+	// Blitting settings windows
 	if (App->scene1->settings_window != nullptr && App->scene1->settings_window->visible == true)
 		App->scene1->settings_window->Draw(App->gui->settingsWindowScale);
 
-	// Blitting the buttons, labels and boxes (sliders) of the window
+	//-------------------------
+
+	if (App->scene2->settings_window != nullptr && App->scene2->settings_window->visible == true)
+		App->scene2->settings_window->Draw(App->gui->settingsWindowScale);
+
+	// Blitting the buttons, labels and boxes (sliders) of the windows
 	for (p2List_item<j1Button*>* item = App->scene1->scene1Buttons.start; item != nullptr; item = item->next) {
 		if (item->data->parent == nullptr) continue;
 
@@ -104,9 +113,37 @@ bool j1Gui::PostUpdate()
 			item->data->Draw(App->gui->buttonsScale);
 	}
 
-	if (App->scene2->settings_window != nullptr && App->scene2->settings_window->visible == true)
-		App->scene2->settings_window->Draw(App->gui->settingsWindowScale);
+	//-------------------------
 
+	for (p2List_item<j1Button*>* item = App->scene2->scene2Buttons.start; item != nullptr; item = item->next) {
+		if (item->data->parent == nullptr) continue;
+
+		if (item->data->parent->visible == false)
+			item->data->visible = false;
+		else
+			item->data->Draw(App->gui->buttonsScale);
+	}
+	for (p2List_item<j1Label*>* item = App->scene2->scene2Labels.start; item != nullptr; item = item->next) {
+		if (item->data->parent == nullptr) continue;
+
+		if (item->data->parent->visible == false)
+			item->data->visible = false;
+		else {
+			if (item->data->text == "Settings")
+				item->data->Draw();
+			else
+				item->data->Draw(App->gui->buttonsScale);
+		}
+	}
+	for (p2List_item<j1Box*>* item = App->scene2->scene2Boxes.start; item != nullptr; item = item->next) {
+		if (item->data->parent == nullptr) continue;
+
+		if (item->data->parent->visible == false)
+			item->data->visible = false;
+		else
+			item->data->Draw(App->gui->buttonsScale);
+	}
+	
 	return true;
 }
 
@@ -162,7 +199,7 @@ void j1Gui::UpdateButtonsState(p2List<j1Button*>* buttons) {
 		if (x <= button->data->position.x + button->data->situation.w * App->gui->buttonsScale && x >= button->data->position.x
 			&& y <= button->data->position.y + button->data->situation.h * App->gui->buttonsScale && y >= button->data->position.y) {
 
-			if(App->credits->active == false && App->menu->settings_window->visible
+			if(App->credits->active == false && App->menu->settings_window != nullptr && App->menu->settings_window->visible
 				&& button->data->bfunction != CLOSE_SETTINGS) continue;
 
 			button->data->state = STATE::HOVERED;
@@ -256,7 +293,7 @@ void j1Gui::UpdateWindow(j1Box* window, p2List<j1Button*>* buttons, p2List<j1Lab
 void j1Gui::UpdateSliders(p2List<j1Box*>* sliders) {
 	int x, y; App->input->GetMousePosition(x, y);
 
-	// Checking if it is being dragged
+	// Checking if they are being dragged
 	for (p2List_item<j1Box*>* slider = sliders->start; slider != nullptr; slider = slider->next) {
 		if (slider->data->parent != nullptr && slider->data->visible == true) {
 			if (x <= slider->data->position.x + slider->data->section.w * App->gui->buttonsScale && x >= slider->data->position.x

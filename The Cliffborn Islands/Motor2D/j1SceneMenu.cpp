@@ -91,12 +91,12 @@ bool j1SceneMenu::Start()
 		SDL_Rect clicked3 = { 463, 207, 49, 49 };
 		App->gui->CreateButton(&menuButtons, BUTTON, 3, 3, idle3, hovered3, clicked3, gui_tex, SETTINGS);
 
-		App->gui->CreateLabel(&menuLabels, LABEL, 106, 115, font, "Start", { 245, 245, 220, 255 });
-		App->gui->CreateLabel(&menuLabels, LABEL, 90, 140, font, "Continue", { 245, 245, 220, 255 });
-		App->gui->CreateLabel(&menuLabels, LABEL, 98, 165, font, "Credits", { 245, 245, 220, 255 });
-		App->gui->CreateLabel(&menuLabels, LABEL, 44, 9, font, "Settings", { 73, 31, 10, 255 }, (j1UserInterfaceElement*)settings_window);
-		App->gui->CreateLabel(&menuLabels, LABEL, 30, 50, font, "Sound", { 73, 31, 10, 255 }, (j1UserInterfaceElement*)settings_window);
-		App->gui->CreateLabel(&menuLabels, LABEL, 30, 89, font, "Music", { 73, 31, 10, 255 }, (j1UserInterfaceElement*)settings_window);
+		App->gui->CreateLabel(&menuLabels, LABEL, 106, 115, font, "Start", App->gui->beige);
+		App->gui->CreateLabel(&menuLabels, LABEL, 90, 140, font, "Continue", App->gui->beige);
+		App->gui->CreateLabel(&menuLabels, LABEL, 98, 165, font, "Credits", App->gui->beige);
+		App->gui->CreateLabel(&menuLabels, LABEL, 44, 9, font, "Settings", App->gui->brown, (j1UserInterfaceElement*)settings_window);
+		App->gui->CreateLabel(&menuLabels, LABEL, 30, 50, font, "Sound", App->gui->brown, (j1UserInterfaceElement*)settings_window);
+		App->gui->CreateLabel(&menuLabels, LABEL, 30, 89, font, "Music", App->gui->brown, (j1UserInterfaceElement*)settings_window);
 
 		player_created = false;
 	}
