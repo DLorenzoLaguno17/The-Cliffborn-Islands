@@ -98,31 +98,6 @@ bool j1Scene2::PreUpdate()
 {
 	BROFILER_CATEGORY("Level2PreUpdate", Profiler::Color::Orange)
 
-	// debug pathfing ------------------
-	static iPoint origin;
-	static bool origin_selected = false;
-
-	if (App->collisions->debug) {
-		int x, y;
-		App->input->GetMousePosition(x, y);
-		iPoint p = App->render->ScreenToWorld(x, y);
-		p = App->map->WorldToMap(p.x, p.y);
-
-		if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
-		{
-			if (origin_selected == true)
-			{
-				App->path->CreatePath(origin, p);
-				origin_selected = false;
-			}
-			else
-			{
-				origin = p;
-				origin_selected = true;
-			}
-		}
-	}
-
 	return true;
 }
 
@@ -203,13 +178,6 @@ bool j1Scene2::Update(float dt)
 		iPoint map_coordinates = App->map->WorldToMap(x - App->render->camera.x, y - App->render->camera.y);
 
 		// Debug pathfinding ------------------------------
-		App->input->GetMousePosition(x, y);
-		iPoint p = App->render->ScreenToWorld(x, y);
-		p = App->map->WorldToMap(p.x, p.y);
-		p = App->map->MapToWorld(p.x, p.y);
-
-		App->render->Blit(debug_tex, p.x, p.y);
-
 		const p2DynArray<iPoint>* path = App->path->GetLastPath();
 
 		for (uint i = 0; i < path->Count(); ++i)

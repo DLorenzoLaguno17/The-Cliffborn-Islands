@@ -49,6 +49,7 @@ bool j1Player::Start() {
 		playerHurt = App->audio->LoadFx("audio/fx/playerHurt.wav");
 		jumpSound = App->audio->LoadFx("audio/fx/jump.wav");
 		attackSound = App->audio->LoadFx("audio/fx/attack.wav");
+		lifeup = App->audio->LoadFx("audio/fx/1-up.wav");
 		loadedAudios = true;
 	}
 
@@ -333,7 +334,9 @@ bool j1Player::Update(float dt, bool do_logic) {
 		lives++;
 		extra_life = true;
 		score_points += 25;
+		App->audio->PlayFx(lifeup);
 	}
+
 	else if (points % 10 != 0)
 		extra_life = false;
 

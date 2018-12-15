@@ -1,7 +1,7 @@
 <!-- Config file for the game -->
 
 <config>
-  <app framerate_cap="30">
+  <app framerate_cap="60">
     <title>The Cliffborn Islands v0.2</title>
     <organization>UPC</organization>
   </app>
@@ -13,7 +13,7 @@
 
   <window>
     <resolution width="1024" height="768" scale="4"/>
-    <fullscreen value="false"/>
+    <fullscreen value="true"/>
     <borderless value="false"/>
     <resizable value="true"/>
     <fullscreen_window value="false"/>

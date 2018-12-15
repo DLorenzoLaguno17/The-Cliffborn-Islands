@@ -44,8 +44,6 @@ bool j1Coin::Update(float dt, bool do_logic)
 		
 	Draw(r, false, 0, 0);
 
-	//App->render->Blit(sprites, 3, 700, &r, SDL_FLIP_NONE, 1.0f, 1, 0, INT_MAX, INT_MAX, false);
-
 	return true;
 }
 

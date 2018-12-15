@@ -54,7 +54,7 @@ bool j1Skeleton::Update(float dt, bool do_logic)
 		position.y += GRAVITY + GRAVITY * dt;
 
 		if (do_logic || path_created) {
-			if ((App->entity->player->position.x - position.x) <= DETECTION_RANGE && (App->entity->player->position.x - position.x) >= -DETECTION_RANGE && App->entity->player->collider->type == COLLIDER_PLAYER)
+			if ((App->entity->player->position.x - position.x) <= DETECTION_RANGE && (App->entity->player->position.x - position.x) >= -DETECTION_RANGE && App->entity->player->collider->type == COLLIDER_PLAYER && !dead)
 			{
 				iPoint origin = { App->map->WorldToMap((int)position.x + colliderSize.x / 2, (int)position.y + colliderSize.y / 2) };
 				iPoint destination;
