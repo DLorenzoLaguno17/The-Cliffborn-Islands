@@ -330,6 +330,7 @@ bool j1Player::Update(float dt, bool do_logic) {
 	{
 		lives++;
 		extra_life = true;
+		score_points += 25;
 	}
 	else if (points % 10 != 0)
 		extra_life = false;
@@ -570,6 +571,7 @@ void j1Player::OnCollision(Collider* col_1, Collider* col_2)
 					App->audio->PlayFx(deathSound);
 					currentJumps == maxJumps;
 					points = 0;
+					score_points = 0;
 				}
 				else if (App->scene1->active)
 					App->scene1->backToMenu = true;
