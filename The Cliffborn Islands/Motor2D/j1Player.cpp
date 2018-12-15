@@ -475,30 +475,6 @@ void j1Player::OnCollision(Collider* col_1, Collider* col_2)
 		{
 			// If the player collides with a wall
 			if (col_2->type == COLLIDER_WALL) {
-				if (collider->rect.y + collider->rect.h >= col_2->rect.y + colisionMargin
-					&& collider->rect.y <= col_2->rect.y + col_2->rect.h) {
-					//If the collision is with a wall in front
-					if (collider->rect.x + collider->rect.w >= col_2->rect.x
-						&& collider->rect.x <= col_2->rect.x) {
-
-						wallInFront = true;
-						App->entity->hook->arrived = true;
-
-						if (position.x + (collider->rect.w * 3 / 4) < col_2->rect.x)
-							position.x = col_2->rect.x - collider->rect.w - 1;
-					}
-					else
-					//If the collision is with a wall behind
-					if (collider->rect.x <= col_2->rect.x + col_2->rect.w
-						&& collider->rect.x + collider->rect.w >= col_2->rect.x + col_2->rect.w) {
-
-						wallBehind = true;
-						App->entity->hook->arrived = true;
-						if (position.x + (collider->rect.w / 4) < col_2->rect.x + col_2->rect.w)
-							position.x = col_2->rect.x + col_2->rect.w - colisionMargin;
-					}
-				}
-
 				if (collider->rect.x + collider->rect.w >= col_2->rect.x + colisionMargin
 					&& collider->rect.x + colisionMargin < col_2->rect.x + col_2->rect.w) {
 					//If the collision is with the "ceiling"
@@ -531,6 +507,31 @@ void j1Player::OnCollision(Collider* col_1, Collider* col_2)
 							}
 						}
 				}
+				if (collider->rect.y + collider->rect.h >= col_2->rect.y + colisionMargin
+					&& collider->rect.y <= col_2->rect.y + col_2->rect.h) {
+					//If the collision is with a wall in front
+					if (collider->rect.x + collider->rect.w >= col_2->rect.x
+						&& collider->rect.x <= col_2->rect.x && !wallAbove) {
+
+						wallInFront = true;
+						App->entity->hook->arrived = true;
+
+						if (position.x + (collider->rect.w * 3 / 4) < col_2->rect.x)
+							position.x = col_2->rect.x - collider->rect.w - 1;
+					}
+					else
+					//If the collision is with a wall behind
+					if (collider->rect.x <= col_2->rect.x + col_2->rect.w
+						&& collider->rect.x + collider->rect.w >= col_2->rect.x + col_2->rect.w && !wallAbove) {
+
+						wallBehind = true;
+						App->entity->hook->arrived = true;
+						if (position.x + (collider->rect.w / 4) < col_2->rect.x + col_2->rect.w)
+							position.x = col_2->rect.x + col_2->rect.w - colisionMargin;
+					}
+				}
+
+				
 			}
 
 			//If the player collides with death colliders
