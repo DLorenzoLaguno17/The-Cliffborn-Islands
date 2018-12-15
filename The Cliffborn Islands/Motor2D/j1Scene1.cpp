@@ -72,17 +72,30 @@ bool j1Scene1::Start()
 			RELEASE_ARRAY(data);
 		}
 
+		// The audio is played	
+		App->audio->PlayMusic("audio/music/level1_music.ogg", 1.0f);
+
 		// Textures are loaded
 		debug_tex = App->tex->Load("maps/path2.png");
 		gui_tex = App->tex->Load("gui/atlas.png");
 
-		// The audio is played	
-		App->audio->PlayMusic("audio/music/level1_music.ogg", 1.0f);
+		// Loading fonts
+		font = App->font->Load("fonts/PixelCowboy/PixelCowboy.otf", 8);
 
 		// Creating UI
 		SDL_Rect section = { 537, 0, 663, 712 };
 		settings_window = App->gui->CreateBox(&scene1Boxes, BOX, App->gui->settingsPosition.x, App->gui->settingsPosition.y, section, gui_tex);
 		settings_window->visible = false;
+
+		uint minimum = 58;
+		uint maximum = 108;
+
+		App->gui->CreateBox(&scene1Boxes, BOX, 83, 42, { 416, 72, 28, 42 }, gui_tex, (j1UserInterfaceElement*)settings_window, minimum, maximum);
+		App->gui->CreateBox(&scene1Boxes, BOX, 83, 82, { 416, 72, 28, 42 }, gui_tex, (j1UserInterfaceElement*)settings_window, minimum, maximum);
+
+		App->gui->CreateLabel(&scene1Labels, LABEL, 44, 9, font, "Settings", { 73, 31, 10, 255 }, (j1UserInterfaceElement*)settings_window);
+		App->gui->CreateLabel(&scene1Labels, LABEL, 30, 50, font, "Sound", { 73, 31, 10, 255 }, (j1UserInterfaceElement*)settings_window);
+		App->gui->CreateLabel(&scene1Labels, LABEL, 30, 89, font, "Music", { 73, 31, 10, 255 }, (j1UserInterfaceElement*)settings_window);
 
 		PlaceEntities();
 
@@ -145,7 +158,7 @@ bool j1Scene1::Update(float dt)
 	}
 
 	App->gui->UpdateButtonsState(&scene1Buttons);
-	App->gui->UpdateBoxesState();
+	App->gui->UpdateWindow(settings_window, &scene1Buttons, &scene1Labels, &scene1Boxes);
 
 	// Button actions
 	for (p2List_item<j1Button*>* item = scene1Buttons.start; item != nullptr; item = item->next) {
@@ -186,22 +199,6 @@ bool j1Scene1::Update(float dt)
 			item->data->situation = item->data->clicked;
 			break;
 		}
-	}
-
-	// To move settings window in case it is visible
-	if (settings_window != nullptr) {
-		if (settings_window->clicked) {
-			int x, y; App->input->GetMousePosition(x, y);
-
-			if (settings_window->distanceCalculated == false) {
-				settings_window->mouseDistance = { x - settings_window->position.x, y - settings_window->position.y };
-				settings_window->distanceCalculated = true;
-			}
-
-			settings_window->position = { x - settings_window->mouseDistance.x, y - settings_window->mouseDistance.y };
-		}
-		else
-			settings_window->distanceCalculated = false;
 	}
 
 	// Load and Save
@@ -249,6 +246,36 @@ bool j1Scene1::Update(float dt)
 	// Blitting settings window
 	if (settings_window != nullptr && settings_window->visible == true)
 		settings_window->Draw(App->gui->settingsWindowScale);
+	
+	// Blitting the buttons, labels and boxes (sliders) of the window
+	/*for (p2List_item<j1Button*>* item = scene1Buttons.start; item != nullptr; item = item->next) {
+		if (item->data->parent == nullptr) continue;
+
+		if (item->data->parent->visible == false)
+			item->data->visible = false;
+		else
+			item->data->Draw(App->gui->buttonsScale);
+	}
+	for (p2List_item<j1Label*>* item = scene1Labels.start; item != nullptr; item = item->next) {
+		if (item->data->parent == nullptr) continue;
+
+		if (item->data->parent->visible == false)
+			item->data->visible = false;
+		else {
+			if (item->data->text == "Settings")
+				item->data->Draw();
+			else
+				item->data->Draw(App->gui->buttonsScale);
+		}
+	}
+	for (p2List_item<j1Box*>* item = scene1Boxes.start; item != nullptr; item = item->next) {
+		if (item->data->parent == nullptr) continue;
+
+		if (item->data->parent->visible == false)
+			item->data->visible = false;
+		else
+			item->data->Draw(App->gui->buttonsScale);
+	}*/
 
 	// Blitting patfhinding if debug is activated
 	if (App->collisions->debug) {

@@ -7,15 +7,15 @@
 #include "SDL_mixer\include\SDL_mixer.h"
 #pragma comment( lib, "SDL_mixer/libx86/SDL2_mixer.lib" )
 
-#define DEFAULT_VOLUMEN MIX_MAX_VOLUME/2
+#define DEFAULT_VOLUME MIX_MAX_VOLUME/2
 
 j1Audio::j1Audio() : j1Module()
 {
 	music = NULL;
 	name.create("audio");
 
-	currentfxvolume = DEFAULT_VOLUMEN;
-	currentmusicvolume = DEFAULT_VOLUMEN;
+	currentfxvolume = DEFAULT_VOLUME;
+	currentmusicvolume = DEFAULT_VOLUME;
 }
 
 // Destructor
@@ -54,6 +54,9 @@ bool j1Audio::Awake(pugi::xml_node& config)
 		active = false;
 		ret = true;
 	}
+
+	MusicVolume(DEFAULT_VOLUME);
+	FxVolume(DEFAULT_VOLUME);
 
 	return ret;
 }

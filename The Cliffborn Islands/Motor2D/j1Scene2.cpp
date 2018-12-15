@@ -146,23 +146,7 @@ bool j1Scene2::Update(float dt)
 	}
 
 	App->gui->UpdateButtonsState(&scene2Buttons);
-	App->gui->UpdateBoxesState();
-
-	// To move settings window in case it is visible
-	if (settings_window != nullptr) {
-		if (settings_window->clicked) {
-			int x, y; App->input->GetMousePosition(x, y);
-
-			if (settings_window->distanceCalculated == false) {
-				settings_window->mouseDistance = { x - settings_window->position.x, y - settings_window->position.y };
-				settings_window->distanceCalculated = true;
-			}
-
-			settings_window->position = { x - settings_window->mouseDistance.x, y - settings_window->mouseDistance.y };
-		}
-		else
-			settings_window->distanceCalculated = false;
-	}
+	App->gui->UpdateWindow(settings_window);
 
 	// Load and Save
 	if (App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)

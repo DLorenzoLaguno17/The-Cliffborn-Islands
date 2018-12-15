@@ -69,8 +69,8 @@ bool j1SceneMenu::Start()
 		uint minimum = 58;
 		uint maximum = 108;
 
-		App->gui->CreateBox(&menuBoxes, BOX, 83, 45, { 416, 72, 28, 42 }, gui_tex, (j1UserInterfaceElement*)settings_window, minimum, maximum);
-		App->gui->CreateBox(&menuBoxes, BOX, 83, 85, { 416, 72, 28, 42 }, gui_tex, (j1UserInterfaceElement*)settings_window, minimum, maximum);
+		App->gui->CreateBox(&menuBoxes, BOX, 83, 42, { 416, 72, 28, 42 }, gui_tex, (j1UserInterfaceElement*)settings_window, minimum, maximum);
+		App->gui->CreateBox(&menuBoxes, BOX, 83, 82, { 416, 72, 28, 42 }, gui_tex, (j1UserInterfaceElement*)settings_window, minimum, maximum);
 
 		SDL_Rect idle = {0, 143, 190, 49};
 		SDL_Rect hovered = { 0, 45, 190, 49 };
@@ -95,8 +95,8 @@ bool j1SceneMenu::Start()
 		App->gui->CreateLabel(&menuLabels, LABEL, 90, 140, font, "Continue", { 245, 245, 220, 255 });
 		App->gui->CreateLabel(&menuLabels, LABEL, 98, 165, font, "Credits", { 245, 245, 220, 255 });
 		App->gui->CreateLabel(&menuLabels, LABEL, 44, 9, font, "Settings", { 73, 31, 10, 255 }, (j1UserInterfaceElement*)settings_window);
-		App->gui->CreateLabel(&menuLabels, LABEL, 30, 52, font, "Sound", { 73, 31, 10, 255 }, (j1UserInterfaceElement*)settings_window);
-		App->gui->CreateLabel(&menuLabels, LABEL, 30, 92, font, "Music", { 73, 31, 10, 255 }, (j1UserInterfaceElement*)settings_window);
+		App->gui->CreateLabel(&menuLabels, LABEL, 30, 50, font, "Sound", { 73, 31, 10, 255 }, (j1UserInterfaceElement*)settings_window);
+		App->gui->CreateLabel(&menuLabels, LABEL, 30, 89, font, "Music", { 73, 31, 10, 255 }, (j1UserInterfaceElement*)settings_window);
 
 		player_created = false;
 	}
@@ -127,11 +127,11 @@ bool j1SceneMenu::Update(float dt)
 
 	// Updating the state of the UI
 	App->gui->UpdateButtonsState(&menuButtons); 
-	App->gui->UpdateBoxesState();
 	for (p2List_item<j1Box*>* item = menuBoxes.start; item != nullptr; item = item->next) {
 		if (item->data->visible) App->gui->UpdateSliderState(item->data);
 	}
-	
+	App->gui->UpdateWindow(settings_window, &menuButtons, &menuLabels, &menuBoxes);
+
 	// Button actions
 	for (p2List_item<j1Button*>* item = menuButtons.start; item != nullptr; item = item->next) {
 		if (item->data->visible) {
@@ -211,54 +211,12 @@ bool j1SceneMenu::Update(float dt)
 			App->LoadGame("save_game.xml");
 	}
 
-	// To move settings window in case it is visible
-	if (settings_window != nullptr) {
-
-		for (p2List_item<j1Button*>* item = menuButtons.start; item != nullptr; item = item->next)
-			//if (item->data->state == CLICKED && item->data->parent == settings_window) settings_window->clicked = false;
-		for (p2List_item<j1Box*>* item = menuBoxes.start; item != nullptr; item = item->next)
-			if (item->data->clicked && item->data->parent == settings_window) settings_window->clicked = false;
-
-		if (settings_window->clicked) {
-			int x, y; App->input->GetMousePosition(x, y);
-
-			if (settings_window->distanceCalculated == false) {
-				settings_window->mouseDistance = { x - settings_window->position.x, y - settings_window->position.y };
-				settings_window->distanceCalculated = true;
-			}
-
-			// Updating the positions of the window and its elements
-			settings_window->position = { x - settings_window->mouseDistance.x, y - settings_window->mouseDistance.y };
-
-			for (p2List_item<j1Button*>* item = menuButtons.start; item != nullptr; item = item->next) {
-				if (item->data->parent == settings_window) {
-					item->data->position.x = settings_window->position.x + item->data->initialPosition.x;
-					item->data->position.y = settings_window->position.y + item->data->initialPosition.y;
-				}
-			}
-
-			for (p2List_item<j1Label*>* item = menuLabels.start; item != nullptr; item = item->next) {
-				if (item->data->parent == settings_window) {
-					item->data->position.x = settings_window->position.x + item->data->initialPosition.x;
-					item->data->position.y = settings_window->position.y + item->data->initialPosition.y;
-				}
-			}
-
-			for (p2List_item<j1Box*>* item = menuBoxes.start; item != nullptr; item = item->next) {
-				if (item->data->parent == settings_window) {
-					item->data->position.x = settings_window->position.x + item->data->initialPosition.x;
-					item->data->position.y = settings_window->position.y + item->data->initialPosition.y;
-				}
-			}
-		}
-		else
-			settings_window->distanceCalculated = false;
-	}
-
-	// Moveing sliders
+	// Moving sliders
 	for (p2List_item<j1Box*>* item = menuBoxes.start; item != nullptr; item = item->next) {
 		if (item->data->clicked) {
 			int x, y; App->input->GetMousePosition(x, y);
+
+			uint lastPos = item->data->position.x;
 
 			if (item->data->distanceCalculated == false) {
 				item->data->mouseDistance.x = x - item->data->position.x;
@@ -271,9 +229,24 @@ bool j1SceneMenu::Update(float dt)
 			if (item->data->minimum != 0 && item->data->position.x <= item->data->parent->position.x + item->data->minimum)
 				item->data->position.x = item->data->parent->position.x + item->data->minimum;
 			if (item->data->maximum != 0 && item->data->position.x >= item->data->parent->position.x + item->data->maximum)
-				item->data->position.x = item->data->parent->position.x + item->data->maximum;
+				item->data->position.x = item->data->parent->position.x + item->data->maximum;	
 
-			App->audio->MusicVolume(item->data->position.x - item->data->minimum);
+			// After that we change the volume
+			if (item->data->parent != nullptr) {
+
+				if (item->data->position.y < item->data->parent->position.y + 50) {
+					if(item->data->position.x > lastPos)
+						App->audio->FxVolume(App->audio->GetFxVolume() + (item->data->position.x - lastPos) * 2);
+					else
+						App->audio->FxVolume(App->audio->GetFxVolume() - (lastPos - item->data->position.x) * 2);
+				}
+				else {
+					if (item->data->position.x > lastPos)
+						App->audio->MusicVolume(App->audio->GetMusicVolume() + (item->data->position.x - lastPos) * 2);
+					else
+						App->audio->MusicVolume(App->audio->GetMusicVolume() - (lastPos - item->data->position.x) * 2);
+				}
+			}
 		}
 	}
 

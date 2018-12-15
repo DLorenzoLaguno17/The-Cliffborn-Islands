@@ -7,6 +7,7 @@
 #include "PugiXml/src/pugixml.hpp"
 
 struct SDL_Texture;
+struct _TTF_Font;
 class j1Box;
 
 class j1Scene1 : public j1Module
@@ -60,15 +61,14 @@ public:
 	int time_scene1;
 
 private:
-
 	SDL_Texture * debug_tex = nullptr;
 	SDL_Texture* gui_tex = nullptr;
 
+	_TTF_Font* font = nullptr;
+
 	bool continueGame = true;
 	bool changingScene = false;
-	bool resettingLevel = false;
-
-	
+	bool resettingLevel = false;	
 };
 
 #endif // __j1SCENE1_H__

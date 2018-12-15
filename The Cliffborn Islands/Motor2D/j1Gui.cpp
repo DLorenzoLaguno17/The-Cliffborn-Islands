@@ -160,26 +160,66 @@ void j1Gui::UpdateButtonsState(p2List<j1Button*>* buttons) {
 	}
 }
 
-void j1Gui::UpdateBoxesState() {
+void j1Gui::UpdateWindow(j1Box* window, p2List<j1Button*>* buttons, p2List<j1Label*>* labels, p2List<j1Box*>* boxes) {
 	int x, y; App->input->GetMousePosition(x, y);
 
-	j1Box* aux = nullptr;
-
-	// Checking which window is enabled
-	if (App->menu->active && App->menu->settings_window->visible)
-		aux = App->menu->settings_window;
-	else if (App->scene1->active && App->scene1->settings_window->visible)
-		aux = App->scene1->settings_window;
-	else if(App->scene2->active && App->scene2->settings_window->visible)
-		aux = App->scene2->settings_window;
-
-	// Checking if it is being dragged
-	if (aux != nullptr && x <= aux->position.x + aux->section.w * App->gui->settingsWindowScale && x >= aux->position.x
-		&& y <= aux->position.y + aux->section.h * App->gui->settingsWindowScale && y >= aux->position.y){
+	// Checking if it is being clicked
+	if (window != nullptr && x <= window->position.x + window->section.w * App->gui->settingsWindowScale && x >= window->position.x
+		&& y <= window->position.y + window->section.h * App->gui->settingsWindowScale && y >= window->position.y){
 		if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT)
-			aux->clicked = true;
+			window->clicked = true;
 		else if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_UP)
-			aux->clicked = false;
+			window->clicked = false;
+	}
+
+	// We move the window in case it is clicked
+	if (window != nullptr) {
+
+		if (boxes != nullptr) {
+			for (p2List_item<j1Box*>* item = boxes->start; item != nullptr; item = item->next)
+				if (item->data->clicked && item->data->parent == window) window->clicked = false;
+		}
+
+		if (window->clicked) {
+			int x, y; App->input->GetMousePosition(x, y);
+
+			if (window->distanceCalculated == false) {
+				window->mouseDistance = { x - window->position.x, y - window->position.y };
+				window->distanceCalculated = true;
+			}
+
+			// Updating the positions of the window and its elements
+			window->position = { x - window->mouseDistance.x, y - window->mouseDistance.y };
+
+			if (buttons != nullptr) {
+				for (p2List_item<j1Button*>* item = buttons->start; item != nullptr; item = item->next) {
+					if (item->data->parent == window) {
+						item->data->position.x = window->position.x + item->data->initialPosition.x;
+						item->data->position.y = window->position.y + item->data->initialPosition.y;
+					}
+				}
+			}
+
+			if (labels != nullptr) {
+				for (p2List_item<j1Label*>* item = labels->start; item != nullptr; item = item->next) {
+					if (item->data->parent == window) {
+						item->data->position.x = window->position.x + item->data->initialPosition.x;
+						item->data->position.y = window->position.y + item->data->initialPosition.y;
+					}
+				}
+			}
+
+			if (boxes != nullptr) {
+				for (p2List_item<j1Box*>* item = boxes->start; item != nullptr; item = item->next) {
+					if (item->data->parent == window) {
+						item->data->position.x = window->position.x + item->data->initialPosition.x;
+						item->data->position.y = window->position.y + item->data->initialPosition.y;
+					}
+				}
+			}
+		}
+		else
+			window->distanceCalculated = false;
 	}
 }
 

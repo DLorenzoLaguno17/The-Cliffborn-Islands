@@ -72,7 +72,7 @@ public:
 
 	// UI uppdaters
 	void UpdateButtonsState(p2List<j1Button*>* buttons);
-	void UpdateBoxesState();
+	void UpdateWindow(j1Box* window, p2List<j1Button*>* buttons = nullptr, p2List<j1Label*>* labels = nullptr, p2List<j1Box*>* boxes = nullptr);
 	void UpdateSliderState(j1Box* slider);
 	
 	const SDL_Texture* GetAtlas() const;
