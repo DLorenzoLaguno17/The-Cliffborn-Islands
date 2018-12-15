@@ -74,6 +74,36 @@ bool j1Gui::PostUpdate()
 	if (App->scene1->settings_window != nullptr && App->scene1->settings_window->visible == true)
 		App->scene1->settings_window->Draw(App->gui->settingsWindowScale);
 
+	// Blitting the buttons, labels and boxes (sliders) of the window
+	for (p2List_item<j1Button*>* item = App->scene1->scene1Buttons.start; item != nullptr; item = item->next) {
+		if (item->data->parent == nullptr) continue;
+
+		if (item->data->parent->visible == false)
+			item->data->visible = false;
+		else
+			item->data->Draw(App->gui->buttonsScale);
+	}
+	for (p2List_item<j1Label*>* item = App->scene1->scene1Labels.start; item != nullptr; item = item->next) {
+		if (item->data->parent == nullptr) continue;
+
+		if (item->data->parent->visible == false)
+			item->data->visible = false;
+		else {
+			if (item->data->text == "Settings")
+				item->data->Draw();
+			else
+				item->data->Draw(App->gui->buttonsScale);
+		}
+	}
+	for (p2List_item<j1Box*>* item = App->scene1->scene1Boxes.start; item != nullptr; item = item->next) {
+		if (item->data->parent == nullptr) continue;
+
+		if (item->data->parent->visible == false)
+			item->data->visible = false;
+		else
+			item->data->Draw(App->gui->buttonsScale);
+	}
+
 	if (App->scene2->settings_window != nullptr && App->scene2->settings_window->visible == true)
 		App->scene2->settings_window->Draw(App->gui->settingsWindowScale);
 
@@ -223,23 +253,61 @@ void j1Gui::UpdateWindow(j1Box* window, p2List<j1Button*>* buttons, p2List<j1Lab
 	}
 }
 
-void j1Gui::UpdateSliderState(j1Box* slider) {
+void j1Gui::UpdateSliders(p2List<j1Box*>* sliders) {
 	int x, y; App->input->GetMousePosition(x, y);
 
 	// Checking if it is being dragged
-	if (slider != nullptr && slider->parent != nullptr && slider->visible == true) {
-		if (x <= slider->position.x + slider->section.w * App->gui->buttonsScale && x >= slider->position.x
-			&& y <= slider->position.y + slider->section.h * App->gui->buttonsScale && y >= slider->position.y) {
-			if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT)
-				slider->clicked = true;
-			else if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_UP){
-				slider->clicked = false;
-				slider->initialPosition.x = slider->position.x - slider->parent->position.x;
+	for (p2List_item<j1Box*>* slider = sliders->start; slider != nullptr; slider = slider->next) {
+		if (slider->data->parent != nullptr && slider->data->visible == true) {
+			if (x <= slider->data->position.x + slider->data->section.w * App->gui->buttonsScale && x >= slider->data->position.x
+				&& y <= slider->data->position.y + slider->data->section.h * App->gui->buttonsScale && y >= slider->data->position.y) {
+				if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT)
+					slider->data->clicked = true;
+				else if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_UP) {
+					slider->data->clicked = false;
+					slider->data->initialPosition.x = slider->data->position.x - slider->data->parent->position.x;
+				}
+			}
+			else if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_UP) {
+				slider->data->clicked = false;
+				slider->data->initialPosition.x = slider->data->position.x - slider->data->parent->position.x;
 			}
 		}
-		else if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_UP) {
-			slider->clicked = false;
-			slider->initialPosition.x = slider->position.x - slider->parent->position.x;
+	}
+
+	// Moving sliders
+	for (p2List_item<j1Box*>* item = sliders->start; item != nullptr; item = item->next) {
+		if (item->data->clicked && item->data->parent != nullptr) {
+			int x, y; App->input->GetMousePosition(x, y);
+
+			uint lastPos = item->data->position.x;
+
+			if (item->data->distanceCalculated == false) {
+				item->data->mouseDistance.x = x - item->data->position.x;
+				item->data->distanceCalculated = true;
+			}
+
+			item->data->position.x = x - item->data->mouseDistance.x;
+
+			// The default value for the margins is 0, meaning they have no minimum or maximum
+			if (item->data->minimum != 0 && item->data->position.x <= item->data->parent->position.x + item->data->minimum)
+				item->data->position.x = item->data->parent->position.x + item->data->minimum;
+			if (item->data->maximum != 0 && item->data->position.x >= item->data->parent->position.x + item->data->maximum)
+				item->data->position.x = item->data->parent->position.x + item->data->maximum;	
+
+			// After that we change the volume
+			if (item->data->position.y < item->data->parent->position.y + 50) {
+				if(item->data->position.x > lastPos)
+					App->audio->FxVolume(App->audio->GetFxVolume() + (item->data->position.x - lastPos) * 2);
+				else
+					App->audio->FxVolume(App->audio->GetFxVolume() - (lastPos - item->data->position.x) * 2);
+			}
+			else {
+				if (item->data->position.x > lastPos)
+					App->audio->MusicVolume(App->audio->GetMusicVolume() + (item->data->position.x - lastPos) * 2);
+				else
+					App->audio->MusicVolume(App->audio->GetMusicVolume() - (lastPos - item->data->position.x) * 2);
+			}
 		}
 	}
 }

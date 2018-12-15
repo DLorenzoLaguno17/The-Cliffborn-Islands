@@ -126,7 +126,6 @@ bool j1Player::Update(float dt, bool do_logic) {
 				position.y += godModeSpeed * dt;
 			}
 		}
-
 		else {
 			// Idle
 			if (App->input->GetKey(SDL_SCANCODE_D) == j1KeyState::KEY_IDLE
@@ -175,8 +174,11 @@ bool j1Player::Update(float dt, bool do_logic) {
 			if (feetOnGround == false && jumping == false) {
 
 				freefall = true;
-				position.y += fallingSpeed * dt;
-				fallingSpeed += verticalAcceleration * dt;
+				if (((App->scene2->active && App->scene2->startup_time.Read() > 85))
+					|| (App->scene1->active && App->scene1->startup_time.Read() > 85)) {
+					position.y += fallingSpeed * dt;
+					fallingSpeed += verticalAcceleration * dt;
+				}
 
 				if (!attacking)
 					animation = &fall;

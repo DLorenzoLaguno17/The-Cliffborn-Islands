@@ -243,40 +243,6 @@ bool j1Scene1::Update(float dt)
 
 	App->map->Draw();
 
-	// Blitting settings window
-	if (settings_window != nullptr && settings_window->visible == true)
-		settings_window->Draw(App->gui->settingsWindowScale);
-	
-	// Blitting the buttons, labels and boxes (sliders) of the window
-	/*for (p2List_item<j1Button*>* item = scene1Buttons.start; item != nullptr; item = item->next) {
-		if (item->data->parent == nullptr) continue;
-
-		if (item->data->parent->visible == false)
-			item->data->visible = false;
-		else
-			item->data->Draw(App->gui->buttonsScale);
-	}
-	for (p2List_item<j1Label*>* item = scene1Labels.start; item != nullptr; item = item->next) {
-		if (item->data->parent == nullptr) continue;
-
-		if (item->data->parent->visible == false)
-			item->data->visible = false;
-		else {
-			if (item->data->text == "Settings")
-				item->data->Draw();
-			else
-				item->data->Draw(App->gui->buttonsScale);
-		}
-	}
-	for (p2List_item<j1Box*>* item = scene1Boxes.start; item != nullptr; item = item->next) {
-		if (item->data->parent == nullptr) continue;
-
-		if (item->data->parent->visible == false)
-			item->data->visible = false;
-		else
-			item->data->Draw(App->gui->buttonsScale);
-	}*/
-
 	// Blitting patfhinding if debug is activated
 	if (App->collisions->debug) {
 		int x, y;

@@ -127,9 +127,7 @@ bool j1SceneMenu::Update(float dt)
 
 	// Updating the state of the UI
 	App->gui->UpdateButtonsState(&menuButtons); 
-	for (p2List_item<j1Box*>* item = menuBoxes.start; item != nullptr; item = item->next) {
-		if (item->data->visible) App->gui->UpdateSliderState(item->data);
-	}
+	App->gui->UpdateSliders(&menuBoxes);
 	App->gui->UpdateWindow(settings_window, &menuButtons, &menuLabels, &menuBoxes);
 
 	// Button actions
@@ -211,45 +209,6 @@ bool j1SceneMenu::Update(float dt)
 			App->LoadGame("save_game.xml");
 	}
 
-	// Moving sliders
-	for (p2List_item<j1Box*>* item = menuBoxes.start; item != nullptr; item = item->next) {
-		if (item->data->clicked) {
-			int x, y; App->input->GetMousePosition(x, y);
-
-			uint lastPos = item->data->position.x;
-
-			if (item->data->distanceCalculated == false) {
-				item->data->mouseDistance.x = x - item->data->position.x;
-				item->data->distanceCalculated = true;
-			}
-
-			item->data->position.x = x - item->data->mouseDistance.x;
-
-			// The default value for the margins is 0, meaning they have no minimum or maximum
-			if (item->data->minimum != 0 && item->data->position.x <= item->data->parent->position.x + item->data->minimum)
-				item->data->position.x = item->data->parent->position.x + item->data->minimum;
-			if (item->data->maximum != 0 && item->data->position.x >= item->data->parent->position.x + item->data->maximum)
-				item->data->position.x = item->data->parent->position.x + item->data->maximum;	
-
-			// After that we change the volume
-			if (item->data->parent != nullptr) {
-
-				if (item->data->position.y < item->data->parent->position.y + 50) {
-					if(item->data->position.x > lastPos)
-						App->audio->FxVolume(App->audio->GetFxVolume() + (item->data->position.x - lastPos) * 2);
-					else
-						App->audio->FxVolume(App->audio->GetFxVolume() - (lastPos - item->data->position.x) * 2);
-				}
-				else {
-					if (item->data->position.x > lastPos)
-						App->audio->MusicVolume(App->audio->GetMusicVolume() + (item->data->position.x - lastPos) * 2);
-					else
-						App->audio->MusicVolume(App->audio->GetMusicVolume() - (lastPos - item->data->position.x) * 2);
-				}
-			}
-		}
-	}
-
 	// ---------------------------------------------------------------------------------------------------------------------
 	// DRAWING EVERYTHING ON THE SCREEN
 	// ---------------------------------------------------------------------------------------------------------------------	
@@ -272,7 +231,7 @@ bool j1SceneMenu::Update(float dt)
 		item->data->Draw();
 	}
 
-	// Bliting the logo
+	// Blitting the logo
 	SDL_Rect logo = { 166, 139, 711, 533 };
 	App->render->Blit(logo_tex, 54, 0, &logo, SDL_FLIP_NONE, 1.0f, App->gui->logoScale);
 
