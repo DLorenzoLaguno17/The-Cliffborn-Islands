@@ -14,7 +14,10 @@ Development degree at the UPC, a university of Barcelona. You can go to our GitH
 <iframe width="560" height="315" src="https://www.youtube.com/embed/_q9eXDu2KOA" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ## Authors of the game
-	
+
+[Òscar Faura https://github.com/DLorenzoLaguno17/The-Cliffborn-Islands/blob/master/docs/oscar.jpg?raw=true]
+(https://github.com/DLorenzoLaguno17/The-Cliffborn-Islands/blob/master/docs/oscar.jpg?raw=true)
+
 Òscar Faura: 
 * Creation of level 1
 * Load entities from Tiled
@@ -23,6 +26,9 @@ Development degree at the UPC, a university of Barcelona. You can go to our GitH
 * Implemented in-game HUD
 * Programmed coins, lives, score and timer
 * Save & Load implementation
+
+[Dani Lorenzo https://github.com/DLorenzoLaguno17/The-Cliffborn-Islands/blob/master/docs/dani.JPG?raw=true]
+(https://github.com/DLorenzoLaguno17/The-Cliffborn-Islands/blob/master/docs/dani.JPG?raw=true)
 
 Daniel Lorenzo: 
 * Creation of level 2
