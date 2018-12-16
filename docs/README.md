@@ -3,6 +3,18 @@
 The Cliffborn Islands is a plataformer game developed by two students of the Videogame Design and
 Development degree at the UPC, a university of Barcelona. You can go to our GitHub by clicking [here](https://github.com/DLorenzoLaguno17/The-Cliffborn-Islands).
 
+## Controls
+
+* A - Move left
+* D - Move right
+* O - Throw the hook
+* P - Attack with the sword
+* Spacebar - Jump.
+
+<iframe width="850" height="480" src="https://www.youtube.com/embed/_q9eXDu2KOA" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+Download the latest version [here](https://goo.gl/WxyN5B)!
+
 ## Main Core Subsystems
 
 Map: Maps are loaded from Tiled reading an xml file, which loads all the properties and also puts all the colliders.
@@ -13,16 +25,6 @@ UI subsystem is organized as a tree that has different elements, like buttons, l
 ## Innovation
 
 We have implemented a hook which you need to use to overcome the level. If it collides with a wall, it moves the player towards it.
-
-## Controls
-
-* A - Move left
-* D - Move right
-* O - Throw the hook
-* P - Attack with the sword
-* Spacebar - Jump.
-
-<iframe width="850" height="480" src="https://www.youtube.com/embed/_q9eXDu2KOA" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ## Authors of the game
 
