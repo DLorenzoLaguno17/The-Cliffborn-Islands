@@ -1,5 +1,7 @@
 # The Cliffborn Islands
 
+test
+
 Go to our GitHub [here](https://github.com/DLorenzoLaguno17/The-Cliffborn-Islands).
 
 
@@ -114,7 +116,7 @@ Licensed under [Creative Commons](http://creativecommons.org/licenses/by/3.0/): 
 
 ## Task list
 	
-	- Òscar Faura: 
+	- Ã’scar Faura: 
 
 	
 	- Daniel Lorenzo: 
@@ -122,7 +124,7 @@ Licensed under [Creative Commons](http://creativecommons.org/licenses/by/3.0/): 
 
 
 
-This game has been created by Òscar Faura and Daniel Lorenzo.
+This game has been created by Ã’scar Faura and Daniel Lorenzo.
 
 Licensed under the [MIT License](LICENSE).
 
