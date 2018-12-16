@@ -79,6 +79,10 @@ bool j1Gui::Start()
 bool j1Gui::PreUpdate()
 {
 	BROFILER_CATEGORY("GuiPreUpdate", Profiler::Color::Orange)
+
+	if (App->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN)
+		debug = !debug;
+
 	return true;
 }
 

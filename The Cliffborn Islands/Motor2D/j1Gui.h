@@ -104,6 +104,8 @@ public:
 	uint hoverSound;
 	uint clickSound;
 
+	bool debug = false;
+
 private:
 
 	SDL_Texture* atlas = nullptr;

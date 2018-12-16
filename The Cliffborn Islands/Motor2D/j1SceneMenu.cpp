@@ -236,6 +236,17 @@ bool j1SceneMenu::Update(float dt)
 	// Blitting the logo
 	SDL_Rect logo = { 166, 139, 711, 533 };
 	App->render->Blit(logo_tex, 54, 0, &logo, SDL_FLIP_NONE, 1.0f, App->gui->logoScale);
+	
+	//Blitting the debug
+	if (App->gui->debug) {
+		App->render->DrawQuad({ Uint8(3 / 0.25), Uint8(3 / 0.25), 
+			Uint8(49 / App->gui->buttonsScale), Uint8(49 / App->gui->buttonsScale) }, 255, 0, 0, 255, false, false);
+		App->render->DrawQuad({ Uint8(228 / 0.25) * 6 + 47, Uint8(3 / 0.25),
+			Uint8(49 / App->gui->buttonsScale), Uint8(49 / App->gui->buttonsScale) }, 255, 0, 0, 255, false, false);
+		App->render->DrawQuad({ 320, 440, 380, Uint8(49 / App->gui->buttonsScale) }, 255, 0, 0, 255, false, false);
+		App->render->DrawQuad({ 320, 540, 380, Uint8(49 / App->gui->buttonsScale) }, 255, 0, 0, 255, false, false);
+		App->render->DrawQuad({ 320, 640, 380, Uint8(49 / App->gui->buttonsScale) }, 255, 0, 0, 255, false, false);
+	}
 
 	// Blitting settings window
 	if (settings_window != nullptr && settings_window->visible == true)
