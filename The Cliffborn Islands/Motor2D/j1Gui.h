@@ -38,7 +38,7 @@ enum ButtonFunction {
 	LOAD_GAME,
 	SETTINGS,
 	CLOSE_SETTINGS,
-	NEXT_LEVEL,
+	OTHER_LEVEL,
 	LINK
 };
 
@@ -86,10 +86,18 @@ public:
 	
 	// Positions
 	iPoint settingsPosition;
+	uint lastSlider1X;
+	uint lastSlider2X;
+	uint slider1Y;
+	uint slider2Y;
+
+	uint minimum;
+	uint maximum;
 
 	// Colors
 	SDL_Color beige;
 	SDL_Color brown;
+	SDL_Color grey;
 
 	// Sounds
 	uint hoverSound;

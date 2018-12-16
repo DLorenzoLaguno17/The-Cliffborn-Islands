@@ -70,20 +70,21 @@ bool j1SceneMenu::Start()
 		pugi::xml_document save_game;
 		pugi::xml_parse_result result = save_game.load_file("save_game.xml");
 
-		uint minimum = 58;
-		uint maximum = 108;
-
-		App->gui->CreateBox(&menuBoxes, BOX, 83, 42, { 416, 72, 28, 42 }, gui_tex, (j1UserInterfaceElement*)settings_window, minimum, maximum);
-		App->gui->CreateBox(&menuBoxes, BOX, 83, 82, { 416, 72, 28, 42 }, gui_tex, (j1UserInterfaceElement*)settings_window, minimum, maximum);
+		App->gui->CreateBox(&menuBoxes, BOX, App->gui->lastSlider1X, App->gui->slider1Y, { 416, 72, 28, 42 }, gui_tex, (j1UserInterfaceElement*)settings_window, App->gui->minimum, App->gui->maximum);
+		App->gui->CreateBox(&menuBoxes, BOX, App->gui->lastSlider2X, App->gui->slider2Y, { 416, 72, 28, 42 }, gui_tex, (j1UserInterfaceElement*)settings_window, App->gui->minimum, App->gui->maximum);
 
 		SDL_Rect idle = {0, 143, 190, 49};
 		SDL_Rect hovered = { 0, 45, 190, 49 };
 		SDL_Rect clicked = { 0, 94, 190, 49 };
-
 		App->gui->CreateButton(&menuButtons, BUTTON, 80, 110, idle, hovered, clicked, gui_tex, PLAY_GAME);
 		App->gui->CreateButton(&menuButtons, BUTTON, 80, 160, idle, hovered, clicked, gui_tex, OPEN_CREDITS);
-		App->gui->CreateButton(&menuButtons, BUTTON, 80, 135, idle, hovered, clicked, gui_tex, LOAD_GAME);
-		if (result == NULL) menuButtons.end->data->visible = false;
+
+		SDL_Rect idle4 = { 0, 699, 190, 49 };
+
+		if (result == NULL)
+			App->gui->CreateButton(&menuButtons, BUTTON, 80, 135, idle4, idle4, idle4, gui_tex, NO_FUNCTION);
+		else
+			App->gui->CreateButton(&menuButtons, BUTTON, 80, 135, idle, hovered, clicked, gui_tex, LOAD_GAME);
 
 		SDL_Rect idle2 = { 28, 201, 49, 49 };
 		SDL_Rect hovered2 = { 77, 201, 49, 49 };
@@ -99,8 +100,6 @@ bool j1SceneMenu::Start()
 		App->gui->CreateLabel(&menuLabels, LABEL, 106, 115, font, "Start", App->gui->beige);
 		App->gui->CreateLabel(&menuLabels, LABEL, 98, 165, font, "Credits", App->gui->beige);
 		App->gui->CreateLabel(&menuLabels, LABEL, 90, 140, font, "Continue", App->gui->beige);
-		if (result == NULL) menuLabels.end->data->visible = false;
-
 		App->gui->CreateLabel(&menuLabels, LABEL, 44, 9, font, "Settings", App->gui->brown, (j1UserInterfaceElement*)settings_window);
 		App->gui->CreateLabel(&menuLabels, LABEL, 30, 50, font, "Sound", App->gui->brown, (j1UserInterfaceElement*)settings_window);
 		App->gui->CreateLabel(&menuLabels, LABEL, 30, 89, font, "Music", App->gui->brown, (j1UserInterfaceElement*)settings_window);

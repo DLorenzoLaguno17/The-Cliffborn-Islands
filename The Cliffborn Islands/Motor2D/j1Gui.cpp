@@ -40,9 +40,21 @@ bool j1Gui::Awake(pugi::xml_node& config)
 	settingsPosition.x = config.child("positions").attribute("settingsPositionX").as_int();
 	settingsPosition.y = config.child("positions").attribute("settingsPositionY").as_int();
 
+	slider1Y = 42;
+	slider2Y = 82;
+	lastSlider1X = 83;
+	lastSlider2X = 83;
+
+	minimum = config.child("sliderLimits").attribute("minimum").as_uint();
+	maximum = config.child("sliderLimits").attribute("maximum").as_uint();
+
 	// Copying color values
-	beige = { 245, 245, 220, 255 };
-	brown = { 73, 31, 10, 255 };
+	pugi::xml_node colors = config.child("colors");
+
+	Uint8 a = colors.attribute("a").as_uint();
+	beige = { Uint8(colors.child("beige").attribute("r").as_uint()), Uint8(colors.child("beige").attribute("g").as_uint()), Uint8(colors.child("beige").attribute("b").as_uint()), a};
+	brown = { Uint8(colors.child("brown").attribute("r").as_uint()), Uint8(colors.child("brown").attribute("g").as_uint()), Uint8(colors.child("brown").attribute("b").as_uint()), a};
+	grey = { Uint8(colors.child("grey").attribute("r").as_uint()), Uint8(colors.child("grey").attribute("g").as_uint()), Uint8(colors.child("grey").attribute("b").as_uint()), a};
 
 	return ret;
 }	
@@ -130,7 +142,7 @@ bool j1Gui::PostUpdate()
 		if (item->data->parent->visible == false)
 			item->data->visible = false;
 		else {
-			if (item->data->text != "Save")
+			if (item->data->text != "Settings" && item->data->text != "Save")
 				item->data->Draw(App->gui->buttonsScale);
 			else
 				item->data->Draw();
@@ -195,7 +207,7 @@ void j1Gui::UpdateButtonsState(p2List<j1Button*>* buttons) {
 	
 	for (p2List_item<j1Button*>* button = buttons->start; button != nullptr; button = button->next) {
 
-		if (button->data->visible == false) continue;
+		if (button->data->visible == false || button->data->bfunction == NO_FUNCTION) continue;
 
 		if (x - (App->render->camera.x / 4) <= button->data->position.x + button->data->situation.w * App->gui->buttonsScale
 			&& x - (App->render->camera.x / 4) >= button->data->position.x

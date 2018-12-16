@@ -9,14 +9,14 @@
 	<menu />
 	<credits />
 	<scene1>
-		<activated true="false" />
+		<activated true="true" />
 	</scene1>
 	<scene2>
-		<activated true="true" />
+		<activated true="false" />
 	</scene2>
 	<entityManager>
 		<player>
-			<position x="1" y="56" />
+			<position x="0" y="25" />
 			<godmode value="false" />
 			<lives value="2" />
 			<hud>
@@ -25,31 +25,39 @@
 			</hud>
 		</player>
 		<harpy>
-			<position x="480" y="32" />
-			<position x="1168" y="16" />
-			<position x="1312" y="64" />
-			<position x="1952" y="16" />
-			<position x="2208" y="16" />
+			<position x="1088" y="32" />
+			<position x="1440" y="16" />
+			<position x="1856" y="96" />
+			<position x="2176" y="64" />
+			<position x="2352" y="48" />
 		</harpy>
 		<skeleton>
-			<position x="304" y="107" />
-			<position x="1056" y="27" />
-			<position x="2320" y="107" />
+			<position x="208" y="123" />
+			<position x="624" y="75" />
+			<position x="1648" y="11" />
+			<position x="2128" y="107" />
 		</skeleton>
 		<coin>
-			<position x="128" y="64" />
-			<position x="512" y="48" />
-			<position x="640" y="128" />
-			<position x="992" y="144" />
-			<position x="976" y="144" />
-			<position x="1200" y="128" />
-			<position x="1360" y="80" />
-			<position x="2160" y="64" />
-			<position x="2224" y="64" />
-			<position x="2208" y="144" />
-			<position x="256" y="64" />
-			<position x="848" y="96" />
-			<position x="992" y="48" />
+			<position x="352" y="112" />
+			<position x="512" y="80" />
+			<position x="704" y="64" />
+			<position x="816" y="96" />
+			<position x="928" y="48" />
+			<position x="1008" y="64" />
+			<position x="1168" y="64" />
+			<position x="1312" y="16" />
+			<position x="1600" y="16" />
+			<position x="1632" y="16" />
+			<position x="1664" y="16" />
+			<position x="1696" y="16" />
+			<position x="1840" y="16" />
+			<position x="1856" y="16" />
+			<position x="1936" y="16" />
+			<position x="2032" y="64" />
+			<position x="2288" y="48" />
+			<position x="2304" y="48" />
+			<position x="1936" y="96" />
+			<position x="1728" y="128" />
 		</coin>
 	</entityManager>
 	<collisions />

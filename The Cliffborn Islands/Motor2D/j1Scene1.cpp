@@ -87,36 +87,34 @@ bool j1Scene1::Start()
 		settings_window = App->gui->CreateBox(&scene1Boxes, BOX, App->gui->settingsPosition.x, App->gui->settingsPosition.y, section, gui_tex);
 		settings_window->visible = false;
 
-		uint minimum = 58;
-		uint maximum = 108;
-
-		SDL_Rect idle = { 0, 293, 84, 49 };
-		SDL_Rect hovered = { 0, 391, 84, 49 };
+		SDL_Rect idle = { 0, 391, 84, 49 };
+		SDL_Rect hovered = { 0, 293, 84, 49 };
 		SDL_Rect clicked = { 0, 342, 84, 49 };
 		App->gui->CreateButton(&scene1Buttons, BUTTON, 31, 105, idle, hovered, clicked, gui_tex, SAVE_GAME, (j1UserInterfaceElement*)settings_window);
 		App->gui->CreateButton(&scene1Buttons, BUTTON, 78, 105, idle, hovered, clicked, gui_tex, LOAD_GAME, (j1UserInterfaceElement*)settings_window);
 
-		App->gui->CreateBox(&scene1Boxes, BOX, 83, 42, { 416, 72, 28, 42 }, gui_tex, (j1UserInterfaceElement*)settings_window, minimum, maximum);
-		App->gui->CreateBox(&scene1Boxes, BOX, 83, 82, { 416, 72, 28, 42 }, gui_tex, (j1UserInterfaceElement*)settings_window, minimum, maximum);
+		App->gui->CreateBox(&scene1Boxes, BOX, App->gui->lastSlider1X, App->gui->slider1Y, { 416, 72, 28, 42 }, gui_tex, (j1UserInterfaceElement*)settings_window, App->gui->minimum, App->gui->maximum);
+		App->gui->CreateBox(&scene1Boxes, BOX, App->gui->lastSlider2X, App->gui->slider2Y, { 416, 72, 28, 42 }, gui_tex, (j1UserInterfaceElement*)settings_window, App->gui->minimum, App->gui->maximum);
 
 		SDL_Rect idle2 = { 28, 201, 49, 49 };
 		SDL_Rect hovered2 = { 77, 201, 49, 49 };
 		SDL_Rect clicked2 = { 126, 201, 49, 49 };
 		App->gui->CreateButton(&scene1Buttons, BUTTON, 63, 135, idle2, hovered2, clicked2, gui_tex, CLOSE_SETTINGS, (j1UserInterfaceElement*)settings_window);
 
-		SDL_Rect idle3 = { 312, 292, 49, 49 };
-		SDL_Rect hovered3 = { 361, 292, 49, 49 };
-		SDL_Rect clicked3 = { 310, 400, 49, 49 };
-		App->gui->CreateButton(&scene1Buttons, BUTTON, 37, 135, idle3, hovered3, clicked3, gui_tex, GO_TO_MENU, (j1UserInterfaceElement*)settings_window);
+		SDL_Rect idle4 = { 417, 292, 49, 49 };
+		SDL_Rect hovered4 = { 417, 345, 49, 49 };
+		SDL_Rect clicked4 = { 417, 400, 49, 49 };
+		App->gui->CreateButton(&scene1Buttons, BUTTON, 37, 135, idle4, hovered4, clicked4, gui_tex, GO_TO_MENU, (j1UserInterfaceElement*)settings_window);
 
-		SDL_Rect idle4 = { 270, 633, 49, 49 };
-		SDL_Rect hovered4 = { 319, 633, 49, 49 };
-		SDL_Rect clicked4 = { 368, 633, 49, 49 };
-		App->gui->CreateButton(&scene1Buttons, BUTTON, 89, 135, idle4, hovered4, clicked4, gui_tex, NEXT_LEVEL, (j1UserInterfaceElement*)settings_window);
+		SDL_Rect idle5 = { 270, 633, 49, 49 };
+		SDL_Rect hovered5 = { 319, 633, 49, 49 };
+		SDL_Rect clicked5 = { 368, 633, 49, 49 };
+		App->gui->CreateButton(&scene1Buttons, BUTTON, 89, 135, idle5, hovered5, clicked5, gui_tex, OTHER_LEVEL, (j1UserInterfaceElement*)settings_window);
 
 		App->gui->CreateLabel(&scene1Labels, LABEL, 44, 9, font, "Settings", App->gui->brown, (j1UserInterfaceElement*)settings_window);
 		App->gui->CreateLabel(&scene1Labels, LABEL, 30, 50, font, "Sound", App->gui->brown, (j1UserInterfaceElement*)settings_window);
 		App->gui->CreateLabel(&scene1Labels, LABEL, 30, 89, font, "Music", App->gui->brown, (j1UserInterfaceElement*)settings_window);
+		App->gui->CreateLabel(&scene1Labels, LABEL, 38, 143, font, "Menu", App->gui->grey, (j1UserInterfaceElement*)settings_window);
 		App->gui->CreateLabel(&scene1Labels, LABEL, 33, 110, font, "Save", App->gui->beige, (j1UserInterfaceElement*)settings_window);
 
 		PlaceEntities();
@@ -205,7 +203,7 @@ bool j1Scene1::Update(float dt)
 			else if (item->data->bfunction == CLOSE_SETTINGS) {
 				closeSettings = true;
 			}
-			else if (item->data->bfunction == NEXT_LEVEL) {
+			else if (item->data->bfunction == OTHER_LEVEL) {
 				changingScene = true;
 				App->gamePaused = false;
 				settings_window->visible = false;
