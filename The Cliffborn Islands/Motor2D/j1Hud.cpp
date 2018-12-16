@@ -111,7 +111,7 @@ bool j1Hud::Update(float dt)
 	if (minutes->sprites != nullptr)
 		minutes->Draw(1.0f, 0, 0, false);
 	if (App->gui->debug)
-		App->render->DrawQuad({ 410, 0, 160, 64 }, 255, 0, 0, 255, false, false);
+		App->render->DrawQuad({ 450, 0, 160, 64 }, 255, 0, 0, 255, false, false);
 
 	//COIN
 	SDL_Rect r = animation->GetCurrentFrame(dt);

@@ -260,6 +260,7 @@ bool j1SceneMenu::Update(float dt)
 			item->data->visible = false;
 		else
 			item->data->Draw(App->gui->buttonsScale);
+		
 	}
 	for (p2List_item<j1Label*>* item = menuLabels.start; item != nullptr; item = item->next) {
 		if (item->data->parent == nullptr) continue;

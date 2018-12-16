@@ -151,7 +151,7 @@ bool j1SceneCredits::Update(float dt)
 	}
 
 	App->render->Blit(license, 29, 29, NULL, SDL_FLIP_NONE, 1.0f, 0.28);
-	//(SDL_Texture* texture, int x, int y, const SDL_Rect* section, SDL_RendererFlip flip, float speed, float blitScale, double angle, int pivot_x, int pivot_y, bool use_camera)
+
 	return true;
 }
 
