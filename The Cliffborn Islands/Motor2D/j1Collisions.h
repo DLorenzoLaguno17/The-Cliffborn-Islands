@@ -5,7 +5,7 @@
 #include "p2Point.h"
 #include "SDL\include\SDL_rect.h"
 
-#define MAX_COLLIDERS 500
+#define MAX_COLLIDERS 600
 
 enum COLLIDER_TYPE
 {
