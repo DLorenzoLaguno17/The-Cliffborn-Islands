@@ -465,7 +465,7 @@ void j1Player::OnCollision(Collider* col_1, Collider* col_2)
 			if (App->scene1->active)
 				App->scene1->ChangeScene();
 			else if (App->scene2->active)
-				App->scene2->ChangeScene();
+				App->scene2->ChangeSceneMenu();
 		}
 		else
 		{
