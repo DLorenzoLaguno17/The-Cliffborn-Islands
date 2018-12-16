@@ -1,4 +1,4 @@
-# The Cliffborn Islands
+﻿# The Cliffborn Islands
 
 The Cliffborn Islands is a plataformer game developed for Videogame Development subject in Videogame Design and
 Development degree of CITM at UPC.
@@ -123,9 +123,16 @@ Licensed under [Creative Commons](http://creativecommons.org/licenses/by/3.0/): 
 		* Implemented coins
 		* Improved save/load
 		* Load entities from Tiled
-	
+		* Implemented pathfinding and enemiess movement
+		* Create and implement the enemies
+		* Created and Implemented entity system
+		* Implemented Save & Load
 	- Daniel Lorenzo: 
-
+		* Capped FPS and normalizd movement using dt
+		* Implemented the hook
+		* Created player death and hook animations
+		* Implemented the attack of the player
+		* Created the UML
 
 
 
