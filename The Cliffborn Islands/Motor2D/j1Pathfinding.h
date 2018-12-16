@@ -70,7 +70,7 @@ private:
 	uint width;
 	uint height;
 	// all map walkability values [0..255]
-	uchar* map;
+	uchar* map = nullptr;
 	// we store the created path here
 	p2DynArray<iPoint> last_path;
 };
@@ -99,7 +99,7 @@ struct PathNode
 	int g;
 	int h;
 	iPoint pos;
-	const PathNode* parent; // needed to reconstruct the path in the end
+	const PathNode* parent = nullptr; // needed to reconstruct the path in the end
 };
 
 // ---------------------------------------------------------------------

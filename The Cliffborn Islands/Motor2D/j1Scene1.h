@@ -59,6 +59,7 @@ public:
 
 	j1Timer	startup_time;
 	int time_scene1;
+	bool changingScene = false;
 
 private:
 	SDL_Texture * debug_tex = nullptr;
@@ -68,7 +69,6 @@ private:
 
 	bool closeSettings = false;
 	bool continueGame = true;
-	bool changingScene = false;
 	bool resettingLevel = false;	
 };
 

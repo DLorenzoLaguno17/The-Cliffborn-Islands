@@ -24,9 +24,6 @@ public:
 	bool FadeToBlack(float time = 2.0f);
 	bool IsFading() const;
 
-	j1Module* ModuleOn = nullptr;
-	j1Module* ModuleOff = nullptr;
-
 private:
 
 	enum fade_step

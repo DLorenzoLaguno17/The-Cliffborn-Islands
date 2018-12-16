@@ -34,8 +34,6 @@ public:
 	uint originalMaximum;
 	uint minimum;
 	uint maximum;
-
-	uint cnt = 0;
 };
 
 #endif // __j1BOX_H__

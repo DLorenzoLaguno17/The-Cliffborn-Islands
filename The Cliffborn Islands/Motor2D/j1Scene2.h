@@ -52,6 +52,7 @@ public:
 	p2List<j1Box*> scene2Boxes;
 
 	bool backToMenu = false;
+	bool changingScene = false;
 
 	j1Timer	startup_time;
 	int time_scene2;
@@ -69,7 +70,6 @@ private:
 	_TTF_Font* font = nullptr;
 
 	bool closeSettings = false;
-	bool changingScene = false;
 	bool resettingLevel = false;
 
 };
