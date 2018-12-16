@@ -17,11 +17,10 @@ Download the latest version [here](https://goo.gl/WxyN5B)!
 
 ## Main Core Subsystems
 
-* Map: Maps are loaded from Tiled reading an xml file, which loads all the properties and also puts all the colliders.
-* Pathfinding: We use the A star algorithm so the enemies can go to the player with the most efficient path.
-* Entities manages the player with the hook, both enemies and the coins.
-* UI subsystem is organized as a tree that has different elements, like buttons, labels and boxes.
-
+* Map: Maps are loaded from Tiled reading an XML file, which loads all the properties and also puts all the colliders.
+* Pathfinding: We use the A star algorithm so the enemies can go towards the player with the most efficient path.
+* Entity subsystem manages the player, the hook, both type of enemies (harpy and skeleton) and the coins.
+* UI subsystem is organized as a tree that has three different element:, Buttons, Labels and Boxes and all of them inherit from a general class, called UserInterfaceElement. Buttons trigger actions, labels are only to show text and boxes are elements than can be dragged through the screen.
 
 ## Innovation
 
