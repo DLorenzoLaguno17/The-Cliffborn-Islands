@@ -1,6 +1,6 @@
 # The Cliffborn Islands
 
-Go to our GitHub [here](https://github.com/DLorenzoLaguno17/The-Cliffborn-Islands).
+Go to our web page: https://goo.gl/SUk3ra.
 
 ## Controls
 
