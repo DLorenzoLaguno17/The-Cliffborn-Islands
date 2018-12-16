@@ -113,13 +113,6 @@ bool j1SceneMenu::PreUpdate()
 bool j1SceneMenu::Update(float dt)
 {
 	BROFILER_CATEGORY("MenuUpdate", Profiler::Color::LightSeaGreen)
-		
-	// Volume control
-	if (App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN)
-		App->audio->MusicVolume(App->audio->GetMusicVolume() + 10.0f);
-
-	if (App->input->GetKey(SDL_SCANCODE_N) == KEY_DOWN)
-		App->audio->MusicVolume(App->audio->GetMusicVolume() - 10.0f);
 
 	// ---------------------------------------------------------------------------------------------------------------------
 	// USER INTERFACE MANAGEMENT

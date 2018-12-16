@@ -128,7 +128,7 @@ bool j1Scene1::Update(float dt)
 {
 	BROFILER_CATEGORY("Level1Update", Profiler::Color::LightSeaGreen)
 
-		time_scene1 = startup_time.ReadSec();
+	time_scene1 = startup_time.ReadSec();
 
 	// ---------------------------------------------------------------------------------------------------------------------
 	// USER INTERFACE MANAGEMENT
@@ -143,7 +143,7 @@ bool j1Scene1::Update(float dt)
 		App->gamePaused = !App->gamePaused;
 
 		if (App->render->camera.x != 0)
-			settings_window->position = { (int)App->entity->player->position.x - App->gui->settingsPosition.x, App->gui->settingsPosition.y };
+			settings_window->position.x = (int)App->entity->player->position.x - App->gui->settingsPosition.x;
 
 		for (p2List_item<j1Button*>* item = scene1Buttons.start; item != nullptr; item = item->next) {
 			if (item->data->parent == settings_window) {

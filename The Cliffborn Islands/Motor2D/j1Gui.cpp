@@ -8,6 +8,7 @@
 #include "j1Label.h"
 #include "j1Box.h"
 #include "j1Audio.h"
+#include "j1Window.h"
 #include "j1SceneMenu.h"
 #include "j1SceneCredits.h"
 #include "j1Scene1.h"
@@ -191,12 +192,13 @@ const SDL_Texture* j1Gui::GetAtlas() const
 
 void j1Gui::UpdateButtonsState(p2List<j1Button*>* buttons) {
 	int x, y; App->input->GetMousePosition(x, y);
-
+	
 	for (p2List_item<j1Button*>* button = buttons->start; button != nullptr; button = button->next) {
 
 		if (button->data->visible == false) continue;
 
-		if (x <= button->data->position.x + button->data->situation.w * App->gui->buttonsScale && x >= button->data->position.x
+		if (x - (App->render->camera.x / 4) <= button->data->position.x + button->data->situation.w * App->gui->buttonsScale
+			&& x - (App->render->camera.x / 4) >= button->data->position.x
 			&& y <= button->data->position.y + button->data->situation.h * App->gui->buttonsScale && y >= button->data->position.y) {
 
 			if(App->credits->active == false && App->menu->settings_window != nullptr && App->menu->settings_window->visible
@@ -231,8 +233,11 @@ void j1Gui::UpdateWindow(j1Box* window, p2List<j1Button*>* buttons, p2List<j1Lab
 	int x, y; App->input->GetMousePosition(x, y);
 
 	// Checking if it is being clicked
-	if (window != nullptr && x <= window->position.x + window->section.w * App->gui->settingsWindowScale && x >= window->position.x
-		&& y <= window->position.y + window->section.h * App->gui->settingsWindowScale && y >= window->position.y){
+	if (window != nullptr && window->visible == true 
+		&& x - (App->render->camera.x / 4) <= window->position.x + window->section.w * App->gui->settingsWindowScale
+		&& x - (App->render->camera.x / 4) >= window->position.x
+		&& y <= window->position.y + window->section.h * App->gui->settingsWindowScale && y >= window->position.y)
+	{
 		if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT)
 			window->clicked = true;
 		else if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_UP)
@@ -295,9 +300,12 @@ void j1Gui::UpdateSliders(p2List<j1Box*>* sliders) {
 
 	// Checking if they are being dragged
 	for (p2List_item<j1Box*>* slider = sliders->start; slider != nullptr; slider = slider->next) {
-		if (slider->data->parent != nullptr && slider->data->visible == true) {
-			if (x <= slider->data->position.x + slider->data->section.w * App->gui->buttonsScale && x >= slider->data->position.x
-				&& y <= slider->data->position.y + slider->data->section.h * App->gui->buttonsScale && y >= slider->data->position.y) {
+		if (slider->data->parent != nullptr && slider->data->visible == true) 
+		{
+			if (x - (App->render->camera.x / 4) <= slider->data->position.x + slider->data->section.w * App->gui->buttonsScale
+				&& x - (App->render->camera.x / 4) >= slider->data->position.x
+				&& y <= slider->data->position.y + slider->data->section.h * App->gui->buttonsScale && y >= slider->data->position.y) 
+			{
 				if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT)
 					slider->data->clicked = true;
 				else if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_UP) {

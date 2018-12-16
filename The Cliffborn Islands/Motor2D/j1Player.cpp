@@ -113,14 +113,10 @@ bool j1Player::Update(float dt, bool do_logic) {
 			}
 
 			if (App->input->GetKey(SDL_SCANCODE_W) == j1KeyState::KEY_REPEAT)
-			{
 				position.y -= godModeSpeed * dt;
-			}
 
 			if (App->input->GetKey(SDL_SCANCODE_S) == j1KeyState::KEY_REPEAT) 
-			{
 				position.y += godModeSpeed * dt;
-			}
 		}
 		else {
 			// Idle
@@ -526,12 +522,11 @@ void j1Player::OnCollision(Collider* col_1, Collider* col_2)
 
 						wallBehind = true;
 						App->entity->hook->arrived = true;
+
 						if (position.x + (collider->rect.w / 4) < col_2->rect.x + col_2->rect.w)
 							position.x = col_2->rect.x + col_2->rect.w - colisionMargin;
 					}
-				}
-
-				
+				}				
 			}
 
 			//If the player collides with death colliders
