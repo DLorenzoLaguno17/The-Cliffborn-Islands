@@ -3,6 +3,17 @@
 The Cliffborn Islands is a plataformer game developed by two students of the Videogame Design and
 Development degree at the UPC, a university of Barcelona. You can go to our GitHub by clicking [here](https://github.com/DLorenzoLaguno17/The-Cliffborn-Islands).
 
+## Main Core Subsystems
+
+Map: Maps are loaded from Tiled reading an xml file, which loads all the properties and also puts all the colliders.
+Pathfinding: We use the A star algorithm so the enemies can go to the player with the most efficient path.
+Entities manages the player with the hook, both enemies and the coins.
+UI subsystem is organized as a tree that has different elements, like buttons, labels and boxes.
+
+## Innovation
+
+We have implemented a hook which you need to use to overcome the level. If it collides with a wall, it moves the player towards it.
+
 ## Controls
 
 * A - Move left
