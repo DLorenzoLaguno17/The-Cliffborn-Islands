@@ -363,12 +363,16 @@ void j1Gui::UpdateSliders(p2List<j1Box*>* sliders) {
 					App->audio->FxVolume(App->audio->GetFxVolume() + (item->data->position.x - lastPos) * 2);
 				else
 					App->audio->FxVolume(App->audio->GetFxVolume() - (lastPos - item->data->position.x) * 2);
+
+				lastSlider1X = item->data->position.x - item->data->parent->position.x;
 			}
 			else {
 				if (item->data->position.x > lastPos)
 					App->audio->MusicVolume(App->audio->GetMusicVolume() + (item->data->position.x - lastPos) * 2);
 				else
 					App->audio->MusicVolume(App->audio->GetMusicVolume() - (lastPos - item->data->position.x) * 2);
+
+				lastSlider2X = item->data->position.x - item->data->parent->position.x;
 			}
 		}
 	}
