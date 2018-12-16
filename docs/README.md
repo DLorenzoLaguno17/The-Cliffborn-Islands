@@ -57,4 +57,4 @@ Player attack and jump: Link from Super Smash Bros
 
 
 This game has been created by Òscar Faura and Daniel Lorenzo.
-Licensed under the [MIT License](LICENSE).
+Licensed under the [MIT License](https://goo.gl/c19PjY).
