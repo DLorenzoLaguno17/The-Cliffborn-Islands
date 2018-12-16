@@ -1,16 +1,15 @@
 # The Cliffborn Islands
 
+The Cliffborn Islands is a plataformer game developed for Videogame Development subject in Videogame Design and
+Development degree of CITM at UPC.
+
+
 
 Go to our GitHub [here](https://github.com/DLorenzoLaguno17/The-Cliffborn-Islands).
 
-
 ## Controls
 
-
-
 ### Gameplay
-
-
 
 Keyboard:
 
@@ -18,9 +17,9 @@ Keyboard:
 
 * D - Move right
 
-* H - Throw the hook
+* O - Throw the hook
 
-* O - Attack with the sword
+* P - Attack with the sword
 
 * Spacebar - Jump.
 
@@ -35,7 +34,10 @@ Keyboard:
 * F3 - To start from the beginning of the second level
 
 * F5 - Save the current state
+
 * F6 - Load the previous state
+
+* F8 - Debug UI
 
 * F9 - To view colliders and logic of the game
 
@@ -109,6 +111,7 @@ Licensed under [Creative Commons](http://creativecommons.org/licenses/by/3.0/): 
 *Death sound: Minecraft.		
 
 *Death music: Uncharted 2.
+
 *Player attack and jump: Link from Super Smash Bros.
 
 
@@ -116,7 +119,10 @@ Licensed under [Creative Commons](http://creativecommons.org/licenses/by/3.0/): 
 ## Task list
 	
 	- Òscar Faura: 
-
+		* Implemented in-game HUD
+		* Implemented coins
+		* Improved save/load
+		* Load entities from Tiled
 	
 	- Daniel Lorenzo: 
 
