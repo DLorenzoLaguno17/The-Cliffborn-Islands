@@ -93,7 +93,7 @@ bool j1Scene2::Start()
 		SDL_Rect hovered = { 0, 293, 84, 49 };
 		SDL_Rect clicked = { 0, 342, 84, 49 };
 		App->gui->CreateButton(&scene2Buttons, BUTTON, 31, 105, idle, hovered, clicked, gui_tex, SAVE_GAME, (j1UserInterfaceElement*)settings_window);
-		App->gui->CreateButton(&scene2Buttons, BUTTON, 78, 105, idle, hovered, clicked, gui_tex, LOAD_GAME, (j1UserInterfaceElement*)settings_window);
+		App->gui->CreateButton(&scene2Buttons, BUTTON, 78, 105, idle, hovered, clicked, gui_tex, CLOSE_GAME, (j1UserInterfaceElement*)settings_window);
 
 		App->gui->CreateBox(&scene2Boxes, BOX, App->gui->lastSlider1X, App->gui->slider1Y, { 416, 72, 28, 42 }, gui_tex, (j1UserInterfaceElement*)settings_window, App->gui->minimum, App->gui->maximum);
 		App->gui->CreateBox(&scene2Boxes, BOX, App->gui->lastSlider2X, App->gui->slider2Y, { 416, 72, 28, 42 }, gui_tex, (j1UserInterfaceElement*)settings_window, App->gui->minimum, App->gui->maximum);
@@ -118,6 +118,7 @@ bool j1Scene2::Start()
 		App->gui->CreateLabel(&scene2Labels, LABEL, 30, 89, font, "Music", App->gui->brown, (j1UserInterfaceElement*)settings_window);
 		App->gui->CreateLabel(&scene2Labels, LABEL, 38, 143, font, "Menu", App->gui->grey, (j1UserInterfaceElement*)settings_window);
 		App->gui->CreateLabel(&scene2Labels, LABEL, 33, 110, font, "Save", App->gui->beige, (j1UserInterfaceElement*)settings_window);
+		App->gui->CreateLabel(&scene2Labels, LABEL, 81, 110, font, "Quit", App->gui->beige, (j1UserInterfaceElement*)settings_window);
 
 		PlaceEntities();
 
@@ -176,6 +177,11 @@ bool j1Scene2::Update(float dt)
 				item->data->visible = !item->data->visible;
 				item->data->position.x = settings_window->position.x + item->data->initialPosition.x;
 				item->data->position.y = settings_window->position.y + item->data->initialPosition.y;
+
+				item->data->minimum = item->data->originalMinimum + settings_window->position.x;
+				item->data->maximum = item->data->originalMaximum + settings_window->position.x;
+
+				item->data->distanceCalculated = false;
 			}
 		}
 
@@ -213,6 +219,9 @@ bool j1Scene2::Update(float dt)
 			}
 			else if (item->data->bfunction == SAVE_GAME) {
 				App->SaveGame("save_game.xml");
+			}
+			else if (item->data->bfunction == CLOSE_GAME) {
+				continueGame = false;
 			}
 			break;
 
@@ -289,9 +298,6 @@ bool j1Scene2::Update(float dt)
 bool j1Scene2::PostUpdate()
 {
 	BROFILER_CATEGORY("Level2PostUpdate", Profiler::Color::Yellow)
-
-		if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN)
-			continueGame = false;
 
 	return continueGame;
 }

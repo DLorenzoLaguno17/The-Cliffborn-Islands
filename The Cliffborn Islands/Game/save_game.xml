@@ -16,12 +16,12 @@
 	</scene2>
 	<entityManager>
 		<player>
-			<position x="0" y="25" />
+			<position x="291.519714" y="121" />
 			<godmode value="false" />
 			<lives value="2" />
 			<hud>
 				<coins_score value="0" />
-				<score value="0" />
+				<score value="50" />
 			</hud>
 		</player>
 		<harpy>
@@ -32,7 +32,6 @@
 			<position x="2352" y="48" />
 		</harpy>
 		<skeleton>
-			<position x="208" y="123" />
 			<position x="624" y="75" />
 			<position x="1648" y="11" />
 			<position x="2128" y="107" />
@@ -65,6 +64,6 @@
 	<gui />
 	<fade />
 	<renderer>
-		<camera x="0" y="0" />
+		<camera x="-766" y="0" />
 	</renderer>
 </game_state>

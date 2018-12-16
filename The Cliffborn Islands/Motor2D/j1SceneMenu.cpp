@@ -180,6 +180,9 @@ bool j1SceneMenu::Update(float dt)
 							item->data->visible = !item->data->visible;
 							item->data->position.x = settings_window->position.x + item->data->initialPosition.x;
 							item->data->position.y = settings_window->position.y + item->data->initialPosition.y;
+
+							item->data->minimum = item->data->originalMinimum + settings_window->position.x;
+							item->data->maximum = item->data->originalMaximum + settings_window->position.x;
 						}
 					}
 				}

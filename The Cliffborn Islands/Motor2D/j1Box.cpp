@@ -5,7 +5,7 @@
 #include "j1Render.h"
 
 j1Box::j1Box(UIELEMENT_TYPES type, int x, int y, SDL_Rect section, SDL_Texture* text, j1UserInterfaceElement* parent, uint minimum, uint maximum) :
-	j1UserInterfaceElement(UIELEMENT_TYPES::BOX, x, y, text, parent), section(section), minimum(minimum), maximum(maximum) {}
+	j1UserInterfaceElement(UIELEMENT_TYPES::BOX, x, y, text, parent), section(section), originalMinimum(minimum), originalMaximum(maximum), minimum(minimum), maximum(maximum) {}
 
 j1Box::~j1Box() {}
 

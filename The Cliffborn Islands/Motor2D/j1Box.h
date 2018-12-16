@@ -30,8 +30,12 @@ public:
 	iPoint mouseDistance;
 
 	// They are used in case you want to limit the movement of the box
+	uint originalMinimum;
+	uint originalMaximum;
 	uint minimum;
 	uint maximum;
+
+	uint cnt = 0;
 };
 
 #endif // __j1BOX_H__

@@ -111,7 +111,7 @@ bool j1Gui::PostUpdate()
 		if (item->data->parent->visible == false)
 			item->data->visible = false;
 		else {
-			if (item->data->text != "Settings" && item->data->text != "Save")
+			if (item->data->text != "Settings" && item->data->text != "Save"  && item->data->text != "Quit")
 			item->data->Draw(App->gui->buttonsScale);
 			else
 				item->data->Draw();
@@ -142,7 +142,7 @@ bool j1Gui::PostUpdate()
 		if (item->data->parent->visible == false)
 			item->data->visible = false;
 		else {
-			if (item->data->text != "Settings" && item->data->text != "Save")
+			if (item->data->text != "Settings" && item->data->text != "Save"  && item->data->text != "Quit")
 				item->data->Draw(App->gui->buttonsScale);
 			else
 				item->data->Draw();
@@ -352,10 +352,10 @@ void j1Gui::UpdateSliders(p2List<j1Box*>* sliders) {
 			item->data->position.x = x - item->data->mouseDistance.x;
 
 			// The default value for the margins is 0, meaning they have no minimum or maximum
-			if (item->data->minimum != 0 && item->data->position.x <= item->data->parent->position.x + item->data->minimum)
-				item->data->position.x = item->data->parent->position.x + item->data->minimum;
-			if (item->data->maximum != 0 && item->data->position.x >= item->data->parent->position.x + item->data->maximum)
-				item->data->position.x = item->data->parent->position.x + item->data->maximum;	
+			if (item->data->minimum != 0 && item->data->position.x <= item->data->minimum)
+				item->data->position.x = item->data->minimum;
+			if (item->data->maximum != 0 && item->data->position.x >= item->data->maximum)
+				item->data->position.x = item->data->maximum;	
 
 			// After that we change the volume
 			if (item->data->position.y < item->data->parent->position.y + 50) {
