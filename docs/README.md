@@ -1,7 +1,7 @@
 ﻿# The Cliffborn Islands
 
-The Cliffborn Islands is a plataformer game developed for Videogame Development subject in the Videogame Design and
-Development degree of the UPC, a university of Barcelona. You can go to our GitHub by clicking [here](https://github.com/DLorenzoLaguno17/The-Cliffborn-Islands).
+The Cliffborn Islands is a plataformer game developed by two students of the Videogame Design and
+Development degree at the UPC, a university of Barcelona. You can go to our GitHub by clicking [here](https://github.com/DLorenzoLaguno17/The-Cliffborn-Islands).
 
 ## Controls
 
