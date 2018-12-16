@@ -15,8 +15,7 @@ Development degree at the UPC, a university of Barcelona. You can go to our GitH
 
 ## Authors of the game
 
-[Òscar Faura https://github.com/DLorenzoLaguno17/The-Cliffborn-Islands/blob/master/docs/oscar.jpg?raw=true]
-(https://github.com/DLorenzoLaguno17/The-Cliffborn-Islands/blob/master/docs/oscar.jpg?raw=true)
+![Òscar Faura https://github.com/DLorenzoLaguno17/The-Cliffborn-Islands/blob/master/docs/oscar.jpg?raw=true](https://github.com/DLorenzoLaguno17/The-Cliffborn-Islands/blob/master/docs/oscar.jpg?raw=true)
 
 Òscar Faura: 
 * Creation of level 1
@@ -27,8 +26,7 @@ Development degree at the UPC, a university of Barcelona. You can go to our GitH
 * Programmed coins, lives, score and timer
 * Save & Load implementation
 
-[Dani Lorenzo https://github.com/DLorenzoLaguno17/The-Cliffborn-Islands/blob/master/docs/dani.JPG?raw=true]
-(https://github.com/DLorenzoLaguno17/The-Cliffborn-Islands/blob/master/docs/dani.JPG?raw=true)
+![Dani Lorenzo https://github.com/DLorenzoLaguno17/The-Cliffborn-Islands/blob/master/docs/dani.JPG?raw=true](https://github.com/DLorenzoLaguno17/The-Cliffborn-Islands/blob/master/docs/dani.JPG?raw=true)
 
 Daniel Lorenzo: 
 * Creation of level 2
