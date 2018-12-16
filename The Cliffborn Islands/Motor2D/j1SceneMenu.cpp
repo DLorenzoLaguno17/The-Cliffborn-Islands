@@ -66,6 +66,10 @@ bool j1SceneMenu::Start()
 		settings_window = App->gui->CreateBox(&menuBoxes, BOX, App->gui->settingsPosition.x, App->gui->settingsPosition.y, { 537, 0, 663, 712 }, gui_tex);
 		settings_window->visible = false;
 
+		// We will use it to check if there is a save file
+		pugi::xml_document save_game;
+		pugi::xml_parse_result result = save_game.load_file("save_game.xml");
+
 		uint minimum = 58;
 		uint maximum = 108;
 
@@ -77,8 +81,9 @@ bool j1SceneMenu::Start()
 		SDL_Rect clicked = { 0, 94, 190, 49 };
 
 		App->gui->CreateButton(&menuButtons, BUTTON, 80, 110, idle, hovered, clicked, gui_tex, PLAY_GAME);
-		App->gui->CreateButton(&menuButtons, BUTTON, 80, 135, idle, hovered, clicked, gui_tex, CONTINUE);
 		App->gui->CreateButton(&menuButtons, BUTTON, 80, 160, idle, hovered, clicked, gui_tex, OPEN_CREDITS);
+		App->gui->CreateButton(&menuButtons, BUTTON, 80, 135, idle, hovered, clicked, gui_tex, LOAD_GAME);
+		if (result == NULL) menuButtons.end->data->visible = false;
 
 		SDL_Rect idle2 = { 28, 201, 49, 49 };
 		SDL_Rect hovered2 = { 77, 201, 49, 49 };
@@ -92,8 +97,10 @@ bool j1SceneMenu::Start()
 		App->gui->CreateButton(&menuButtons, BUTTON, 3, 3, idle3, hovered3, clicked3, gui_tex, SETTINGS);
 
 		App->gui->CreateLabel(&menuLabels, LABEL, 106, 115, font, "Start", App->gui->beige);
-		App->gui->CreateLabel(&menuLabels, LABEL, 90, 140, font, "Continue", App->gui->beige);
 		App->gui->CreateLabel(&menuLabels, LABEL, 98, 165, font, "Credits", App->gui->beige);
+		App->gui->CreateLabel(&menuLabels, LABEL, 90, 140, font, "Continue", App->gui->beige);
+		if (result == NULL) menuLabels.end->data->visible = false;
+
 		App->gui->CreateLabel(&menuLabels, LABEL, 44, 9, font, "Settings", App->gui->brown, (j1UserInterfaceElement*)settings_window);
 		App->gui->CreateLabel(&menuLabels, LABEL, 30, 50, font, "Sound", App->gui->brown, (j1UserInterfaceElement*)settings_window);
 		App->gui->CreateLabel(&menuLabels, LABEL, 30, 89, font, "Music", App->gui->brown, (j1UserInterfaceElement*)settings_window);
@@ -142,7 +149,7 @@ bool j1SceneMenu::Update(float dt)
 					startGame = true;
 					App->fade->FadeToBlack();
 				}
-				else if (item->data->bfunction == CONTINUE) {
+				else if (item->data->bfunction == LOAD_GAME) {
 					loadGame = true;
 					App->fade->FadeToBlack();
 				}
@@ -221,7 +228,7 @@ bool j1SceneMenu::Update(float dt)
 	}
 	for (p2List_item<j1Label*>* item = menuLabels.start; item != nullptr; item = item->next) {
 		if (item->data->parent != nullptr) continue;
-		item->data->Draw();
+		if (item->data->visible) item->data->Draw();
 	}
 
 	// Blitting the logo

@@ -99,10 +99,10 @@ bool j1Gui::PostUpdate()
 		if (item->data->parent->visible == false)
 			item->data->visible = false;
 		else {
-			if (item->data->text == "Settings")
-				item->data->Draw();
+			if (item->data->text != "Settings" && item->data->text != "Save")
+			item->data->Draw(App->gui->buttonsScale);
 			else
-				item->data->Draw(App->gui->buttonsScale);
+				item->data->Draw();
 		}
 	}
 	for (p2List_item<j1Box*>* item = App->scene1->scene1Boxes.start; item != nullptr; item = item->next) {
@@ -130,10 +130,10 @@ bool j1Gui::PostUpdate()
 		if (item->data->parent->visible == false)
 			item->data->visible = false;
 		else {
-			if (item->data->text == "Settings")
-				item->data->Draw();
-			else
+			if (item->data->text != "Save")
 				item->data->Draw(App->gui->buttonsScale);
+			else
+				item->data->Draw();
 		}
 	}
 	for (p2List_item<j1Box*>* item = App->scene2->scene2Boxes.start; item != nullptr; item = item->next) {
@@ -246,6 +246,11 @@ void j1Gui::UpdateWindow(j1Box* window, p2List<j1Button*>* buttons, p2List<j1Lab
 
 	// We move the window in case it is clicked
 	if (window != nullptr) {
+
+		if (buttons != nullptr) {
+			for (p2List_item<j1Button*>* item = buttons->start; item != nullptr; item = item->next)
+				if (item->data->state == CLICKED && item->data->parent == window) window->clicked = false;
+		}
 
 		if (boxes != nullptr) {
 			for (p2List_item<j1Box*>* item = boxes->start; item != nullptr; item = item->next)

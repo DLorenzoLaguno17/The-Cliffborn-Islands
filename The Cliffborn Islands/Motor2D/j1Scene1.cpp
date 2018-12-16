@@ -90,22 +90,34 @@ bool j1Scene1::Start()
 		uint minimum = 58;
 		uint maximum = 108;
 
+		SDL_Rect idle = { 0, 293, 84, 49 };
+		SDL_Rect hovered = { 0, 391, 84, 49 };
+		SDL_Rect clicked = { 0, 342, 84, 49 };
+		App->gui->CreateButton(&scene1Buttons, BUTTON, 31, 105, idle, hovered, clicked, gui_tex, SAVE_GAME, (j1UserInterfaceElement*)settings_window);
+		App->gui->CreateButton(&scene1Buttons, BUTTON, 78, 105, idle, hovered, clicked, gui_tex, LOAD_GAME, (j1UserInterfaceElement*)settings_window);
+
 		App->gui->CreateBox(&scene1Boxes, BOX, 83, 42, { 416, 72, 28, 42 }, gui_tex, (j1UserInterfaceElement*)settings_window, minimum, maximum);
 		App->gui->CreateBox(&scene1Boxes, BOX, 83, 82, { 416, 72, 28, 42 }, gui_tex, (j1UserInterfaceElement*)settings_window, minimum, maximum);
-
-		SDL_Rect idle3 = { 312, 292, 49, 49 };
-		SDL_Rect hovered3 = { 361, 292, 49, 49 };
-		SDL_Rect clicked3 = { 310, 400, 49, 49 };
-		App->gui->CreateButton(&scene1Buttons, BUTTON, 38, 135, idle3, hovered3, clicked3, gui_tex, GO_TO_MENU, (j1UserInterfaceElement*)settings_window);
 
 		SDL_Rect idle2 = { 28, 201, 49, 49 };
 		SDL_Rect hovered2 = { 77, 201, 49, 49 };
 		SDL_Rect clicked2 = { 126, 201, 49, 49 };
-		App->gui->CreateButton(&scene1Buttons, BUTTON, 64, 135, idle2, hovered2, clicked2, gui_tex, CLOSE_GAME, (j1UserInterfaceElement*)settings_window);
+		App->gui->CreateButton(&scene1Buttons, BUTTON, 63, 135, idle2, hovered2, clicked2, gui_tex, CLOSE_SETTINGS, (j1UserInterfaceElement*)settings_window);
+
+		SDL_Rect idle3 = { 312, 292, 49, 49 };
+		SDL_Rect hovered3 = { 361, 292, 49, 49 };
+		SDL_Rect clicked3 = { 310, 400, 49, 49 };
+		App->gui->CreateButton(&scene1Buttons, BUTTON, 37, 135, idle3, hovered3, clicked3, gui_tex, GO_TO_MENU, (j1UserInterfaceElement*)settings_window);
+
+		SDL_Rect idle4 = { 270, 633, 49, 49 };
+		SDL_Rect hovered4 = { 319, 633, 49, 49 };
+		SDL_Rect clicked4 = { 368, 633, 49, 49 };
+		App->gui->CreateButton(&scene1Buttons, BUTTON, 89, 135, idle4, hovered4, clicked4, gui_tex, NEXT_LEVEL, (j1UserInterfaceElement*)settings_window);
 
 		App->gui->CreateLabel(&scene1Labels, LABEL, 44, 9, font, "Settings", App->gui->brown, (j1UserInterfaceElement*)settings_window);
 		App->gui->CreateLabel(&scene1Labels, LABEL, 30, 50, font, "Sound", App->gui->brown, (j1UserInterfaceElement*)settings_window);
 		App->gui->CreateLabel(&scene1Labels, LABEL, 30, 89, font, "Music", App->gui->brown, (j1UserInterfaceElement*)settings_window);
+		App->gui->CreateLabel(&scene1Labels, LABEL, 33, 110, font, "Save", App->gui->beige, (j1UserInterfaceElement*)settings_window);
 
 		PlaceEntities();
 
@@ -138,12 +150,12 @@ bool j1Scene1::Update(float dt)
 	App->gui->UpdateWindow(settings_window, &scene1Buttons, &scene1Labels, &scene1Boxes);
 	App->gui->UpdateSliders(&scene1Boxes);
 
-	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN) {
+	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN || closeSettings) {
 		settings_window->visible = !settings_window->visible;
 		App->gamePaused = !App->gamePaused;
 
 		if (App->render->camera.x != 0)
-			settings_window->position.x = (int)App->entity->player->position.x - App->gui->settingsPosition.x;
+			settings_window->position = { (int)App->entity->player->position.x - App->gui->settingsPosition.x, App->gui->settingsPosition.y };
 
 		for (p2List_item<j1Button*>* item = scene1Buttons.start; item != nullptr; item = item->next) {
 			if (item->data->parent == settings_window) {
@@ -166,6 +178,8 @@ bool j1Scene1::Update(float dt)
 				item->data->position.y = settings_window->position.y + item->data->initialPosition.y;
 			}
 		}
+
+		if (!settings_window->visible) closeSettings = false;
 	}
 
 	// Button actions
@@ -188,17 +202,18 @@ bool j1Scene1::Update(float dt)
 				settings_window->visible = false;
 				App->fade->FadeToBlack();
 			}
-			else if (item->data->bfunction == CLOSE_GAME) {
-				continueGame = false;
+			else if (item->data->bfunction == CLOSE_SETTINGS) {
+				closeSettings = true;
 			}
-			/*else if (item->data->bfunction == CONTINUE) {
-			loadGame = true;
-			App->fade->FadeToBlack();
+			else if (item->data->bfunction == NEXT_LEVEL) {
+				changingScene = true;
+				App->gamePaused = false;
+				settings_window->visible = false;
+				App->fade->FadeToBlack();
 			}
-			else if (item->data->bfunction == SETTINGS) {
-			settings_window->visible = !settings_window->visible;
-			settings_window->position = settingsPosition;
-			}*/
+			else if (item->data->bfunction == SAVE_GAME) {
+				App->SaveGame("save_game.xml");
+			}
 			break;
 
 		case CLICKED:

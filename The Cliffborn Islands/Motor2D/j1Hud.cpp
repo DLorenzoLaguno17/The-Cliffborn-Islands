@@ -27,8 +27,8 @@ bool j1Hud::Start()
 	sprites = App->tex->Load("textures/coin.png");
 	lives_tex = App->tex->Load("textures/life.png");
 
-	seconds = App->gui->CreateLabel(&labels_list, LABEL, 500, 0, text, time_text.GetString());
-	minutes = App->gui->CreateLabel(&labels_list, LABEL, 410, 0, text, "00:");
+	seconds = App->gui->CreateLabel(&labels_list, LABEL, 540, 0, text, time_text.GetString());
+	minutes = App->gui->CreateLabel(&labels_list, LABEL, 450, 0, text, "00:");
 
 	score = { "%i", App->entity->player->points };
 	score_points = { "%i", App->entity->player->score_points };

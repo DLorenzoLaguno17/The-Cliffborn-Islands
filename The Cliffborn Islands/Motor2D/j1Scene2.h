@@ -68,6 +68,7 @@ private:
 
 	_TTF_Font* font = nullptr;
 
+	bool closeSettings = false;
 	bool changingScene = false;
 	bool resettingLevel = false;
 

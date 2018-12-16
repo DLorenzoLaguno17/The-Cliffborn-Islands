@@ -13,12 +13,6 @@ Keyboard:
 * O - Attack with the sword
 * Spacebar - Jump.
 
-XBox Controller:
-* Left joystick/D-pad - Move
-* B - Throw the hook
-* X - Attack with the sword
-* A - Jump
-
 ### Special keys
 * F1 - To start from the very first level
 * F2 - To start from the beginning of the current level
