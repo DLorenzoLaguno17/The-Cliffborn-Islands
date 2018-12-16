@@ -54,6 +54,7 @@ bool j1SceneCredits::Start()
 
 		// Loading textures
 		gui_tex = App->tex->Load("gui/atlas.png");
+		license = App->tex->Load("gui/credits.png");
 
 		// Loading fonts
 		font = App->font->Load("fonts/PixelCowboy/PixelCowboy.otf", 8);
@@ -149,6 +150,8 @@ bool j1SceneCredits::Update(float dt)
 		item->data->Draw();
 	}
 
+	App->render->Blit(license, 29, 29, NULL, SDL_FLIP_NONE, 1.0f, 0.28);
+	//(SDL_Texture* texture, int x, int y, const SDL_Rect* section, SDL_RendererFlip flip, float speed, float blitScale, double angle, int pivot_x, int pivot_y, bool use_camera)
 	return true;
 }
 
