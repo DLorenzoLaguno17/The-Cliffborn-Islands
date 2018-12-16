@@ -1,6 +1,5 @@
 # The Cliffborn Islands
 
-test
 
 Go to our GitHub [here](https://github.com/DLorenzoLaguno17/The-Cliffborn-Islands).
 
