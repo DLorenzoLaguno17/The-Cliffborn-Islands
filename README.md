@@ -60,18 +60,11 @@ Licensed under [Creative Commons](http://creativecommons.org/licenses/by/3.0/): 
 *Player attack and jump: Link from Super Smash Bros.
 
 ## Task list
-	- Òscar Faura: 
-		* Implemented pathfinding and enemies' movement
-		* Created and implemented the enemies
-		* Created and implemented entity system
-		* Implemented Save & Load
-	- Daniel Lorenzo: 
-		* Capped FPS and normalized movement using dt
-		* Implemented the hook
-		* Created player death and hook animations
-		* Implemented the attack of the player
-		* Created the UML
+	- Ã’scar Faura: 
 
-This game has been created by Òscar Faura and Daniel Lorenzo.
+	- Daniel Lorenzo: 
+
+
+This game has been created by Ã’scar Faura and Daniel Lorenzo.
 Licensed under the [MIT License](LICENSE).
 
