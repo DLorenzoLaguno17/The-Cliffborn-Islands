@@ -117,8 +117,9 @@ public:
 	bool attacking = false;
 	bool extra_life = false;
 
-private:
 	int cameraLimit;
+
+private:
 	int playerLimit;
 
 	bool loadedAudios = false;

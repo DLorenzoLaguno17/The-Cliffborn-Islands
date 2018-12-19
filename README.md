@@ -9,8 +9,8 @@ Go to our web page: https://goo.gl/SUk3ra.
 Keyboard:
 * A - Move left
 * D - Move right
-* H - Throw the hook
-* O - Attack with the sword
+* O - Throw the hook
+* P - Attack with the sword
 * Spacebar - Jump.
 
 ### Special keys
@@ -55,15 +55,9 @@ Music of the first and second level: "Airship Serenity"
 Licensed under [Creative Commons](http://creativecommons.org/licenses/by/3.0/): By Attribution 3.0
 
 ### Sound effects
-*Death sound: Minecraft.		
-*Death music: Uncharted 2.
-*Player attack and jump: Link from Super Smash Bros.
-
-## Task list
-	- Òscar Faura: 
-
-	- Daniel Lorenzo: 
-
+* Death sound: Minecraft.		
+* Death music: Uncharted 2.
+* Player attack and jump: Link from Super Smash Bros.
 
 This game has been created by Òscar Faura and Daniel Lorenzo.
 Licensed under the [MIT License](LICENSE).

@@ -69,6 +69,8 @@ bool j1Player::Start() {
 	else
 		collider = App->collisions->AddCollider({ (int)position.x + margin.x, (int)position.y + margin.y, playerSize.x, playerSize.y }, COLLIDER_PLAYER, App->entity);
 	
+	attackCollider = App->collisions->AddCollider({ (int)position.x + rightAttackSpawnPos, (int)position.y + margin.y, playerSize.x, playerSize.y }, COLLIDER_NONE, App->entity);
+
 	hud = new j1Hud();
 	hud->Start();
 
@@ -221,13 +223,12 @@ bool j1Player::Update(float dt, bool do_logic) {
 			&& attacking == false && GodMode == false && dead == false) {
 			attacking = true;
 			App->audio->PlayFx(attackSound);
+			attackCollider->type = COLLIDER_ATTACK;
 						
 			if (facingRight) {
-				attackCollider = App->collisions->AddCollider({ (int)position.x + rightAttackSpawnPos, (int)position.y + margin.y, playerSize.x, playerSize.y }, COLLIDER_ATTACK, App->entity);
 				animation = &attackRight;
 			}
 			else {
-				attackCollider = App->collisions->AddCollider({ (int)position.x + leftAttackSpawnPos, (int)position.y + margin.y, playerSize.x, playerSize.y }, COLLIDER_ATTACK, App->entity);
 				animation = &attackLeft;
 			}
 		}
@@ -236,8 +237,7 @@ bool j1Player::Update(float dt, bool do_logic) {
 		if ((facingRight && attackRight.Finished())
 			|| (!facingRight && attackLeft.Finished()) || dead == true) {
 
-			if (attackCollider != nullptr)
-				attackCollider->to_delete = true;
+			attackCollider->type = COLLIDER_NONE;
 
 			attackLeft.Reset();
 			attackRight.Reset();

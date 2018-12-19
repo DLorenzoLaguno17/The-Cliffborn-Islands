@@ -150,7 +150,7 @@ bool j1SceneCredits::Update(float dt)
 		item->data->Draw();
 	}
 
-	App->render->Blit(license, 29, 29, NULL, SDL_FLIP_NONE, 1.0f, 0.28);
+	App->render->Blit(license, 42, 37, NULL, SDL_FLIP_NONE, 1.0f, 0.25);
 
 	return true;
 }
