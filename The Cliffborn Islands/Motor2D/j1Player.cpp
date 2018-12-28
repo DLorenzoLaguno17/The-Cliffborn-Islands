@@ -462,10 +462,12 @@ void j1Player::OnCollision(Collider* col_1, Collider* col_2)
 		if (col_2->type == COLLIDER_WIN)
 		{
 			feetOnGround = true;
+			App->fade->FadeToBlack();
+
 			if (App->scene1->active)
-				App->scene1->ChangeScene();
+				App->scene1->changingScene = true;
 			else if (App->scene2->active)
-				App->scene2->ChangeSceneMenu();
+				App->scene2->backToMenu = true;
 		}
 		else
 		{
@@ -486,22 +488,21 @@ void j1Player::OnCollision(Collider* col_1, Collider* col_2)
 						currentJumps++;
 					}
 					else
-						//If the collision is with the ground
-						if (loading == false) {
+					//If the collision is with the ground
+					if (loading == false) {
+						if (collider->rect.y + collider->rect.h >= col_2->rect.y
+							&& collider->rect.y < col_2->rect.y) {
 
-							if (collider->rect.y + collider->rect.h >= col_2->rect.y
-								&& collider->rect.y < col_2->rect.y) {
+							position.y = col_2->rect.y - collider->rect.h;
 
-								position.y = col_2->rect.y - collider->rect.h;
-
-								feetOnGround = true;
-								jumping = false;
-								freefall = false;
-								verticalSpeed = initialVerticalSpeed;
-								fallingSpeed = initialFallingSpeed;
-								currentJumps = initialJumps;
-							}
+							feetOnGround = true;
+							jumping = false;
+							freefall = false;
+							verticalSpeed = initialVerticalSpeed;
+							fallingSpeed = initialFallingSpeed;
+							currentJumps = initialJumps;
 						}
+					}
 				}
 				if (collider->rect.y + collider->rect.h >= col_2->rect.y + colisionMargin
 					&& collider->rect.y <= col_2->rect.y + col_2->rect.h) {
@@ -537,6 +538,8 @@ void j1Player::OnCollision(Collider* col_1, Collider* col_2)
 				if (App->scene2->active)
 					App->scene2->settings_window->position = App->gui->settingsPosition;
 
+				App->fade->FadeToBlack(3.0f);
+
 				if (lives > 0)
 				{
 					if (col_2->rect.h < deathByFallColliderHeight)
@@ -551,10 +554,6 @@ void j1Player::OnCollision(Collider* col_1, Collider* col_2)
 						fallingSpeed = initialFallingSpeed;
 					}
 					App->entity->DestroyEntities();
-					if (App->scene1->active == true)
-						App->fade->FadeToBlack(3.0f);
-					else if (App->scene2->active == true)
-						App->fade->FadeToBlack(3.0f);
 
 					dead = true;
 					App->audio->PlayFx(deathSound);
@@ -562,7 +561,7 @@ void j1Player::OnCollision(Collider* col_1, Collider* col_2)
 					points = 0;
 					score_points = 0;
 				}
-				else if (App->scene1->active)
+				else if (App->scene1->active)					
 					App->scene1->backToMenu = true;
 				else if (App->scene2->active)
 					App->scene2->backToMenu = true;

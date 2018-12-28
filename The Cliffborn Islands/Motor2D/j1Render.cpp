@@ -169,6 +169,7 @@ bool j1Render::Blit(SDL_Texture* texture, int x, int y, const SDL_Rect* section,
 	if(section != NULL)
 	{
 		rect.w = section->w;
+
 		rect.h = section->h;
 	}
 	else
