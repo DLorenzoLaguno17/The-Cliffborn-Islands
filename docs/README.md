@@ -13,7 +13,7 @@ Development degree at the UPC, a university of Barcelona. You can go to our GitH
 
 <iframe width="850" height="480" src="https://www.youtube.com/embed/_q9eXDu2KOA" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-Download the latest version [here](https://goo.gl/WxyN5B)!
+Download the latest version [here](https://github.com/DLorenzoLaguno17/The-Cliffborn-Islands/releases/tag/v0.4)!
 
 ## Main Core Subsystems
 
