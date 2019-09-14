@@ -213,8 +213,8 @@ void j1Gui::UpdateButtonsState(p2List<j1Button*>* buttons) {
 
 		if (button->data->visible == false || button->data->bfunction == NO_FUNCTION) continue;
 
-		if (x - (App->render->camera.x / 4) <= button->data->position.x + button->data->situation.w * App->gui->buttonsScale
-			&& x - (App->render->camera.x / 4) >= button->data->position.x
+		if (x - (App->render->camera.x / (int)App->win->GetScale()) <= button->data->position.x + button->data->situation.w * App->gui->buttonsScale
+			&& x - (App->render->camera.x / (int)App->win->GetScale()) >= button->data->position.x
 			&& y <= button->data->position.y + button->data->situation.h * App->gui->buttonsScale && y >= button->data->position.y) {
 
 			if(App->credits->active == false && App->menu->settings_window != nullptr && App->menu->settings_window->visible
@@ -250,8 +250,8 @@ void j1Gui::UpdateWindow(j1Box* window, p2List<j1Button*>* buttons, p2List<j1Lab
 
 	// Checking if it is being clicked
 	if (window != nullptr && window->visible == true 
-		&& x - (App->render->camera.x / 4) <= window->position.x + window->section.w * App->gui->settingsWindowScale
-		&& x - (App->render->camera.x / 4) >= window->position.x
+		&& x - (App->render->camera.x / (int)App->win->GetScale()) <= window->position.x + window->section.w * App->gui->settingsWindowScale
+		&& x - (App->render->camera.x / (int)App->win->GetScale()) >= window->position.x
 		&& y <= window->position.y + window->section.h * App->gui->settingsWindowScale && y >= window->position.y)
 	{
 		if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT)
@@ -307,6 +307,9 @@ void j1Gui::UpdateWindow(j1Box* window, p2List<j1Button*>* buttons, p2List<j1Lab
 					if (item->data->parent == window) {
 						item->data->position.x = window->position.x + item->data->initialPosition.x;
 						item->data->position.y = window->position.y + item->data->initialPosition.y;
+
+						item->data->minimum = item->data->originalMinimum + window->position.x;
+						item->data->maximum = item->data->originalMaximum + window->position.x;
 					}
 				}
 			}
@@ -323,8 +326,8 @@ void j1Gui::UpdateSliders(p2List<j1Box*>* sliders) {
 	for (p2List_item<j1Box*>* slider = sliders->start; slider != nullptr; slider = slider->next) {
 		if (slider->data->parent != nullptr && slider->data->visible == true) 
 		{
-			if (x - (App->render->camera.x / 4) <= slider->data->position.x + slider->data->section.w * App->gui->buttonsScale
-				&& x - (App->render->camera.x / 4) >= slider->data->position.x
+			if (x - (App->render->camera.x / (int)App->win->GetScale()) <= slider->data->position.x + slider->data->section.w * App->gui->buttonsScale
+				&& x - (App->render->camera.x / (int)App->win->GetScale()) >= slider->data->position.x
 				&& y <= slider->data->position.y + slider->data->section.h * App->gui->buttonsScale && y >= slider->data->position.y) 
 			{
 				if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT)

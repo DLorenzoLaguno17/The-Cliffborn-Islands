@@ -157,6 +157,8 @@ bool j1Scene2::Update(float dt)
 
 		if (App->render->camera.x != 0)
 			settings_window->position = { (int)App->entity->player->position.x - App->gui->settingsPosition.x, App->gui->settingsPosition.y };
+		else
+			settings_window->position.x = App->gui->settingsPosition.x - App->render->camera.x / (int)App->win->GetScale();
 
 		for (p2List_item<j1Button*>* item = scene2Buttons.start; item != nullptr; item = item->next) {
 			if (item->data->parent == settings_window) {
